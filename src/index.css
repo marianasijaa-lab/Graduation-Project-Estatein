@@ -11,6 +11,8 @@
   --color-primary-light: #a685fa;
   --color-border: #4d4d4d;
 }
+
+  @layer base{
 *,
 *::before,
 *::after {
@@ -18,6 +20,7 @@
   margin: 0;
   padding: 0;
 }
+  }
 
 body {
   font-family: "Urbanist", sans-serif;
