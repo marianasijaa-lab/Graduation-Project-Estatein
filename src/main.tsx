@@ -5,6 +5,7 @@ import { store } from "./store/store";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import Root from "./Root";
+import { ThemeProvider } from "./Context/ThemeContext";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </Provider>
   </StrictMode>,
 );
