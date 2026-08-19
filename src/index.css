@@ -15,10 +15,19 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  margin: 0;
+ 
+}
+html{
+   margin: 0;
   padding: 0;
 }
-
 body {
   font-family: "Urbanist", sans-serif;
+  
+}
+.card{
+  @apply p-6 lg:p-8 xl:p-10 bg-gray-50 border-gray border rounded-xl ;
+}
+.card-title{
+  @apply text-bg-dark font-semibold xl:text-2xl
 }
