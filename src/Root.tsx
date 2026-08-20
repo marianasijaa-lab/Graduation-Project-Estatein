@@ -19,7 +19,7 @@ function Root() {
     <div
       className={`min-h-screen flex flex-col ${
         isDark
-          ? 'bg-[#141414] text-white'
+          ? 'bg-bg-dark-1 text-white'
           : 'bg-[#FAFAFA] text-zinc-900'
       } font-['Urbanist',sans-serif]`}
     >
