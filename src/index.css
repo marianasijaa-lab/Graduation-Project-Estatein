@@ -17,4 +17,11 @@
 >>>>>>> 526146e140436e8efad84e05fcca081ba134a29b
 body {
   font-family: "Urbanist", sans-serif;
+  
+}
+.card{
+  @apply p-6 lg:p-8 xl:p-10 bg-gray-50 border-gray border rounded-xl ;
+}
+.card-title{
+  @apply text-bg-dark font-semibold xl:text-2xl
 }
