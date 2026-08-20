@@ -45,11 +45,11 @@ const Footer = () => {
   const { theme } = useTheme();
   return (
     <footer>
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8 pt-10 py-16 px-11">
         <div>
           <div className="flex items-center mb-4">
             <img src="/assets/logo_icon.png" alt="" />
-            <h2 className="ml-2 font-bold text-lg">Estatein</h2>
+            <h2 className="ml-2 font-bold text-xl">Estatein</h2>
           </div>
           <div className="relative w-full">
             <img
