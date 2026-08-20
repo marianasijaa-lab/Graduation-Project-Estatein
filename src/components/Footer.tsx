@@ -4,7 +4,7 @@
   FaTwitter,
   FaYoutube,
 } from "react-icons/fa";
-import { useTheme } from "../../Context/ThemeContext";
+import { useTheme } from "../Context/ThemeContext";
 
 const footerLinks = [
   {
