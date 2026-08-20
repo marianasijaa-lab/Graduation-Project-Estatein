@@ -1,4 +1,4 @@
-import { useTheme } from "../context/ThemeContext";
+import { useTheme } from "../Context/ThemeContext";
 
 interface Stat {
   value: string;
