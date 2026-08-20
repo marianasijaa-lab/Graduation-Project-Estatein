@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTheme } from '../Context/ThemeContext';
+import { useTheme } from '../context/ThemeContext';
 
 interface CtaSectionProps {
     title?: string;

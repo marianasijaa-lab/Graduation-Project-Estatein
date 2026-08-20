@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTheme } from '../Context/ThemeContext';
+import { useTheme } from '../context/ThemeContext';
 
 export interface ExtraField {
   name: string;

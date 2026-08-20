@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router';
 import { Navbar } from './components/Layout/navBar';
 import { TopBanner } from './components/Layout/TopBanner';
+import Footer from './components/Layout/Footer';
 import type { PageId } from './interfaces';
 import TestPage from './testPage';
 
@@ -41,6 +42,8 @@ function Root() {
          <TestPage /> 
         <Outlet />
       </main>
+
+      <Footer />
     </div>
   );
 }

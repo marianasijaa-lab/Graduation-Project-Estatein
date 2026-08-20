@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { Logo } from '../common/Logo';
 import type { PageId } from '../../interfaces';
-import ThemeToggle from '../ThemeToggleButton';
+import ThemeToggle from '../ui/ThemeToggle';
 
 interface NavbarProps {
   activePage: PageId;
