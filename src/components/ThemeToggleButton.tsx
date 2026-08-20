@@ -1,51 +1,35 @@
-import React from "react";
-import { useTheme } from "../Context/ThemeContext";
+import { useEffect, useState } from "react";
+import { HiOutlineMoon, HiOutlineSun } from "react-icons/hi";
 
-export const ThemeToggleButton: React.FC = () => {
-  const { theme, toggleTheme } = useTheme();
-  const isDark = theme === "dark";
+export default function ThemeToggle() {
+
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem("theme");
+    return saved !== null ? saved === "dark" : true; // الافتراضي true (Dark)
+  });
+
+  useEffect(() => {
+    if (!darkMode) {
+      document.documentElement.classList.add("light");
+      localStorage.setItem("theme", "light");
+    } else {
+      document.documentElement.classList.remove("light");
+      localStorage.setItem("theme", "dark");
+    }
+  }, [darkMode]);
 
   return (
     <button
-      onClick={toggleTheme}
+      onClick={() => setDarkMode(!darkMode)}
       aria-label="Toggle Theme"
-      className={`fixed bottom-6 right-6 z-50 flex items-center justify-center p-3.5 rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 border backdrop-blur-md ${
-        isDark
-          ? "bg-bg-dark/80 text-yellow-400 border-[#333333] hover:border-primary shadow-purple-900/20"
-          : "bg-white/80 text-slate-800 border-gray-200 hover:border-primary shadow-slate-400/20"
-      }`}
+  
+      className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-[var(--bg-main)] hover:bg-[var(--bg-secondary)] border border-[var(--color-border)] text-[var(--text-main)] hover:text-[#703BF7] transition-all cursor-pointer shadow-sm"
     >
-      <div className="relative w-6 h-6 flex items-center justify-center">
-        {isDark ? (
-          <svg
-            className="w-6 h-6 transition-transform duration-500 rotate-0 hover:rotate-90"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-            />
-          </svg>
-        ) : (
-          <svg
-            className="w-5 h-5 transition-transform duration-500 -rotate-12 hover:rotate-0"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-            />
-          </svg>
-        )}
-      </div>
+      {darkMode ? (
+        <HiOutlineSun className="text-xl text-[#F5C344]" />
+      ) : (
+        <HiOutlineMoon className="text-xl text-[#703BF7]" />
+      )}
     </button>
   );
-};
+}
