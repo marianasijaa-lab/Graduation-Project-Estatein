@@ -1,6 +1,6 @@
 const JourneyToday = () => {
     return (
-      <section className="w-full  px-6 py-16 sm:px-10 sm:py-20 md:px-16 md:py-24 `lg:px-[160px] `lg:py-[100px]">
+      <section className="w-full bg-black px-6 py-16 sm:px-10 sm:py-20 md:px-16 md:py-24 `lg:px-[160px] `lg:py-[100px]">
         <div className="flex w-full flex-col items-start justify-between gap-10 md:flex-row md:items-center md:gap-12">
           
           
