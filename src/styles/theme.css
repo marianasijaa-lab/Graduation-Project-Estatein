@@ -1,0 +1,46 @@
+:root {
+  /* Primary Colors */
+  --color-primary-50: #2a213f;
+  --color-primary-60: #703bf7;
+  --color-primary-65: #8254f8;
+  --color-primary-70: #946cf9;
+  --color-primary-75: #a685fa;
+  --color-primary-90: #dbcefd;
+  --color-primary-95: #ede7fe;
+  --color-primary-97: #f4f0fe;
+  --color-primary-99: #fbfaff;
+
+  /* Light Colors */
+  --color-light-90: #e4e4e7;
+  --color-light-95: #f1f1f3;
+  --color-light-97: #f7f7f8;
+  --color-light-99: #fcfcfd;
+
+  --color-white: #ffffff;
+
+  /* Gray Colors */
+  --color-gray-09: #191919;
+  --color-gray-08: #141414;
+  --color-gray-10: #1a1a1a;
+  --color-gray-15: #262626;
+  --color-gray-20: #333333;
+  --color-gray-30: #4d4d4d;
+  --color-gray-40: #666666;
+  --color-gray-50: #808080;
+  --color-gray-60: #999999;
+
+  /* Dark Colors */
+  --bg-main: var(--color-gray-08);
+  --bg-secondary: var(--color-gray-10);
+  --text-main: var(--color-white);
+  --text-secondary: var(--color-gray-60);
+  --color-shadow: var(--color-gray-09);
+}
+
+.light {
+  --bg-main: var(--color-light-99);
+  --bg-secondary: var(--color-light-90);
+  --text-main: var(--color-gray-08);
+  --text-secondary: var(--color-gray-40);
+  --color-shadow: var(--color-light-90);
+}
