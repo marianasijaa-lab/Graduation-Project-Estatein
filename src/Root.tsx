@@ -1,20 +1,46 @@
-import { Outlet } from "react-router";
-import { useTheme } from "./Context/ThemeContext";
-import { ThemeToggleButton } from "./components/ThemeToggleButton";
-
-
-
+import { useState } from 'react';
+import { Outlet, useNavigate, useLocation } from 'react-router';
+import { Navbar } from './components/Layout/navBar';
+import { TopBanner } from './components/Layout/TopBanner';
+import type { PageId } from './interfaces';
+import TestPage from './testPage';
 
 function Root() {
-  const { theme } = useTheme();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [isDark, setIsDark] = useState(true);
+
+  const currentPath = location.pathname.replace('/', '') || 'home';
+  const activePage = (currentPath === '' ? 'home' : currentPath) as PageId;
+
   return (
     <div
-      className={`${theme === "dark" ? "bg-[#0E0E0E] text-white" : "bg-gray-50 text-gray-900"}`}
+      className={`min-h-screen flex flex-col ${
+        isDark
+          ? 'bg-[#141414] text-white'
+          : 'bg-[#FAFAFA] text-zinc-900'
+      } font-['Urbanist',sans-serif]`}
     >
-      <main>
+      <TopBanner
+        message="Discover Your Dream Property with Estatein"
+        actionText="Learn More"
+        onActionClick={() => navigate('/properties')}
+      />
+
+      <Navbar
+        activePage={activePage}
+        onNavigate={(page) =>
+          navigate(page === 'home' ? '/' : `/${page}`)
+        }
+        isDark={isDark}
+        onToggleTheme={() => setIsDark(!isDark)}
+      />
+
+      <main className="flex-1">
+         <TestPage /> 
         <Outlet />
       </main>
-      <ThemeToggleButton />
     </div>
   );
 }
