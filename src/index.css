@@ -11,13 +11,13 @@
   --color-primary-light: #a685fa;
   --color-border: #4d4d4d;
 }
-*,
+/* *,
 *::before,
 *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
+} */
 
 body {
   font-family: "Urbanist", sans-serif;

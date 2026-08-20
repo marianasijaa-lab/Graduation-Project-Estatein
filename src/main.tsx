@@ -7,13 +7,16 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import Root from "./Root";
 import { ThemeProvider } from "./Context/ThemeContext";
 
+import { HomePage } from "./Pages/Home";
+
 const router = createBrowserRouter([
   {
     element: <Root />,
     children: [
       {
-        path: "",
+        path: "/",
         index: true,
+        element: <HomePage/>
         // element:<Home/> home page to be done 
       // صحفة الهوم وقت بتنعمل بتنحط هون
       },
