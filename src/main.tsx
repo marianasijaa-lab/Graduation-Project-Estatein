@@ -14,8 +14,8 @@ const router = createBrowserRouter([
       {
         path: "",
         index: true,
-        // element:<Home/> home page to be done 
-      // صحفة الهوم وقت بتنعمل بتنحط هون
+        // element:<Home/> home page to be done
+        // صحفة الهوم وقت بتنعمل بتنحط هون
       },
     ],
   },
