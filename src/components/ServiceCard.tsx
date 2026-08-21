@@ -20,7 +20,9 @@ const ServiceCard = ({type,heading,icon}:ServiceCardProps) => {
            
         </div>
         :
-        <div>
+        <div className="">
+          <div className=""></div>
+          <p></p>
             </div>
             }
     </>
