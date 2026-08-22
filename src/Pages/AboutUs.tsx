@@ -3,6 +3,7 @@ import { useTheme } from '../Context/ThemeContext';
 import { SectionHeader } from '../components/common/SectionHeader';
 import { values, achievements } from '../data/aboutData';
 import HeroAbout from '../components/HeroAbout';
+import CompaniesSlider from '../components/Slider/CompaniesSlider';
 
 // Value Item
 
@@ -166,6 +167,28 @@ const OurValues: React.FC = () => {
   );
 };
 
+// ─── Our Valued Clients Section
+
+const OurValuedClients: React.FC = () => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
+  return (
+    <section
+      className={`w-full transition-colors ${isDark ? "bg-bg-dark-1" : "bg-gray-50"}`}
+    >
+      <div className="max-w-[1568px] mx-auto px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-20">
+        <SectionHeader
+          title="Our Valued Clients"
+          subtitle="At Estatein, we have had the privilege of working with a diverse range of clients across various industries. Here are some of the clients we've had the pleasure of serving."
+          className="mb-10"
+        />
+        <CompaniesSlider />
+      </div>
+    </section>
+  );
+};
+
 // ─── AboutUs Page
 
 const AboutUs: React.FC = () => {
@@ -177,6 +200,7 @@ const AboutUs: React.FC = () => {
       />
       <OurValues />
       <OurAchievements />
+      <OurValuedClients />
     </main>
   );
 };

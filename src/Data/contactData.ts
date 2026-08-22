@@ -1,18 +1,18 @@
 export const services = [
   {
-    icon: "/assets/icon1.svg",
+    icon: '/assets/Icon_29.png',
     heading: "Property Management",
   },
   {
-    icon: "/assets/icon2.svg",
+    icon: "/assets/Icon_30.png",
     heading: "Property Valuation",
   },
   {
-    icon: "/assets/icon3.svg",
+    icon: "/assets/Icon_31.png",
     heading: "Property Marketing",
   },
   {
-    icon: "/assets/icon4.svg",
+    icon: "/assets/Icon_32.png",
     heading: "Property Investment",
   },
 ];

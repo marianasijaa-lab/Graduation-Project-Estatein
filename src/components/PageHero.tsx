@@ -18,7 +18,7 @@ const PageHero: React.FC<PageHeroProps> = ({ title, description, className = '' 
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-tight mb-4">
           {title}
         </h1>
-        <p className="text-sm sm:text-base font-normal text-gray leading-relaxed">
+        <p className="text-sm sm:text-base font-normal text-gray  max-w-[1100px] leading-relaxed">
           {description}
         </p>
       </div>

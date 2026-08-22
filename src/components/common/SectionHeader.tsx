@@ -7,6 +7,7 @@ export interface SectionHeaderProps {
   actionLabel?: string;
   onAction?: () => void;
   className?: string;
+  fullWidth?: boolean;
 }
 
 export const SectionHeader: React.FC<SectionHeaderProps> = ({
@@ -15,11 +16,12 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
   actionLabel,
   onAction,
   className = '',
+  fullWidth = false,
 }) => {
   return (
     <div className={`flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 sm:mb-14 ${className}`}>
       {/* الجانب الأيسر: النجوم + العنوان h2 + الوصف p */}
-      <div className="space-y-2.5 max-w-4xl">
+      <div className={`space-y-2.5 ${fullWidth ? 'w-full' : 'max-w-4xl'}`}>
         <StarCluster />
         
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white font-['Urbanist',sans-serif]">
