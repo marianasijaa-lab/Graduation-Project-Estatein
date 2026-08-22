@@ -1,9 +1,8 @@
-import React from "react";
-import { useTheme } from "../Context/ThemeContext";
-import { SectionHeader } from "../components/common/SectionHeader";
-import { values, achievements } from "../data/aboutData";
-import { CtaSection } from "../components/CTA";
-import HeroAbout from "../components/HeroAbout";
+import React from 'react';
+import { useTheme } from '../Context/ThemeContext';
+import { SectionHeader } from '../components/common/SectionHeader';
+import { values, achievements } from '../data/aboutData';
+import HeroAbout from '../components/HeroAbout';
 
 // Value Item
 
@@ -178,18 +177,6 @@ const AboutUs: React.FC = () => {
       />
       <OurValues />
       <OurAchievements />
-      <CtaSection
-        bgLeftImage="public/assets/Abstract2.png"
-        bgRightImage="public/assets/Abstract1.png"
-        renderButton={() => (
-          <a
-            href="/properties"
-            className="w-full sm:w-auto text-center bg-primary hover:bg-[#5e2ed9] text-white text-sm font-medium px-6 py-3.5 rounded-lg transition-colors whitespace-nowrap inline-block"
-          >
-            Explore Properties
-          </a>
-        )}
-      />
     </main>
   );
 };

@@ -14,7 +14,7 @@ const StatsBar = ({ stats }: PropsStatsBar) =>
   const { theme } = useTheme();
 
   return (
-    <div className={`  px-1 py-6 md:p-6  max-2xl:gap-4 2xl:gap-5
+    <div className={`py-6 max-2xl:gap-4 2xl:gap-5
       ${
       theme === "dark"
         ? " border-bg-gray-1 "

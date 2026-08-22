@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { Outlet, useNavigate, useLocation } from "react-router";
-import { Navbar } from "./components/Layout/navBar";
-import { TopBanner } from "./components/Layout/TopBanner";
-import Footer from "./components/Layout/Footer";
-import type { PageId } from "./interfaces";
+import { useState } from 'react';
+import { Outlet, useNavigate, useLocation } from 'react-router';
+import { Navbar } from './components/Layout/navBar';
+import { TopBanner } from './components/Layout/TopBanner';
+import Footer from './components/Layout/Footer';
+import type { PageId } from './interfaces';
+import { CtaSection } from './components/CTA';
 
 function Root() {
   const navigate = useNavigate();
@@ -36,6 +37,19 @@ function Root() {
       <main className="flex-1">
         <Outlet />
       </main>
+
+      <CtaSection
+        bgLeftImage="public/assets/Abstract2.png"
+        bgRightImage="public/assets/Abstract1.png"
+        renderButton={() => (
+          <a
+            href="/properties"
+            className="w-full sm:w-auto text-center bg-primary hover:bg-[#5e2ed9] text-white text-sm font-medium px-6 py-3.5 rounded-lg transition-colors whitespace-nowrap inline-block"
+          >
+            Explore Properties
+          </a>
+        )}
+      />
 
       <Footer />
     </div>

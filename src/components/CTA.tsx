@@ -19,18 +19,25 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  return (
-    <section
-      className={`relative w-full overflow-hidden transition-colors py-12 sm:py-16 lg:py-20 ${
-        isDark ? "bg-bg-dark text-white" : "bg-white text-gray-900"
-      }`}
-    >
-      {bgLeftImage && (
-        <div
-          className="absolute left-0 top-0 w-1/2 h-1/2 sm:h-full bg-left bg-no-repeat bg-contain pointer-events-none z-0"
-          style={{ backgroundImage: `url(${bgLeftImage})` }}
-        />
-      )}
+    return (
+        <section
+            className={`relative w-full overflow-hidden transition-colors py-12 sm:py-16 lg:py-20 border-b border-t border-bg-gray-1 ${
+                isDark ? 'bg-bg-dark-1 text-white' : 'bg-white text-gray-900'
+            }`}
+        >
+            {bgLeftImage && (
+                <div
+                    className="absolute left-0 top-0 w-1/2 h-1/2 sm:h-full bg-left bg-no-repeat bg-contain pointer-events-none z-0"
+                    style={{ backgroundImage: `url(${bgLeftImage})` }}
+                />
+            )}
+
+            {bgRightImage && (
+                <div
+                    className="absolute right-0 bottom-0 w-1/2 h-1/2 sm:h-full bg-right bg-no-repeat bg-contain pointer-events-none z-0"
+                    style={{ backgroundImage: `url(${bgRightImage})` }}
+                />
+            )}
 
       {bgRightImage && (
         <div
