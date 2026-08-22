@@ -1,12 +1,13 @@
-import React from 'react';
+
 import { SectionHeader } from './components/common/SectionHeader';
 import { InfoBox } from './components/InfoBox';
+
 
 export default function TestPage() {
   return (
     <div className="min-h-screen bg-[#141414] text-white p-6 sm:p-12 lg:p-16">
       <div className="max-w-7xl mx-auto space-y-20">
-
+        
         {/* 1. السيكشن الأول: Featured Properties */}
         <section>
           <SectionHeader
