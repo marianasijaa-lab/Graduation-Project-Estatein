@@ -7,8 +7,7 @@ import { ThemeProvider } from "./Context/ThemeContext";
 
 import { HomePage } from "./Pages/Home";
 import AboutUs from "./Pages/AboutUs";
-import { PropertyDetails } from "./Pages/PropertyDetails";
-import ServicesPage from "./Pages/Services";
+import Contact from "./Pages/Contact";
 
 const router = createBrowserRouter([
   {
@@ -17,13 +16,15 @@ const router = createBrowserRouter([
       {
         path: "/",
         index: true,
-        element: <HomePage />
+        element: <HomePage />,
       },
       {
         path: "/about",
         element: <AboutUs />,
       },
       {
+        path: "/contact",
+        element: <Contact />,
         path: "/property-details",
         element: <PropertyDetails />,
       },

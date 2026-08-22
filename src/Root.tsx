@@ -12,28 +12,24 @@ function Root() {
 
   const [isDark, setIsDark] = useState(true);
 
-  const currentPath = location.pathname.replace('/', '') || 'home';
-  const activePage = (currentPath === '' ? 'home' : currentPath) as PageId;
+  const currentPath = location.pathname.replace("/", "") || "home";
+  const activePage = (currentPath === "" ? "home" : currentPath) as PageId;
 
   return (
     <div
       className={`min-h-screen flex flex-col ${
-        isDark
-          ? 'bg-bg-dark-1 text-white'
-          : 'bg-[#FAFAFA] text-zinc-900'
+        isDark ? "bg-bg-dark-1 text-white" : "bg-[#FAFAFA] text-zinc-900"
       } font-['Urbanist',sans-serif]`}
     >
       <TopBanner
         message="Discover Your Dream Property with Estatein"
         actionText="Learn More"
-        onActionClick={() => navigate('/properties')}
+        onActionClick={() => navigate("/properties")}
       />
 
       <Navbar
         activePage={activePage}
-        onNavigate={(page) =>
-          navigate(page === 'home' ? '/' : `/${page}`)
-        }
+        onNavigate={(page) => navigate(page === "home" ? "/" : `/${page}`)}
         isDark={isDark}
         onToggleTheme={() => setIsDark(!isDark)}
       />
