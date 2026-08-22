@@ -4,7 +4,7 @@ interface ButtonProps
   text: string;
   variant: 'primary' | 'secondary';
   onClick: () => void;
-  icon?: string;
+  icon?: string ;
   iconPosition?: 'left' | 'right';
   fullWidth?: boolean;
   disabled?: boolean;

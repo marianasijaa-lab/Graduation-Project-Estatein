@@ -4,19 +4,26 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import Root from "./Root";
 import { ThemeProvider } from "./Context/ThemeContext";
+import ProperityPage from "./Pages/ProperityPage";
+import { Home } from "lucide-react";
 
-import { HomePage } from "./Pages/Home";
+
+
 
 const router = createBrowserRouter([
   {
     element: <Root />,
     children: [
       {
-        path: "/",
+        path: "",
         index: true,
-        element: <HomePage/>
+        element: <Home/>
         // element:<Home/> home page to be done 
       // صحفة الهوم وقت بتنعمل بتنحط هون
+      },
+      {
+        path: "properties",
+        element: <ProperityPage />,
       },
     ],
   },

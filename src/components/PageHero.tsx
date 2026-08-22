@@ -1,81 +1,42 @@
-/*interface PageHeroProps {
-    title: string;
-    description: string;
-  }
-  
-  const PageHero = ({ title, description }: PageHeroProps) => {
-    return (
-      <section className="w-full bg-black px-6 py-16 sm:px-8 sm:py-20 md:px-0 `md:py-[150px] `md:pl-[162px] `md:pr-[400px]">
-        <div className="w-full">
-         
-          <h1
-            className="font-['Urbanist'] text-[28px] font-semibold leading-[150%] tracking-[0%] text-white"
-          >
-           
-          </h1>
-  
-         
-          <p
-            className="mt-3 `max-w-[900px] font-['Urbanist'] text-[14px] font-medium leading-[150%] tracking-[0%] text-[#999999]  `sm:max-w-[750px] `md:max-w-[900px]"
-          >
-            {description}
-          </p>
-        </div>
-      </section>
-    );
-  };
-  
-  export default PageHero;*/
-  interface PageHeroProps {
-    title: string;
-    description: string;
-  }
-  
-  const PageHero = ({ title, description }: PageHeroProps) => {
-    return (
-      <section className="w-full `pt-[150px] `pb-[100px]">
-        <div className="w-full max-w-[1568px] mx-auto px-6 sm:px-8 md:px-10">
-          
-          {/* Title */}
-          <h1
-            className="
-              w-full
-              `h-[72px]
-              font-['Urbanist']
-              text-[28px]
-              font-semibold
-              leading-[150%]
-              tracking-[0%]
-              text-white
-              flex
-              items-center
-            "
-          >
-            {title}
-          </h1>
-  
-          {/* Description */}
-          <p
-            className="
-              w-full
-              `h-[72px]
-              mt-3
-              font-['Urbanist']
-              text-[14px]
-              font-medium
-              leading-[150%]
-              tracking-[0%]
-              text-[#999999]
-              flex
-              items-start
-            "
-          >
-            {description}
-          </p>
-  
-        </div>
-      </section>
-    );
-  };
-  
-  export default PageHero;
+import React from 'react';
+import { useTheme } from '../Context/ThemeContext'; 
+
+interface PageHeroProps {
+  title: string;
+  description: string;
+}
+
+const PageHero: React.FC<PageHeroProps> = ({ title, description }) => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
+  return (
+    <section 
+      className={`w-full pt-12 md:pt-20 pb-8 md:pb-12 px-4 sm:px-8 md:px-10 transition-colors duration-300 ${
+        isDark ? 'bg-bg-dark-1 text-white' : 'bg-white text-gray-900'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Title */}
+        <h1
+          className={`font-['Urbanist'] text-2xl sm:text-3xl md:text-5xl font-semibold leading-tight tracking-normal transition-colors ${
+            isDark ? 'text-white' : 'text-gray-900'
+          }`}
+        >
+          {title}
+        </h1>
+
+        {/* Description */}
+        <p
+          className={`mt-3 font-['Urbanist'] text-sm sm:text-base md:text-lg font-medium leading-relaxed max-w-6xl transition-colors ${
+            isDark ? 'text-gray' : 'text-gray-600'
+          }`}
+        >
+          {description}
+        </p>
+      </div>
+    </section>
+  );
+};
+
+export default PageHero;
