@@ -22,7 +22,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
     return (
         <section
             className={`relative w-full overflow-hidden transition-colors py-12 sm:py-16 lg:py-20 ${
-                isDark ? 'bg-[#141414] text-white' : 'bg-white text-gray-900'
+                isDark ? 'bg-bg-dark text-white' : 'bg-white text-gray-900'
             }`}
         >
             {bgLeftImage && (
