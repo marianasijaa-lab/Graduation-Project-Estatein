@@ -15,10 +15,10 @@ const PageHero: React.FC<PageHeroProps> = ({ title, description, className = '' 
       }}
     >
       <div className={`w-full max-w-[1590px] mx-auto px-6 sm:px-10 lg:px-16 pt-16 pb-12 sm:pt-20 sm:pb-14 ${className}`}>
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight mb-4">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-tight mb-4">
           {title}
         </h1>
-        <p className="text-sm sm:text-base font-normal text-gray max-w-4xl leading-relaxed">
+        <p className="text-sm sm:text-base font-normal text-gray leading-relaxed">
           {description}
         </p>
       </div>
