@@ -1,12 +1,13 @@
-import { FaArrowUp } from "react-icons/fa"
+import { FaArrowUp, FaStar } from "react-icons/fa"
 
 interface ServiceCardProps{
     type:"horizontal"|"vertical",
     icon:string,
-    heading:string
+    heading:string,
+    description?:string,
 
 }
-const ServiceCard = ({type,heading,icon}:ServiceCardProps) => {
+const ServiceCard = ({type,heading,icon,description}:ServiceCardProps) => {
   return (
     <>
         {type ==="vertical"?
@@ -21,6 +22,13 @@ const ServiceCard = ({type,heading,icon}:ServiceCardProps) => {
         </div>
         :
         <div>
+          <div className="flex items-center gap-2 lg:gap-2.5 xl:gap-3.5">
+            <div className="border flex justify-center items-center p-3.5 lg:p-4 xl:p-6 rounded-full border-primary">
+              <img src={icon} className="w-6 h-6 lg:w-7 lg:h-7 xl:w-8.5 xl:h-8.5" alt={description} />
+            </div>
+            <h3 className="text-lg lg:text-xl xl:text-2xl">{heading}</h3>
+          </div>
+          <p className="font-medium text-gray max-w-82.25 leading-[150%]">{description}</p>
             </div>
             }
     </>
