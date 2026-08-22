@@ -4,7 +4,6 @@ import { Navbar } from './components/Layout/navBar';
 import { TopBanner } from './components/Layout/TopBanner';
 import Footer from './components/Layout/Footer';
 import type { PageId } from './interfaces';
-import TestPage from './testPage';
 
 function Root() {
   const navigate = useNavigate();
@@ -39,7 +38,6 @@ function Root() {
       />
 
       <main className="flex-1">
-         <TestPage /> 
         <Outlet />
       </main>
 
