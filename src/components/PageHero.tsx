@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-
-=======
 /*interface PageHeroProps {
     title: string;
     description: string;
@@ -29,7 +26,6 @@
   };
   
   export default PageHero;*/
->>>>>>> 73627b9620e5507b609926c4159fc626592eb214
   interface PageHeroProps {
     title: string;
     description: string;
@@ -37,11 +33,7 @@
   
   const PageHero = ({ title, description }: PageHeroProps) => {
     return (
-<<<<<<< HEAD
-      <section className="w-full bg-black `pt-[150px] `pb-[100px]">
-=======
       <section className="w-full `pt-[150px] `pb-[100px]">
->>>>>>> 73627b9620e5507b609926c4159fc626592eb214
         <div className="w-full max-w-[1568px] mx-auto px-6 sm:px-8 md:px-10">
           
           {/* Title */}

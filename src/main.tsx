@@ -7,6 +7,7 @@ import { ThemeProvider } from "./Context/ThemeContext";
 
 import { HomePage } from "./Pages/Home";
 import AboutUs from "./Pages/AboutUs";
+import { PropertyDetails } from "./Pages/PropertyDetails";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <AboutUs />,
+      },
+      {
+        path: "/property-details",
+        element: <PropertyDetails />,
       },
     ],
   },

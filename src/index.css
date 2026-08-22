@@ -11,32 +11,7 @@
   --color-border: #4d4d4d;
 }
 
-<<<<<<< HEAD
-  @layer base{
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-=======
-/* Dark mode (default) */
-:root {
-  --bg-main: #141414;
-  --bg-secondary: #1a1a1a;
-  --text-main: #ffffff;
-  --color-border: #4d4d4d;
-}
 
-/* Light mode */
-:root.light {
-  --bg-main: #ffffff;
-  --bg-secondary: #f5f5f5;
-  --text-main: #141414;
-  --color-border: #d1d1d1;
->>>>>>> 73627b9620e5507b609926c4159fc626592eb214
-}
-  }
 
 body {
   font-family: "Urbanist", sans-serif;

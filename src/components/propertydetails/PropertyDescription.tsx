@@ -22,7 +22,7 @@ import {
   }: PropertyDescriptionProps) => {
     
     return (
-      <section className="w-full overflow-x-hidden bg-black text-white ">
+      <section className="w-full overflow-x-hidden bg-black text-white px-[20px] py-[60px] sm:px-[40px] lg:px-[80px]">
         <div
           className="
             mx-auto
@@ -31,7 +31,6 @@ import {
             max-w-[1596px]
             flex-col
             gap-[30px]
-            px-0
             lg:flex-row
             lg:items-start
           "
@@ -50,9 +49,7 @@ import {
               bg-[#141414]
               p-[30px]
               sm:p-[40px]
-              lg:h-[374px]
-              lg:w-[783px]
-              lg:shrink-0
+              lg:flex-1
               lg:p-[50px]
            "
           >
@@ -99,7 +96,7 @@ import {
                 grid
                 grid-cols-2
                 gap-y-[25px]
-                sm:grid-cols-3
+                sm:grid-cols-[1fr_1fr_auto]
                 sm:gap-y-0
               "
             >
@@ -219,10 +216,11 @@ import {
                   className="
                     whitespace-nowrap
                     font-['Urbanist']
-                    text-[18px]
+                    text-[13px]
                     font-semibold
                     leading-[150%]
                     text-white
+                    sm:text-[15px]
                   "
                 >
                   {area}
@@ -245,10 +243,8 @@ import {
               bg-[#141414]
               p-[30px]
               sm:p-[40px]
-              lg:h-[621px]
-              lg:w-[783px]
-              lg:shrink-0
-              lg:p-[50px]
+              lg:flex-1
+              lg:p-[38px]
             "
           >
             {/* Title */}
@@ -256,7 +252,6 @@ import {
             <h2
               className="
                 mb-[30px]
-                font-['Urbanist']
                 text-[20px]
                 font-semibold
                 leading-[150%]
@@ -277,25 +272,15 @@ import {
                     flex
                     h-[63px]
                     w-full
-                    max-w-[683px]
                     items-center
                     gap-[14px]
-                    rounded-[8px]
+                    border-l-[1.5px]
+                    border-l-[#703BF7]
                     bg-[#1A1A1A]
-                    px-[20px]
+                    px-[22px]
                     sm:px-[24px]
                   "
                 >
-                  {/* Purple Line */}
-  
-                  <div
-                    className="
-                      h-[34px]
-                      w-[2px]
-                      shrink-0
-                      bg-[#703BF7]
-                    "
-                  />
   
                   {/* White Lightning Icon */}
   
@@ -312,6 +297,7 @@ import {
   
                   <p
                     className="
+                      truncate
                       font-['Urbanist']
                       text-[14px]
                       font-medium
