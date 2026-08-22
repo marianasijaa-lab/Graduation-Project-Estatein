@@ -1,81 +1,29 @@
-/*interface PageHeroProps {
-    title: string;
-    description: string;
-  }
-  
-  const PageHero = ({ title, description }: PageHeroProps) => {
-    return (
-      <section className="w-full bg-black px-6 py-16 sm:px-8 sm:py-20 md:px-0 `md:py-[150px] `md:pl-[162px] `md:pr-[400px]">
-        <div className="w-full">
-         
-          <h1
-            className="font-['Urbanist'] text-[28px] font-semibold leading-[150%] tracking-[0%] text-white"
-          >
-           
-          </h1>
-  
-         
-          <p
-            className="mt-3 `max-w-[900px] font-['Urbanist'] text-[14px] font-medium leading-[150%] tracking-[0%] text-[#999999]  `sm:max-w-[750px] `md:max-w-[900px]"
-          >
-            {description}
-          </p>
-        </div>
-      </section>
-    );
-  };
-  
-  export default PageHero;*/
-  interface PageHeroProps {
-    title: string;
-    description: string;
-  }
-  
-  const PageHero = ({ title, description }: PageHeroProps) => {
-    return (
-      <section className="w-full `pt-[150px] `pb-[100px]">
-        <div className="w-full max-w-[1568px] mx-auto px-6 sm:px-8 md:px-10">
-          
-          {/* Title */}
-          <h1
-            className="
-              w-full
-              `h-[72px]
-              font-['Urbanist']
-              text-[28px]
-              font-semibold
-              leading-[150%]
-              tracking-[0%]
-              text-white
-              flex
-              items-center
-            "
-          >
-            {title}
-          </h1>
-  
-          {/* Description */}
-          <p
-            className="
-              w-full
-              `h-[72px]
-              mt-3
-              font-['Urbanist']
-              text-[14px]
-              font-medium
-              leading-[150%]
-              tracking-[0%]
-              text-[#999999]
-              flex
-              items-start
-            "
-          >
-            {description}
-          </p>
-  
-        </div>
-      </section>
-    );
-  };
-  
-  export default PageHero;
+import React from 'react';
+
+interface PageHeroProps {
+  title: string;
+  description: string;
+  className?: string;
+}
+
+const PageHero: React.FC<PageHeroProps> = ({ title, description, className = '' }) => {
+  return (
+    <section
+      className="w-full border-b border-bg-gray-1"
+      style={{
+        background: 'linear-gradient(95.93deg, #262626 -26.82%, rgba(38, 38, 38, 0) 40.46%)',
+      }}
+    >
+      <div className={`w-full max-w-[1590px] mx-auto px-6 sm:px-10 lg:px-16 pt-16 pb-12 sm:pt-20 sm:pb-14 ${className}`}>
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight mb-4">
+          {title}
+        </h1>
+        <p className="text-sm sm:text-base font-normal text-gray max-w-4xl leading-relaxed">
+          {description}
+        </p>
+      </div>
+    </section>
+  );
+};
+
+export default PageHero;
