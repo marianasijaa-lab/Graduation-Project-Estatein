@@ -4,11 +4,7 @@ import { Navbar } from './components/Layout/navBar';
 import { TopBanner } from './components/Layout/TopBanner';
 import Footer from './components/Layout/Footer';
 import type { PageId } from './interfaces';
-<<<<<<< HEAD
-=======
-import TestPage from './testPage';
 import { CtaSection } from './components/CTA';
->>>>>>> 07d6dff5037885c40417b6705cb319a2a5b494e4
 
 function Root() {
   const navigate = useNavigate();
@@ -43,10 +39,6 @@ function Root() {
       />
 
       <main className="flex-1">
-<<<<<<< HEAD
-=======
-         {/* <TestPage />  */}
->>>>>>> 07d6dff5037885c40417b6705cb319a2a5b494e4
         <Outlet />
       </main>
  <CtaSection
