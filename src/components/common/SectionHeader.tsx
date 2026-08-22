@@ -26,7 +26,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
           {title}
         </h2>
         
-        <p className="text-sm sm:text-base text-[#999999] leading-relaxed font-normal">
+        <p className="text-sm sm:text-base text-gray leading-relaxed font-normal">
           {subtitle}
         </p>
       </div>
@@ -36,7 +36,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
         <div className="shrink-0 self-start lg:self-end">
           <button
             onClick={onAction}
-            className="px-5 py-3.5 rounded-xl bg-[#1A1A1A] hover:bg-[#222222] border border-[#262626] hover:border-[#703BF7]/50 text-white text-sm font-medium transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap"
+            className="px-5 py-3.5 rounded-xl bg-bg-dark hover:bg-[#222222] border border-bg-gray-1 hover:border-primary/50 text-white text-sm font-medium transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap"
           >
             {actionLabel}
           </button>
