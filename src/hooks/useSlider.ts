@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const useSlider=(data:any[])=>{
+export const useSlider=(data:any[],type?:"two" |"three")=>{
  const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsToShow, setItemsToShow] = useState(3); // Default for large screens
 
@@ -8,10 +8,13 @@ export const useSlider=(data:any[])=>{
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
+      
       if (width < 768)
         setItemsToShow(1); // Mobile
       else if (width < 1024)
         setItemsToShow(2); // Tablet
+      else if (type==='two' && width > 1024) // Desktop
+        setItemsToShow(2); 
       else setItemsToShow(3); // Desktop
     };
 

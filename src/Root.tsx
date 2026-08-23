@@ -4,7 +4,10 @@ import { Navbar } from './components/Layout/navBar';
 import { TopBanner } from './components/Layout/TopBanner';
 import Footer from './components/Layout/Footer';
 import type { PageId } from './interfaces';
+<<<<<<< HEAD
 import TestPage from './testPage';
+=======
+>>>>>>> 46cf8271d8dd0b5cbfddd560ef3ad40951e84a2d
 import { CtaSection } from './components/CTA';
 
 function Root() {
@@ -39,10 +42,16 @@ function Root() {
       />
 
       <main className="flex-1">
+<<<<<<< HEAD
          {/* <TestPage />  */}
         <Outlet />
       </main>
       <CtaSection
+=======
+        <Outlet />
+      </main>
+ <CtaSection
+>>>>>>> 46cf8271d8dd0b5cbfddd560ef3ad40951e84a2d
             bgLeftImage="public/assets/Abstract2.png"
             bgRightImage="public/assets/Abstract1.png"
             renderButton={() => (
@@ -53,6 +62,10 @@ function Root() {
                     Explore Properties
                 </a>
             )}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 46cf8271d8dd0b5cbfddd560ef3ad40951e84a2d
         />
       <Footer />
     </div>
