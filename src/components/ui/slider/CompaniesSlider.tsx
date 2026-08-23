@@ -102,7 +102,7 @@ function CompanyCard({ company }: { company: Company }) {
           <div className="sm:hidden w-full">
             <button
               onClick={() => {}}
-              className="w-full text-white rounded-[8px] py-3 px-4 text-sm font-medium transition-all"
+              className="w-full text-white rounded-lg py-3 px-4 text-sm font-medium transition-all"
               style={{ backgroundColor: "#1A1A1A", border: "1px solid #262626" }}
             >
               Visit Website

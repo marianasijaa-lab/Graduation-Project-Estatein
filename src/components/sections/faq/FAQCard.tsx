@@ -1,4 +1,3 @@
-
 import { Button } from '../../ui/Button';
 
 interface FAQCardProps {

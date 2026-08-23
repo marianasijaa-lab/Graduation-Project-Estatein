@@ -11,7 +11,7 @@ interface ServiceCardProps {
 const ServiceCard: React.FC<ServiceCardProps> = ({ type, heading, icon, description }) => {
   if (type === 'vertical') {
     return (
-      <div className="group relative flex flex-col items-center justify-center text-center bg-[#1A1A1A] border border-[#262626] rounded-[10px] py-8 px-10 sm:px-6 hover:border-[#703BF7]/50 hover:bg-[#1e1e1e] transition-all duration-300 cursor-pointer overflow-hidden w-full">
+      <div className="group relative flex flex-col items-center justify-center text-center bg-bg-dark border border-bg-gray-1 rounded-[10px] py-8 px-10 sm:px-6 hover:border-[#703BF7]/50 hover:bg-[#1e1e1e] transition-all duration-300 cursor-pointer overflow-hidden w-full">
         {/* سهم الزاوية */}
         <GoArrowUpRight
           size={28}

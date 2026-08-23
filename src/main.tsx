@@ -25,10 +25,6 @@ const router = createBrowserRouter([
         element: <AboutUs />,
       },
       {
-        path: "/contact",
-        element: <Contact />,
-      },
-      {
         path: "/property-details",
         element: <PropertyDetails />,
       },
@@ -39,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/services",
         element: <ServicesPage />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
     ],
   },

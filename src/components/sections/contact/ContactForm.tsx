@@ -100,7 +100,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
       <form
         onSubmit={handleSubmit}
         className={`w-full rounded-2xl p-6 sm:p-10 lg:p-14 border space-y-6 sm:space-y-8 ${
-          isDark ? 'bg-[#141414] border-[#262626]' : 'bg-white border-gray-200 shadow-sm'
+          isDark ? 'bg-bg-dark-1 border-bg-gray-1' : 'bg-white border-gray-200 shadow-sm'
         }`}
       >
         {/* 1. First Name + Last Name */}
@@ -207,7 +207,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                         <option
                           key={opt}
                           value={opt}
-                          className={isDark ? 'bg-[#1A1A1A]' : 'bg-white'}
+                          className={isDark ? 'bg-bg-dark' : 'bg-white'}
                         >
                           {opt}
                         </option>
@@ -230,7 +230,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                       return (
                         <div
                           key={opt}
-                          className={`flex items-center gap-3 flex-1 min-w-[200px] px-4 py-3 rounded-xl border transition-all ${
+                          className={`flex items-center gap-3 flex-1 min-w-50 px-4 py-3 rounded-xl border transition-all ${
                             isSelected
                               ? 'border-primary bg-primary/10'
                               : isDark

@@ -45,8 +45,8 @@ import {
               flex-col
               rounded-[10px]
               border
-              border-[#262626]
-              bg-[#141414]
+              border-bg-gray-1
+              bg-bg-dark-1
               p-[30px]
               sm:p-[40px]
               lg:flex-1
@@ -78,7 +78,7 @@ import {
                 text-[14px]
                 font-medium
                 leading-[150%]
-                text-[#999999]
+                text-gray
                 sm:text-[15px]
               "
             >
@@ -114,14 +114,14 @@ import {
                 "
               >
                 <div className="flex items-center gap-[8px]">
-                  <FaBed className="text-[16px] text-[#999999]" />
+                  <FaBed className="text-[16px] text-gray" />
   
                   <span
                     className="
                       font-['Urbanist']
                       text-[14px]
                       font-medium
-                      text-[#999999]
+                      text-gray
                     "
                   >
                     Bedrooms
@@ -154,14 +154,14 @@ import {
                 "
               >
                 <div className="flex items-center gap-[8px]">
-                  <FaBath className="text-[16px] text-[#999999]" />
+                  <FaBath className="text-[16px] text-gray" />
   
                   <span
                     className="
                       font-['Urbanist']
                       text-[14px]
                       font-medium
-                      text-[#999999]
+                      text-gray
                     "
                   >
                     Bathrooms
@@ -198,14 +198,14 @@ import {
                 "
               >
                 <div className="flex items-center gap-[8px]">
-                  <FaRulerCombined className="text-[16px] text-[#999999]" />
+                  <FaRulerCombined className="text-[16px] text-gray" />
   
                   <span
                     className="
                       font-['Urbanist']
                       text-[14px]
                       font-medium
-                      text-[#999999]
+                      text-gray
                     "
                   >
                     Area
@@ -239,8 +239,8 @@ import {
               flex-col
               rounded-[10px]
               border
-              border-[#262626]
-              bg-[#141414]
+              border-bg-gray-1
+              bg-bg-dark-1
               p-[30px]
               sm:p-[40px]
               lg:flex-1
@@ -275,8 +275,8 @@ import {
                     items-center
                     gap-[14px]
                     border-l-[1.5px]
-                    border-l-[#703BF7]
-                    bg-[#1A1A1A]
+                    border-l-primary
+                    bg-bg-dark
                     px-[22px]
                     sm:px-[24px]
                   "
@@ -302,7 +302,7 @@ import {
                       text-[14px]
                       font-medium
                       leading-[150%]
-                      text-[#999999]
+                      text-gray
                       sm:text-[15px]
                     "
                   >

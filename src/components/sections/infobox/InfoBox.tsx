@@ -59,7 +59,7 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
           onClick={onButtonClick}
           className={`relative z-10 w-full py-4 rounded-xl text-sm font-medium transition-colors ${
             isDark
-              ? 'bg-[#1A1A1A] border border-[#262626] text-white hover:bg-[#222]'
+              ? 'bg-bg-dark-1 border border-bg-gray-1 text-white hover:bg-[#222]'
               : 'bg-gray-100 border border-gray-200 text-gray-900 hover:bg-gray-200'
           }`}
         >
@@ -92,7 +92,7 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
           onClick={onButtonClick}
           className={`px-6 py-3 rounded-xl text-sm font-medium transition-colors border ${
             isDark
-              ? 'bg-[#1A1A1A] border-[#333] text-white hover:bg-[#222]'
+              ? 'bg-bg-dark-1 border-border-gray-1 text-white hover:bg-[#222]'
               : 'bg-gray-100 border-gray-200 text-gray-900 hover:bg-gray-200'
           }`}
         >

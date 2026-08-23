@@ -42,7 +42,7 @@ export const Button = (
       disabled={disabled}
       style={variantInlineStyle}
              className={`inline-flex items-center justify-center gap-2 max-2xl:px-[20px]
-                max-2xl:py-[14px] 2xl:px-[24px] 2xl:py-[18px] 2xl:rounded-[10px] max-2xl:rounded-[8px] font-medium 2xl:text-[18px] max-2xl:text-sm whitespace-nowrap transition-all ${variantStyles} ${
+                max-2xl:py-[14px] 2xl:px-[24px] 2xl:py-[18px] 2xl:rounded-[10px] max-2xl:rounded-lg font-medium 2xl:text-[18px] max-2xl:text-sm whitespace-nowrap transition-all ${variantStyles} ${
         fullWidth ? 'w-full' : 'w-auto'
       } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
          >
