@@ -35,7 +35,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
 
      
       {actionLabel && (
-        <div className="shrink-0 self-start lg:self-end">
+        <div className="hidden lg:block shrink-0 self-start lg:self-end">
           <button
             onClick={onAction}
             className="px-5 py-3.5 rounded-xl bg-bg-dark hover:bg-[#222222] border border-bg-gray-1 hover:border-primary/50 text-white text-sm font-medium transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap"

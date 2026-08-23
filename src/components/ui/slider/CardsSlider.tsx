@@ -2,6 +2,7 @@ import BaseSlider from "./BaseSlider";
 import { useSlider } from "../../../hooks/useSlider";
 import SliderButtons from "./SliderButtons";
 import { properties, type Property } from "../../../data/properties";
+import { Button } from "../Button";
 
 interface CardProps {
   item: Property;
@@ -11,13 +12,13 @@ const CardsSlider = () => {
   const { currentIndex, goNext, goPrev, itemsToShow, maxIndex } =
     useSlider(properties);
   return (
-    <div className="w-full max-w-384 mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="w-full max-w-400 mx-auto px-0 sm:px-6 lg:px-8 py-8">
       <BaseSlider currentIndex={currentIndex} itemsToShow={itemsToShow}>
         {properties.map((card) => (
           <div
             key={card.id}
-            className="flex"
-            style={{ width: `${100 / itemsToShow}%`, padding: "0 12px" }}
+            className="flex px-0 py-0 lg:px-3"
+            style={{ width: `${100 / itemsToShow}%`, }}
           >
             <Card item={card} />
           </div>
@@ -30,7 +31,9 @@ const CardsSlider = () => {
         itemsLength={properties.length}
         itemsToShow={itemsToShow}
         maxIndex={maxIndex}
-      />
+      >
+        <Button onClick={()=>{}} text="View All Properties" variant="secondary"/>
+      </SliderButtons>
     </div>
   );
 };
@@ -69,14 +72,11 @@ function Card({ item }: CardProps) {
           ))}
         </div>
         <div className="flex gap-10">
-          <p className="font-semibold text-black">
+          <p className="font-semibold text-white  ">
             <span className="block font-normal text-gray">Price</span> $
             {item.priceHome}
           </p>
-          {/* below to be deleted when the button component is developed and created*/}
-          <button className="py-3.5 px-12 rounded-lg bg-primary text-white">
-            View More Details
-          </button>
+          <Button onClick={()=>{}} text="View More Properties" variant="primary"/>
         </div>
       </div>
     </div>
