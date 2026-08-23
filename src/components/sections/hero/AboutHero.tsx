@@ -1,25 +1,14 @@
+import { SectionHeader } from "../../common/SectionHeader";
+import StatsBar from "../stats/StatsBar";
+import { sharedStats } from "../../../data/homeData";
 
-
-import { SectionHeader } from "./common/SectionHeader";
-import StatsBar from "./StatsBar";
-
-interface HeroAboutProps
-{
-image1:string;
-image2:string
+interface HeroAboutProps {
+  image1: string;
+  image2: string;
 }
 
-const HeroAbout = ({image1,image2}:HeroAboutProps) => 
-  {
-  const journeyStats = 
-  [
-    { value: "200+", label: "Happy Customers" },
-    { value: "10k+", label: "Properties For Clients" },
-    { value: "16+", label: "Years of Experience" },
-  ];
-
+const HeroAbout = ({ image1, image2 }: HeroAboutProps) => {
   return (
-    <>
     <section className="w-full bg-bg-dark-1">
       <div className="max-w-[1568px] mx-auto px-4 sm:px-6 lg:px-10 pt-2 pb-14 sm:py-16 lg:py-20">
         <div className="flex max-sm:flex-col 2xl:flex-row max-2xl:flex-row max-sm:gap-10 2xl:gap-20 max-2xl:gap-15">
@@ -28,7 +17,7 @@ const HeroAbout = ({image1,image2}:HeroAboutProps) =>
               title="Our Journey"
               subtitle="Our story is one of continuous growth and evolution. We started as a small team with big dreams, determined to create a real estate platform that transcended the ordinary. Over the years, we've expanded our reach, forged valuable partnerships, and gained the trust of countless clients."
             />
-            <StatsBar stats={journeyStats} />
+            <StatsBar stats={sharedStats} />
           </div>
           <div className="max-sm:mt-12.5 max-sm:order-1 max-2xl:order-2 2xl:order-2 max-w-188.75 relative border border-bg-gray-1 rounded-xl">
             <img src={image1} alt="abstract design" className="inset-0 w-full h-full object-cover opacity-20 pointer-events-none z-0" />
@@ -41,7 +30,6 @@ const HeroAbout = ({image1,image2}:HeroAboutProps) =>
         </div>
       </div>
     </section>
-    </>
   );
 };
 

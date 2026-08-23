@@ -4,8 +4,8 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import Root from "./Root";
 import { ThemeProvider } from "./Context/ThemeContext";
-
-import { HomePage } from "./Pages/Home";
+import ProperityPage from "./Pages/Properties";
+import HomePage from "./Pages/Home";
 import AboutUs from "./Pages/AboutUs";
 import Contact from "./Pages/Contact";
 import { PropertyDetails } from "./Pages/PropertyDetails";
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       {
-        path: "/",
+        path: "",
         index: true,
         element: <HomePage />,
       },
@@ -33,12 +33,17 @@ const router = createBrowserRouter([
         element: <PropertyDetails />,
       },
       {
+        path: "/properties",
+        element: <ProperityPage />,
+      },
+      {
         path: "/services",
         element: <ServicesPage />,
       },
     ],
   },
 ]);
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider>

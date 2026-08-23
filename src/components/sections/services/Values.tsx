@@ -1,32 +1,7 @@
 import React from 'react';
-import { SectionHeader } from '../common/SectionHeader';
+import { SectionHeader } from '../../common/SectionHeader';
 import ServiceCard from './ServiceCard';
-
-const valuesData = [
-  {
-    icon: '/assets/Icon_33.png',
-    heading: 'Trust',
-    description: 'Trust is the cornerstone of every successful real estate transaction.',
-  },
-  {
-    icon: '/assets/icon_10.png',
-    heading: 'Excellence',
-    description:
-      'We set the bar high for ourselves. From the properties we list to the services we provide.',
-  },
-  {
-    icon: '/assets/icon_11.png',
-    heading: 'Client-Centric',
-    description:
-      'Your dreams and needs are at the center of our universe. We listen, understand.',
-  },
-  {
-    icon: '/assets/icon_12.png',
-    heading: 'Our Commitment',
-    description:
-      'We are dedicated to providing you with the highest level of service, professionalism, and support.',
-  },
-];
+import { values } from '../../../data/aboutData';
 
 const Values: React.FC = () => {
   return (
@@ -44,12 +19,12 @@ const Values: React.FC = () => {
 
           {/* Values Grid */}
           <div className="lg:w-[65%] grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-10">
-            {valuesData.map((value, index) => (
+            {values.map((value) => (
               <ServiceCard
-                key={index}
+                key={value.id}
                 type="horizontal"
                 icon={value.icon}
-                heading={value.heading}
+                heading={value.title}
                 description={value.description}
               />
             ))}

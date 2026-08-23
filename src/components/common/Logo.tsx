@@ -9,7 +9,7 @@ interface LogoProps {
 export const Logo: React.FC<LogoProps> = ({
   onClick,
   className = '',
-  logoSrc = '/public/assets/logo_icon.png', 
+  logoSrc = '/assets/logo_icon.png', 
 }) => {
   return (
     <div

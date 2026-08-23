@@ -1,7 +1,7 @@
 import BaseSlider from "./BaseSlider";
-import { useSlider } from "../../hooks/useSlider";
+import { useSlider } from "../../../hooks/useSlider";
 import SliderButtons from "./SliderButtons";
-import { properties, type Property } from "../../data/properties";
+import { properties, type Property } from "../../../data/properties";
 
 interface CardProps {
   item: Property;

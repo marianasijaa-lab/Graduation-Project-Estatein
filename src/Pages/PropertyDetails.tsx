@@ -1,5 +1,5 @@
 
-import PropertyDescription from "../components/propertydetails/PropertyDescription";
+import PropertyDescription from "../components/sections/property/PropertyDescription";
 export const  PropertyDetails = () => {
   return (
     <>

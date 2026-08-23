@@ -1,6 +1,6 @@
 import { SectionHeader } from "../components/common/SectionHeader";
-import PageHero from "../components/PageHero";
-import ServiceCard from "../components/ServiceCard/ServiceCard";
+import PageHero from "../components/sections/hero/PageHero";
+import ServiceCard from "../components/sections/services/ServiceCard";
 import { services } from "../data/contactData";
 const Contact = () => {
   return (

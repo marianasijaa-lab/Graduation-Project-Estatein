@@ -1,2 +1,7 @@
 // Home page static data
-// Add home page data exports here as the page is built out
+
+export const sharedStats = [
+  { value: "200+", label: "Happy Customers" },
+  { value: "10k+", label: "Properties For Clients" },
+  { value: "16+", label: "Years of Experience" },
+];

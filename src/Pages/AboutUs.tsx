@@ -2,46 +2,9 @@ import React from 'react';
 import { useTheme } from '../Context/ThemeContext';
 import { SectionHeader } from '../components/common/SectionHeader';
 import { values, achievements } from '../data/aboutData';
-import HeroAbout from '../components/HeroAbout';
-import CompaniesSlider from '../components/Slider/CompaniesSlider';
-
-// Value Item
-
-interface ValueCardProps {
-  icon: string;
-  title: string;
-  description: string;
-  isDark: boolean;
-}
-
-const ValueCard: React.FC<ValueCardProps> = ({
-  icon,
-  title,
-  description,
-  isDark,
-}) => {
-  return (
-    <div className="flex flex-col gap-4 p-6 sm:p-8">
-      {/* Icon + Title row */}
-      <div className="flex items-center gap-3">
-        <div className="flex items-center justify-center w-14 h-14 rounded-full shrink-0 bg-bg-dark-1 border border-primary">
-          <img src={icon} alt={title} className="w-6 h-6 object-contain" />
-        </div>
-        <h3
-          className={`font-semibold text-xl ${isDark ? "text-white" : "text-gray-900"}`}
-        >
-          {title}
-        </h3>
-      </div>
-      {/* Description */}
-      <p
-        className={`text-[15.7px] font-medium  ${isDark ? "text-gray" : "text-gray-500"}`}
-      >
-        {description}
-      </p>
-    </div>
-  );
-};
+import HeroAbout from '../components/sections/hero/AboutHero';
+import CompaniesSlider from '../components/ui/slider/CompaniesSlider';
+import ServiceCard from '../components/sections/services/ServiceCard';
 
 // Our Achievements Section
 
@@ -142,21 +105,23 @@ const OurValues: React.FC = () => {
                   ${isDark ? "bg-bg-gray-1" : "bg-gray-200"}`}
               />
 
-              {values.map((value, index) => (
+              {values.map((value) => (
                 <div key={value.id} className="relative">
                   {/* ── خط أفقي بين الـ cards على الشاشات الصغيرة فقط ── */}
-                  {index > 0 && (
+                  {values.indexOf(value) > 0 && (
                     <div
                       className={`sm:hidden absolute top-0 left-4 right-4 h-px
                         ${isDark ? "bg-bg-gray-1" : "bg-gray-200"}`}
                     />
                   )}
-                  <ValueCard
-                    icon={value.icon}
-                    title={value.title}
-                    description={value.description}
-                    isDark={isDark}
-                  />
+                  <div className="p-6 sm:p-8">
+                    <ServiceCard
+                      type="horizontal"
+                      icon={value.icon}
+                      heading={value.title}
+                      description={value.description}
+                    />
+                  </div>
                 </div>
               ))}
             </div>

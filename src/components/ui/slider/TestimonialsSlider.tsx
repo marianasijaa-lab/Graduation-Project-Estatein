@@ -1,4 +1,4 @@
-import { useSlider } from "../../hooks/useSlider";
+import { useSlider } from "../../../hooks/useSlider";
 import BaseSlider from "./BaseSlider";
 import SliderButtons from "./SliderButtons";
 import { FaStar } from "react-icons/fa";

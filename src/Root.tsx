@@ -1,16 +1,17 @@
-import { useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router';
-import { Navbar } from './components/Layout/navBar';
+import { Navbar } from './components/Layout/Navbar';
 import { TopBanner } from './components/Layout/TopBanner';
 import Footer from './components/Layout/Footer';
 import type { PageId } from './interfaces';
-import { CtaSection } from './components/CTA';
+import { CtaSection } from './components/sections/cta/CTA';
+import { useTheme } from './Context/ThemeContext';
 
 function Root() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { theme, toggleTheme } = useTheme();
 
-  const [isDark, setIsDark] = useState(true);
+  const isDark = theme === 'dark';
 
   const currentPath = location.pathname.replace("/", "") || "home";
   const activePage = (currentPath === "" ? "home" : currentPath) as PageId;
@@ -26,12 +27,11 @@ function Root() {
         actionText="Learn More"
         onActionClick={() => navigate("/properties")}
       />
-
       <Navbar
         activePage={activePage}
         onNavigate={(page) => navigate(page === "home" ? "/" : `/${page}`)}
         isDark={isDark}
-        onToggleTheme={() => setIsDark(!isDark)}
+        onToggleTheme={toggleTheme}
       />
 
       <main className="flex-1">
@@ -39,8 +39,8 @@ function Root() {
       </main>
 
       <CtaSection
-        bgLeftImage="public/assets/Abstract2.png"
-        bgRightImage="public/assets/Abstract1.png"
+        bgLeftImage="/assets/Abstract2.png"
+        bgRightImage="/assets/Abstract1.png"
         renderButton={() => (
           <a
             href="/properties"

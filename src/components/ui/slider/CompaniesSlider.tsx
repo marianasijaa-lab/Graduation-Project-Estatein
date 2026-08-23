@@ -1,5 +1,5 @@
 import { MdWindow } from "react-icons/md";
-import { useSlider } from "../../hooks/useSlider";
+import { useSlider } from "../../../hooks/useSlider";
 import { Button } from "../Button";
 import BaseSlider from "./BaseSlider";
 import SliderButtons from "./SliderButtons";

@@ -2,8 +2,8 @@
 import React from 'react';
 
 
-import PageHero from '../components/PageHero';
-import Services from '../components/ServiceCard/Services';
+import PageHero from '../components/sections/hero/PageHero';
+import Services from '../components/sections/services/Services';
 
 export const ServicesPage: React.FC = () => {
   return (

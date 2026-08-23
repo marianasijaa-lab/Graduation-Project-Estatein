@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme } from "../Context/ThemeContext";
+import { useTheme } from '../../../Context/ThemeContext';
 
 interface CtaSectionProps {
   title?: string;
@@ -38,13 +38,6 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
                     style={{ backgroundImage: `url(${bgRightImage})` }}
                 />
             )}
-
-      {bgRightImage && (
-        <div
-          className="absolute right-0 bottom-0 w-1/2 h-1/2 sm:h-full bg-right bg-no-repeat bg-contain pointer-events-none z-0"
-          style={{ backgroundImage: `url(${bgRightImage})` }}
-        />
-      )}
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
         <div className="max-w-6xl text-center lg:text-left mx-auto lg:mx-0 space-y-3">
