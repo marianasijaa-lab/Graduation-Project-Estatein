@@ -118,7 +118,7 @@ function CompanyCard({ company }: { company: Company }) {
               <MdWindow className="text-gray" size={20} />
               <span className="text-gray text-sm md:text-base">Domain</span>
             </p>
-            <h4 className="text-white text-sm sm:text-sm md:text-base font-medium">
+            <h4 className="text-white sm:text-sm md:text-base font-medium">
               {company.domain}
             </h4>
           </div>
@@ -132,7 +132,7 @@ function CompanyCard({ company }: { company: Company }) {
               <AiOutlineThunderbolt className="text-gray" size={20} />
               <span className="text-gray text-sm md:text-base">Category</span>
             </p>
-            <h4 className="text-white text-sm sm:text-sm md:text-base font-medium">
+            <h4 className="text-white sm:text-sm md:text-base font-medium">
               {company.category}
             </h4>
           </div>
