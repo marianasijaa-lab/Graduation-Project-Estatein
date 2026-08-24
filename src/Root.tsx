@@ -1,6 +1,11 @@
-import { Outlet } from "react-router"
-import JourneyToday from "./components/JourneyToday"
-import PageHero from "./components/PageHero"
+import { useState } from 'react';
+import { Outlet, useNavigate, useLocation } from 'react-router';
+import { Navbar } from './components/Layout/navBar';
+import { TopBanner } from './components/Layout/TopBanner';
+import Footer from './components/Layout/Footer';
+import type { PageId } from './interfaces';
+import TestPage from './testPage';
+
 function Root() {
   return (
 
