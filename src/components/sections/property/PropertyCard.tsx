@@ -73,24 +73,24 @@ export function PropertyCard({
         {/* Tags — Home Page فقط */}
         {showTags && (
           <>
-            <div className="flex items-center gap-3 flex-wrap">
-              <span className="flex items-center gap-1.5 text-white text-sm bg-bg-dark-1 border border-bg-dark rounded-[28px] px-3 py-1">
+            <div className="flex items-center gap-2 overflow-hidden">
+              <span className="flex items-center gap-1.5 text-white text-sm bg-bg-dark-1 border border-bg-dark rounded-[28px] px-3 py-2 whitespace-nowrap">
                 {bedroomIcon
-                  ? <img src={bedroomIcon} alt="bedroom" className="w-3.5 h-3.5" />
+                  ? <img src={bedroomIcon} alt="bedroom" className="w-3.5 h-3 shrink-0" />
                   : null
                 }
                 {bedrooms}-Bedroom
               </span>
-              <span className="flex items-center gap-1.5 text-white text-sm bg-bg-dark-1 border border-bg-dark rounded-[28px] px-3 py-1">
+              <span className="flex items-center gap-1.5 text-white text-sm bg-bg-dark-1 border border-bg-dark rounded-[28px] px-3 py-2 whitespace-nowrap">
                 {bathroomIcon
-                  ? <img src={bathroomIcon} alt="bathroom" className="w-3.5 h-3.5" />
+                  ? <img src={bathroomIcon} alt="bathroom" className="w-3 h-3 shrink-0" />
                   : null
                 }
                 {bathrooms}-Bathroom
               </span>
-              <span className="flex items-center gap-1.5 text-white text-sm bg-bg-dark-1 border border-bg-dark rounded-[28px] px-3 py-1">
+              <span className="flex items-center gap-1,5 text-white text-sm bg-bg-dark-1 border border-bg-dark rounded-[28px] px-3 py-2 whitespace-nowrap">
                 {propertyTypeIcon
-                  ? <img src={propertyTypeIcon} alt="type" className="w-3.5 h-3.5" />
+                  ? <img src={propertyTypeIcon} alt="type" className="w-3 h-3 shrink-0" />
                   : null
                 }
                 {propertyType}
@@ -111,7 +111,7 @@ export function PropertyCard({
 
           <button
             onClick={onViewDetails}
-            className="bg-primary hover:bg-[#5f2ee0] text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors whitespace-nowrap"
+            className="bg-primary hover:bg-[#5f2ee0] text-white text-sm font-medium px-8 py-2 rounded-lg transition-colors whitespace-nowrap"
           >
             View Property Details
           </button>

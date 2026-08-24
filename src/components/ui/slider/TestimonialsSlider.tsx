@@ -1,4 +1,5 @@
-import { useSlider } from "../../hooks/useSlider";
+import { useSlider } from "../../../hooks/useSlider";
+import { Button } from "../Button";
 import BaseSlider from "./BaseSlider";
 import SliderButtons from "./SliderButtons";
 import { FaStar } from "react-icons/fa";
@@ -67,13 +68,13 @@ const TestimonialsSlider = () => {
  const { currentIndex, goNext, goPrev, itemsToShow, maxIndex } =
     useSlider(testimonials);
   return (
-    <div className="w-full max-w-384 mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="w-full max-w-400 mx-auto px-0 py-8">
       <BaseSlider currentIndex={currentIndex} itemsToShow={itemsToShow}>
         {testimonials.map((testimonial) => (
           <div
             key={testimonial.clientId}
-            className="flex"
-            style={{ width: `${100 / itemsToShow}%`, padding: "0 12px" }}
+            className="flex px-0 py-0 lg:pr-6"
+            style={{ width: `${100 / itemsToShow}%` }}
           >
             <TestimonialCard testimony={testimonial} />
           </div>
@@ -86,15 +87,17 @@ const TestimonialsSlider = () => {
         itemsLength={testimonials.length}
         itemsToShow={itemsToShow}
         maxIndex={maxIndex}
-      />
+    >
+      <Button onClick={()=>{}} text="View All Testimonials" variant="secondary"/>
+    </SliderButtons>
     </div>
   );
 };
 
 function Star() {
   return (
-    <div className="p-2.5 rounded-full bg-bg-card">
-      <FaStar  size={24} color="#FFE500" />
+    <div className="p-1.5 lg:p-2.5 rounded-full bg-bg-dark">
+      <FaStar  className="w-4.5 lg:w-5 xl:w-6" color="#FFE500" />
     </div>
   );
 }
@@ -103,19 +106,19 @@ function TestimonialCard({testimony}:{testimony:TestimonialCardProps}) {
 return (
     <div className="card flex items-start flex-col gap-4 lg:gap-5 xl:gap-7.5">
         <div className="flex gap-2.5">
-        {Array.from({length:5},(_)=><Star/>)}
+        {Array.from({length:5},(_,index)=><Star key={index}/>)}
         </div>
         <div className="flex flex-col gap-1.5 lg:gap-2.5 xl:gap-3.5">
-            <h3 className="font-semibold text-2xl text-bg-dark">{testimony.title}</h3>
-             <p className="text-[18px]">{testimony.description}</p>
+            <h3 className="font-semibold text-lg lg:text-xl 2xl:text-2xl text-white">{testimony.title}</h3>
+             <p className=" text-[14px] lg:text-[16px] xl:text-[18px]">{testimony.description}</p>
         </div>
         <div className="flex gap-3">
             <div className="">
                 <img src={testimony.avatar} alt={testimony.clientName}/>
             </div>
             <div className="flex flex-col gap-0.5">
-                <h4 className="text-xl text-bg-dark">{testimony.clientName}</h4>
-                <p className="text-gray">{testimony.clientLocation}</p>
+                <h4 className=" xl:text-lg 2xl:text-xl text-white">{testimony.clientName}</h4>
+                <p className="text-[14px] lg:text-[16px] text-gray">{testimony.clientLocation}</p>
             </div>
         </div>
     </div>

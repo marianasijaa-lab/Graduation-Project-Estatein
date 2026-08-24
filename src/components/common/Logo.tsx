@@ -3,13 +3,13 @@ import React from 'react';
 interface LogoProps {
   onClick?: () => void;
   className?: string;
-  logoSrc?: string; // مسار صورة اللوغو المرفوعة لديك
+  logoSrc?: string; 
 }
 
 export const Logo: React.FC<LogoProps> = ({
   onClick,
   className = '',
-  logoSrc = '/public/assets/logo_icon.png', 
+  logoSrc = '/assets/logo_icon.png', 
 }) => {
   return (
     <div
@@ -20,10 +20,10 @@ export const Logo: React.FC<LogoProps> = ({
       <img
         src={logoSrc}
         alt="Estatein Logo"
-        className="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-105"
+        className="w-9 h-9 object-contain transition-transform duration-300 group-hover:scale-105"
       />
      
-      <span className="font-bold tracking-tight text-white text-xl font-['Urbanist',sans-serif]">
+      <span className="font-semibold text-lg md:text-xl ">
         Estatein
       </span>
     </div>
