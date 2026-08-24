@@ -48,12 +48,12 @@ const FAQSlider = () => {
     useSlider(FAQData);
 
   return (
-    <div className="w-full max-w-400 mx-auto px-0 sm:px-6 lg:px-8 py-8">
+    <div className="w-full max-w-400 mx-auto px-0 py-8">
       <BaseSlider currentIndex={currentIndex} itemsToShow={itemsToShow}>
         {FAQData.map((card) => (
           <div
             key={card.id}
-            className="flex px-0 py-0 lg:px-3"
+            className="flex px-0 py-0 lg:pr-6"
             style={{ width: `${100 / itemsToShow}%` }}
           >
             <FAQCard
