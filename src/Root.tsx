@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router';
 import { Navbar } from './components/Layout/Navbar';
 import { TopBanner } from './components/Layout/TopBanner';
@@ -5,11 +6,13 @@ import Footer from './components/Layout/Footer';
 import type { PageId } from './interfaces';
 import { CtaSection } from './components/sections/cta/CTA';
 import { useTheme } from './Context/ThemeContext';
+import { RouteTransitionOverlay } from './components/common/RouteTransitionOverlay';
 
 function Root() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
+  const mainRef = useRef<HTMLElement>(null);
 
   const isDark = theme === 'dark';
 
@@ -30,11 +33,11 @@ function Root() {
       <Navbar
         activePage={activePage}
         onNavigate={(page) => navigate(page === "home" ? "/" : `/${page}`)}
-        isDark={isDark}
-        onToggleTheme={toggleTheme}
       />
 
-      <main className="flex-1">
+      <RouteTransitionOverlay onTransitionEnd={() => mainRef.current?.focus()} />
+
+      <main ref={mainRef} tabIndex={-1} className="flex-1 outline-none">
         <Outlet />
       </main>
 

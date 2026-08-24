@@ -1,7 +1,7 @@
 import React from 'react';
 import { SectionHeader } from '../../common/SectionHeader';
 import ServiceCard from './ServiceCard';
-import { values } from '../../../data/aboutData';
+import { values } from '../../../Data/aboutData';
 
 const Values: React.FC = () => {
   return (

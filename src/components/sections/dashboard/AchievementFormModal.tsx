@@ -1,0 +1,167 @@
+import { useRef, useState } from "react";
+import { HiXMark } from "react-icons/hi2";
+import { useTheme } from "../../../Context/ThemeContext";
+import { Button } from "../../ui/Button";
+import type { Achievement } from "../../../Data/aboutData";
+
+interface AchievementFormState {
+  title: string;
+  description: string;
+}
+
+type AchievementFormErrors = Partial<Record<keyof AchievementFormState, string>>;
+
+function buildInitialState(initialData?: Achievement): AchievementFormState {
+  if (!initialData) {
+    return { title: "", description: "" };
+  }
+  return {
+    title: initialData.title,
+    description: initialData.description,
+  };
+}
+
+function validate(values: AchievementFormState): AchievementFormErrors {
+  const errors: AchievementFormErrors = {};
+
+  if (!values.title.trim()) errors.title = "Title is required.";
+  if (!values.description.trim()) errors.description = "Description is required.";
+
+  return errors;
+}
+
+interface AchievementFormModalProps {
+  mode: "add" | "edit";
+  initialData?: Achievement;
+  onClose: () => void;
+  onSubmit: (values: Omit<Achievement, "id">) => void;
+}
+
+export const AchievementFormModal = ({ mode, initialData, onClose, onSubmit }: AchievementFormModalProps) => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
+  const [values, setValues] = useState<AchievementFormState>(() => buildInitialState(initialData));
+  const [errors, setErrors] = useState<AchievementFormErrors>({});
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const setField = <K extends keyof AchievementFormState>(field: K, value: AchievementFormState[K]) => {
+    setValues((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const validationErrors = validate(values);
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length > 0) return;
+
+    const payload: Omit<Achievement, "id"> = {
+      title: values.title.trim(),
+      description: values.description.trim(),
+    };
+
+    onSubmit(payload);
+  };
+
+  const inputBgClass = isDark
+    ? "bg-bg-dark border-bg-gray-1 text-white placeholder-gray-500 focus:border-primary"
+    : "bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-primary";
+
+  const labelClass = `block text-sm font-medium mb-2 ${isDark ? "text-white" : "text-gray-900"}`;
+  const fieldClass = `w-full px-4 py-3 rounded-xl border outline-none transition-all ${inputBgClass}`;
+  const errorClass = "mt-1.5 text-xs text-red-500";
+
+  return (
+    <div
+      className="fixed inset-0 z-70 flex items-start sm:items-center justify-center bg-black/60 px-4 py-6 overflow-y-auto"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="achievement-form-title"
+      onClick={onClose}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className={`w-full max-w-2xl rounded-2xl border shadow-xl ${
+          isDark ? "bg-bg-dark-1 border-bg-gray-1" : "bg-white border-gray-200"
+        }`}
+      >
+        <div
+          className={`flex items-center justify-between px-6 sm:px-8 py-5 border-b ${
+            isDark ? "border-bg-gray-1" : "border-gray-200"
+          }`}
+        >
+          <h3 id="achievement-form-title" className={`text-lg font-semibold ${isDark ? "text-white" : "text-gray-900"}`}>
+            {mode === "add" ? "Add Achievement" : "Edit Achievement"}
+          </h3>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className={`inline-flex items-center justify-center w-9 h-9 rounded-lg transition-colors cursor-pointer ${
+              isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-500 hover:bg-gray-100"
+            }`}
+          >
+            <HiXMark className="w-5 h-5" />
+          </button>
+        </div>
+
+        <form
+          ref={formRef}
+          onSubmit={handleSubmit}
+          className="px-6 sm:px-8 py-6 space-y-6 max-h-[70vh] overflow-y-auto"
+        >
+          <div>
+            <label className={labelClass} htmlFor="af-title">Title</label>
+            <input
+              id="af-title"
+              type="text"
+              placeholder="e.g. 3+ Years of Excellence"
+              value={values.title}
+              onChange={(e) => setField("title", e.target.value)}
+              className={fieldClass}
+            />
+            {errors.title && <p className={errorClass}>{errors.title}</p>}
+          </div>
+
+          <div>
+            <label className={labelClass} htmlFor="af-description">Description</label>
+            <textarea
+              id="af-description"
+              rows={4}
+              placeholder="Description"
+              value={values.description}
+              onChange={(e) => setField("description", e.target.value)}
+              className={`${fieldClass} resize-none`}
+            />
+            {errors.description && <p className={errorClass}>{errors.description}</p>}
+          </div>
+        </form>
+
+        <div
+          className={`flex flex-col-reverse sm:flex-row sm:justify-end gap-3 px-6 sm:px-8 py-5 border-t ${
+            isDark ? "border-bg-gray-1" : "border-gray-200"
+          }`}
+        >
+          <button
+            type="button"
+            onClick={onClose}
+            className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer border ${
+              isDark
+                ? "border-bg-gray-1 text-white hover:bg-bg-gray-1"
+                : "border-gray-200 text-gray-700 hover:bg-gray-100"
+            }`}
+          >
+            Cancel
+          </button>
+          <Button
+            text={mode === "add" ? "Add Achievement" : "Save Changes"}
+            variant="primary"
+            type="submit"
+            onClick={() => formRef.current?.requestSubmit()}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTheme } from '../Context/ThemeContext';
 import { SectionHeader } from '../components/common/SectionHeader';
-import { values, achievements } from '../data/aboutData';
+import { values, achievements } from '../Data/aboutData';
 import HeroAbout from '../components/sections/hero/AboutHero';
 import CompaniesSlider from '../components/ui/slider/CompaniesSlider';
 import ServiceCard from '../components/sections/services/ServiceCard';

@@ -1,6 +1,6 @@
 import { SectionHeader } from "../../common/SectionHeader";
 import StatsBar from "../stats/StatsBar";
-import { sharedStats } from "../../../data/homeData";
+import { sharedStats } from "../../../Data/homeData";
 
 interface HeroAboutProps {
   image1: string;

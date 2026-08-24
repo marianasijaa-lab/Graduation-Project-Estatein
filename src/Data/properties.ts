@@ -1,5 +1,4 @@
 
-
 export interface Property {
   id: number;
   image: string;
@@ -49,7 +48,7 @@ export const properties: Property[] = [
     propertyTypeIcon: "/assets/icon_8.png",
     priceHome: 550000,
     priceProperties: 650000,
-    
+
   },
   {
     id: 3,
