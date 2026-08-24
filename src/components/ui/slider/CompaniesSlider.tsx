@@ -59,7 +59,7 @@ const CompaniesSlider = () => {
           <div
             key={company.companyId}
             style={{ width: `${100 / itemsToShow}%` }}
-            className="px-2 sm:px-5 flex"
+            className="px-3 sm:px-5 flex"
           >
             <CompanyCard company={company} />
           </div>
