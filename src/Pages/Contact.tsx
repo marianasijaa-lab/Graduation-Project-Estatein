@@ -1,7 +1,8 @@
 import { SectionHeader } from "../components/common/SectionHeader";
+import { ContactForm } from "../components/sections/contact/ContactForm";
 import PageHero from "../components/sections/hero/PageHero";
 import ServiceCard from "../components/sections/services/ServiceCard";
-import { services } from "../data/contactData";
+import { services } from "../Data/contactData";
 const Contact = () => {
   return (
     <div>
@@ -32,6 +33,13 @@ const Contact = () => {
           subtitle="We're excited to connect with you and learn more about your real estate goals. Use the form below to get in touch with Estatein. Whether you're a prospective client, partner, or simply curious about our services, we're here to answer your questions and provide the assistance you need."
           className="mb-10"
           fullWidth
+        />
+        <ContactForm
+          columns={3}
+          extraFields={[
+            { name: 'inquiryType', label: 'Inquiry Type', type: 'dropdown', placeholder: 'Select Inquiry Type', options: ['Buying', 'Selling'] },
+            { name: 'howDidYouHear', label: 'How Did You Hear About Us?', type: 'dropdown', placeholder: 'Select', options: ['Google', 'Social Media'] },
+          ]}
         />
       </div>
     </div>
