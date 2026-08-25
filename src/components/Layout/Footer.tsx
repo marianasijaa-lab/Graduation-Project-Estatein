@@ -48,7 +48,7 @@ const Footer = () => {
       <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8 items-start pb-12 pt-14 px-4 sm:px-8 md:px-11">
         <div>
           <div className="flex items-center mb-4">
-            <img src="/assets/logo_icon.png" alt="" className="w-8 h-8 md:w-10 md:h-10 object-contain" />
+            <img src="/assets/logo_icon.png" alt="" className="w-9 h-9 object-contain transition-transform duration-300 group-hover:scale-105" />
             <h2 className="ml-2 font-semibold text-lg md:text-xl">Estatein</h2>
           </div>
           <div className="relative w-full">
