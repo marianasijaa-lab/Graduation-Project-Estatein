@@ -1,5 +1,10 @@
 import { useState } from "react";
 import { SectionHeader } from "../components/common/SectionHeader";
+import OfficeLocations from "../components/OfficeLocations/OfficeLocations";
+import PageHero from "../components/sections/hero/PageHero";
+import ServiceCard from "../components/sections/services/ServiceCard";
+import TeamCard from "../components/TeamCard/TeamCard";
+import { services } from "../data/contactData";
 import { ContactForm } from "../components/sections/contact/ContactForm";
 import PageHero from "../components/sections/hero/PageHero";
 import ServiceCard from "../components/sections/services/ServiceCard";
@@ -123,6 +128,16 @@ const Contact = () => {
         />
       </div>
 
+      <div className="w-full max-w-[1590px] mx-auto px-6 sm:px-10 lg:px-16 pt-10 sm:pt-14">
+        <SectionHeader
+          title="Explore Estatein's World"
+          subtitle="Step inside the world of Estatein, where professionalism meets warmth, and expertise meets passion. Our gallery offers a glimpse into our team and workspaces, inviting you to get to know us better."
+          className="mb-10"
+          fullWidth
+        />
+      </div>
+      <OfficeLocations />
+      <TeamCard />
       {/* Offices Section */}
       <OfficesSection />
     </div>
