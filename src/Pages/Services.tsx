@@ -2,8 +2,17 @@
 import React from 'react';
 
 
+<<<<<<< Updated upstream
 import PageHero from '../components/PageHero';
 import Services from '../components/Services';
+=======
+import PageHero from '../components/sections/hero/PageHero';
+import Services from '../components/sections/services/Services';
+import { SectionHeader } from '../components/common/SectionHeader';
+import UnlockPropertyValue from '../components/sections/services/UnlockPropertyValue';
+import SmartInvestments from '../components/sections/services/SmartInvestments';
+import EffortlessPropertyManagement from '../components/sections/services/EffortlessManagement';
+>>>>>>> Stashed changes
 
 export const ServicesPage: React.FC = () => {
   return (
@@ -16,6 +25,12 @@ export const ServicesPage: React.FC = () => {
 
       
       <Services />
+      
+    <UnlockPropertyValue/>
+    < EffortlessPropertyManagement/>
+    < SmartInvestments />
+          
+        
     </div>
   );
 };

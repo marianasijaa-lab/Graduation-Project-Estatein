@@ -1,11 +1,21 @@
 import { useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router';
+<<<<<<< Updated upstream
 import { Navbar } from './components/Layout/navBar';
 import { TopBanner } from './components/Layout/TopBanner';
 import Footer from './components/Layout/Footer';
 import type { PageId } from './interfaces';
 import TestPage from './testPage';
 import ServicesPage from './Pages/Services';
+=======
+
+import { TopBanner } from './components/Layout/TopBanner';
+import Footer from './components/Layout/Footer';
+import type { PageId } from './interfaces';
+import { CtaSection } from './components/sections/cta/CTA';
+import { useTheme } from './Context/ThemeContext';
+import { Navbar } from './components/Layout/navBar';
+>>>>>>> Stashed changes
 
 function Root() {
   const navigate = useNavigate();
