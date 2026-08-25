@@ -4,6 +4,9 @@ import React from 'react';
 
 import PageHero from '../components/sections/hero/PageHero';
 import Services from '../components/sections/services/Services';
+import UnlockPropertyValue from '../components/sections/services/UnlockPropertyValue';
+import SmartInvestments from '../components/sections/services/SmartInvestments';
+import EffortlessPropertyManagement from '../components/sections/services/EffortlessManagement';
 
 export const ServicesPage: React.FC = () => {
   return (
@@ -17,6 +20,12 @@ export const ServicesPage: React.FC = () => {
 
       
       <Services />
+      
+    <UnlockPropertyValue/>
+    < EffortlessPropertyManagement/>
+    < SmartInvestments />
+          
+        
     </div>
   );
 };

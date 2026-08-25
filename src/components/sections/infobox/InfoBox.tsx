@@ -11,6 +11,7 @@ interface InfoBoxProps {
    * vertical   → title on top, description in middle, full-width button at the bottom (card style)
    */
   variant?: 'horizontal' | 'vertical';
+  
 }
 
 export const InfoBox: React.FC<InfoBoxProps> = ({

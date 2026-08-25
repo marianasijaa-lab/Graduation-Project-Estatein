@@ -1,8 +1,10 @@
-import { Outlet, useLocation, useNavigate } from "react-router";
-import Footer from "./components/Layout/Footer";
-import { Navbar } from "./components/Layout/Navbar";
-import { TopBanner } from "./components/Layout/TopBanner";
-import type { PageId } from "./interfaces";
+
+import { Outlet, useNavigate, useLocation } from 'react-router';
+import { TopBanner } from './components/Layout/TopBanner';
+import Footer from './components/Layout/Footer';
+import type { PageId } from './interfaces';
+import { Navbar } from './components/Layout/Navbar';
+
 
 const pagePaths: Record<PageId, string> = {
 	home: "/",
