@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
-const GAP   = 40; // px — gap between cards
-const BLEED = 36; // px — extra space on each side so box-shadows are never clipped
+const GAP   = 24; // px — must match the card width calculations in each slider
+const BLEED = 10; // px — space for card shadows without changing content width
 
 interface BaseSliderProps {
     children: ReactNode;
@@ -12,14 +12,8 @@ interface BaseSliderProps {
 /**
  * How it works:
  *
- * The visible window is exactly the parent's width.
- * We create an inner wrapper that is WIDER than the window by BLEED on each side,
- * then shift it LEFT by BLEED so it visually aligns with the parent — and the
- * overflow:hidden sits on a separate ancestor that is also WIDER by the same amount.
- *
- * Because the overflow:hidden box is permanently BLEED px wider on every side,
- * any box-shadow up to BLEED px will always be inside that box — regardless of
- * which slide is active, because the overflow boundary never moves.
+ * Keep the track width aligned with the parent while giving card shadows room
+ * outside the visible content area.
  */
 const BaseSlider = ({ children, currentIndex, itemsToShow }: BaseSliderProps) => {
   const itemWidthPercent = 100 / itemsToShow;
@@ -35,9 +29,9 @@ const BaseSlider = ({ children, currentIndex, itemsToShow }: BaseSliderProps) =>
     <div
       style={{
         overflow: "hidden",
-        marginLeft:  `-${BLEED}px`,
+        marginLeft: `-${BLEED}px`,
         marginRight: `-${BLEED}px`,
-        paddingLeft:  `${BLEED}px`,
+        paddingLeft: `${BLEED}px`,
         paddingRight: `${BLEED}px`,
       }}
     >

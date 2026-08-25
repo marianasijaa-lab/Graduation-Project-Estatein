@@ -22,13 +22,12 @@ import {
   }: PropertyDescriptionProps) => {
     
     return (
-      <section className="w-full overflow-x-hidden bg-black text-white px-[20px] py-[60px] sm:px-[40px] lg:px-[80px]">
+      <section className="w-full overflow-x-hidden bg-[#141414] text-white py-[60px]">
         <div
           className="
-            mx-auto
+            site-container
             flex
             w-full
-            max-w-[1596px]
             flex-col
             gap-[30px]
             lg:flex-row

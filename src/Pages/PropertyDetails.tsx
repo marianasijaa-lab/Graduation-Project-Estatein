@@ -2,6 +2,7 @@ import { useParams } from "react-router";
 import PropertyDescription from "../components/sections/property/PropertyDescription";
 import { useProperties } from "../hooks/useProperties";
 import { LoadingSkeleton } from "../components/ui/LoadingSkeleton";
+import InquireSection from "../components/sections/property/InquireSection";
 
 export const PropertyDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -10,7 +11,7 @@ export const PropertyDetails = () => {
   // حالة التحميل
   if (status === 'loading' || status === 'idle') {
     return (
-      <div className="max-w-[1568px] mx-auto px-4 sm:px-6 lg:px-10 py-14">
+      <div className="site-container py-14">
         <LoadingSkeleton variant="list" count={3} />
       </div>
     );
@@ -42,6 +43,10 @@ export const PropertyDetails = () => {
           "Private garage and ample storage space",
         ]}
       />
+      <InquireSection
+  propertyName="Seaside Serenity Villa"
+  propertyLocation="Seaside Serenity Villa, Malibu, California"
+/>
     </>
   );
 };

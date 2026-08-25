@@ -50,7 +50,7 @@ const FAQSlider = () => {
     useSlider(FAQData);
 
   return (
-    <div className="w-full max-w-400 mx-auto px-0 py-8">
+    <div className="w-full py-8">
       <BaseSlider currentIndex={currentIndex} itemsToShow={itemsToShow}>
         {FAQData.map((card) => (
           <div

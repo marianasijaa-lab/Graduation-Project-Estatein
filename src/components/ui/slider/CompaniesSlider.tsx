@@ -78,7 +78,7 @@ function CompanyCard({ company }: { company: FirestoreCompany }) {
             <button
               onClick={() => {}}
               className="w-full text-white rounded-lg py-3 px-4 text-sm font-medium transition-all"
-              style={{ backgroundColor: "#1A1A1A", border: "1px solid #262626" }}
+              style={{ backgroundColor: "#141414", border: "1px solid #262626" }}
             >
               Visit Website
             </button>

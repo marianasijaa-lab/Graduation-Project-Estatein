@@ -38,7 +38,7 @@ export const NavigatingTheEstatein = () => {
 
   return (
     <section className="w-full bg-bg-dark-1 py-8 sm:py-10 lg:py-14">
-      <div className="max-w-[1568px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div className="site-container">
         <SectionHeader
           title="Navigating the Estatein Experience"
           subtitle="At Estatein, we've designed a straightforward process to help you find and purchase your dream property with ease. Here's a step-by-step guide to how it all works."

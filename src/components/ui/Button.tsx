@@ -34,7 +34,7 @@ export const Button = (
 
   const variantInlineStyle =
     variant === 'secondary'
-      ? { backgroundColor: '#1A1A1A', border: '1px solid #262626' }
+      ? { backgroundColor: '#141414', border: '1px solid #262626' }
       : undefined;
 
   return (

@@ -16,9 +16,10 @@ export function useStats() {
   const { data, status, error } = useAppSelector((state) => state.stats);
 
   useEffect(() => {
-    // إذا لم يكن Firebase مهيأً (env vars مفقودة) نستخدم البيانات الافتراضية
+    // اعرض الإحصائيات الافتراضية فورًا إلى أن تصل بيانات Firebase.
+    dispatch(setStats(FALLBACK_STATS));
+
     if (!realtimeDb) {
-      dispatch(setStats(FALLBACK_STATS));
       return;
     }
 

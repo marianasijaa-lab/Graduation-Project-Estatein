@@ -1,5 +1,5 @@
 import React from 'react';
-import { StarCluster } from '../../common/StarCluster';
+import { SectionHeader } from '../../common/SectionHeader';
 import { InfoBox } from '../infobox/InfoBox';
 
 interface InvestmentServiceItem {
@@ -44,26 +44,30 @@ export const SmartInvestments: React.FC = () => {
   return (
     <section className="w-full bg-[#141414] border-t border-[#262626] py-16 sm:py-20 lg:py-24">
      
-      <div className="max-w-[1596px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
+      <div className="site-container">
         
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           
        
-          <div className="lg:col-span-5 xl:col-span-4 flex flex-col justify-between gap-8 sm:gap-10">
-            <div className="space-y-3.5">
-              <StarCluster />
-              <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-bold text-white tracking-tight leading-[120%] font-['Urbanist',sans-serif]">
-                Smart Investments,<br className="hidden sm:block" /> Informed Decisions
-              </h2>
-              <p className="text-sm sm:text-base text-[#999999] leading-[150%] font-normal">
-                Building a real estate portfolio requires a strategic approach. Estatein's Investment Advisory Service empowers you to make smart investments and informed decisions.
-              </p>
-            </div>
+          <div className="lg:col-span-5 xl:col-span-4 flex flex-col justify-start gap-0 sm:gap-1">
+            <SectionHeader
+              title={
+                <>
+                  Smart Investments,
+                  <br />
+                  Informed Decisions
+                </>
+              }
+              subtitle="Building a real estate portfolio requires a strategic approach. Estatein's Investment Advisory Service empowers you to make smart investments and informed decisions."
+              className="mb-0"
+              fullWidth
+            />
 
            
             <div className="w-full">
-              <InfoBox
+              <div className="h-auto">
+                <InfoBox
                 variant="vertical"
                 title="Unlock Your Investment Potential"
                 description="Explore our Property Management Service categories and let us handle the complexities while you enjoy the benefits of property ownership."
@@ -71,21 +75,22 @@ export const SmartInvestments: React.FC = () => {
                 onButtonClick={() => {
                   console.log('Learn More clicked');
                 }}
-              />
+                />
+              </div>
             </div>
           </div>
 
           
-          <div className="lg:col-span-7 xl:col-span-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 h-full">
+          <div className="lg:col-span-7 xl:col-span-8 rounded-[10px] bg-[#191919] p-1.5 mt-14">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
               {investmentServices.map((service) => (
                 <div
                   key={service.id}
-                  className="bg-[#1A1A1A] border border-[#262626] rounded-[16px] p-8 sm:p-10 flex flex-col justify-between gap-6 hover:border-[#703BF7]/40 transition-all duration-300 min-h-[266px]"
+                  className="bg-[#141414] border border-[#262626] rounded-[8px] px-5 sm:px-6 py-3 sm:py-4 flex flex-col justify-start gap-4 hover:border-[#703BF7]/40 transition-all duration-300"
                 >
                   
-                  <div className="flex items-center gap-4 sm:gap-5">
-                    <div className="w-16 h-16 sm:w-[82px] sm:h-[82px] shrink-0 flex items-center justify-center">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 shrink-0 flex items-center justify-center">
                       <img
                         src={service.icon}
                         alt={service.title}

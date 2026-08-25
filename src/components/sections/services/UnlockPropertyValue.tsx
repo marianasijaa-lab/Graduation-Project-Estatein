@@ -1,5 +1,5 @@
 import React from 'react';
-import { StarCluster } from '../../common/StarCluster';
+import { SectionHeader } from '../../common/SectionHeader';
 import { InfoBox } from '../infobox/InfoBox';
 
 interface ServiceItem {
@@ -38,20 +38,16 @@ const unlockServices: ServiceItem[] = [
 
 export const UnlockPropertyValue: React.FC = () => {
   return (
-    <section className="w-full bg-[#141414] border-t border-[#262626] py-16 sm:py-20 lg:py-24">
+    <section className="w-full bg-bg-dark-1 border-t border-bg-gray-1 py-16 sm:py-20 lg:py-24">
       {/* Container مطابق لعرض Figma المحدد 1596px */}
-      <div className="max-w-[1596px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
+      <div className="site-container">
         
-        {/* 1. Header القسم (مع النجوم، والعرض 1296px لسطرين فقط مثل فيغما تماماً) */}
-        <div className="mb-12 sm:mb-16 space-y-3.5 max-w-[1296px]">
-          <StarCluster />
-          <h2 className="text-3xl sm:text-4xl lg:text-[48px] font-bold text-white tracking-tight leading-[120%] font-['Urbanist',sans-serif]">
-            Unlock Property Value
-          </h2>
-          <p className="text-sm sm:text-base lg:text-[16px] text-[#999999] leading-[150%] font-normal">
-            Selling your property should be a rewarding experience, and at Estatein, we make sure it is. Our Property Selling Service is designed to maximize the value of your property, ensuring you get the best deal possible. Explore the categories below to see how we can help you at every step of your selling journey
-          </p>
-        </div>
+        <SectionHeader
+          title="Unlock Property Value"
+          subtitle="Selling your property should be a rewarding experience, and at Estatein, we make sure it is. Our Property Selling Service is designed to maximize the value of your property, ensuring you get the best deal possible. Explore the categories below to see how we can help you at every step of your selling journey"
+          className="mb-12 sm:mb-16"
+          fullWidth
+        />
 
         {/* 2. شبكة الكروت (3 أعمدة مع items-stretch لارتفاع متساوٍ لكافة العناصر بالصف) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
@@ -60,11 +56,11 @@ export const UnlockPropertyValue: React.FC = () => {
           {unlockServices.map((service) => (
             <div
               key={service.id}
-              className="bg-[#1A1A1A] border border-[#262626] rounded-[16px] p-8 sm:p-10 flex flex-col justify-between gap-6 hover:border-[#703BF7]/40 transition-all duration-300 h-full min-h-[266px]"
+              className="bg-[#141414] border border-[#262626] rounded-[16px] p-5 sm:p-6 flex flex-col justify-start gap-3 hover:border-[#703BF7]/40 transition-all duration-300 h-full min-h-[200px]"
             >
               {/* الصف العلوي: الأيقونة (82px × 82px بدون إطار خارجي) + العنوان */}
-              <div className="flex items-center gap-4 sm:gap-5">
-                <div className="w-16 h-16 sm:w-[82px] sm:h-[82px] shrink-0 flex items-center justify-center">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-10 h-10 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center">
                   <img
                     src={service.icon}
                     alt={service.title}

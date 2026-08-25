@@ -2,7 +2,7 @@ import React from 'react';
 import { StarCluster } from './StarCluster';
 
 export interface SectionHeaderProps {
-  title: string;
+  title: React.ReactNode;
   subtitle: string;
   actionLabel?: string;
   onAction?: () => void;

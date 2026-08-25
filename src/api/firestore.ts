@@ -54,19 +54,48 @@ export function subscribeToCollection<T>(
     return () => {};
   }
 
+  // اعرض البيانات الاحتياطية فورًا إلى أن تصل بيانات Firestore.
+  if (fallbackData) onData(fallbackData);
+
   const colRef = collection(firestoreDb, collectionName);
+
+  // timeout احتياطي: إذا لم تصل أي بيانات خلال 8 ثوانٍ نستخدم الـ fallback
+  let receivedFirstSnapshot = false;
+  const fallbackTimer = fallbackData
+    ? setTimeout(() => {
+        if (!receivedFirstSnapshot) {
+          onData(fallbackData);
+        }
+      }, 8000)
+    : null;
 
   const unsubscribe = onSnapshot(
     colRef,
     (snapshot) => {
-      onData(snapshotToDocs<T>(snapshot));
+      receivedFirstSnapshot = true;
+      if (fallbackTimer) clearTimeout(fallbackTimer);
+      // إذا كانت الـ collection فارغة في Firebase نستخدم الـ fallback
+      if (snapshot.empty && fallbackData) {
+        onData(fallbackData);
+      } else {
+        onData(snapshotToDocs<T>(snapshot));
+      }
     },
     (error) => {
-      if (onError) onError(error);
+      if (fallbackTimer) clearTimeout(fallbackTimer);
+      // عند الخطأ نعرض الـ fallback بدل إظهار رسالة الخطأ
+      if (fallbackData) {
+        onData(fallbackData);
+      } else if (onError) {
+        onError(error);
+      }
     },
   );
 
-  return unsubscribe;
+  return () => {
+    if (fallbackTimer) clearTimeout(fallbackTimer);
+    unsubscribe();
+  };
 }
 
 // ─── Add ──────────────────────────────────────────────────────────────────────
