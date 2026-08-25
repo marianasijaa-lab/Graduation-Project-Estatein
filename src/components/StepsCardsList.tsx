@@ -1,5 +1,4 @@
 
-
 interface StepItem {
   id: string | number;
   title: string;
@@ -14,18 +13,18 @@ export const StepsCardsList = ({ steps }: StepsCardsListProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-sm:gap-[30px] max-2xl:gap-10 2xl:gap-[50px]">
       {steps.map((step, index) => (
-        <div 
-          key={step.id} 
-          className={`flex-col relative ${index >= 3 ? 'hidden sm:flex' : 'flex'}`}
-        > 
+        <div
+          key={step.id}
+          className={`flex-col relative h-full ${index >= 3 ? 'hidden sm:flex' : 'flex'}`}
+        >
           {/* قسم الـ Step العلوي */}
           <div className="relative pb-[14px] pl-4 2xl:pl-[20px] 2xl:pb-4 flex items-center">
-            
-            {/* الخط الطولي الأيسر العلوي */}
-            <div className="absolute left-0 -top-3 h-[calc(100%+12px)] w-[2px] bg-primary"></div>
-            
-            {/* الخط الأفقي العلوي */}
-            <div className="absolute left-[1.5px] bottom-0 w-[180px] h-[1.5px] bg-gradient-to-r from-primary via-primary/70 to-transparent"></div>
+
+            {/* الخط الشاقولي الأيسر — يبدأ من top-0 */}
+            <div className="absolute left-0 top-0 h-full w-[2px] bg-primary"></div>
+
+            {/* الخط الأفقي — يبدأ من left-0 عند bottom-0 */}
+            <div className="absolute left-0 bottom-0 w-[180px] h-[2px] bg-gradient-to-r from-primary via-primary/70 to-transparent"></div>
 
             {/* نص Step */}
             <span className="text-white 2xl:text-xl text-base font-medium tracking-wide">
@@ -33,10 +32,10 @@ export const StepsCardsList = ({ steps }: StepsCardsListProps) => {
             </span>
           </div>
 
-          {/* صندوق الكارد السفلي */}
-          <div className="max-w-[512.33px] max-h-[329px] max-sm:p-[30px] max-2xl:p-10 2xl:p-[50px] border border-bg-gray-1 rounded-[10px] rounded-tl-none flex flex-col max-sm:gap-[14px] max-2xl:gap-4 2xl:gap-5 shadow-2xl relative overflow-hidden">
-            
-            {/* خط يسار الكارد السفلي  */}
+          {/* صندوق الكارد السفلي — بدون border-t وبدون border-l */}
+          <div className="flex-1 max-w-[512.33px] max-sm:p-[30px] max-2xl:p-10 2xl:p-[50px] border border-t-0 border-l-0 border-bg-gray-1 rounded-[10px] rounded-tl-none flex flex-col max-sm:gap-[14px] max-2xl:gap-4 2xl:gap-5 shadow-2xl relative overflow-hidden">
+
+            {/* الخط الشاقولي الأيسر للكارد — يكمل من أعلى الكارد */}
             <div className="absolute left-0 top-0 h-1/2 w-[2px] bg-gradient-to-b from-primary to-transparent z-10"></div>
 
             {/* الوهج البنفسجي */}
@@ -45,7 +44,7 @@ export const StepsCardsList = ({ steps }: StepsCardsListProps) => {
             <h3 className="text-white max-sm:text-lg max-2xl:text-xl 2xl:text-2xl font-semibold">
               {step.title}
             </h3>
-            <p className="text-gray max-sm:text-sm max-2xl:text-base 2xl:text-lg font-medium leading-relaxed"> 
+            <p className="text-gray max-sm:text-sm max-2xl:text-base 2xl:text-lg font-medium leading-relaxed">
               {step.description}
             </p>
           </div>
