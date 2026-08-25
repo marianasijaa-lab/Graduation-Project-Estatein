@@ -10,8 +10,6 @@ import { BsFillBoxFill } from "react-icons/bs";
 import { FaRegCalendar } from "react-icons/fa6";
 import { useTheme } from '../../../Context/ThemeContext';
 
-import { Button } from '../../ui/Button';
-
 const MOCK_PROPERTIES = [
     { id: 1, name: 'Villa Dubai', location: 'Dubai', type: 'Villa', price: '$500k - $1M', size: '2000-3000 sqft', year: '2023' },
     { id: 2, name: 'Modern Apartment', location: 'Cairo', type: 'Apartment', price: '$100k - $300k', size: '1000-2000 sqft', year: '2022' },

@@ -1,14 +1,14 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { FiEdit2, FiSearch, FiTrash2 } from "react-icons/fi";
 import { useTheme } from "../../Context/ThemeContext";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppDispatch } from "../../store";
+import { useCompanies } from "../../hooks/useCompanies";
 import {
-  addClient,
-  deleteClient,
-  fetchClients,
-  updateClient,
-} from "../../store/slices/clientsSlice";
-import type { Company } from "../../Data/clients";
+  createCompanyDoc,
+  deleteCompanyDoc,
+  updateCompanyDoc,
+} from "../../store/slices/companiesSlice";
+import type { FirestoreCompany } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { ClientFormModal } from "../../components/sections/dashboard/ClientFormModal";
 import { ConfirmDialog } from "../../components/sections/dashboard/ConfirmDialog";
@@ -16,12 +16,12 @@ import { DetailModal, type DetailField } from "../../components/sections/dashboa
 
 const ALL_DOMAINS = "All";
 
-type FormModalState = { mode: "add" } | { mode: "edit"; client: Company } | null;
+type FormModalState = { mode: "add" } | { mode: "edit"; client: FirestoreCompany } | null;
 
 // Every Company field, for the detail view.
-function buildClientDetailFields(client: Company): DetailField[] {
+function buildClientDetailFields(client: FirestoreCompany): DetailField[] {
   return [
-    { label: "ID", value: `#${client.companyId}` },
+    { label: "ID", value: `#${client.id}` },
     { label: "Company Name", value: client.heading },
     { label: "Client Since", value: client.date },
     { label: "Domain", value: client.domain },
@@ -36,19 +36,13 @@ export const ClientsManagement = () => {
   const isDark = theme === "dark";
 
   const dispatch = useAppDispatch();
-  const { items: clients, status } = useAppSelector((state) => state.clients);
-
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchClients());
-    }
-  }, [status, dispatch]);
+  const { companies: clients, status } = useCompanies();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [domainFilter, setDomainFilter] = useState(ALL_DOMAINS);
   const [formModal, setFormModal] = useState<FormModalState>(null);
-  const [deleteTarget, setDeleteTarget] = useState<Company | null>(null);
-  const [detailTarget, setDetailTarget] = useState<Company | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<FirestoreCompany | null>(null);
+  const [detailTarget, setDetailTarget] = useState<FirestoreCompany | null>(null);
 
   // Filter options come from the data, not a fixed list.
   const domainOptions = useMemo(
@@ -63,27 +57,29 @@ export const ClientsManagement = () => {
   });
 
   const openAddModal = () => setFormModal({ mode: "add" });
-  const openEditModal = (client: Company) => setFormModal({ mode: "edit", client });
+  const openEditModal = (client: FirestoreCompany) => setFormModal({ mode: "edit", client });
   const closeFormModal = () => setFormModal(null);
 
-  const handleFormSubmit = (values: Omit<Company, "companyId">) => {
+  const handleFormSubmit = (values: Omit<FirestoreCompany, "id">) => {
     if (formModal?.mode === "edit") {
-      dispatch(updateClient({ ...values, companyId: formModal.client.companyId }));
+      // Merge onto the existing record (not a full replace) so any
+      // Firestore-only fields this form doesn't manage aren't wiped out.
+      dispatch(updateCompanyDoc({ ...formModal.client, ...values, id: formModal.client.id }));
     } else {
-      dispatch(addClient(values));
+      dispatch(createCompanyDoc(values));
     }
     setFormModal(null);
   };
 
   const confirmDelete = () => {
     if (deleteTarget) {
-      dispatch(deleteClient(deleteTarget.companyId));
+      dispatch(deleteCompanyDoc(deleteTarget.id));
     }
     setDeleteTarget(null);
   };
 
-  const openRowDetail = (client: Company) => setDetailTarget(client);
-  const handleRowKeyDown = (e: React.KeyboardEvent, client: Company) => {
+  const openRowDetail = (client: FirestoreCompany) => setDetailTarget(client);
+  const handleRowKeyDown = (e: React.KeyboardEvent, client: FirestoreCompany) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       openRowDetail(client);
@@ -169,7 +165,7 @@ export const ClientsManagement = () => {
             <tbody>
               {filteredClients.map((client) => (
                 <tr
-                  key={client.companyId}
+                  key={client.id}
                   tabIndex={0}
                   aria-label={`View details for ${client.heading}`}
                   onClick={() => openRowDetail(client)}
@@ -178,7 +174,7 @@ export const ClientsManagement = () => {
                     isDark ? "border-bg-gray-1" : "border-gray-200"
                   } ${rowHoverClass}`}
                 >
-                  <td className={`px-5 py-3 ${isDark ? "text-gray" : "text-gray-600"}`}>#{client.companyId}</td>
+                  <td className={`px-5 py-3 ${isDark ? "text-gray" : "text-gray-600"}`}>#{client.id}</td>
                   <td className={`px-5 py-3 font-medium ${isDark ? "text-white" : "text-gray-900"}`}>
                     {client.heading}
                   </td>
@@ -247,7 +243,7 @@ export const ClientsManagement = () => {
         <div className="lg:hidden flex flex-col gap-4">
           {filteredClients.map((client) => (
             <div
-              key={client.companyId}
+              key={client.id}
               tabIndex={0}
               role="button"
               aria-label={`View details for ${client.heading}`}

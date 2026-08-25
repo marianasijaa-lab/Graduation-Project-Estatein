@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { LayoutDashboard, Menu, X } from "lucide-react";
-import { Link } from "react-router";
+import { Menu, X } from "lucide-react";
 import { Logo } from "../common/Logo";
 import type { PageId } from "../../interfaces";
 import ThemeToggle from "../ui/ThemeToggle";
@@ -8,6 +7,8 @@ import ThemeToggle from "../ui/ThemeToggle";
 interface NavbarProps {
   activePage: PageId;
   onNavigate: (page: PageId) => void;
+  isDark?: boolean;
+  onToggleTheme?: () => void;
 }
 
 const NAV_ITEMS: { id: PageId; label: string }[] = [
@@ -20,6 +21,8 @@ const NAV_ITEMS: { id: PageId; label: string }[] = [
 export const Navbar: React.FC<NavbarProps> = ({
   activePage,
   onNavigate,
+  isDark: _isDark = true,
+  onToggleTheme: _onToggleTheme,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -64,14 +67,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             Contact Us
           </button>
 
-          <Link
-            to="/dashboard"
-            aria-label="Go to Admin Dashboard"
-            className="hidden sm:inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bg-dark border border-bg-gray-1 text-gray hover:text-white hover:border-primary/50 transition-all cursor-pointer"
-          >
-            <LayoutDashboard className="w-5 h-5" />
-          </Link>
-
           <ThemeToggle />
 
           <button
@@ -110,15 +105,6 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             Contact Us
           </button>
-          <Link
-            to="/dashboard"
-            onClick={() => setMobileMenuOpen(false)}
-            aria-label="Go to Admin Dashboard"
-            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium text-center bg-bg-dark border border-bg-gray-1 text-gray hover:text-white transition-all"
-          >
-            <LayoutDashboard className="w-4 h-4" />
-            Admin Dashboard
-          </Link>
         </div>
       )}
     </header>

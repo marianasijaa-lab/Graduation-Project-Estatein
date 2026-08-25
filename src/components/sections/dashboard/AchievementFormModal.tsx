@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { HiXMark } from "react-icons/hi2";
 import { useTheme } from "../../../Context/ThemeContext";
 import { Button } from "../../ui/Button";
-import type { Achievement } from "../../../Data/aboutData";
+import type { FirestoreAchievement } from "../../../store/types";
 
 interface AchievementFormState {
   title: string;
@@ -11,7 +11,7 @@ interface AchievementFormState {
 
 type AchievementFormErrors = Partial<Record<keyof AchievementFormState, string>>;
 
-function buildInitialState(initialData?: Achievement): AchievementFormState {
+function buildInitialState(initialData?: FirestoreAchievement): AchievementFormState {
   if (!initialData) {
     return { title: "", description: "" };
   }
@@ -32,9 +32,9 @@ function validate(values: AchievementFormState): AchievementFormErrors {
 
 interface AchievementFormModalProps {
   mode: "add" | "edit";
-  initialData?: Achievement;
+  initialData?: FirestoreAchievement;
   onClose: () => void;
-  onSubmit: (values: Omit<Achievement, "id">) => void;
+  onSubmit: (values: Omit<FirestoreAchievement, "id">) => void;
 }
 
 export const AchievementFormModal = ({ mode, initialData, onClose, onSubmit }: AchievementFormModalProps) => {
@@ -56,7 +56,7 @@ export const AchievementFormModal = ({ mode, initialData, onClose, onSubmit }: A
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length > 0) return;
 
-    const payload: Omit<Achievement, "id"> = {
+    const payload: Omit<FirestoreAchievement, "id"> = {
       title: values.title.trim(),
       description: values.description.trim(),
     };

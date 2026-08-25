@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FiEdit2, FiSearch, FiTrash2 } from "react-icons/fi";
 import { useTheme } from "../../Context/ThemeContext";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppDispatch } from "../../store";
+import { useProperties } from "../../hooks/useProperties";
 import {
-  addProperty,
-  deleteProperty,
-  fetchProperties,
-  updateProperty,
+  createPropertyDoc,
+  deletePropertyDoc,
+  updatePropertyDoc,
 } from "../../store/slices/propertiesSlice";
-import type { Property } from "../../Data/properties";
+import type { FirestoreProperty } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { PropertyFormModal } from "../../components/sections/dashboard/PropertyFormModal";
 import { ConfirmDialog } from "../../components/sections/dashboard/ConfirmDialog";
 import { DetailModal, type DetailField } from "../../components/sections/dashboard/DetailModal";
 
-type FormModalState = { mode: "add" } | { mode: "edit"; property: Property } | null;
+type FormModalState = { mode: "add" } | { mode: "edit"; property: FirestoreProperty } | null;
 
 // Every Property field, for the detail view.
-function buildPropertyDetailFields(property: Property): DetailField[] {
+function buildPropertyDetailFields(property: FirestoreProperty): DetailField[] {
   return [
     { label: "ID", value: `#${property.id}` },
     {
@@ -72,45 +72,42 @@ export const PropertiesManagement = () => {
   const isDark = theme === "dark";
 
   const dispatch = useAppDispatch();
-  const { items: properties, status } = useAppSelector((state) => state.properties);
-
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchProperties());
-    }
-  }, [status, dispatch]);
+  const { properties, status } = useProperties();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [formModal, setFormModal] = useState<FormModalState>(null);
-  const [deleteTarget, setDeleteTarget] = useState<Property | null>(null);
-  const [detailTarget, setDetailTarget] = useState<Property | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<FirestoreProperty | null>(null);
+  const [detailTarget, setDetailTarget] = useState<FirestoreProperty | null>(null);
 
   const filteredProperties = properties.filter((property) =>
     property.name.toLowerCase().includes(searchTerm.trim().toLowerCase()),
   );
 
   const openAddModal = () => setFormModal({ mode: "add" });
-  const openEditModal = (property: Property) => setFormModal({ mode: "edit", property });
+  const openEditModal = (property: FirestoreProperty) => setFormModal({ mode: "edit", property });
   const closeFormModal = () => setFormModal(null);
 
-  const handleFormSubmit = (values: Omit<Property, "id">) => {
+  const handleFormSubmit = (values: Omit<FirestoreProperty, "id">) => {
     if (formModal?.mode === "edit") {
-      dispatch(updateProperty({ ...values, id: formModal.property.id }));
+      // Merge onto the existing record (not a full replace) so Firestore-only
+      // fields this form doesn't manage (location, size, amenities, ...)
+      // aren't wiped out by the update.
+      dispatch(updatePropertyDoc({ ...formModal.property, ...values, id: formModal.property.id }));
     } else {
-      dispatch(addProperty(values));
+      dispatch(createPropertyDoc(values));
     }
     setFormModal(null);
   };
 
   const confirmDelete = () => {
     if (deleteTarget) {
-      dispatch(deleteProperty(deleteTarget.id));
+      dispatch(deletePropertyDoc(deleteTarget.id));
     }
     setDeleteTarget(null);
   };
 
-  const openRowDetail = (property: Property) => setDetailTarget(property);
-  const handleRowKeyDown = (e: React.KeyboardEvent, property: Property) => {
+  const openRowDetail = (property: FirestoreProperty) => setDetailTarget(property);
+  const handleRowKeyDown = (e: React.KeyboardEvent, property: FirestoreProperty) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       openRowDetail(property);

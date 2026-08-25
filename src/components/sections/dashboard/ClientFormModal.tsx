@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { HiXMark } from "react-icons/hi2";
 import { useTheme } from "../../../Context/ThemeContext";
 import { Button } from "../../ui/Button";
-import type { Company } from "../../../Data/clients";
+import type { FirestoreCompany } from "../../../store/types";
 
 interface ClientFormState {
   heading: string;
@@ -15,7 +15,7 @@ interface ClientFormState {
 
 type ClientFormErrors = Partial<Record<keyof ClientFormState, string>>;
 
-function buildInitialState(initialData?: Company): ClientFormState {
+function buildInitialState(initialData?: FirestoreCompany): ClientFormState {
   if (!initialData) {
     return { heading: "", date: "", domain: "", category: "", link: "", testimony: "" };
   }
@@ -43,9 +43,9 @@ function validate(values: ClientFormState): ClientFormErrors {
 
 interface ClientFormModalProps {
   mode: "add" | "edit";
-  initialData?: Company;
+  initialData?: FirestoreCompany;
   onClose: () => void;
-  onSubmit: (values: Omit<Company, "companyId">) => void;
+  onSubmit: (values: Omit<FirestoreCompany, "id">) => void;
 }
 
 export const ClientFormModal = ({ mode, initialData, onClose, onSubmit }: ClientFormModalProps) => {
@@ -67,7 +67,7 @@ export const ClientFormModal = ({ mode, initialData, onClose, onSubmit }: Client
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length > 0) return;
 
-    const payload: Omit<Company, "companyId"> = {
+    const payload: Omit<FirestoreCompany, "id"> = {
       heading: values.heading.trim(),
       date: values.date.trim(),
       domain: values.domain.trim(),

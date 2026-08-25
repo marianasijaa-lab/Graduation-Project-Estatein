@@ -1,16 +1,38 @@
 import BaseSlider from "./BaseSlider";
 import { useSlider } from "../../../hooks/useSlider";
 import SliderButtons from "./SliderButtons";
-import { properties, type Property } from "../../../Data/properties";
 import { Button } from "../Button";
+import { useNavigate } from "react-router";
+import { useProperties } from "../../../hooks/useProperties";
+import { LoadingSkeleton } from "../LoadingSkeleton";
+import { ErrorMessage } from "../ErrorMessage";
+import { useAppDispatch } from "../../../store";
+import { fetchProperties } from "../../../store/slices/propertiesSlice";
+import type { FirestoreProperty } from "../../../store/types";
 
 interface CardProps {
-  item: Property;
+  item: FirestoreProperty;
 }
 
 const CardsSlider = () => {
+  const { properties, status, error } = useProperties();
+  const dispatch = useAppDispatch();
   const { currentIndex, goNext, goPrev, itemsToShow, maxIndex } =
     useSlider(properties);
+
+  if (status === 'loading' || status === 'idle') {
+    return <LoadingSkeleton variant="slider" count={3} />;
+  }
+
+  if (status === 'failed') {
+    return (
+      <ErrorMessage
+        message={error ?? 'فشل جلب العقارات'}
+        onRetry={() => dispatch(fetchProperties())}
+      />
+    );
+  }
+
   return (
     <div className="w-full max-w-400 mx-auto px-0 py-8">
       <BaseSlider currentIndex={currentIndex} itemsToShow={itemsToShow}>
@@ -32,13 +54,14 @@ const CardsSlider = () => {
         itemsToShow={itemsToShow}
         maxIndex={maxIndex}
       >
-        <Button onClick={()=>{}} text="View All Properties" variant="secondary"/>
+        <Button onClick={() => {}} text="View All Properties" variant="secondary" />
       </SliderButtons>
     </div>
   );
 };
 
 function Card({ item }: CardProps) {
+  const navigate = useNavigate();
   const details = [
     { icon: item.bedroomIcon, text: `${item.bedrooms}-Bedroom` },
     { icon: item.bathroomIcon, text: `${item.bathrooms}-Bathroom` },
@@ -65,11 +88,11 @@ function Card({ item }: CardProps) {
             </button>
           </p>
         </div>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-nowrap gap-2 overflow-hidden">
           {details.map((detail) => (
             <div
               key={detail.text}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-bg-dark text-white rounded-[28px] whitespace-nowrap w-fit"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-bg-dark text-white rounded-[28px] whitespace-nowrap w-fit shrink-0"
             >
               <img src={detail.icon} alt={detail.text} className="w-4 h-4 shrink-0" />
               <p className="font-medium text-xs">{detail.text}</p>
@@ -81,7 +104,12 @@ function Card({ item }: CardProps) {
             <span className="block font-normal text-gray text-sm">Price</span>
             ${Number(item.priceHome).toLocaleString()}
           </p>
-          <Button onClick={()=>{}} text="View Property Details" variant="primary" className="text-sm px-4 py-3  md:px-5 " />
+          <Button
+            onClick={() => navigate(`/property-details/${item.id}`)}
+            text="View Property Details"
+            variant="primary"
+            className="text-sm px-4 py-3 md:py-3 md:px-5"
+          />
         </div>
       </div>
     </div>

@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FiEdit2, FiSearch, FiTrash2 } from "react-icons/fi";
 import { useTheme } from "../../Context/ThemeContext";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppDispatch } from "../../store";
+import { useValues } from "../../hooks/useValues";
 import {
-  addValue,
-  deleteValue,
-  fetchValues,
-  updateValue,
+  createValueDoc,
+  deleteValueDoc,
+  updateValueDoc,
 } from "../../store/slices/valuesSlice";
-import type { Value } from "../../Data/aboutData";
+import type { FirestoreValue } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { ValueFormModal } from "../../components/sections/dashboard/ValueFormModal";
 import { ConfirmDialog } from "../../components/sections/dashboard/ConfirmDialog";
 import { DetailModal, type DetailField } from "../../components/sections/dashboard/DetailModal";
 
-type FormModalState = { mode: "add" } | { mode: "edit"; value: Value } | null;
+type FormModalState = { mode: "add" } | { mode: "edit"; value: FirestoreValue } | null;
 
 // Every Value field, for the detail view.
-function buildValueDetailFields(value: Value): DetailField[] {
+function buildValueDetailFields(value: FirestoreValue): DetailField[] {
   return [
     { label: "ID", value: `#${value.id}` },
     {
@@ -34,45 +34,41 @@ export const ValuesManagement = () => {
   const isDark = theme === "dark";
 
   const dispatch = useAppDispatch();
-  const { items: values, status } = useAppSelector((state) => state.values);
-
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchValues());
-    }
-  }, [status, dispatch]);
+  const { values, status } = useValues();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [formModal, setFormModal] = useState<FormModalState>(null);
-  const [deleteTarget, setDeleteTarget] = useState<Value | null>(null);
-  const [detailTarget, setDetailTarget] = useState<Value | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<FirestoreValue | null>(null);
+  const [detailTarget, setDetailTarget] = useState<FirestoreValue | null>(null);
 
   const filteredValues = values.filter((value) =>
     value.title.toLowerCase().includes(searchTerm.trim().toLowerCase()),
   );
 
   const openAddModal = () => setFormModal({ mode: "add" });
-  const openEditModal = (value: Value) => setFormModal({ mode: "edit", value });
+  const openEditModal = (value: FirestoreValue) => setFormModal({ mode: "edit", value });
   const closeFormModal = () => setFormModal(null);
 
-  const handleFormSubmit = (values: Omit<Value, "id">) => {
+  const handleFormSubmit = (values: Omit<FirestoreValue, "id">) => {
     if (formModal?.mode === "edit") {
-      dispatch(updateValue({ ...values, id: formModal.value.id }));
+      // Merge onto the existing record (not a full replace) so any
+      // Firestore-only fields this form doesn't manage aren't wiped out.
+      dispatch(updateValueDoc({ ...formModal.value, ...values, id: formModal.value.id }));
     } else {
-      dispatch(addValue(values));
+      dispatch(createValueDoc(values));
     }
     setFormModal(null);
   };
 
   const confirmDelete = () => {
     if (deleteTarget) {
-      dispatch(deleteValue(deleteTarget.id));
+      dispatch(deleteValueDoc(deleteTarget.id));
     }
     setDeleteTarget(null);
   };
 
-  const openRowDetail = (value: Value) => setDetailTarget(value);
-  const handleRowKeyDown = (e: React.KeyboardEvent, value: Value) => {
+  const openRowDetail = (value: FirestoreValue) => setDetailTarget(value);
+  const handleRowKeyDown = (e: React.KeyboardEvent, value: FirestoreValue) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       openRowDetail(value);

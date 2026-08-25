@@ -3,7 +3,7 @@ import { HiXMark } from "react-icons/hi2";
 import { FiUploadCloud } from "react-icons/fi";
 import { useTheme } from "../../../Context/ThemeContext";
 import { Button } from "../../ui/Button";
-import type { Value } from "../../../Data/aboutData";
+import type { FirestoreValue } from "../../../store/types";
 
 const MAX_IMAGE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
 
@@ -15,7 +15,7 @@ interface ValueFormState {
 
 type ValueFormErrors = Partial<Record<keyof ValueFormState, string>>;
 
-function buildInitialState(initialData?: Value): ValueFormState {
+function buildInitialState(initialData?: FirestoreValue): ValueFormState {
   if (!initialData) {
     return { title: "", description: "", icon: "" };
   }
@@ -38,9 +38,9 @@ function validate(values: ValueFormState): ValueFormErrors {
 
 interface ValueFormModalProps {
   mode: "add" | "edit";
-  initialData?: Value;
+  initialData?: FirestoreValue;
   onClose: () => void;
-  onSubmit: (values: Omit<Value, "id">) => void;
+  onSubmit: (values: Omit<FirestoreValue, "id">) => void;
 }
 
 export const ValueFormModal = ({ mode, initialData, onClose, onSubmit }: ValueFormModalProps) => {
@@ -109,7 +109,7 @@ export const ValueFormModal = ({ mode, initialData, onClose, onSubmit }: ValueFo
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length > 0) return;
 
-    const payload: Omit<Value, "id"> = {
+    const payload: Omit<FirestoreValue, "id"> = {
       title: values.title.trim(),
       description: values.description.trim(),
       icon: values.icon.trim(),

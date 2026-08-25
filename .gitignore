@@ -1,1 +1,10 @@
 node_modules/
+dist/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Firebase Service Account (لا ترفع هذا الملف أبداً)
+serviceAccount.json

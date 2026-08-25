@@ -1,8 +1,11 @@
 import { Button } from '../../ui/Button';
 import StatsBar from '../stats/StatsBar';
-import { sharedStats } from '../../../Data/homeData';
+import { useStats } from '../../../hooks/useStats';
+import { LoadingSkeleton } from '../../ui/LoadingSkeleton';
 
 const HomeHero = () => {
+  const { stats, status } = useStats();
+
   return (
     <section className="w-full bg-bg-dark-1 overflow-hidden">
       <div className="flex flex-col lg:flex-row min-h-[480px]">
@@ -22,7 +25,11 @@ const HomeHero = () => {
               <Button text="Learn More" variant="secondary" onClick={() => {}} />
               <Button text="Browse Properties" variant="primary" onClick={() => {}} />
             </div>
-            <StatsBar stats={sharedStats} />
+            {(status === 'loading' || status === 'idle') ? (
+              <LoadingSkeleton variant="stats" count={3} />
+            ) : (
+              <StatsBar stats={stats} />
+            )}
           </div>
         </div>
 

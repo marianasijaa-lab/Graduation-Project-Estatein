@@ -3,7 +3,7 @@ import { HiXMark } from "react-icons/hi2";
 import { FiUploadCloud } from "react-icons/fi";
 import { useTheme } from "../../../Context/ThemeContext";
 import { Button } from "../../ui/Button";
-import type { Property } from "../../../Data/properties";
+import type { FirestoreProperty } from "../../../store/types";
 
 const MAX_IMAGE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
 
@@ -31,7 +31,7 @@ interface PropertyFormState {
 
 type PropertyFormErrors = Partial<Record<keyof PropertyFormState, string>>;
 
-function buildInitialState(initialData?: Property): PropertyFormState {
+function buildInitialState(initialData?: FirestoreProperty): PropertyFormState {
   if (!initialData) {
     return {
       name: "",
@@ -97,9 +97,9 @@ function validate(values: PropertyFormState): PropertyFormErrors {
 
 interface PropertyFormModalProps {
   mode: "add" | "edit";
-  initialData?: Property;
+  initialData?: FirestoreProperty;
   onClose: () => void;
-  onSubmit: (values: Omit<Property, "id">) => void;
+  onSubmit: (values: Omit<FirestoreProperty, "id">) => void;
 }
 
 export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: PropertyFormModalProps) => {
@@ -168,7 +168,7 @@ export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: Prop
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length > 0) return;
 
-    const payload: Omit<Property, "id"> = {
+    const payload: Omit<FirestoreProperty, "id"> = {
       // Icons aren't editable here — keep the existing ones.
       bedroomIcon: initialData?.bedroomIcon,
       bathroomIcon: initialData?.bathroomIcon,

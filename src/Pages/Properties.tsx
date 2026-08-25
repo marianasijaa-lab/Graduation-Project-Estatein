@@ -2,7 +2,7 @@ import { SectionHeader } from "../components/common/SectionHeader"
 import { ContactForm } from "../components/sections/contact/ContactForm"
 import PageHero from "../components/sections/hero/PageHero"
 import { PropitySearchSection } from "../components/sections/property/PropertySearchSection"
-import CardsSlider from "../components/ui/slider/CardsSlider"
+import { PropertiesGrid } from "../components/sections/property/PropertiesGrid"
 import { MdCall, MdEmail } from "react-icons/md"
 
 
@@ -17,11 +17,14 @@ const ProperityPage = () => {
                 className="pb-24 md:pb-32"
             />
             <PropitySearchSection className="-mt-10 md:-mt-20" />
-            <div className="m-20 xl:mt-0 lg:mb-30 2xl:mb-38">
+            <section className="w-full">
+              <div className="max-w-[1568px] mx-auto px-4 sm:px-6 lg:px-10 py-8 sm:py-10 lg:py-14">
                 <SectionHeader title='Discover a World of Possibilities' subtitle='Our portfolio of properties is as diverse as your dreams. Explore the following categories to find the perfect property that resonates with your vision of home' />
-                <CardsSlider />
-            </div>
-            <div className="m-5 xl:mt-0 lg:mb-30 2xl:mb-38 sm:m-20">
+                <PropertiesGrid />
+              </div>
+            </section>
+            <section className="w-full">
+              <div className="max-w-[1568px] mx-auto px-4 sm:px-6 lg:px-10 py-8 sm:py-10 lg:py-14">
                 <SectionHeader title='Lets Make it Happen' subtitle='Ready to take the first step toward your dream property? Fill out the form below, and our real estate wizards will work their magic to find your perfect match. Dont wait; lets embark on this exciting journey together.' />
                 <ContactForm
                     columns={4}
@@ -49,7 +52,8 @@ const ProperityPage = () => {
                         },
                     ]}
                 />
-            </div>
+              </div>
+            </section>
         </div>
     )
 }

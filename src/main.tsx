@@ -3,9 +3,9 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
 import { Provider } from "react-redux";
+import { store } from "./store";
 import Root from "./Root";
 import { ThemeProvider } from "./Context/ThemeContext";
-import { store } from "./store/store";
 import ProperityPage from "./Pages/Properties";
 import HomePage from "./Pages/Home";
 import AboutUs from "./Pages/AboutUs";
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
         element: <AboutUs />,
       },
       {
-        path: "/property-details",
+        path: "/property-details/:id",
         element: <PropertyDetails />,
       },
       {

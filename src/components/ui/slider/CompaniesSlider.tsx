@@ -4,20 +4,42 @@ import { Button } from "../Button";
 import BaseSlider from "./BaseSlider";
 import SliderButtons from "./SliderButtons";
 import { AiOutlineThunderbolt } from "react-icons/ai";
-import { companies, type Company } from "../../../Data/clients";
+import { useCompanies } from "../../../hooks/useCompanies";
+import { LoadingSkeleton } from "../LoadingSkeleton";
+import { ErrorMessage } from "../ErrorMessage";
+import { useAppDispatch } from "../../../store";
+import { fetchCompanies } from "../../../store/slices/companiesSlice";
+import type { FirestoreCompany } from "../../../store/types";
+
+const GAP = 20;
 
 const CompaniesSlider = () => {
+  const { companies, status, error } = useCompanies();
+  const dispatch = useAppDispatch();
   const { currentIndex, goNext, goPrev, itemsToShow, maxIndex } =
     useSlider(companies, "two");
+
+  if (status === 'loading' || status === 'idle') {
+    return <LoadingSkeleton variant="slider" count={2} />;
+  }
+
+  if (status === 'failed') {
+    return (
+      <ErrorMessage
+        message={error ?? 'فشل جلب بيانات الشركات'}
+        onRetry={() => dispatch(fetchCompanies())}
+      />
+    );
+  }
 
   return (
     <div className="w-full">
       <BaseSlider currentIndex={currentIndex} itemsToShow={itemsToShow}>
         {companies.map((company) => (
           <div
-            key={company.companyId}
-            style={{ width: `${100 / itemsToShow}%` }}
-            className="px-3 sm:px-5 flex"
+            key={company.id}
+            className="flex-shrink-0"
+            style={{ width: `calc(${100 / itemsToShow}% - ${(GAP * (itemsToShow - 1)) / itemsToShow}px)` }}
           >
             <CompanyCard company={company} />
           </div>
@@ -35,7 +57,7 @@ const CompaniesSlider = () => {
   );
 };
 
-function CompanyCard({ company }: { company: Company }) {
+function CompanyCard({ company }: { company: FirestoreCompany }) {
   return (
     <div
       className="w-full h-full rounded-xl border border-bg-gray-1 p-5 sm:p-8 lg:p-10 flex flex-col overflow-hidden"
@@ -51,12 +73,10 @@ function CompanyCard({ company }: { company: Company }) {
                 {company.heading}
               </h3>
             </div>
-            {/* Desktop: button next to name */}
             <div className="shrink-0 mt-1 hidden sm:block">
               <Button onClick={() => {}} text="Visit Website" variant="secondary" />
             </div>
           </div>
-          {/* Mobile: full-width button below name */}
           <div className="sm:hidden w-full">
             <button
               onClick={() => {}}
@@ -70,7 +90,6 @@ function CompanyCard({ company }: { company: Company }) {
 
         {/* ── Domain / Category row ── */}
         <div className="flex gap-0">
-          {/* Domain */}
           <div className="flex flex-col gap-2 flex-1">
             <p className="flex items-center gap-1.5">
               <MdWindow className="text-gray" size={20} />
@@ -80,11 +99,7 @@ function CompanyCard({ company }: { company: Company }) {
               {company.domain}
             </h4>
           </div>
-
-          {/* Divider */}
           <div className="w-px bg-bg-gray-1 mx-6 self-stretch" />
-
-          {/* Category */}
           <div className="flex flex-col gap-2 flex-1">
             <p className="flex items-center gap-1.5">
               <AiOutlineThunderbolt className="text-gray" size={20} />
@@ -97,10 +112,7 @@ function CompanyCard({ company }: { company: Company }) {
         </div>
 
         {/* ── Testimony box ── */}
-        <div
-          className="rounded-xl border border-bg-gray-1 p-5 sm:p-6 lg:p-7 flex flex-col gap-3 flex-1"
-          
-        >
+        <div className="rounded-xl border border-bg-gray-1 p-5 sm:p-6 lg:p-7 flex flex-col gap-3 flex-1">
           <p className="text-gray text-sm sm:text-base">What They Said 🤗</p>
           <p className="text-white sm:text-base lg:text-sm leading-relaxed">
             {company.testimony}

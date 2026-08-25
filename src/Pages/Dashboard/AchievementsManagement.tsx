@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FiEdit2, FiSearch, FiTrash2 } from "react-icons/fi";
 import { useTheme } from "../../Context/ThemeContext";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppDispatch } from "../../store";
+import { useAchievements } from "../../hooks/useAchievements";
 import {
-  addAchievement,
-  deleteAchievement,
-  fetchAchievements,
-  updateAchievement,
+  createAchievementDoc,
+  deleteAchievementDoc,
+  updateAchievementDoc,
 } from "../../store/slices/achievementsSlice";
-import type { Achievement } from "../../Data/aboutData";
+import type { FirestoreAchievement } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { AchievementFormModal } from "../../components/sections/dashboard/AchievementFormModal";
 import { ConfirmDialog } from "../../components/sections/dashboard/ConfirmDialog";
 import { DetailModal, type DetailField } from "../../components/sections/dashboard/DetailModal";
 
-type FormModalState = { mode: "add" } | { mode: "edit"; achievement: Achievement } | null;
+type FormModalState = { mode: "add" } | { mode: "edit"; achievement: FirestoreAchievement } | null;
 
 // Every Achievement field, for the detail view.
-function buildAchievementDetailFields(achievement: Achievement): DetailField[] {
+function buildAchievementDetailFields(achievement: FirestoreAchievement): DetailField[] {
   return [
     { label: "ID", value: `#${achievement.id}` },
     { label: "Title", value: achievement.title },
@@ -30,45 +30,41 @@ export const AchievementsManagement = () => {
   const isDark = theme === "dark";
 
   const dispatch = useAppDispatch();
-  const { items: achievements, status } = useAppSelector((state) => state.achievements);
-
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchAchievements());
-    }
-  }, [status, dispatch]);
+  const { achievements, status } = useAchievements();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [formModal, setFormModal] = useState<FormModalState>(null);
-  const [deleteTarget, setDeleteTarget] = useState<Achievement | null>(null);
-  const [detailTarget, setDetailTarget] = useState<Achievement | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<FirestoreAchievement | null>(null);
+  const [detailTarget, setDetailTarget] = useState<FirestoreAchievement | null>(null);
 
   const filteredAchievements = achievements.filter((achievement) =>
     achievement.title.toLowerCase().includes(searchTerm.trim().toLowerCase()),
   );
 
   const openAddModal = () => setFormModal({ mode: "add" });
-  const openEditModal = (achievement: Achievement) => setFormModal({ mode: "edit", achievement });
+  const openEditModal = (achievement: FirestoreAchievement) => setFormModal({ mode: "edit", achievement });
   const closeFormModal = () => setFormModal(null);
 
-  const handleFormSubmit = (values: Omit<Achievement, "id">) => {
+  const handleFormSubmit = (values: Omit<FirestoreAchievement, "id">) => {
     if (formModal?.mode === "edit") {
-      dispatch(updateAchievement({ ...values, id: formModal.achievement.id }));
+      // Merge onto the existing record (not a full replace) so any
+      // Firestore-only fields this form doesn't manage aren't wiped out.
+      dispatch(updateAchievementDoc({ ...formModal.achievement, ...values, id: formModal.achievement.id }));
     } else {
-      dispatch(addAchievement(values));
+      dispatch(createAchievementDoc(values));
     }
     setFormModal(null);
   };
 
   const confirmDelete = () => {
     if (deleteTarget) {
-      dispatch(deleteAchievement(deleteTarget.id));
+      dispatch(deleteAchievementDoc(deleteTarget.id));
     }
     setDeleteTarget(null);
   };
 
-  const openRowDetail = (achievement: Achievement) => setDetailTarget(achievement);
-  const handleRowKeyDown = (e: React.KeyboardEvent, achievement: Achievement) => {
+  const openRowDetail = (achievement: FirestoreAchievement) => setDetailTarget(achievement);
+  const handleRowKeyDown = (e: React.KeyboardEvent, achievement: FirestoreAchievement) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       openRowDetail(achievement);
