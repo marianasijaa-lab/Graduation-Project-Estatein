@@ -5,6 +5,9 @@ import { values, achievements } from '../data/aboutData';
 import HeroAbout from '../components/sections/hero/AboutHero';
 import CompaniesSlider from '../components/ui/slider/CompaniesSlider';
 import ServiceCard from '../components/sections/services/ServiceCard';
+import MeetTheEstaein from '../components/MeetTheEstaein';
+import NavigatingTheEstatein from '../components/NavigatingTheEstatein';
+
 
 // Our Achievements Section
 
@@ -165,6 +168,8 @@ const AboutUs: React.FC = () => {
       />
       <OurValues />
       <OurAchievements />
+      <NavigatingTheEstatein/>
+      <MeetTheEstaein/>
       <OurValuedClients />
     </main>
   );
