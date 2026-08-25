@@ -11,20 +11,20 @@ interface ServiceCardProps {
 const ServiceCard: React.FC<ServiceCardProps> = ({ type, heading, icon, description }) => {
   if (type === 'vertical') {
     return (
-      <div className="group relative flex flex-col items-center justify-center text-center bg-bg-dark border border-bg-gray-1 rounded-[10px] py-8 px-10 sm:px-6 hover:border-[#703BF7]/50 hover:bg-[#1e1e1e] transition-all duration-300 cursor-pointer overflow-hidden w-full">
+      <div className="group relative flex flex-col items-center justify-center text-center bg-bg-dark border border-bg-gray-1 rounded-[10px] py-6 px-4 sm:py-8 sm:px-10 hover:border-[#703BF7]/50 hover:bg-[#1e1e1e] transition-all duration-300 cursor-pointer overflow-hidden w-full">
         {/* سهم الزاوية */}
         <GoArrowUpRight
-          size={28}
-          className="absolute right-4 top-4 text-border group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
+          size={22}
+          className="absolute right-3 top-3 sm:right-4 sm:top-4 text-border group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
         />
 
         {/* الأيقونة */}
-        <div className="relative mb-5 flex items-center justify-center">
-          <img src={icon} alt={heading} className="w-15 h-15 object-contain" />
+        <div className="relative mb-4 flex items-center justify-center">
+          <img src={icon} alt={heading} className="w-12 h-12 sm:w-15 sm:h-15 object-contain" />
         </div>
 
         {/* العنوان */}
-        <h3 className="font-semibold text-white text-[11px] sm:text-[13px] lg:text-[15px]  leading-snug whitespace-nowrap">
+        <h3 className="font-semibold text-white text-[11px] sm:text-[13px] lg:text-base whitespace-nowrap ">
           {heading}
         </h3>
       </div>

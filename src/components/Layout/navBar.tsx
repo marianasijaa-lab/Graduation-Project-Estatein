@@ -21,8 +21,8 @@ const NAV_ITEMS: { id: PageId; label: string }[] = [
 export const Navbar: React.FC<NavbarProps> = ({
   activePage,
   onNavigate,
-  isDark = true,
-  onToggleTheme,
+  isDark: _isDark = true,
+  onToggleTheme: _onToggleTheme,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 

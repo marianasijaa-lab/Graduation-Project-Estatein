@@ -10,6 +10,8 @@ import AboutUs from "./Pages/AboutUs";
 import Contact from "./Pages/Contact";
 import { PropertyDetails } from "./Pages/PropertyDetails";
 import { ServicesPage } from "./Pages/Services";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +27,7 @@ const router = createBrowserRouter([
         element: <AboutUs />,
       },
       {
-        path: "/property-details",
+        path: "/property-details/:id",
         element: <PropertyDetails />,
       },
       {
@@ -46,8 +48,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ThemeProvider>
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </Provider>
   </StrictMode>,
 );
