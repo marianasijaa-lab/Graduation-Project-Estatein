@@ -35,6 +35,9 @@ const HomeHero = () => {
 
         {/* Right: Hero Image full height, no border */}
         <div className="flex flex-1 relative min-h-[240px] sm:min-h-[360px] lg:min-h-[480px] order-1 lg:order-2">
+           <div className="absolute z-30 -bottom-7 left-0  lg:top-15 lg:-left-20  xl:top-34 xl:-left-30 w-29 lg:w-32 xl:w-44">
+                <img src='/assets/HeroSticker.png' className='w-full h-full'/>
+              </div>
           <img
             src="/assets/Abstract_6.png"
             alt=""

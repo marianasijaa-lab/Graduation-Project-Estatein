@@ -10,12 +10,10 @@ const Services: React.FC = () => {
   ];
 
   return (
-    <section
-      className="relative z-10 w-full bg-bg-dark-1 border border-bg-gray-1 px-2 sm:px-4 py-1 sm:py-2"
-      style={{ boxShadow: '0px 0px 0px 6px #191919' }}
-    >
-      <div className="w-full">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+    <section className="w-full bg-bg-dark-1 border border-bg-gray-1 py-1 sm:py-2" 
+     style={{ boxShadow: '0px 0px 0px 6px #191919'}}>
+        <div className="w-full mx-auto px-2 sm:px-1 lg:px-2">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
           {services.map((service, index) => (
             <ServiceCard
               key={index}
