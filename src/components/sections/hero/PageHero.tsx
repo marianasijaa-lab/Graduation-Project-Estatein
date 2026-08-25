@@ -13,7 +13,7 @@ const PageHero: React.FC<PageHeroProps> = ({ title, description, className = '' 
 
   return (
     <section 
-      className={`w-full pt-12 md:pt-20 pb-8 md:pb-12 px-4 sm:px-8 md:px-10 transition-colors duration-300 ${
+      className={`w-full pt-8 md:pt-12 pb-6 md:pb-8 px-4 sm:px-8 md:px-10 transition-colors duration-300 ${
         isDark ? 'text-white' : 'bg-white text-gray-900'
       } ${className}`}
       style={isDark ? { background: 'linear-gradient(95.93deg, #262626 -26.82%, rgba(38, 38, 38, 0) 40.46%)' } : undefined}

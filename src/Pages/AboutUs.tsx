@@ -1,15 +1,18 @@
 import React from 'react';
 import { useTheme } from '../Context/ThemeContext';
 import { SectionHeader } from '../components/common/SectionHeader';
-import { values, achievements } from '../data/aboutData';
+
 import HeroAbout from '../components/sections/hero/AboutHero';
 import CompaniesSlider from '../components/ui/slider/CompaniesSlider';
 import ServiceCard from '../components/sections/services/ServiceCard';
+import { useAchievements } from '../hooks/useAchievements';
+import { useValues } from '../hooks/useValues';
 
 // Our Achievements Section
 
 const OurAchievements: React.FC = () => {
   const { theme } = useTheme();
+  const { achievements } = useAchievements();
   const isDark = theme === "dark";
 
   return (
@@ -58,6 +61,7 @@ const OurAchievements: React.FC = () => {
 
 const OurValues: React.FC = () => {
   const { theme } = useTheme();
+  const { values } = useValues();
   const isDark = theme === "dark";
 
   return (

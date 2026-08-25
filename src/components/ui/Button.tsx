@@ -9,6 +9,7 @@ interface ButtonProps
   fullWidth?: boolean;
   disabled?: boolean;
   type?: 'button' | 'submit';
+  className?: string;
 }
 
 
@@ -23,11 +24,12 @@ export const Button = (
   fullWidth ,
   disabled ,
   type ,
+  className = '',
 }: ButtonProps) => {
 
      const variantStyles =
     variant === 'primary'
-      ? 'bg-primary text-white hover:opacity-90'
+      ? ' bg-primary text-white hover:opacity-90'
       : 'text-white hover:opacity-90';
 
   const variantInlineStyle =
@@ -41,10 +43,9 @@ export const Button = (
       onClick={onClick}
       disabled={disabled}
       style={variantInlineStyle}
-             className={`inline-flex items-center justify-center gap-2 max-2xl:px-[20px]
-                max-2xl:py-[14px] 2xl:px-[24px] 2xl:py-[18px] 2xl:rounded-[10px] max-2xl:rounded-lg font-medium 2xl:text-[18px] max-2xl:text-sm whitespace-nowrap transition-all ${variantStyles} ${
+             className={`inline-flex items-center justify-center gap-2 2xl:rounded-[10px] max-2xl:rounded-lg font-medium whitespace-nowrap transition-all ${variantStyles} ${
         fullWidth ? 'w-full' : 'w-auto'
-      } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+      } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'} ${className || 'max-2xl:px-[20px] max-2xl:py-[14px] 2xl:px-[24px] 2xl:py-[18px] 2xl:text-[18px] max-2xl:text-sm'}`}
          >
       {icon && iconPosition === 'left' && <img src={icon} alt="" />}
       <span>{text}</span>
