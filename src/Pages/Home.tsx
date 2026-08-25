@@ -4,10 +4,22 @@ import Services from '../components/sections/services/Services';
 import CardsSlider from '../components/ui/slider/CardsSlider';
 import FAQSlider from '../components/ui/slider/FAQSlider';
 import TestimonialsSlider from '../components/ui/slider/TestimonialsSlider';
-
+// المصفوفة يلي تحت لازم تتمرر للكومبونينت GallerySlider منشان يتشغل 
+// <GallerySlider images={propertyImages}/>
+// const propertyImages = [
+//     "/assets/Villa1.webp",
+//     "/assets/Villa2.webp",
+//     "/assets/Discover1.webp",
+//     "/assets/Discover1.webp",
+//     "/assets/Villa2.webp",
+//     "/assets/Villa1.webp",
+//     "assets/Discover1.webp",
+//     "/assets/Villa2.webp",
+//     "/assets/Discover1.webp",
+//   ];
 const HomePage = () => {
     return (
-        <div className='pb-20 pt-10 px-4 lg:px-0 lg:pt-10 lg:pb-0'>
+        <div className='pb-20 pt-10 px-4 lg:px-0 lg:pt-0 lg:pb-0'>
             <HomeHero />
             <Services/>
             <div className="pt-0 px-0 pb-0 xl:pt-30 xl:px-20 xl:pb-18 2xl:pt-37.5 2xl:px-40.5 2xl:pb-24">
@@ -22,6 +34,7 @@ const HomePage = () => {
               <div>
                 <SectionHeader title='Frequently Asked Questions' actionLabel='View All FAQ’s' subtitle="Find answers to common questions about Estatein's services, property listings, and the real estate process. We're here to provide clarity and assist you every step of the way."/>
                 <FAQSlider/>
+               
               </div>
             </div>
         </div>

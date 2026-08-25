@@ -14,7 +14,7 @@ const BaseSlider = ({ children, currentIndex, itemsToShow }:BaseSliderProps) => 
   return (
     <div className="overflow-x-hidden w-full py-2 px-0">
       <div 
-        className="flex items-stretch my-2 transition-[transform_0.4s_ease-in-out] *:box-border *:shrink-0"
+        className="flex items-stretch my-2 transition-transform duration-400 ease-in-out *:box-border *:shrink-0"
         style={{ transform: `translateX(${translateX}%)` }}
       >
         {children}
