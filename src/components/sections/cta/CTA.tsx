@@ -21,7 +21,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
 
     return (
         <section
-            className={`relative w-full overflow-hidden transition-colors py-12 sm:py-16 lg:py-20 border-b border-t border-bg-gray-1 ${
+            className={`relative w-full overflow-hidden transition-colors py-8 sm:py-10 lg:py-14 border-b border-t border-bg-gray-1 ${
                 isDark ? 'bg-bg-dark-1 text-white' : 'bg-white text-gray-900'
             }`}
         >

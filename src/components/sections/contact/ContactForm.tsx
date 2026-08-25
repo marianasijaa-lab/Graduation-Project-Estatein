@@ -23,12 +23,14 @@ interface ContactFormProps {
   extraFields?: ExtraField[];
   columns?: 2 | 3 | 4; // التحكم بأسلوب الأعمدة لكل فورم
   onSubmit?: (data: Record<string, any>) => void;
+  isSubmitting?: boolean;
 }
 
 export const ContactForm: React.FC<ContactFormProps> = ({
   extraFields = [],
   columns = 3,
   onSubmit,
+  isSubmitting = false,
 }) => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
@@ -237,7 +239,12 @@ export const ContactForm: React.FC<ContactFormProps> = ({
             </a>
           </span>
         </label>
-        <Button text="Send Your Message" variant="primary" onClick={() => { }} />
+        <Button
+            text={isSubmitting ? "Sending..." : "Send Your Message"}
+            variant="primary"
+            onClick={() => {}}
+            disabled={isSubmitting}
+          />
 
       </div>
     </form>

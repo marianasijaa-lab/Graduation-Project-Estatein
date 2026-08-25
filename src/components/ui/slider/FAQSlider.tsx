@@ -4,6 +4,8 @@ import SliderButtons from "./SliderButtons";
 import { FAQCard } from "../../sections/faq/FAQCard";
 import { Button } from "../Button";
 
+const GAP = 24; // يجب أن يطابق قيمة GAP في BaseSlider
+
 interface FAQItem {
   id: number;
   title: string;
@@ -53,8 +55,8 @@ const FAQSlider = () => {
         {FAQData.map((card) => (
           <div
             key={card.id}
-            className="flex px-0 py-0 lg:pr-6"
-            style={{ width: `${100 / itemsToShow}%` }}
+            className="flex-shrink-0"
+            style={{ width: `calc(${100 / itemsToShow}% - ${(GAP * (itemsToShow - 1)) / itemsToShow}px)` }}
           >
             <FAQCard
               question={card.title}

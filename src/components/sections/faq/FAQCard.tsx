@@ -11,12 +11,12 @@ export const FAQCard = ({ question, description, onReadMore }: FAQCardProps) => 
     <div className="flex flex-col gap-4 bg-bg-dark-1 border border-white/10 rounded-xl p-6 h-full">
 
       {/* question */}
-      <h3 className="text-white font-semibold text-lg leading-snug">
+      <h3 className="text-white font-semibold text-[19px] min-h-[3.5rem]">
         {question}
       </h3>
 
       {/* description */}
-      <p className="text-gray text-sm leading-relaxed flex-1">
+      <p className="text-gray text-base flex-1">
         {description}
       </p>
 

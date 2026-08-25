@@ -24,7 +24,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ type, heading, icon, descript
         </div>
 
         {/* العنوان */}
-        <h3 className="font-semibold text-white text-[11px] sm:text-[13px] lg:text-[15px] leading-snug">
+        <h3 className="font-semibold text-white text-[11px] sm:text-[13px] lg:text-base whitespace-nowrap ">
           {heading}
         </h3>
       </div>
