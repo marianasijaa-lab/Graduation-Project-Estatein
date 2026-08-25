@@ -4,14 +4,10 @@ import OfficeLocations from "../components/OfficeLocations/OfficeLocations";
 import PageHero from "../components/sections/hero/PageHero";
 import ServiceCard from "../components/sections/services/ServiceCard";
 import TeamCard from "../components/TeamCard/TeamCard";
-import { services } from "../data/contactData";
 import { ContactForm } from "../components/sections/contact/ContactForm";
-import PageHero from "../components/sections/hero/PageHero";
-import ServiceCard from "../components/sections/services/ServiceCard";
 import { useServices } from "../hooks/useServices";
 import { LoadingSkeleton } from "../components/ui/LoadingSkeleton";
 import { ErrorMessage } from "../components/ui/ErrorMessage";
-import { OfficesSection } from "../components/sections/contact/OfficesSection";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { firestoreDb } from "../firebase/config";
 
@@ -138,8 +134,6 @@ const Contact = () => {
       </div>
       <OfficeLocations />
       <TeamCard />
-      {/* Offices Section */}
-      <OfficesSection />
     </div>
   );
 };
