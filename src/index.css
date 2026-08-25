@@ -9,6 +9,24 @@
   --color-primary: #703bf7;
   --color-primary-light: #a685fa;
   --color-border: #4d4d4d;
+  --decor-opacity: 1;
+  --hero-gradient: linear-gradient(95.93, #262626 -26.82%, rgba(38, 38, 38, 0) 40.46%)
+
+  --color-bg-main: var(--color-bg-dark);
+  --color-bg-secondary: var(--color-bg-gray-1);
+  --color-text-main: #ffffff;
+  --icon-filter: none;
+  /* --bg-main: var(--color-bg-dark) */
+}
+
+.light {
+  --color-bg-main: #ffffff;
+  --color-bg-secondary: #f5f5f5;
+  --color-border: #d9d9d9;
+  --color-text-main: #141414;
+  --icon-filter: invert(1);
+  --decor-opacity : 0.12;
+  --hero-gradient: none;
 }
 
 
@@ -18,8 +36,8 @@ body {
   
 }
 .card{
-  @apply p-6 lg:p-8 xl:p-10 bg-gray-50 border-gray border rounded-xl ;
+  @apply p-6 lg:p-8 xl:p-10 bg-(--color-border) border rounded-xl bg-(--bg-main) transition-colors duration-300 ;
 }
 .card-title{
-  @apply text-bg-dark font-semibold xl:text-2xl
+  @apply text-(--text-main) font-semibold xl:text-2xl
 }

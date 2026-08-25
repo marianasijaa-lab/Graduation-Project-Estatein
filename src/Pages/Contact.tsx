@@ -1,4 +1,5 @@
 import { SectionHeader } from "../components/common/SectionHeader";
+import { StaggerContainer } from "../components/common/StaggerContainer";
 import PageHero from "../components/sections/hero/PageHero";
 import ServiceCard from "../components/sections/services/ServiceCard";
 import { services } from "../data/contactData";
@@ -10,11 +11,11 @@ const Contact = () => {
         description="Welcome to Estatein's Contact Us page. We're here to assist you with any inquiries, requests, or feedback you may have. Whether you're looking to buy or sell a property, explore investment opportunities, or simply want to connect, we're just a message away. Reach out to us, and let's start a conversation."
       />
       <section
-        className="w-full bg-bg-dark-1 border border-bg-gray-1 py-1 sm:py-2"
-        style={{ boxShadow: '0px 0px 0px 6px #191919' }}
+        className="w-full bg-(--bg-secondary) border border-(--color-border) py-1 sm:py-2 transition-colors duration-300"
+        style={{ boxShadow: '0px 0px 0px 6px (--bg-main)' }}
       >
         <div className="w-full max-w-[1590px] mx-auto px-2 sm:px-1 lg:px-2">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
             {services.map((service) => (
               <ServiceCard
                 key={service.heading}
@@ -23,7 +24,7 @@ const Contact = () => {
                 heading={service.heading}
               />
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
       <div className="w-full max-w-[1590px] mx-auto px-6 sm:px-10 lg:px-16 pt-10 sm:pt-14">

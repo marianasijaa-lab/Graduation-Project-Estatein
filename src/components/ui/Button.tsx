@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 
 interface ButtonProps 
 {
@@ -36,11 +37,14 @@ export const Button = (
       : undefined;
 
   return (
-    <button
+    <motion.button
       type={type}
       onClick={onClick}
       disabled={disabled}
       style={variantInlineStyle}
+      whileHover={disabled ? undefined : {scale: 1.03}}
+      whileTap={disabled ? undefined : {scale: 0.97}}
+      transition={{duration: 0.15}}
              className={`inline-flex items-center justify-center gap-2 max-2xl:px-[20px]
                 max-2xl:py-[14px] 2xl:px-[24px] 2xl:py-[18px] 2xl:rounded-[10px] max-2xl:rounded-lg font-medium 2xl:text-[18px] max-2xl:text-sm whitespace-nowrap transition-all ${variantStyles} ${
         fullWidth ? 'w-full' : 'w-auto'
@@ -49,6 +53,6 @@ export const Button = (
       {icon && iconPosition === 'left' && <img src={icon} alt="" />}
       <span>{text}</span>
       {icon && iconPosition === 'right' && <img src={icon} alt="" />}
-    </button>
+    </motion.button>
   );
 };

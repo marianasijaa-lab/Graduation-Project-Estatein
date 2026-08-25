@@ -1,9 +1,12 @@
+import { motion } from "framer-motion";
 import {
     FaBed,
     FaBath,
     FaRulerCombined,
     FaBolt,
   } from "react-icons/fa";
+import { FadeInSection } from "../../common/FadeInSection";
+import { StaggerContainer, staggerItem } from "../../common/StaggerContainer";
   
   interface PropertyDescriptionProps {
     description: string;
@@ -22,7 +25,7 @@ import {
   }: PropertyDescriptionProps) => {
     
     return (
-      <section className="w-full overflow-x-hidden bg-black text-white px-[20px] py-[60px] sm:px-[40px] lg:px-[80px]">
+      <section className="w-full overflow-x-hidden bg-(--bg-main) text-(--text-main) transition-colors duration-300 px-[20px] py-[60px] sm:px-[40px] lg:px-[80px]">
         <div
           className="
             mx-auto
@@ -37,7 +40,8 @@ import {
         >
           {/* ================= LEFT : PROPERTY DESCRIPTION ================= */}
   
-          <div
+          <FadeInSection
+          direction="left"
             className="
               flex
               h-auto
@@ -45,8 +49,8 @@ import {
               flex-col
               rounded-[10px]
               border
-              border-bg-gray-1
-              bg-bg-dark-1
+              border-(--color-border)
+              bg-(--bg-secondary)
               p-[30px]
               sm:p-[40px]
               lg:flex-1
@@ -61,7 +65,7 @@ import {
                 text-[20px]
                 font-semibold
                 leading-[150%]
-                text-white
+                text-(--text-main)
                 sm:text-[22px]
               "
             >
@@ -87,7 +91,7 @@ import {
   
             {/* Horizontal Divider */}
   
-            <div className="my-[30px] h-px w-full bg-[#333333]" />
+            <div className="my-[30px] h-px w-full bg-(--color-border) " />
   
             {/* Property Information */}
   
@@ -108,7 +112,7 @@ import {
                   flex-col
                   gap-[10px]
                   border-r
-                  border-[#333333]
+                  border-(--color-border)
                   pr-[20px]
                   sm:border-r
                 "
@@ -134,7 +138,7 @@ import {
                     text-[18px]
                     font-semibold
                     leading-[150%]
-                    text-white
+                    text-(--text-main)
                   "
                 >
                   {bedrooms}
@@ -173,7 +177,7 @@ import {
                     text-[18px]
                     font-semibold
                     leading-[150%]
-                    text-white
+                    text-(--text-main)
                   "
                 >
                   {bathrooms}
@@ -219,7 +223,7 @@ import {
                     text-[13px]
                     font-semibold
                     leading-[150%]
-                    text-white
+                    text-(--text-main)
                     sm:text-[15px]
                   "
                 >
@@ -227,11 +231,12 @@ import {
                 </span>
               </div>
             </div>
-          </div>
+          </FadeInSection>
   
           {/* ================= RIGHT : KEY FEATURES ================= */}
   
-          <div
+          <FadeInSection
+            direction="right"
             className="
               flex
               h-auto
@@ -239,8 +244,8 @@ import {
               flex-col
               rounded-[10px]
               border
-              border-bg-gray-1
-              bg-bg-dark-1
+              border-(--color-border)
+              bg-(--bg-secondary)
               p-[30px]
               sm:p-[40px]
               lg:flex-1
@@ -255,7 +260,7 @@ import {
                 text-[20px]
                 font-semibold
                 leading-[150%]
-                text-white
+                text-(--text-main)
                 sm:text-[22px]
               "
             >
@@ -264,10 +269,11 @@ import {
   
             {/* Features */}
   
-            <div className="flex w-full flex-col gap-[20px]">
+            <StaggerContainer className="flex w-full flex-col gap-[20px]">
               {features.map((feature, index) => (
-                <div
+                <motion.div
                   key={index}
+                  variants={staggerItem}
                   className="
                     flex
                     h-[63px]
@@ -276,7 +282,7 @@ import {
                     gap-[14px]
                     border-l-[1.5px]
                     border-l-primary
-                    bg-bg-dark
+                    bg-(--bg-main)
                     px-[22px]
                     sm:px-[24px]
                   "
@@ -289,7 +295,7 @@ import {
                       h-[20px]
                       w-[20px]
                       shrink-0
-                      text-white
+                      text-(--text-main)
                     "
                   />
   
@@ -308,10 +314,10 @@ import {
                   >
                     {feature}
                   </p>
-                </div>
+                </motion.div>
               ))}
-            </div>
-          </div>
+            </StaggerContainer>
+          </FadeInSection>
         </div>
       </section>
     );

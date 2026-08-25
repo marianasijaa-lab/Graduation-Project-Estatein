@@ -7,7 +7,7 @@ import Services from '../components/sections/services/Services';
 
 export const ServicesPage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-bg-dark-1 text-white">
+    <div className="min-h-screen bg-(--bg-main) text-(--text-main) transition-colors duration-300">
       {/* الجزء العلوي */}
       <PageHero
         title="Elevate Your Real Estate Experience"

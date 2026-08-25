@@ -1,3 +1,4 @@
+import { motion, scale } from "framer-motion";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 interface SliderButtonsProps {
@@ -22,30 +23,34 @@ const SliderButtons = ({
   const total = itemsLength - itemsToShow + 1;
 
   return (
-    <div className="border-t border-bg-gray-1 flex justify-between items-center pt-4 mt-6">
+    <div className="border-t border-(--color-border) flex justify-between items-center pt-4 mt-6 transition-colors duration-300">
       {/* Counter */}
       <p className="text-gray text-sm">
-        <span className="text-white">{pad(currentIndex + 1)}</span>
+        <span className="text-(--text-main)">{pad(currentIndex + 1)}</span>
         {" of "}
         {pad(total)}
       </p>
 
       {/* Arrow Buttons */}
       <div className="flex gap-3">
-        <button
-          className="w-10 h-10 rounded-full border border-bg-gray-1 flex items-center justify-center text-white hover:bg-white/10 transition disabled:opacity-30 disabled:cursor-not-allowed"
+        <motion.button
+          whileHover={currentIndex === 0 ? undefined : {scale: 1.08}}
+          whileTap={currentIndex === 0 ? undefined : {scale: 0.92}}
+          className="w-10 h-10 rounded-full border border-(--color-border) flex items-center justify-center text-(--text-main) hover:bg-(--text-main)/10 transition disabled:opacity-30 disabled:cursor-not-allowed"
           onClick={goPrev}
           disabled={currentIndex === 0}
         >
           <FaArrowLeft size={16} />
-        </button>
-        <button
-          className="w-10 h-10 rounded-full border border-bg-gray-1 flex items-center justify-center text-white hover:bg-white/10 transition disabled:opacity-30 disabled:cursor-not-allowed"
+        </motion.button>
+        <motion.button
+          whileHover={currentIndex >= maxIndex ? undefined : {scale: 1.08}}
+          whileTap={currentIndex >= maxIndex ? undefined : {scale: 0.92}}
+          className="w-10 h-10 rounded-full border border-(--color-border) flex items-center justify-center text-(--text-main) hover:bg-(--text-main)/10 transition disabled:opacity-30 disabled:cursor-not-allowed"
           onClick={goNext}
           disabled={currentIndex >= maxIndex}
         >
           <FaArrowRight size={16} />
-        </button>
+        </motion.button>
       </div>
     </div>
   );

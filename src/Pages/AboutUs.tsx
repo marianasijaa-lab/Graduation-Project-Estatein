@@ -1,20 +1,19 @@
 import React from 'react';
-import { useTheme } from '../Context/ThemeContext';
 import { SectionHeader } from '../components/common/SectionHeader';
 import { values, achievements } from '../data/aboutData';
 import HeroAbout from '../components/sections/hero/AboutHero';
 import CompaniesSlider from '../components/ui/slider/CompaniesSlider';
 import ServiceCard from '../components/sections/services/ServiceCard';
+import { motion } from 'framer-motion';
+import { StaggerContainer, staggerItem } from '../components/common/StaggerContainer';
 
 // Our Achievements Section
 
 const OurAchievements: React.FC = () => {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
 
   return (
     <section
-      className={`w-full transition-colors ${isDark ? "bg-bg-dark-1" : "bg-gray-50"}`}
+      className="w-full transition-colors duration-300 bg-(--bg-main) "
     >
       <div className="max-w-[1568px] mx-auto px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-20">
         {/* Header */}
@@ -25,30 +24,31 @@ const OurAchievements: React.FC = () => {
         />
 
         {/* Cards grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
           {achievements.map((item) => (
-            <div
+            <motion.div
               key={item.id}
+              variants={staggerItem}
               className="rounded-[10px] p-6 sm:p-8 flex flex-col gap-4"
               style={{
-                backgroundColor: "#141414",
-                border: "1px solid #262626",
-                boxShadow: "0px 0px 0px 6px #191919",
+                backgroundColor: "(--bg-secondary)",
+                border: "1px solid (--color-border)",
+                boxShadow: "0px 0px 0px 6px (--bg-main)",
               }}
             >
               <h3
-                className={`font-semibold sm:text-lg md:text-2xl ${isDark ? "text-white" : "text-gray-900"}`}
+                className="font-semibold sm:text-lg md:text-2xl text-(--text-main) "
               >
                 {item.title}
               </h3>
               <p
-                className={` sm:text-sm md:text-base   ${isDark ? "text-gray-400" : "text-gray-500"}`}
+                className="sm:text-sm md:text-base text-gray "
               >
                 {item.description}
               </p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );
@@ -57,13 +57,10 @@ const OurAchievements: React.FC = () => {
 // ─── Our Values Section
 
 const OurValues: React.FC = () => {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
 
   return (
     <section
-      className={`w-full transition-colors
-        ${isDark ? "bg-bg-dark-1" : "bg-gray-50"}`}
+      className="w-full transition-colors duration-300 bg-(--bg-main) "
     >
       <div className="max-w-[1568px] mx-auto px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-20">
         <div className="flex flex-col lg:flex-row gap-6">
@@ -78,31 +75,33 @@ const OurValues: React.FC = () => {
 
           {/* ── Right: Values Grid container ── */}
           <div
-            className="lg:w-[65%] rounded-xl overflow-hidden border border-bg-dark-1 "
+            className="lg:w-[65%] rounded-xl overflow-hidden border border-(--color-border) "
             style={{
-              backgroundColor: "#141414",
-              boxShadow: "0px 0px 0px 10px #191919",
+              backgroundColor: "(--bg-secondary)",
+              boxShadow: "0px 0px 0px 10px (--bg-main)",
             }}
           >
-            <div className="relative grid grid-cols-1 sm:grid-cols-2">
+            <motion.div
+              initial={{opacity: 0, y: 20}}
+              whileInView={{opacity: 1, y: 0}}
+              viewport={{once: true, amount:0.2}}
+              transition={{duration: 0.6}}
+              className="relative grid grid-cols-1 sm:grid-cols-2">
               {/* ── الخط الرأسي العلوي (الصف الأول فقط) ── */}
               <div
-                className={`hidden sm:block absolute left-1/2 w-px -translate-x-1/2
-                  ${isDark ? "bg-bg-gray-1" : "bg-gray-200"}`}
+                className="hidden sm:block absolute left-1/2 w-px -translate-x-1/2 bg-(--color-border) "
                 style={{ top: "40px", height: "calc(50% - 40px - 20px)" }}
               />
 
               {/* ── الخط الرأسي السفلي (الصف الثاني فقط) ── */}
               <div
-                className={`hidden sm:block absolute left-1/2 w-px -translate-x-1/2
-                  ${isDark ? "bg-bg-gray-1 " : "bg-gray-200"}`}
+                className="hidden sm:block absolute left-1/2 w-px -translate-x-1/2 bg-(--color-border) "
                 style={{ bottom: "40px", height: "calc(50% - 40px - 20px)" }}
               />
 
               {/* ── الخط الأفقي الفاصل بين الصفين (شاشات sm فما فوق فقط) ── */}
               <div
-                className={`hidden sm:block absolute left-6 right-6 top-1/2 h-px -translate-y-1/2
-                  ${isDark ? "bg-bg-gray-1" : "bg-gray-200"}`}
+                className="hidden sm:block absolute left-6 right-6 top-1/2 h-px -translate-y-1/2 bg-(--color-border) "
               />
 
               {values.map((value) => (
@@ -110,8 +109,7 @@ const OurValues: React.FC = () => {
                   {/* ── خط أفقي بين الـ cards على الشاشات الصغيرة فقط ── */}
                   {values.indexOf(value) > 0 && (
                     <div
-                      className={`sm:hidden absolute top-0 left-4 right-4 h-px
-                        ${isDark ? "bg-bg-gray-1" : "bg-gray-200"}`}
+                      className="sm:hidden absolute top-0 left-4 right-4 h-px bg-(--color-border)"
                     />
                   )}
                   <div className="p-6 sm:p-8">
@@ -124,7 +122,7 @@ const OurValues: React.FC = () => {
                   </div>
                 </div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
@@ -135,12 +133,14 @@ const OurValues: React.FC = () => {
 // ─── Our Valued Clients Section
 
 const OurValuedClients: React.FC = () => {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
 
   return (
-    <section
-      className={`w-full transition-colors ${isDark ? "bg-bg-dark-1" : "bg-gray-50"}`}
+    <motion.section
+      initial={{opacity: 0, y: 20}}
+      whileInView={{opacity: 1, y: 0}}
+      viewport={{once: true, amount:0.2}}
+      transition={{duration: 0.6}}
+      className="w-full transition-colors duration-300 bg-(--bg-main) "
     >
       <div className="max-w-[1568px] mx-auto px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-20">
         <SectionHeader
@@ -150,7 +150,7 @@ const OurValuedClients: React.FC = () => {
         />
         <CompaniesSlider />
       </div>
-    </section>
+    </motion.section>
   );
 };
 

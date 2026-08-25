@@ -1,5 +1,7 @@
+import { motion } from 'framer-motion';
 import React from 'react';
-import { useTheme } from '../../../Context/ThemeContext';
+import { FadeInSection } from '../../common/FadeInSection';
+
 
 interface InfoBoxProps {
   title: string;
@@ -20,12 +22,8 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
   onButtonClick,
   variant = 'horizontal',
 }) => {
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
 
-  const containerBase = `relative overflow-hidden rounded-2xl border transition-colors ${
-    isDark ? 'bg-[#141414] border-[#262626] text-white' : 'bg-white border-gray-200 text-gray-900'
-  }`;
+  const containerBase = "relative overflow-hidden rounded-2xl border transition-colors duration-300 bg-(--bg-main) border-(--color-border) text-(--text-main)"
 
   // Shared abstract background overlay
   const bgOverlay = (
@@ -47,40 +45,34 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
 
         {/* Description */}
         <p
-          className={`relative z-10 text-sm sm:text-base leading-relaxed flex-1 ${
-            isDark ? 'text-gray-400' : 'text-gray-600'
-          }`}
+          className="relative z-10 text-sm sm:text-base leading-relaxed flex-1 text-gray"
         >
           {description}
         </p>
 
         {/* Full-width button */}
-        <button
+        <motion.button
+          whileHover={{opacity: 1.02}}
+          whileTap={{scale: 0.98}}
           onClick={onButtonClick}
-          className={`relative z-10 w-full py-4 rounded-xl text-sm font-medium transition-colors ${
-            isDark
-              ? 'bg-bg-dark-1 border border-bg-gray-1 text-white hover:bg-[#222]'
-              : 'bg-gray-100 border border-gray-200 text-gray-900 hover:bg-gray-200'
-          }`}
+          className="relative z-10 w-full py-4 rounded-xl text-sm font-medium transition-colors duration-300 bg-(--bg-secondary) border border-(--color-border) text-(--text-main) hover:opacity-80 "
         >
           {buttonLabel}
-        </button>
+        </motion.button>
       </div>
     );
   }
 
   // horizontal (default)
   return (
-    <div className={`${containerBase} flex flex-col sm:flex-row items-center justify-between gap-6 px-8 sm:px-10 py-8`}>
+    <FadeInSection direction='up' className={`${containerBase} flex flex-col sm:flex-row items-center justify-between gap-6 px-8 sm:px-10 py-8`}>
       {bgOverlay}
 
       {/* Text block */}
       <div className="relative z-10 flex flex-col gap-3 max-w-2xl">
         <h3 className="text-xl sm:text-2xl font-semibold leading-snug">{title}</h3>
         <p
-          className={`text-sm sm:text-base leading-relaxed ${
-            isDark ? 'text-gray-400' : 'text-gray-600'
-          }`}
+          className="text-sm sm:text-base leading-relaxed text-gray " 
         >
           {description}
         </p>
@@ -88,17 +80,15 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
 
       {/* Button */}
       <div className="relative z-10 shrink-0 w-full sm:w-auto flex justify-center sm:justify-end">
-        <button
+        <motion.button
+          whileHover={{opacity: 1.02}}
+          whileTap={{scale: 0.98}}
           onClick={onButtonClick}
-          className={`px-6 py-3 rounded-xl text-sm font-medium transition-colors border ${
-            isDark
-              ? 'bg-bg-dark-1 border-border-gray-1 text-white hover:bg-[#222]'
-              : 'bg-gray-100 border-gray-200 text-gray-900 hover:bg-gray-200'
-          }`}
+          className="px-6 py-3 rounded-xl text-sm font-medium transition-colors duration-300 border bg-(--bg-secondary) border-(--color-border) text-(--text-main) hover:opacity-80 "
         >
           {buttonLabel}
-        </button>
+        </motion.button>
       </div>
-    </div>
+    </FadeInSection>
   );
 };

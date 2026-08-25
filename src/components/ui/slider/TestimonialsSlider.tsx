@@ -93,7 +93,7 @@ const TestimonialsSlider = () => {
 
 function Star() {
   return (
-    <div className="p-2.5 rounded-full bg-bg-card">
+    <div className="p-2.5 rounded-full bg-(--bg-secondary) transition-colors duration-300">
       <FaStar  size={24} color="#FFE500" />
     </div>
   );
@@ -106,15 +106,15 @@ return (
         {Array.from({length:5},(_)=><Star/>)}
         </div>
         <div className="flex flex-col gap-1.5 lg:gap-2.5 xl:gap-3.5">
-            <h3 className="font-semibold text-2xl text-bg-dark">{testimony.title}</h3>
-             <p className="text-[18px]">{testimony.description}</p>
+            <h3 className="font-semibold text-2xl text-(--text-main)">{testimony.title}</h3>
+            <p className="text-[18px] text-(--text-main)">{testimony.description}</p>
         </div>
         <div className="flex gap-3">
             <div className="">
                 <img src={testimony.avatar} alt={testimony.clientName}/>
             </div>
             <div className="flex flex-col gap-0.5">
-                <h4 className="text-xl text-bg-dark">{testimony.clientName}</h4>
+                <h4 className="text-xl text-(--text-main)">{testimony.clientName}</h4>
                 <p className="text-gray">{testimony.clientLocation}</p>
             </div>
         </div>

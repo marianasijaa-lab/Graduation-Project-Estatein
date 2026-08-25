@@ -8,10 +8,10 @@ interface FAQCardProps {
 
 export const FAQCard = ({ question, description, onReadMore }: FAQCardProps) => {
   return (
-    <div className="flex flex-col gap-4 bg-bg-dark border border-white/10 rounded-xl p-6 h-full">
+    <div className="flex flex-col gap-4 bg-(--bg-main) border border-(--color-border) rounded-xl p-6 h-full transition-colors duration-300">
 
       {/* question */}
-      <h3 className="text-white font-semibold text-lg leading-snug">
+      <h3 className="text-(--text-main) font-semibold text-lg leading-snug">
         {question}
       </h3>
 

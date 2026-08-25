@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { useTheme } from '../../../Context/ThemeContext';
+import { FadeInSection } from '../../common/FadeInSection';
+import { motion } from 'framer-motion';
+
 
 export interface ExtraField {
   name: string;
@@ -26,8 +28,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({
   extraFields = [],
   onSubmit,
 }) => {
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
 
   const initialFormState: Record<string, any> = {
     firstName: '',
@@ -63,11 +63,9 @@ export const ContactForm: React.FC<ContactFormProps> = ({
     }
   };
 
-  const inputBgClass = isDark
-    ? 'bg-[#1A1A1A] border-[#262626] text-white placeholder-gray-500 focus:border-primary'
-    : 'bg-[#F9F9F9] border-gray-200 text-gray-900 placeholder-gray-400 focus:border-primary';
+  const inputBgClass = 'bg-(--bg-secondary) border-(--color-border) text-(--text-main) placeholder-gray-500 focus:border-primary transition-colors duration-300'
 
-  const labelClass = `block text-sm font-medium mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`;
+  const labelClass = "block text-sm font-medium mb-2 text-(--text-mian)";
 
   // دالة لتحديد عرض الحقل بناءً على colSpan
   const getColSpanClass = (colSpan?: number) => {
@@ -83,25 +81,27 @@ export const ContactForm: React.FC<ContactFormProps> = ({
     <div className="w-full">
       {/* إضافة 2: title و subtitle */}
       {(title || subtitle) && (
-        <div className="mb-8">
+        <FadeInSection direction='up' className="mb-8">
           {title && (
-            <h2 className={`text-2xl sm:text-3xl font-bold mb-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-3 text-(--text-main)">
               {title}
             </h2>
           )}
           {subtitle && (
-            <p className={`text-sm sm:text-base leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+            <p className="text-sm sm:text-base leading-relaxed text-gray">
               {subtitle}
             </p>
           )}
-        </div>
+        </FadeInSection>
       )}
 
-      <form
+      <motion.form
         onSubmit={handleSubmit}
-        className={`w-full rounded-2xl p-6 sm:p-10 lg:p-14 border space-y-6 sm:space-y-8 ${
-          isDark ? 'bg-bg-dark-1 border-bg-gray-1' : 'bg-white border-gray-200 shadow-sm'
-        }`}
+        initial={{opacity: 0, y: 24}}
+        whileInView={{opacity: 1, y: 0}}
+        viewport={{once: true, amount: 0.1}}
+        transition={{duration: 0.6, delay: 0.15, ease: [0.24,0.1,0.25,1]}}
+        className="w-full rounded-2xl p-6 sm:p-10 lg:p-14 border space-y-6 sm:space-y-8 bg-(--bg-main) border-(--color-border) transition-colors duration-300"
       >
         {/* 1. First Name + Last Name */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -207,7 +207,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                         <option
                           key={opt}
                           value={opt}
-                          className={isDark ? 'bg-bg-dark' : 'bg-white'}
+                          className="bg-(--bg-secondary) text-(--text-main)"
                         >
                           {opt}
                         </option>
@@ -233,9 +233,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                           className={`flex items-center gap-3 flex-1 min-w-50 px-4 py-3 rounded-xl border transition-all ${
                             isSelected
                               ? 'border-primary bg-primary/10'
-                              : isDark
-                              ? 'border-bg-gray-1 bg-bg-dark'
-                              : 'border-gray-200 bg-[#F9F9F9]'
+                              : 'border-(--color-border) bg-(--bg-secondary) transition-all duration-300'
                           }`}
                         >
                           {/* Radio button */}
@@ -257,9 +255,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                             onChange={(e) =>
                               handleChange(`${field.name}_${opt}`, e.target.value)
                             }
-                            className={`flex-1 bg-transparent outline-none text-sm ${
-                              isDark ? 'text-white placeholder-gray-500' : 'text-gray-900 placeholder-gray-400'
-                            }`}
+                            className="flex-1 bg-transparent outline-none text-sm text-(--text-main) placeholder-gray-500"
                           />
                         </div>
                       );
@@ -305,26 +301,28 @@ export const ContactForm: React.FC<ContactFormProps> = ({
               onChange={(e) => handleChange('agreeTerms', e.target.checked)}
               className="w-5 h-5 rounded accent-primary cursor-pointer"
             />
-            <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+            <span className="text-sm text-gray">
               I agree with{' '}
-              <a href="#" className={`underline ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              <a href="#" className="underline text-(--text-main)">
                 Terms of Use
               </a>{' '}
               and{' '}
-              <a href="#" className={`underline ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              <a href="#" className="underline text-(--text-main)">
                 Privacy Policy
               </a>
             </span>
           </label>
 
-          <button
+          <motion.button
             type="submit"
+            whileHover={{scale: 1.03}}
+            whileTap={{scale: 0.97}}
             className="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-[#5e2ed9] text-white text-sm font-medium rounded-xl transition-colors shadow-sm shrink-0"
           >
             Send Your Message
-          </button>
+          </motion.button>
         </div>
-      </form>
+      </motion.form>
     </div>
   );
 };

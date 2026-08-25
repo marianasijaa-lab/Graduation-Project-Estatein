@@ -7,9 +7,10 @@ import { HiHomeModern } from "react-icons/hi2";
 import { PiMoneyWavyFill } from "react-icons/pi";
 import { BsFillBoxFill } from "react-icons/bs";
 import { FaRegCalendar } from "react-icons/fa6";
-import { useTheme } from '../../../Context/ThemeContext';
 
 import { Button } from '../../ui/Button';
+import { AnimatePresence, motion } from 'framer-motion';
+import { FadeInSection } from '../../common/FadeInSection';
 
 const MOCK_PROPERTIES = [
     { id: 1, name: 'Villa Dubai', location: 'Dubai', type: 'Villa', price: '$500k - $1M', size: '2000-3000 sqft', year: '2023' },
@@ -30,8 +31,6 @@ interface SearchSectionProps {
 }
 
 export const PropitySearchSection: React.FC<SearchSectionProps> = ({ onSearchSubmit }) => {
-    const { theme } = useTheme();
-    const isDark = theme === 'dark';
 
     const [searchTerm, setSearchTerm] = useState('');
     const [filters, setFilters] = useState({
@@ -85,24 +84,18 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({ onSearchSub
     };
 
     return (
-        <section
-            className={`w-full pt-6 pb-10 px-4 md:px-8 lg:px-16 transition-colors duration-300 ${isDark ? 'bg-bg-dark-1 text-white' : 'bg-white text-gray-900'
-                }`}
+        <FadeInSection
+            direction='up'
+            className="w-full pt-6 pb-10 px-4 md:px-8 lg:px-16 transition-colors duration-300 bg-(--bg-main) text-(--text-main) "
         >
             <div className="max-w-7xl mx-auto flex flex-col items-center" ref={containerRef}>
 
                 {/* 1. السيرش العلوي (Radius بس ع الزوايا العلوية + ملتصق بالسفلي) */}
                 <div
-                    className={`w-full max-w-4xl border border-b-0 rounded-t-2xl p-2.5 transition-colors ${isDark
-                            ? 'bg-bg-dark border-bg-gray-1'
-                            : 'bg-gray-400 border-gray-200'
-                        }`}
+                    className="w-full max-w-4xl border border-b-0 rounded-t-2xl p-2.5 transition-colors bg-(--bg-secondary) border-(--color-border) "
                 >
                     <div
-                        className={`w-full flex flex-col sm:flex-row items-center justify-between border rounded-xl p-2 transition-colors ${isDark
-                                ? 'bg-bg-dark-1 border-bg-gray-1'
-                                : 'bg-white border-gray-200'
-                            }`}
+                        className="w-full flex flex-col sm:flex-row items-center justify-between border rounded-xl p-2 transition-colors bg-(--bg-main) border-(--color-border) "
                     >
                         <div className="flex items-center flex-1 w-full px-3 py-1.5">
                             <input
@@ -110,10 +103,7 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({ onSearchSub
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 placeholder="Search For A Property"
-                                className={`w-full h-13 bg-transparent focus:outline-none text-sm md:text-base ${isDark
-                                        ? 'text-white placeholder-gray-500'
-                                        : 'text-gray-900 placeholder-gray-700'
-                                    }`}
+                                className="w-full h-13 bg-transparent focus:outline-none text-sm md:text-base text-(--text-main) placeholder-gray-500 "
                             />
                         </div>
 
@@ -131,10 +121,7 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({ onSearchSub
 
                 {/* 2. المربع السفلي للدروب داونز (الخلفية العريضة المشتركة) */}
                 <div
-                    className={`w-full border rounded-2xl  p-2 sm:p-3 shadow-2xl transition-colors ${isDark
-                            ? 'bg-bg-dark border-bg-gray-1'
-                            : 'bg-gray-400 border-gray-200'
-                        }`}
+                    className="w-full border rounded-2xl  p-2 sm:p-3 shadow-2xl transition-colors bg-(--bg-secondary) border-(--color-border) "
                 >
                     <div className="w-full h-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
                         {[
@@ -152,45 +139,48 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({ onSearchSub
                                 <div key={filter.id} className="relative w-full">
                                     <div
                                         onClick={() => toggleDropdown(filter.id)}
-                                        className={`w-full h-16 flex items-center justify-between border rounded-xl px-3.5 py-1 cursor-pointer transition-colors ${isDark
-                                                ? 'bg-bg-dark-1 border-bg-gray-1 hover:border-gray-700'
-                                                : 'bg-white border-gray-200 hover:border-gray-300'
-                                            }`}
+                                        className="w-full h-16 flex items-center justify-between border rounded-xl px-3.5 py-1 cursor-pointer transition-colors bg-(--bg-main) border-(--color-border) hover:border-primary/50 "
                                     >
                                         <div className="flex items-center gap-2.5 truncate">
-                                            <Icon className={`shrink-0 text-base ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
+                                            <Icon className="shrink-0 text-base text-gray "/>
 
-                                            <div className={`w-px h-4 ${isDark ? 'bg-bg-gray-1' : 'bg-gray-200'}`}></div>
+                                            <div className="w-px h-4 bg-(--color-border) "></div>
 
-                                            <span className={`text-sm truncate ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                                            <span className="text-sm truncate text-gray">
                                                 {selectedValue || filter.label}
                                             </span>
                                         </div>
 
-                                        <FiChevronDown className={`shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''} ${isDark ? 'text-gray-500' : 'text-gray-400'}`} />
+                                        <motion.div animate={{rotate: isOpen ? 180 : 0}} transition={{duration: 0.2}} >
+                                            <FiChevronDown className={`shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''} text-gray`} />
+                                        </motion.div>
+
+                                        
                                     </div>
 
-                                    {isOpen && (
-                                        <div
-                                            className={`absolute top-full left-0 w-full mt-2 rounded-xl border shadow-xl z-50 max-h-48 overflow-y-auto ${isDark
-                                                    ? 'bg-bg-dark border-bg-gray-1 text-white'
-                                                    : 'bg-white border-gray-200 text-gray-800'
-                                                }`}
+                                    <AnimatePresence>
+                                        {isOpen && (
+                                        <motion.div
+                                            initial={{opacity: 0, y: -8}}
+                                            animate={{opacity: 1, y: 0}}
+                                            exit={{opacity: 0, y: -8}}
+                                            transition={{duration: 0.18}}
+                                            className="absolute top-full left-0 w-full mt-2 rounded-xl border shadow-xl z-50 max-h-48 overflow-y-auto bg-(--bg-secondary) border-(--color-border) text-(--text-main) "
                                         >
                                             {filter.options.map((option) => (
                                                 <div
                                                     key={option}
                                                     onClick={() => handleSelectOption(filter.id, option)}
-                                                    className={`px-4 py-2.5 text-sm cursor-pointer transition-colors ${isDark
-                                                            ? 'hover:bg-bg-gray-1'
-                                                            : 'hover:bg-gray-100'
-                                                        }`}
+                                                    className="px-4 py-2.5 text-sm cursor-pointer transition-colors hover:bg-(bg-main) "
                                                 >
                                                     {option}
                                                 </div>
                                             ))}
-                                        </div>
+                                        </motion.div>
                                     )}
+                                    </AnimatePresence>
+
+                                    
                                 </div>
                             );
                         })}
@@ -198,6 +188,6 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({ onSearchSub
                 </div>
 
             </div>
-        </section>
+        </FadeInSection>
     );
 };

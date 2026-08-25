@@ -2,6 +2,8 @@ import BaseSlider from "./BaseSlider";
 import { useSlider } from "../../../hooks/useSlider";
 import SliderButtons from "./SliderButtons";
 import { properties, type Property } from "../../../data/properties";
+import { motion } from "framer-motion";
+
 
 interface CardProps {
   item: Property;
@@ -43,7 +45,10 @@ function Card({ item }: CardProps) {
   ].filter((d) => d.icon && d.text);
 
   return (
-    <div className="card flex flex-col gap-4 lg:gap-5 xl:gap-7.5">
+    <motion.div
+      whileHover={{y: -6}}
+      transition={{duration: 0.25, ease: [0.25, 0.1, 0.25, 1]}}
+      className="card flex flex-col gap-4 lg:gap-5 xl:gap-7.5">
       <img
         src={item.image}
         alt={item.name}
@@ -61,7 +66,7 @@ function Card({ item }: CardProps) {
           {details.map((detail) => (
             <div
               key={detail.text}
-              className="flex items-center gap-1 px-3.5 py-1.5 bg-bg-dark text-white rounded-[28px]"
+              className="flex items-center gap-1 px-3.5 py-1.5 bg-(--bg-secondary) text-(--text-main) rounded-[28px] transition-colors duration-300"
             >
               <img src={detail.icon} alt={detail.text} className="w-4 h-4" />
               <p className="font-medium text-[14px]">{detail.text}</p>
@@ -69,17 +74,20 @@ function Card({ item }: CardProps) {
           ))}
         </div>
         <div className="flex gap-10">
-          <p className="font-semibold text-black">
+          <p className="font-semibold text-(--text-main)">
             <span className="block font-normal text-gray">Price</span> $
             {item.priceHome}
           </p>
           {/* below to be deleted when the button component is developed and created*/}
-          <button className="py-3.5 px-12 rounded-lg bg-primary text-white">
+          <motion.button 
+            whileHover={{scale: 1.03}}
+            whileTap={{scale: 0.97}}
+            className="py-3.5 px-12 rounded-lg bg-primary text-white">
             View More Details
-          </button>
+          </motion.button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

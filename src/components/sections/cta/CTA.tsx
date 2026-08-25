@@ -1,5 +1,7 @@
 import React from "react";
-import { useTheme } from '../../../Context/ThemeContext';
+import { FadeInSection } from "../../common/FadeInSection";
+import { motion } from "framer-motion";
+
 
 interface CtaSectionProps {
   title?: string;
@@ -16,30 +18,25 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
   bgRightImage,
   renderButton,
 }) => {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-
     return (
         <section
-            className={`relative w-full overflow-hidden transition-colors py-12 sm:py-16 lg:py-20 border-b border-t border-bg-gray-1 ${
-                isDark ? 'bg-bg-dark-1 text-white' : 'bg-white text-gray-900'
-            }`}
+            className="relative w-full overflow-hidden transition-colors py-12 sm:py-16 lg:py-20 border-b border-t border-(--color-border) bg-(--bg-main) text-(--text-main)"
         >
             {bgLeftImage && (
                 <div
                     className="absolute left-0 top-0 w-1/2 h-1/2 sm:h-full bg-left bg-no-repeat bg-contain pointer-events-none z-0"
-                    style={{ backgroundImage: `url(${bgLeftImage})` }}
+                    style={{ backgroundImage: `url(${bgLeftImage})` , opacity: 'var(--decor-opacity)'}}
                 />
             )}
 
             {bgRightImage && (
                 <div
                     className="absolute right-0 bottom-0 w-1/2 h-1/2 sm:h-full bg-right bg-no-repeat bg-contain pointer-events-none z-0"
-                    style={{ backgroundImage: `url(${bgRightImage})` }}
+                    style={{ backgroundImage: `url(${bgRightImage})` , opacity: 'var(--decor-opacity)'}}
                 />
             )}
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
+      <FadeInSection direction="up" className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
         <div className="max-w-6xl text-center lg:text-left mx-auto lg:mx-0 space-y-3">
           {title && (
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight leading-snug">
@@ -47,9 +44,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
             </h2>
           )}
           <p
-            className={`text-sm sm:text-base leading-relaxed font-normal ${
-              isDark ? "text-gray-300" : "text-gray-700"
-            }`}
+            className="text-sm sm:text-base leading-relaxed font-normal text-gray"
           >
             {description}
           </p>
@@ -59,12 +54,15 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
           {renderButton ? (
             renderButton()
           ) : (
-            <button className="px-6 py-3.5 bg-primary hover:bg-[#5e2ed9] text-white text-sm font-medium rounded-xl transition-colors shadow-sm">
+            <motion.button 
+            whileHover={{scale: 1.03}}
+            whileTap={{scale: 0.97}}
+            className="px-6 py-3.5 bg-primary hover:bg-[#5e2ed9] text-white text-sm font-medium rounded-xl transition-colors shadow-sm">
               Explore Properties
-            </button>
+            </motion.button>
           )}
         </div>
-      </div>
+      </FadeInSection>
     </section>
   );
 };
