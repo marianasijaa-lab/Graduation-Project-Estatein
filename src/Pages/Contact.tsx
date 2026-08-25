@@ -6,8 +6,6 @@ import ServiceCard from "../components/sections/services/ServiceCard";
 import { useServices } from "../hooks/useServices";
 import { LoadingSkeleton } from "../components/ui/LoadingSkeleton";
 import { ErrorMessage } from "../components/ui/ErrorMessage";
-import { useAppDispatch } from "../store";
-import { fetchServices } from "../store/slices/servicesSlice";
 import { OfficesSection } from "../components/sections/contact/OfficesSection";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { firestoreDb } from "../firebase/config";
@@ -16,7 +14,6 @@ type SubmitStatus = "idle" | "submitting" | "submitted" | "error";
 
 const Contact = () => {
   const { services, status, error } = useServices();
-  const dispatch = useAppDispatch();
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>("idle");
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -62,7 +59,7 @@ const Contact = () => {
           {status === "failed" && (
             <ErrorMessage
               message={error ?? "فشل جلب الخدمات"}
-              onRetry={() => dispatch(fetchServices())}
+              onRetry={() => window.location.reload()}
             />
           )}
           {status === "succeeded" && (

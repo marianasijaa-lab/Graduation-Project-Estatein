@@ -1,6 +1,4 @@
-import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
-import { collection, getDocs } from 'firebase/firestore';
-import { firestoreDb } from '../../firebase/config';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { FirestoreProperty, DataStatus } from '../types';
 
 const FALLBACK_PROPERTIES: FirestoreProperty[] = [
@@ -114,22 +112,25 @@ const initialState: PropertiesState = {
   error: null,
 };
 
-export const fetchProperties = createAsyncThunk<FirestoreProperty[]>(
-  'properties/fetchAll',
-  async () => {
-    if (!firestoreDb) return FALLBACK_PROPERTIES;
-    const querySnapshot = await getDocs(collection(firestoreDb, 'properties'));
-    return querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as FirestoreProperty[];
-  }
-);
-
 const propertiesSlice = createSlice({
   name: 'properties',
   initialState,
   reducers: {
+    // ── onSnapshot يُطلق هذا عند كل تغيير في Firestore ──────────────────
+    syncProperties(state, action: PayloadAction<FirestoreProperty[]>) {
+      state.data   = action.payload;
+      state.status = 'succeeded';
+      state.error  = null;
+    },
+    setPropertiesLoading(state) {
+      state.status = 'loading';
+      state.error  = null;
+    },
+    setPropertiesError(state, action: PayloadAction<string>) {
+      state.status = 'failed';
+      state.error  = action.payload;
+    },
+    // ── عمليات CRUD المحلية (تُستخدم مع addDocument / updateDocument / deleteDocument) ──
     addProperty(state, action: PayloadAction<FirestoreProperty>) {
       state.data.push(action.payload);
     },
@@ -141,22 +142,16 @@ const propertiesSlice = createSlice({
       state.data = state.data.filter((p) => p.id !== action.payload);
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchProperties.pending, (state) => {
-        state.status = 'loading';
-        state.error = null;
-      })
-      .addCase(fetchProperties.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.data = action.payload;
-      })
-      .addCase(fetchProperties.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message ?? 'فشل جلب العقارات';
-      });
-  },
 });
 
-export const { addProperty, updateProperty, removeProperty } = propertiesSlice.actions;
+export const {
+  syncProperties,
+  setPropertiesLoading,
+  setPropertiesError,
+  addProperty,
+  updateProperty,
+  removeProperty,
+} = propertiesSlice.actions;
 export default propertiesSlice.reducer;
+
+export { FALLBACK_PROPERTIES };

@@ -2,7 +2,7 @@ import React from 'react';
 import { useTheme } from '../../../Context/ThemeContext';
 import { useOffices } from '../../../hooks/useOffices';
 import { useAppDispatch } from '../../../store';
-import { setActiveTab, fetchOffices } from '../../../store/slices/officesSlice';
+import { setActiveTab } from '../../../store/slices/officesSlice';
 import { LoadingSkeleton } from '../../ui/LoadingSkeleton';
 import { ErrorMessage } from '../../ui/ErrorMessage';
 import { SectionHeader } from '../../common/SectionHeader';
@@ -57,7 +57,7 @@ export const OfficesSection: React.FC = () => {
         {status === 'failed' && (
           <ErrorMessage
             message={error ?? 'فشل جلب المكاتب'}
-            onRetry={() => dispatch(fetchOffices())}
+            onRetry={() => window.location.reload()}
           />
         )}
 

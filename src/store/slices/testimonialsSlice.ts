@@ -1,16 +1,14 @@
-import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
-import { collection, getDocs } from 'firebase/firestore';
-import { firestoreDb } from '../../firebase/config';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { FirestoreTestimonial, DataStatus } from '../types';
 
-const FALLBACK_TESTIMONIALS: FirestoreTestimonial[] = [
+export const FALLBACK_TESTIMONIALS: FirestoreTestimonial[] = [
   {
     id: 'test-1',
     clientName: 'Wade Warren',
     clientImage: '/assets/Profile_1.png',
     clientLocation: 'USA, California',
     title: 'Exceptional Service!',
-    description: 'Our experience with Estatein was outstanding. Their team\'s dedication and professionalism made finding our dream home a breeze. Highly recommended!',
+    description: "Our experience with Estatein was outstanding. Their team's dedication and professionalism made finding our dream home a breeze. Highly recommended!",
     rating: 5,
     position: 'Software Engineer',
     createdAt: new Date().toISOString(),
@@ -32,7 +30,7 @@ const FALLBACK_TESTIMONIALS: FirestoreTestimonial[] = [
     clientImage: '/assets/Profile_3.png',
     clientLocation: 'USA, Texas',
     title: 'Trusted Advisors!',
-    description: 'Estatein guided us through every step of the buying process. Their knowledge and commitment to our needs made all the difference. We couldn\'t be happier with our new home.',
+    description: "Estatein guided us through every step of the buying process. Their knowledge and commitment to our needs made all the difference. We couldn't be happier with our new home.",
     rating: 5,
     position: 'Financial Analyst',
     createdAt: new Date().toISOString(),
@@ -73,22 +71,23 @@ const initialState: TestimonialsState = {
   error: null,
 };
 
-export const fetchTestimonials = createAsyncThunk<FirestoreTestimonial[]>(
-  'testimonials/fetchAll',
-  async () => {
-    if (!firestoreDb) return FALLBACK_TESTIMONIALS;
-    const querySnapshot = await getDocs(collection(firestoreDb, 'testimonials'));
-    return querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as FirestoreTestimonial[];
-  }
-);
-
 const testimonialsSlice = createSlice({
   name: 'testimonials',
   initialState,
   reducers: {
+    syncTestimonials(state, action: PayloadAction<FirestoreTestimonial[]>) {
+      state.data   = action.payload;
+      state.status = 'succeeded';
+      state.error  = null;
+    },
+    setTestimonialsLoading(state) {
+      state.status = 'loading';
+      state.error  = null;
+    },
+    setTestimonialsError(state, action: PayloadAction<string>) {
+      state.status = 'failed';
+      state.error  = action.payload;
+    },
     addTestimonial(state, action: PayloadAction<FirestoreTestimonial>) {
       state.data.push(action.payload);
     },
@@ -100,22 +99,14 @@ const testimonialsSlice = createSlice({
       state.data = state.data.filter((t) => t.id !== action.payload);
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchTestimonials.pending, (state) => {
-        state.status = 'loading';
-        state.error = null;
-      })
-      .addCase(fetchTestimonials.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.data = action.payload;
-      })
-      .addCase(fetchTestimonials.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message ?? 'فشل جلب آراء العملاء';
-      });
-  },
 });
 
-export const { addTestimonial, updateTestimonial, removeTestimonial } = testimonialsSlice.actions;
+export const {
+  syncTestimonials,
+  setTestimonialsLoading,
+  setTestimonialsError,
+  addTestimonial,
+  updateTestimonial,
+  removeTestimonial,
+} = testimonialsSlice.actions;
 export default testimonialsSlice.reducer;

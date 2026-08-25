@@ -1,9 +1,7 @@
-import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
-import { collection, getDocs } from 'firebase/firestore';
-import { firestoreDb } from '../../firebase/config';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { FirestoreOffice, DataStatus } from '../types';
 
-const FALLBACK_OFFICES: FirestoreOffice[] = [
+export const FALLBACK_OFFICES: FirestoreOffice[] = [
   {
     id: 'off-1',
     name: 'Estatein HQ — New York',
@@ -98,22 +96,23 @@ const initialState: OfficesState = {
   activeTab: 'All',
 };
 
-export const fetchOffices = createAsyncThunk<FirestoreOffice[]>(
-  'offices/fetchAll',
-  async () => {
-    if (!firestoreDb) return FALLBACK_OFFICES;
-    const querySnapshot = await getDocs(collection(firestoreDb, 'offices'));
-    return querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as FirestoreOffice[];
-  }
-);
-
 const officesSlice = createSlice({
   name: 'offices',
   initialState,
   reducers: {
+    syncOffices(state, action: PayloadAction<FirestoreOffice[]>) {
+      state.data   = action.payload;
+      state.status = 'succeeded';
+      state.error  = null;
+    },
+    setOfficesLoading(state) {
+      state.status = 'loading';
+      state.error  = null;
+    },
+    setOfficesError(state, action: PayloadAction<string>) {
+      state.status = 'failed';
+      state.error  = action.payload;
+    },
     setActiveTab(state, action: PayloadAction<'All' | 'Regional' | 'International'>) {
       state.activeTab = action.payload;
     },
@@ -128,22 +127,15 @@ const officesSlice = createSlice({
       state.data = state.data.filter((o) => o.id !== action.payload);
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchOffices.pending, (state) => {
-        state.status = 'loading';
-        state.error = null;
-      })
-      .addCase(fetchOffices.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.data = action.payload;
-      })
-      .addCase(fetchOffices.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message ?? 'فشل جلب المكاتب';
-      });
-  },
 });
 
-export const { setActiveTab, addOffice, updateOffice, removeOffice } = officesSlice.actions;
+export const {
+  syncOffices,
+  setOfficesLoading,
+  setOfficesError,
+  setActiveTab,
+  addOffice,
+  updateOffice,
+  removeOffice,
+} = officesSlice.actions;
 export default officesSlice.reducer;

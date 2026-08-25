@@ -1,9 +1,7 @@
-import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
-import { collection, getDocs } from 'firebase/firestore';
-import { firestoreDb } from '../../firebase/config';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { FirestoreInfoBox, DataStatus } from '../types';
 
-const FALLBACK_INFOBOXES: FirestoreInfoBox[] = [
+export const FALLBACK_INFOBOXES: FirestoreInfoBox[] = [
   {
     id: 'info-1',
     variant: 'horizontal',
@@ -32,22 +30,23 @@ const initialState: InfoBoxesState = {
   error: null,
 };
 
-export const fetchInfoBoxes = createAsyncThunk<FirestoreInfoBox[]>(
-  'infoBoxes/fetchAll',
-  async () => {
-    if (!firestoreDb) return FALLBACK_INFOBOXES;
-    const querySnapshot = await getDocs(collection(firestoreDb, 'infoBoxes'));
-    return querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as FirestoreInfoBox[];
-  }
-);
-
 const infoBoxesSlice = createSlice({
   name: 'infoBoxes',
   initialState,
   reducers: {
+    syncInfoBoxes(state, action: PayloadAction<FirestoreInfoBox[]>) {
+      state.data   = action.payload;
+      state.status = 'succeeded';
+      state.error  = null;
+    },
+    setInfoBoxesLoading(state) {
+      state.status = 'loading';
+      state.error  = null;
+    },
+    setInfoBoxesError(state, action: PayloadAction<string>) {
+      state.status = 'failed';
+      state.error  = action.payload;
+    },
     addInfoBox(state, action: PayloadAction<FirestoreInfoBox>) {
       state.data.push(action.payload);
     },
@@ -59,22 +58,14 @@ const infoBoxesSlice = createSlice({
       state.data = state.data.filter((b) => b.id !== action.payload);
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchInfoBoxes.pending, (state) => {
-        state.status = 'loading';
-        state.error = null;
-      })
-      .addCase(fetchInfoBoxes.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.data = action.payload;
-      })
-      .addCase(fetchInfoBoxes.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message ?? 'فشل جلب صناديق المعلومات';
-      });
-  },
 });
 
-export const { addInfoBox, updateInfoBox, removeInfoBox } = infoBoxesSlice.actions;
+export const {
+  syncInfoBoxes,
+  setInfoBoxesLoading,
+  setInfoBoxesError,
+  addInfoBox,
+  updateInfoBox,
+  removeInfoBox,
+} = infoBoxesSlice.actions;
 export default infoBoxesSlice.reducer;

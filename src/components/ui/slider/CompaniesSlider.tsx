@@ -7,15 +7,12 @@ import { AiOutlineThunderbolt } from "react-icons/ai";
 import { useCompanies } from "../../../hooks/useCompanies";
 import { LoadingSkeleton } from "../LoadingSkeleton";
 import { ErrorMessage } from "../ErrorMessage";
-import { useAppDispatch } from "../../../store";
-import { fetchCompanies } from "../../../store/slices/companiesSlice";
 import type { FirestoreCompany } from "../../../store/types";
 
 const GAP = 20;
 
 const CompaniesSlider = () => {
   const { companies, status, error } = useCompanies();
-  const dispatch = useAppDispatch();
   const { currentIndex, goNext, goPrev, itemsToShow, maxIndex } =
     useSlider(companies, "two");
 
@@ -27,7 +24,7 @@ const CompaniesSlider = () => {
     return (
       <ErrorMessage
         message={error ?? 'فشل جلب بيانات الشركات'}
-        onRetry={() => dispatch(fetchCompanies())}
+        onRetry={() => window.location.reload()}
       />
     );
   }

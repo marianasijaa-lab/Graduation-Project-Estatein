@@ -6,8 +6,6 @@ import { useNavigate } from "react-router";
 import { useProperties } from "../../../hooks/useProperties";
 import { LoadingSkeleton } from "../LoadingSkeleton";
 import { ErrorMessage } from "../ErrorMessage";
-import { useAppDispatch } from "../../../store";
-import { fetchProperties } from "../../../store/slices/propertiesSlice";
 import type { FirestoreProperty } from "../../../store/types";
 
 interface CardProps {
@@ -16,7 +14,6 @@ interface CardProps {
 
 const CardsSlider = () => {
   const { properties, status, error } = useProperties();
-  const dispatch = useAppDispatch();
   const { currentIndex, goNext, goPrev, itemsToShow, maxIndex } =
     useSlider(properties);
 
@@ -28,7 +25,7 @@ const CardsSlider = () => {
     return (
       <ErrorMessage
         message={error ?? 'فشل جلب العقارات'}
-        onRetry={() => dispatch(fetchProperties())}
+        onRetry={() => window.location.reload()}
       />
     );
   }

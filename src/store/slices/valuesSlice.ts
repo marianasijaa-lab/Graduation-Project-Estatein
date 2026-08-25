@@ -1,9 +1,7 @@
-import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
-import { collection, getDocs } from 'firebase/firestore';
-import { firestoreDb } from '../../firebase/config';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { FirestoreValue, DataStatus } from '../types';
 
-const FALLBACK_VALUES: FirestoreValue[] = [
+export const FALLBACK_VALUES: FirestoreValue[] = [
   {
     id: 'val-1',
     icon: '/assets/Icon_33.png',
@@ -42,22 +40,23 @@ const initialState: ValuesState = {
   error: null,
 };
 
-export const fetchValues = createAsyncThunk<FirestoreValue[]>(
-  'values/fetchAll',
-  async () => {
-    if (!firestoreDb) return FALLBACK_VALUES;
-    const querySnapshot = await getDocs(collection(firestoreDb, 'values'));
-    return querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as FirestoreValue[];
-  }
-);
-
 const valuesSlice = createSlice({
   name: 'values',
   initialState,
   reducers: {
+    syncValues(state, action: PayloadAction<FirestoreValue[]>) {
+      state.data   = action.payload;
+      state.status = 'succeeded';
+      state.error  = null;
+    },
+    setValuesLoading(state) {
+      state.status = 'loading';
+      state.error  = null;
+    },
+    setValuesError(state, action: PayloadAction<string>) {
+      state.status = 'failed';
+      state.error  = action.payload;
+    },
     addValue(state, action: PayloadAction<FirestoreValue>) {
       state.data.push(action.payload);
     },
@@ -69,22 +68,14 @@ const valuesSlice = createSlice({
       state.data = state.data.filter((v) => v.id !== action.payload);
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchValues.pending, (state) => {
-        state.status = 'loading';
-        state.error = null;
-      })
-      .addCase(fetchValues.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.data = action.payload;
-      })
-      .addCase(fetchValues.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message ?? 'فشل جلب القيم المؤسسية';
-      });
-  },
 });
 
-export const { addValue, updateValue, removeValue } = valuesSlice.actions;
+export const {
+  syncValues,
+  setValuesLoading,
+  setValuesError,
+  addValue,
+  updateValue,
+  removeValue,
+} = valuesSlice.actions;
 export default valuesSlice.reducer;

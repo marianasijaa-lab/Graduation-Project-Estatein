@@ -8,9 +8,6 @@ import { useValues } from '../hooks/useValues';
 import { useAchievements } from '../hooks/useAchievements';
 import { LoadingSkeleton } from '../components/ui/LoadingSkeleton';
 import { ErrorMessage } from '../components/ui/ErrorMessage';
-import { useAppDispatch } from '../store';
-import { fetchValues } from '../store/slices/valuesSlice';
-import { fetchAchievements } from '../store/slices/achievementsSlice';
 import MeetTheEstaein from '../components/MeetTheEstaein';
 import { NavigatingTheEstatein } from '../components/NavigatingTheEstatein';
 
@@ -19,7 +16,6 @@ import { NavigatingTheEstatein } from '../components/NavigatingTheEstatein';
 const OurAchievements: React.FC = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
-  const dispatch = useAppDispatch();
   const { achievements, status, error } = useAchievements();
 
   return (
@@ -36,7 +32,7 @@ const OurAchievements: React.FC = () => {
         {status === 'failed' && (
           <ErrorMessage
             message={error ?? 'فشل جلب الإنجازات'}
-            onRetry={() => dispatch(fetchAchievements())}
+            onRetry={() => window.location.reload()}
           />
         )}
         {status === 'succeeded' && (
@@ -70,7 +66,6 @@ const OurAchievements: React.FC = () => {
 const OurValues: React.FC = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
-  const dispatch = useAppDispatch();
   const { values, status, error } = useValues();
 
   return (
@@ -95,7 +90,7 @@ const OurValues: React.FC = () => {
               <div className="p-6">
                 <ErrorMessage
                   message={error ?? 'فشل جلب القيم'}
-                  onRetry={() => dispatch(fetchValues())}
+                  onRetry={() => window.location.reload()}
                 />
               </div>
             )}

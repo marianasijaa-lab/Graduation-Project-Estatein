@@ -6,15 +6,12 @@ import { FaStar } from "react-icons/fa";
 import { useTestimonials } from "../../../hooks/useTestimonials";
 import { LoadingSkeleton } from "../LoadingSkeleton";
 import { ErrorMessage } from "../ErrorMessage";
-import { useAppDispatch } from "../../../store";
-import { fetchTestimonials } from "../../../store/slices/testimonialsSlice";
 import type { FirestoreTestimonial } from "../../../store/types";
 
 const GAP = 24; // يجب أن يطابق قيمة GAP في BaseSlider
 
 const TestimonialsSlider = () => {
   const { testimonials, status, error } = useTestimonials();
-  const dispatch = useAppDispatch();
   const { currentIndex, goNext, goPrev, itemsToShow, maxIndex } =
     useSlider(testimonials);
 
@@ -26,7 +23,7 @@ const TestimonialsSlider = () => {
     return (
       <ErrorMessage
         message={error ?? 'فشل جلب آراء العملاء'}
-        onRetry={() => dispatch(fetchTestimonials())}
+        onRetry={() => window.location.reload()}
       />
     );
   }

@@ -1,9 +1,7 @@
-import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
-import { collection, getDocs } from 'firebase/firestore';
-import { firestoreDb } from '../../firebase/config';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { FirestoreAchievement, DataStatus } from '../types';
 
-const FALLBACK_ACHIEVEMENTS: FirestoreAchievement[] = [
+export const FALLBACK_ACHIEVEMENTS: FirestoreAchievement[] = [
   {
     id: 'ach-1',
     title: '3+ Years of Excellence',
@@ -33,22 +31,23 @@ const initialState: AchievementsState = {
   error: null,
 };
 
-export const fetchAchievements = createAsyncThunk<FirestoreAchievement[]>(
-  'achievements/fetchAll',
-  async () => {
-    if (!firestoreDb) return FALLBACK_ACHIEVEMENTS;
-    const querySnapshot = await getDocs(collection(firestoreDb, 'achievements'));
-    return querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as FirestoreAchievement[];
-  }
-);
-
 const achievementsSlice = createSlice({
   name: 'achievements',
   initialState,
   reducers: {
+    syncAchievements(state, action: PayloadAction<FirestoreAchievement[]>) {
+      state.data   = action.payload;
+      state.status = 'succeeded';
+      state.error  = null;
+    },
+    setAchievementsLoading(state) {
+      state.status = 'loading';
+      state.error  = null;
+    },
+    setAchievementsError(state, action: PayloadAction<string>) {
+      state.status = 'failed';
+      state.error  = action.payload;
+    },
     addAchievement(state, action: PayloadAction<FirestoreAchievement>) {
       state.data.push(action.payload);
     },
@@ -60,22 +59,14 @@ const achievementsSlice = createSlice({
       state.data = state.data.filter((a) => a.id !== action.payload);
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchAchievements.pending, (state) => {
-        state.status = 'loading';
-        state.error = null;
-      })
-      .addCase(fetchAchievements.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.data = action.payload;
-      })
-      .addCase(fetchAchievements.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message ?? 'فشل جلب الإنجازات';
-      });
-  },
 });
 
-export const { addAchievement, updateAchievement, removeAchievement } = achievementsSlice.actions;
+export const {
+  syncAchievements,
+  setAchievementsLoading,
+  setAchievementsError,
+  addAchievement,
+  updateAchievement,
+  removeAchievement,
+} = achievementsSlice.actions;
 export default achievementsSlice.reducer;
