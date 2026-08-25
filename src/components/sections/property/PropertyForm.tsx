@@ -1,0 +1,139 @@
+import { FaLocationDot } from "react-icons/fa6";
+import FormField from "./FormField";
+
+interface PropertyFormProps {
+  propertyLocation?: string;
+}
+
+const PropertyForm = ({
+  propertyLocation = "Seaside Serenity Villa, Malibu, California",
+}: PropertyFormProps) => {
+  const fields = [
+    {
+      label: "First Name",
+      placeholder: "Enter First Name",
+    },
+    {
+      label: "Last Name",
+      placeholder: "Enter Last Name",
+    },
+    {
+      label: "Email",
+      placeholder: "Enter your Email",
+      type: "email",
+    },
+    {
+      label: "Phone",
+      placeholder: "Enter Phone Number",
+      type: "tel",
+    },
+  ];
+
+  return (
+    <form
+      className="
+        w-full rounded-[10px] border border-[#262626]
+        bg-[#141414] p-[25px]
+        sm:p-[35px]
+        xl:h-[862px] xl:w-[984px] xl:p-[50px]
+      "
+    >
+      {/* Inputs */}
+      <div className="grid grid-cols-1 gap-[30px] sm:grid-cols-2">
+        {fields.map((field) => (
+          <FormField key={field.label} {...field} />
+        ))}
+      </div>
+
+      {/* Selected Property */}
+      <div className="mt-[30px]">
+        <label className="mb-[12px] block font-['Urbanist'] text-[14px] font-semibold text-white">
+          Selected Property
+        </label>
+
+        <div className="relative">
+          <input
+            value={propertyLocation}
+            readOnly
+            className="
+              h-[72px] w-full rounded-[8px]
+              border border-[#262626]
+              bg-[#141414] px-[20px] pr-[55px]
+              font-['Urbanist'] text-[14px]
+              font-medium text-white outline-none
+            "
+          />
+
+          <FaLocationDot
+            className="
+              absolute right-[20px] top-1/2
+              -translate-y-1/2 text-[18px] text-white
+            "
+          />
+        </div>
+      </div>
+
+      {/* Message */}
+      <div className="mt-[30px]">
+        <label className="mb-[12px] block font-['Urbanist'] text-[14px] font-semibold text-white">
+          Message
+        </label>
+
+        <textarea
+          placeholder="Enter your Message here"
+          className="
+            h-[170px] w-full resize-none
+            rounded-[8px] border border-[#262626]
+            bg-[#141414] px-[20px] py-[20px]
+            font-['Urbanist'] text-[14px]
+            text-white outline-none
+            placeholder:text-[#666666]
+            focus:border-[#703BF7]
+          "
+        />
+      </div>
+
+      {/* Bottom */}
+      <div
+        className="
+          mt-[30px] flex flex-col gap-[30px]
+          sm:flex-row sm:items-center
+          sm:justify-between sm:gap-[50px]
+        "
+      >
+        <label className="flex min-h-[28px] max-w-[584px] items-center gap-[10px]">
+          <input
+            type="checkbox"
+            className="
+              h-[20px] w-[20px] shrink-0
+              appearance-none rounded-[4px]
+              border border-[#262626]
+              bg-[#141414]
+              checked:bg-[#703BF7]
+            "
+          />
+
+          <span className="font-['Urbanist'] text-[13px] text-[#999999]">
+            I agree with Terms of Use and Privacy Policy
+          </span>
+        </label>
+
+        <button
+          type="submit"
+          className="
+            h-[60px] w-full rounded-[8px]
+            bg-[#703BF7]
+            font-['Urbanist'] text-[14px]
+            font-semibold text-white
+            hover:bg-[#5f2fe0]
+            sm:w-[250px]
+          "
+        >
+          Send Your Message
+        </button>
+      </div>
+    </form>
+  );
+};
+
+export default PropertyForm;
