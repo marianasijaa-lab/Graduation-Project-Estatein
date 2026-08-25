@@ -1,13 +1,8 @@
 import { useState } from "react";
 import { FiEdit2, FiSearch, FiTrash2 } from "react-icons/fi";
 import { useTheme } from "../../Context/ThemeContext";
-import { useAppDispatch } from "../../store";
 import { useAchievements } from "../../hooks/useAchievements";
-import {
-  createAchievementDoc,
-  deleteAchievementDoc,
-  updateAchievementDoc,
-} from "../../store/slices/achievementsSlice";
+import { addDocument, updateDocument, deleteDocument } from "../../api/firestore";
 import type { FirestoreAchievement } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { AchievementFormModal } from "../../components/sections/dashboard/AchievementFormModal";
@@ -29,7 +24,6 @@ export const AchievementsManagement = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const dispatch = useAppDispatch();
   const { achievements, status } = useAchievements();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -45,20 +39,27 @@ export const AchievementsManagement = () => {
   const openEditModal = (achievement: FirestoreAchievement) => setFormModal({ mode: "edit", achievement });
   const closeFormModal = () => setFormModal(null);
 
-  const handleFormSubmit = (values: Omit<FirestoreAchievement, "id">) => {
-    if (formModal?.mode === "edit") {
-      // Merge onto the existing record (not a full replace) so any
-      // Firestore-only fields this form doesn't manage aren't wiped out.
-      dispatch(updateAchievementDoc({ ...formModal.achievement, ...values, id: formModal.achievement.id }));
-    } else {
-      dispatch(createAchievementDoc(values));
+  const handleFormSubmit = async (values: Omit<FirestoreAchievement, "id">) => {
+    try {
+      if (formModal?.mode === "edit") {
+        // Partial merge — Firestore only touches the fields this form sends.
+        await updateDocument<FirestoreAchievement>("achievements", formModal.achievement.id, values);
+      } else {
+        await addDocument<FirestoreAchievement>("achievements", values);
+      }
+    } catch (error) {
+      console.error("Failed to save achievement:", error);
     }
     setFormModal(null);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (deleteTarget) {
-      dispatch(deleteAchievementDoc(deleteTarget.id));
+      try {
+        await deleteDocument("achievements", deleteTarget.id);
+      } catch (error) {
+        console.error("Failed to delete achievement:", error);
+      }
     }
     setDeleteTarget(null);
   };

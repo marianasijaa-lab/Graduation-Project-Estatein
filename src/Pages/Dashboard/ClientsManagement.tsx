@@ -1,13 +1,8 @@
 import { useMemo, useState } from "react";
 import { FiEdit2, FiSearch, FiTrash2 } from "react-icons/fi";
 import { useTheme } from "../../Context/ThemeContext";
-import { useAppDispatch } from "../../store";
 import { useCompanies } from "../../hooks/useCompanies";
-import {
-  createCompanyDoc,
-  deleteCompanyDoc,
-  updateCompanyDoc,
-} from "../../store/slices/companiesSlice";
+import { addDocument, updateDocument, deleteDocument } from "../../api/firestore";
 import type { FirestoreCompany } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { ClientFormModal } from "../../components/sections/dashboard/ClientFormModal";
@@ -35,7 +30,6 @@ export const ClientsManagement = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const dispatch = useAppDispatch();
   const { companies: clients, status } = useCompanies();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -60,20 +54,27 @@ export const ClientsManagement = () => {
   const openEditModal = (client: FirestoreCompany) => setFormModal({ mode: "edit", client });
   const closeFormModal = () => setFormModal(null);
 
-  const handleFormSubmit = (values: Omit<FirestoreCompany, "id">) => {
-    if (formModal?.mode === "edit") {
-      // Merge onto the existing record (not a full replace) so any
-      // Firestore-only fields this form doesn't manage aren't wiped out.
-      dispatch(updateCompanyDoc({ ...formModal.client, ...values, id: formModal.client.id }));
-    } else {
-      dispatch(createCompanyDoc(values));
+  const handleFormSubmit = async (values: Omit<FirestoreCompany, "id">) => {
+    try {
+      if (formModal?.mode === "edit") {
+        // Partial merge — Firestore only touches the fields this form sends.
+        await updateDocument<FirestoreCompany>("companies", formModal.client.id, values);
+      } else {
+        await addDocument<FirestoreCompany>("companies", values);
+      }
+    } catch (error) {
+      console.error("Failed to save client:", error);
     }
     setFormModal(null);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (deleteTarget) {
-      dispatch(deleteCompanyDoc(deleteTarget.id));
+      try {
+        await deleteDocument("companies", deleteTarget.id);
+      } catch (error) {
+        console.error("Failed to delete client:", error);
+      }
     }
     setDeleteTarget(null);
   };

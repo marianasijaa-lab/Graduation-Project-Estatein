@@ -5,16 +5,12 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useProperties } from "../../../hooks/useProperties";
 import { LoadingSkeleton } from "../../ui/LoadingSkeleton";
 import { ErrorMessage } from "../../ui/ErrorMessage";
-import { useAppDispatch } from "../../../store";
-import { fetchProperties } from "../../../store/slices/propertiesSlice";
-
 const ITEMS_PER_PAGE = 3;
 const pad = (n: number) => String(n).padStart(2, "0");
 
 export function PropertiesGrid() {
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const { properties, status, error } = useProperties();
 
   if (status === 'loading' || status === 'idle') {
@@ -25,7 +21,7 @@ export function PropertiesGrid() {
     return (
       <ErrorMessage
         message={error ?? 'فشل جلب العقارات'}
-        onRetry={() => dispatch(fetchProperties())}
+        onRetry={() => window.location.reload()}
       />
     );
   }

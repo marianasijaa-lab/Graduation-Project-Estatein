@@ -1,6 +1,4 @@
-import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
-import { firestoreDb } from '../../firebase/config';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { FirestoreProperty, DataStatus } from '../types';
 
 const FALLBACK_PROPERTIES: FirestoreProperty[] = [
@@ -114,51 +112,25 @@ const initialState: PropertiesState = {
   error: null,
 };
 
-export const fetchProperties = createAsyncThunk<FirestoreProperty[]>(
-  'properties/fetchAll',
-  async () => {
-    if (!firestoreDb) return FALLBACK_PROPERTIES;
-    const querySnapshot = await getDocs(collection(firestoreDb, 'properties'));
-    return querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as FirestoreProperty[];
-  }
-);
-
-// Real Firestore writes for the dashboard. Additive alongside fetchProperties
-// and the local addProperty/updateProperty/removeProperty reducers below —
-// nothing about the read side changes.
-export const createPropertyDoc = createAsyncThunk<FirestoreProperty, Omit<FirestoreProperty, 'id'>>(
-  'properties/create',
-  async (property) => {
-    if (!firestoreDb) return { ...property, id: crypto.randomUUID() };
-    const docRef = await addDoc(collection(firestoreDb, 'properties'), property);
-    return { id: docRef.id, ...property };
-  }
-);
-
-export const updatePropertyDoc = createAsyncThunk<FirestoreProperty, FirestoreProperty>(
-  'properties/update',
-  async (property) => {
-    const { id, ...rest } = property;
-    if (firestoreDb) await updateDoc(doc(firestoreDb, 'properties', id), rest);
-    return property;
-  }
-);
-
-export const deletePropertyDoc = createAsyncThunk<string, string>(
-  'properties/delete',
-  async (id) => {
-    if (firestoreDb) await deleteDoc(doc(firestoreDb, 'properties', id));
-    return id;
-  }
-);
-
 const propertiesSlice = createSlice({
   name: 'properties',
   initialState,
   reducers: {
+    // ── onSnapshot يُطلق هذا عند كل تغيير في Firestore ──────────────────
+    syncProperties(state, action: PayloadAction<FirestoreProperty[]>) {
+      state.data   = action.payload;
+      state.status = 'succeeded';
+      state.error  = null;
+    },
+    setPropertiesLoading(state) {
+      state.status = 'loading';
+      state.error  = null;
+    },
+    setPropertiesError(state, action: PayloadAction<string>) {
+      state.status = 'failed';
+      state.error  = action.payload;
+    },
+    // ── عمليات CRUD المحلية (تُستخدم مع addDocument / updateDocument / deleteDocument) ──
     addProperty(state, action: PayloadAction<FirestoreProperty>) {
       state.data.push(action.payload);
     },
@@ -170,32 +142,16 @@ const propertiesSlice = createSlice({
       state.data = state.data.filter((p) => p.id !== action.payload);
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchProperties.pending, (state) => {
-        state.status = 'loading';
-        state.error = null;
-      })
-      .addCase(fetchProperties.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.data = action.payload;
-      })
-      .addCase(fetchProperties.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message ?? 'فشل جلب العقارات';
-      })
-      .addCase(createPropertyDoc.fulfilled, (state, action) => {
-        state.data.push(action.payload);
-      })
-      .addCase(updatePropertyDoc.fulfilled, (state, action) => {
-        const index = state.data.findIndex((p) => p.id === action.payload.id);
-        if (index !== -1) state.data[index] = action.payload;
-      })
-      .addCase(deletePropertyDoc.fulfilled, (state, action) => {
-        state.data = state.data.filter((p) => p.id !== action.payload);
-      });
-  },
 });
 
-export const { addProperty, updateProperty, removeProperty } = propertiesSlice.actions;
+export const {
+  syncProperties,
+  setPropertiesLoading,
+  setPropertiesError,
+  addProperty,
+  updateProperty,
+  removeProperty,
+} = propertiesSlice.actions;
 export default propertiesSlice.reducer;
+
+export { FALLBACK_PROPERTIES };

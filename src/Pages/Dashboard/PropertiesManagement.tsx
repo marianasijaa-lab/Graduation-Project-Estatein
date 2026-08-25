@@ -1,13 +1,8 @@
 import { useState } from "react";
 import { FiEdit2, FiSearch, FiTrash2 } from "react-icons/fi";
 import { useTheme } from "../../Context/ThemeContext";
-import { useAppDispatch } from "../../store";
 import { useProperties } from "../../hooks/useProperties";
-import {
-  createPropertyDoc,
-  deletePropertyDoc,
-  updatePropertyDoc,
-} from "../../store/slices/propertiesSlice";
+import { addDocument, updateDocument, deleteDocument } from "../../api/firestore";
 import type { FirestoreProperty } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { PropertyFormModal } from "../../components/sections/dashboard/PropertyFormModal";
@@ -15,6 +10,19 @@ import { ConfirmDialog } from "../../components/sections/dashboard/ConfirmDialog
 import { DetailModal, type DetailField } from "../../components/sections/dashboard/DetailModal";
 
 type FormModalState = { mode: "add" } | { mode: "edit"; property: FirestoreProperty } | null;
+
+// createdAt is stamped server-side (serverTimestamp()), which Firestore hands
+// back as a Timestamp object, not the plain string the type declares — handle
+// both so the detail view never shows "[object Object]".
+function formatCreatedAt(createdAt: FirestoreProperty["createdAt"]): string {
+  if (!createdAt) return "—";
+  const value: unknown = createdAt;
+  if (value !== null && typeof value === "object" && "toDate" in value && typeof (value as { toDate: unknown }).toDate === "function") {
+    return (value as { toDate: () => Date }).toDate().toLocaleString();
+  }
+  const parsed = new Date(createdAt);
+  return Number.isNaN(parsed.getTime()) ? String(createdAt) : parsed.toLocaleString();
+}
 
 // Every Property field, for the detail view.
 function buildPropertyDetailFields(property: FirestoreProperty): DetailField[] {
@@ -62,8 +70,38 @@ function buildPropertyDetailFields(property: FirestoreProperty): DetailField[] {
         </span>
       ),
     },
-    { label: "Price — Home Page", value: `$${property.priceHome.toLocaleString()}` },
-    { label: "Price — Properties Page", value: `$${property.priceProperties.toLocaleString()}` },
+    {
+      label: "Price — Home Page",
+      value: `${property.currency ?? "USD"} ${property.priceHome.toLocaleString()}`,
+    },
+    {
+      label: "Price — Properties Page",
+      value: `${property.currency ?? "USD"} ${property.priceProperties.toLocaleString()}`,
+    },
+    { label: "Location", value: property.location || "—" },
+    { label: "Size", value: property.size !== undefined ? `${property.size.toLocaleString()} sq ft` : "—" },
+    { label: "Build Year", value: property.buildYear ?? "—" },
+    { label: "Featured", value: property.featured ? "Yes" : "No" },
+    {
+      label: "Amenities",
+      value:
+        property.amenities && property.amenities.length > 0 ? (
+          <div className="flex flex-wrap gap-2">
+            {property.amenities.map((amenity) => (
+              <span
+                key={amenity}
+                className="px-2.5 py-1 rounded-full text-xs font-medium border border-gray-500/20 bg-gray-500/10 text-current"
+              >
+                {amenity}
+              </span>
+            ))}
+          </div>
+        ) : (
+          "—"
+        ),
+      fullWidth: true,
+    },
+    { label: "Created At", value: formatCreatedAt(property.createdAt) },
   ];
 }
 
@@ -71,7 +109,6 @@ export const PropertiesManagement = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const dispatch = useAppDispatch();
   const { properties, status } = useProperties();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -87,21 +124,27 @@ export const PropertiesManagement = () => {
   const openEditModal = (property: FirestoreProperty) => setFormModal({ mode: "edit", property });
   const closeFormModal = () => setFormModal(null);
 
-  const handleFormSubmit = (values: Omit<FirestoreProperty, "id">) => {
-    if (formModal?.mode === "edit") {
-      // Merge onto the existing record (not a full replace) so Firestore-only
-      // fields this form doesn't manage (location, size, amenities, ...)
-      // aren't wiped out by the update.
-      dispatch(updatePropertyDoc({ ...formModal.property, ...values, id: formModal.property.id }));
-    } else {
-      dispatch(createPropertyDoc(values));
+  const handleFormSubmit = async (values: Omit<FirestoreProperty, "id">) => {
+    try {
+      if (formModal?.mode === "edit") {
+        // Partial merge — Firestore only touches the fields this form sends.
+        await updateDocument<FirestoreProperty>("properties", formModal.property.id, values);
+      } else {
+        await addDocument<FirestoreProperty>("properties", values);
+      }
+    } catch (error) {
+      console.error("Failed to save property:", error);
     }
     setFormModal(null);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (deleteTarget) {
-      dispatch(deletePropertyDoc(deleteTarget.id));
+      try {
+        await deleteDocument("properties", deleteTarget.id);
+      } catch (error) {
+        console.error("Failed to delete property:", error);
+      }
     }
     setDeleteTarget(null);
   };
@@ -195,13 +238,24 @@ export const PropertiesManagement = () => {
                     />
                   </td>
                   <td className={`px-5 py-3 font-medium ${isDark ? "text-white" : "text-gray-900"}`}>
-                    {property.name}
+                    <span className="inline-flex items-center gap-1.5">
+                      {property.name}
+                      {property.featured && (
+                        <span
+                          title="Featured"
+                          aria-label="Featured"
+                          className="text-primary-light text-xs"
+                        >
+                          ★
+                        </span>
+                      )}
+                    </span>
                   </td>
                   <td className={`px-5 py-3 ${isDark ? "text-gray" : "text-gray-600"}`}>
                     {property.propertyType ?? "—"}
                   </td>
                   <td className={`px-5 py-3 font-medium ${isDark ? "text-white" : "text-gray-900"}`}>
-                    ${property.priceProperties.toLocaleString()}
+                    {property.currency ?? "USD"} {property.priceProperties.toLocaleString()}
                   </td>
                   <td className="px-5 py-3">
                     <div className="flex items-center justify-end gap-2">
@@ -268,8 +322,13 @@ export const PropertiesManagement = () => {
                   className="w-16 h-16 rounded-lg object-cover shrink-0"
                 />
                 <div className="flex-1 min-w-0">
-                  <h3 className={`font-semibold truncate ${isDark ? "text-white" : "text-gray-900"}`}>
+                  <h3 className={`font-semibold truncate flex items-center gap-1.5 ${isDark ? "text-white" : "text-gray-900"}`}>
                     {property.name}
+                    {property.featured && (
+                      <span title="Featured" aria-label="Featured" className="text-primary-light text-xs">
+                        ★
+                      </span>
+                    )}
                   </h3>
                   <p className={`text-sm truncate ${isDark ? "text-gray" : "text-gray-500"}`}>
                     {property.propertyType ?? "—"} · {property.bedrooms ?? "—"} bd / {property.bathrooms ?? "—"} ba
@@ -280,7 +339,7 @@ export const PropertiesManagement = () => {
               <div className={`mt-4 flex items-center justify-between text-sm ${isDark ? "text-gray" : "text-gray-600"}`}>
                 <span>Price</span>
                 <span className={`font-semibold ${isDark ? "text-white" : "text-gray-900"}`}>
-                  ${property.priceProperties.toLocaleString()}
+                  {property.currency ?? "USD"} {property.priceProperties.toLocaleString()}
                 </span>
               </div>
 

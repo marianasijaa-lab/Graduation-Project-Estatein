@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { SectionHeader } from "../components/common/SectionHeader";
-import { ContactForm } from "../components/sections/contact/ContactForm";
+import OfficeLocations from "../components/OfficeLocations/OfficeLocations";
 import PageHero from "../components/sections/hero/PageHero";
 import ServiceCard from "../components/sections/services/ServiceCard";
+import TeamCard from "../components/TeamCard/TeamCard";
+import { ContactForm } from "../components/sections/contact/ContactForm";
 import { useServices } from "../hooks/useServices";
 import { LoadingSkeleton } from "../components/ui/LoadingSkeleton";
 import { ErrorMessage } from "../components/ui/ErrorMessage";
-import { useAppDispatch } from "../store";
-import { fetchServices } from "../store/slices/servicesSlice";
 import { OfficesSection } from "../components/sections/contact/OfficesSection";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { firestoreDb } from "../firebase/config";
@@ -16,7 +16,6 @@ type SubmitStatus = "idle" | "submitting" | "submitted" | "error";
 
 const Contact = () => {
   const { services, status, error } = useServices();
-  const dispatch = useAppDispatch();
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>("idle");
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -62,7 +61,7 @@ const Contact = () => {
           {status === "failed" && (
             <ErrorMessage
               message={error ?? "فشل جلب الخدمات"}
-              onRetry={() => dispatch(fetchServices())}
+              onRetry={() => window.location.reload()}
             />
           )}
           {status === "succeeded" && (
@@ -126,6 +125,16 @@ const Contact = () => {
         />
       </div>
 
+      <div className="w-full max-w-[1590px] mx-auto px-6 sm:px-10 lg:px-16 pt-10 sm:pt-14">
+        <SectionHeader
+          title="Explore Estatein's World"
+          subtitle="Step inside the world of Estatein, where professionalism meets warmth, and expertise meets passion. Our gallery offers a glimpse into our team and workspaces, inviting you to get to know us better."
+          className="mb-10"
+          fullWidth
+        />
+      </div>
+      <OfficeLocations />
+      <TeamCard />
       {/* Offices Section */}
       <OfficesSection />
     </div>

@@ -1,9 +1,7 @@
-import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
-import { firestoreDb } from '../../firebase/config';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { FirestoreCompany, DataStatus } from '../types';
 
-const FALLBACK_COMPANIES: FirestoreCompany[] = [
+export const FALLBACK_COMPANIES: FirestoreCompany[] = [
   {
     id: 'comp-1',
     date: 'Since 2019',
@@ -63,51 +61,23 @@ const initialState: CompaniesState = {
   error: null,
 };
 
-export const fetchCompanies = createAsyncThunk<FirestoreCompany[]>(
-  'companies/fetchAll',
-  async () => {
-    if (!firestoreDb) return FALLBACK_COMPANIES;
-    const querySnapshot = await getDocs(collection(firestoreDb, 'companies'));
-    return querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as FirestoreCompany[];
-  }
-);
-
-// Real Firestore writes for the dashboard. Additive alongside fetchCompanies
-// and the local addCompany/updateCompany/removeCompany reducers below —
-// nothing about the read side changes.
-export const createCompanyDoc = createAsyncThunk<FirestoreCompany, Omit<FirestoreCompany, 'id'>>(
-  'companies/create',
-  async (company) => {
-    if (!firestoreDb) return { ...company, id: crypto.randomUUID() };
-    const docRef = await addDoc(collection(firestoreDb, 'companies'), company);
-    return { id: docRef.id, ...company };
-  }
-);
-
-export const updateCompanyDoc = createAsyncThunk<FirestoreCompany, FirestoreCompany>(
-  'companies/update',
-  async (company) => {
-    const { id, ...rest } = company;
-    if (firestoreDb) await updateDoc(doc(firestoreDb, 'companies', id), rest);
-    return company;
-  }
-);
-
-export const deleteCompanyDoc = createAsyncThunk<string, string>(
-  'companies/delete',
-  async (id) => {
-    if (firestoreDb) await deleteDoc(doc(firestoreDb, 'companies', id));
-    return id;
-  }
-);
-
 const companiesSlice = createSlice({
   name: 'companies',
   initialState,
   reducers: {
+    syncCompanies(state, action: PayloadAction<FirestoreCompany[]>) {
+      state.data   = action.payload;
+      state.status = 'succeeded';
+      state.error  = null;
+    },
+    setCompaniesLoading(state) {
+      state.status = 'loading';
+      state.error  = null;
+    },
+    setCompaniesError(state, action: PayloadAction<string>) {
+      state.status = 'failed';
+      state.error  = action.payload;
+    },
     addCompany(state, action: PayloadAction<FirestoreCompany>) {
       state.data.push(action.payload);
     },
@@ -119,32 +89,14 @@ const companiesSlice = createSlice({
       state.data = state.data.filter((c) => c.id !== action.payload);
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchCompanies.pending, (state) => {
-        state.status = 'loading';
-        state.error = null;
-      })
-      .addCase(fetchCompanies.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.data = action.payload;
-      })
-      .addCase(fetchCompanies.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message ?? 'فشل جلب بيانات الشركات';
-      })
-      .addCase(createCompanyDoc.fulfilled, (state, action) => {
-        state.data.push(action.payload);
-      })
-      .addCase(updateCompanyDoc.fulfilled, (state, action) => {
-        const index = state.data.findIndex((c) => c.id === action.payload.id);
-        if (index !== -1) state.data[index] = action.payload;
-      })
-      .addCase(deleteCompanyDoc.fulfilled, (state, action) => {
-        state.data = state.data.filter((c) => c.id !== action.payload);
-      });
-  },
 });
 
-export const { addCompany, updateCompany, removeCompany } = companiesSlice.actions;
+export const {
+  syncCompanies,
+  setCompaniesLoading,
+  setCompaniesError,
+  addCompany,
+  updateCompany,
+  removeCompany,
+} = companiesSlice.actions;
 export default companiesSlice.reducer;

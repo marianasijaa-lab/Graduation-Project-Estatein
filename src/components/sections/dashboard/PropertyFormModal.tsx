@@ -6,6 +6,8 @@ import { Button } from "../../ui/Button";
 import type { FirestoreProperty } from "../../../store/types";
 
 const MAX_IMAGE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
+const MIN_BUILD_YEAR = 1800;
+const MAX_BUILD_YEAR = new Date().getFullYear();
 
 const PROPERTY_TYPE_OPTIONS = [
   "Villa",
@@ -15,6 +17,8 @@ const PROPERTY_TYPE_OPTIONS = [
   "Cottage",
   "Land",
 ] as const;
+
+const CURRENCY_OPTIONS = ["USD", "EUR", "GBP"] as const;
 
 interface PropertyFormState {
   name: string;
@@ -27,6 +31,12 @@ interface PropertyFormState {
   bathrooms: string;
   priceHome: string;
   priceProperties: string;
+  location: string;
+  size: string;
+  buildYear: string;
+  amenities: string[];
+  featured: boolean;
+  currency: string;
 }
 
 type PropertyFormErrors = Partial<Record<keyof PropertyFormState, string>>;
@@ -44,6 +54,12 @@ function buildInitialState(initialData?: FirestoreProperty): PropertyFormState {
       bathrooms: "",
       priceHome: "",
       priceProperties: "",
+      location: "",
+      size: "",
+      buildYear: "",
+      amenities: [],
+      featured: false,
+      currency: CURRENCY_OPTIONS[0],
     };
   }
   return {
@@ -57,6 +73,12 @@ function buildInitialState(initialData?: FirestoreProperty): PropertyFormState {
     bathrooms: initialData.bathrooms !== undefined ? String(initialData.bathrooms) : "",
     priceHome: String(initialData.priceHome),
     priceProperties: String(initialData.priceProperties),
+    location: initialData.location ?? "",
+    size: initialData.size !== undefined ? String(initialData.size) : "",
+    buildYear: initialData.buildYear !== undefined ? String(initialData.buildYear) : "",
+    amenities: initialData.amenities ?? [],
+    featured: initialData.featured ?? false,
+    currency: initialData.currency ?? CURRENCY_OPTIONS[0],
   };
 }
 
@@ -92,6 +114,20 @@ function validate(values: PropertyFormState): PropertyFormErrors {
     }
   }
 
+  if (values.size.trim()) {
+    const size = Number(values.size);
+    if (Number.isNaN(size) || size <= 0) {
+      errors.size = "Size must be a number greater than 0.";
+    }
+  }
+
+  if (values.buildYear.trim()) {
+    const buildYear = Number(values.buildYear);
+    if (!Number.isInteger(buildYear) || buildYear < MIN_BUILD_YEAR || buildYear > MAX_BUILD_YEAR) {
+      errors.buildYear = `Build year must be between ${MIN_BUILD_YEAR} and ${MAX_BUILD_YEAR}.`;
+    }
+  }
+
   return errors;
 }
 
@@ -108,6 +144,7 @@ export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: Prop
 
   const [values, setValues] = useState<PropertyFormState>(() => buildInitialState(initialData));
   const [errors, setErrors] = useState<PropertyFormErrors>({});
+  const [amenityInput, setAmenityInput] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
   // Tracks the object URL created for a locally-picked image, so it can be revoked.
@@ -161,6 +198,27 @@ export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: Prop
     setField("image", "");
   };
 
+  const handleAddAmenity = () => {
+    const trimmed = amenityInput.trim();
+    if (!trimmed || values.amenities.includes(trimmed)) {
+      setAmenityInput("");
+      return;
+    }
+    setField("amenities", [...values.amenities, trimmed]);
+    setAmenityInput("");
+  };
+
+  const handleAmenityKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleAddAmenity();
+    }
+  };
+
+  const handleRemoveAmenity = (amenity: string) => {
+    setField("amenities", values.amenities.filter((a) => a !== amenity));
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -183,6 +241,12 @@ export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: Prop
       bathrooms: values.bathrooms.trim() ? Number(values.bathrooms) : undefined,
       priceHome: Number(values.priceHome),
       priceProperties: Number(values.priceProperties),
+      location: values.location.trim() || undefined,
+      size: values.size.trim() ? Number(values.size) : undefined,
+      buildYear: values.buildYear.trim() ? Number(values.buildYear) : undefined,
+      amenities: values.amenities,
+      featured: values.featured,
+      currency: values.currency,
     };
 
     onSubmit(payload);
@@ -418,6 +482,120 @@ export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: Prop
               {errors.priceProperties && <p className={errorClass}>{errors.priceProperties}</p>}
             </div>
           </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label className={labelClass} htmlFor="pf-location">Location (optional)</label>
+              <input
+                id="pf-location"
+                type="text"
+                placeholder="e.g. Malibu, California"
+                value={values.location}
+                onChange={(e) => setField("location", e.target.value)}
+                className={fieldClass}
+              />
+            </div>
+            <div>
+              <label className={labelClass} htmlFor="pf-currency">Currency</label>
+              <select
+                id="pf-currency"
+                value={values.currency}
+                onChange={(e) => setField("currency", e.target.value)}
+                className={`${fieldClass} cursor-pointer`}
+              >
+                {CURRENCY_OPTIONS.map((option) => (
+                  <option key={option} value={option} className={isDark ? "bg-bg-dark" : "bg-white"}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label className={labelClass} htmlFor="pf-size">Size — sq ft (optional)</label>
+              <input
+                id="pf-size"
+                type="number"
+                min="0"
+                step="1"
+                placeholder="Size"
+                value={values.size}
+                onChange={(e) => setField("size", e.target.value)}
+                className={fieldClass}
+              />
+              {errors.size && <p className={errorClass}>{errors.size}</p>}
+            </div>
+            <div>
+              <label className={labelClass} htmlFor="pf-build-year">Build Year (optional)</label>
+              <input
+                id="pf-build-year"
+                type="number"
+                min={MIN_BUILD_YEAR}
+                max={MAX_BUILD_YEAR}
+                step="1"
+                placeholder="e.g. 2020"
+                value={values.buildYear}
+                onChange={(e) => setField("buildYear", e.target.value)}
+                className={fieldClass}
+              />
+              {errors.buildYear && <p className={errorClass}>{errors.buildYear}</p>}
+            </div>
+          </div>
+
+          <div>
+            <label className={labelClass} htmlFor="pf-amenities">Amenities (optional)</label>
+            <input
+              id="pf-amenities"
+              type="text"
+              placeholder="Type an amenity and press Enter"
+              value={amenityInput}
+              onChange={(e) => setAmenityInput(e.target.value)}
+              onKeyDown={handleAmenityKeyDown}
+              className={fieldClass}
+            />
+            {values.amenities.length > 0 && (
+              <div className="mt-3 flex flex-wrap gap-2">
+                {values.amenities.map((amenity) => (
+                  <span
+                    key={amenity}
+                    className={`inline-flex items-center gap-1.5 pl-3 pr-2 py-1.5 rounded-full text-xs font-medium border ${
+                      isDark
+                        ? "bg-bg-dark border-bg-gray-1 text-white"
+                        : "bg-gray-50 border-gray-200 text-gray-900"
+                    }`}
+                  >
+                    {amenity}
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveAmenity(amenity)}
+                      aria-label={`Remove ${amenity}`}
+                      className={`inline-flex items-center justify-center w-4 h-4 rounded-full cursor-pointer transition-colors ${
+                        isDark ? "hover:bg-bg-gray-1 hover:text-white" : "hover:bg-gray-200"
+                      }`}
+                    >
+                      <HiXMark className="w-3 h-3" />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <label
+            htmlFor="pf-featured"
+            className={`flex items-center gap-3 cursor-pointer select-none ${isDark ? "text-white" : "text-gray-900"}`}
+          >
+            <input
+              id="pf-featured"
+              type="checkbox"
+              checked={values.featured}
+              onChange={(e) => setField("featured", e.target.checked)}
+              className="w-5 h-5 rounded cursor-pointer accent-primary"
+            />
+            <span className="text-sm font-medium">Featured Property</span>
+          </label>
         </form>
 
         <div

@@ -1,13 +1,8 @@
 import { useState } from "react";
 import { FiEdit2, FiSearch, FiTrash2 } from "react-icons/fi";
 import { useTheme } from "../../Context/ThemeContext";
-import { useAppDispatch } from "../../store";
 import { useValues } from "../../hooks/useValues";
-import {
-  createValueDoc,
-  deleteValueDoc,
-  updateValueDoc,
-} from "../../store/slices/valuesSlice";
+import { addDocument, updateDocument, deleteDocument } from "../../api/firestore";
 import type { FirestoreValue } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { ValueFormModal } from "../../components/sections/dashboard/ValueFormModal";
@@ -33,7 +28,6 @@ export const ValuesManagement = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const dispatch = useAppDispatch();
   const { values, status } = useValues();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -49,20 +43,27 @@ export const ValuesManagement = () => {
   const openEditModal = (value: FirestoreValue) => setFormModal({ mode: "edit", value });
   const closeFormModal = () => setFormModal(null);
 
-  const handleFormSubmit = (values: Omit<FirestoreValue, "id">) => {
-    if (formModal?.mode === "edit") {
-      // Merge onto the existing record (not a full replace) so any
-      // Firestore-only fields this form doesn't manage aren't wiped out.
-      dispatch(updateValueDoc({ ...formModal.value, ...values, id: formModal.value.id }));
-    } else {
-      dispatch(createValueDoc(values));
+  const handleFormSubmit = async (values: Omit<FirestoreValue, "id">) => {
+    try {
+      if (formModal?.mode === "edit") {
+        // Partial merge — Firestore only touches the fields this form sends.
+        await updateDocument<FirestoreValue>("values", formModal.value.id, values);
+      } else {
+        await addDocument<FirestoreValue>("values", values);
+      }
+    } catch (error) {
+      console.error("Failed to save value:", error);
     }
     setFormModal(null);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (deleteTarget) {
-      dispatch(deleteValueDoc(deleteTarget.id));
+      try {
+        await deleteDocument("values", deleteTarget.id);
+      } catch (error) {
+        console.error("Failed to delete value:", error);
+      }
     }
     setDeleteTarget(null);
   };
