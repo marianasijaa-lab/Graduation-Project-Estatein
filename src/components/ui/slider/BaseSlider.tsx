@@ -21,11 +21,6 @@ const BaseSlider = ({ children, currentIndex, itemsToShow }: BaseSliderProps) =>
   const translatePx = currentIndex * GAP;
 
   return (
-    <div className="overflow-x-hidden w-full py-2 px-0">
-      <div 
-        className="flex items-stretch my-2 transition-transform duration-400 ease-in-out *:box-border *:shrink-0"
-        style={{ transform: `translateX(${translateX}%)` }}
-    /* Step 1: widen the clipping box permanently on both sides */
     <div
       style={{
         overflow: "hidden",
@@ -35,7 +30,6 @@ const BaseSlider = ({ children, currentIndex, itemsToShow }: BaseSliderProps) =>
         paddingRight: `${BLEED}px`,
       }}
     >
-      {/* Step 2: the moving track — width is relative to the padded container above */}
       <div
         className="flex items-stretch transition-[transform] duration-[400ms] ease-in-out *:box-border *:shrink-0"
         style={{

@@ -35,18 +35,18 @@ const HomeHero = () => {
 
         {/* Right: Hero Image full height, no border */}
         <div className="flex flex-1 relative min-h-[240px] sm:min-h-[360px] lg:min-h-[480px] order-1 lg:order-2">
-           <div className="absolute z-30 -bottom-7 left-0  lg:top-15 lg:-left-20  xl:top-34 xl:-left-30 w-29 lg:w-32 xl:w-44">
-                <img src='/assets/HeroSticker.png' className='w-full h-full'/>
+           <div className="absolute z-30 -bottom-8 left-0 translate-x-0 translate-y-0 w-20 sm:top-[28%] sm:bottom-auto sm:left-0 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:w-28 lg:w-32 xl:w-44">
+             <img src='/assets/HeroSticker.png' alt="" className='w-full h-full animate-[spin_10s_linear_infinite]'/>
               </div>
           <img
             src="/assets/Abstract_6.png"
             alt=""
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none bg-bg-dark"
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none bg-bg-dark max-sm:rounded-xl max-sm:border max-sm:border-bg-gray-1"
           />
           <img
             src="/assets/Hero Image_1.webp"
             alt="Hero Image"
-            className="relative w-full h-full object-cover object-center z-10 "
+            className="relative w-full h-full object-cover object-center z-10 max-sm:rounded-xl max-sm:border max-sm:border-bg-gray-1"
           />
         </div>
       </div>

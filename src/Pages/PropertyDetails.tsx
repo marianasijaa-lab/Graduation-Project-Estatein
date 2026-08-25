@@ -3,6 +3,7 @@ import PropertyDescription from "../components/sections/property/PropertyDescrip
 import { useProperties } from "../hooks/useProperties";
 import { LoadingSkeleton } from "../components/ui/LoadingSkeleton";
 import InquireSection from "../components/sections/property/InquireSection";
+import GallerySlider from "../components/ui/slider/GallerySlider";
 
 export const PropertyDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -28,8 +29,18 @@ export const PropertyDetails = () => {
     );
   }
 
+  const galleryImages = property.images?.length
+    ? property.images
+    : [
+        property.image,
+        ...properties
+          .filter((item) => item.id !== property.id && item.image !== property.image)
+          .map((item) => item.image),
+      ];
+
   return (
     <>
+      <GallerySlider images={galleryImages} />
       <PropertyDescription
         description={property.descriptionLong}
         bedrooms={String(property.bedrooms ?? 0).padStart(2, "0")}

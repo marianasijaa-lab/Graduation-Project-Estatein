@@ -27,7 +27,7 @@ const GallerySlider = ({ images }: GallerySliderProps) => {
   const secondaryIndex = (primaryIndex + 1) % images.length;
 
   return (
-    <div className="max-w-[1600px] mx-auto bg-bg-dark p-4 rounded-lg">
+    <div className="site-container bg-bg-dark py-4 rounded-lg">
       {/* Thumbnail Strip */}
       <div className="mb-4 bg-bg-dark-1 p-2 overflow-x-auto">
         <div className="flex gap-2">

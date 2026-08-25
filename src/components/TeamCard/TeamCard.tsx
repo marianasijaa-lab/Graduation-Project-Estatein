@@ -3,7 +3,7 @@ import { SectionHeader } from "../common/SectionHeader";
 const TeamCard = () => {
   return (
     <section
-      className="rounded-xl bg-cover bg-center bg-no-repeat p-6 md:p-8"
+      className="rounded-xl border border-[#262626] bg-[#1A1A1A] bg-cover bg-center bg-no-repeat p-6 md:p-8"
       style={{
         backgroundImage: "url('/assets/background_2.png')",
       }}
@@ -41,10 +41,10 @@ const TeamCard = () => {
           />
         </div>
 
-        <div className="flex items-center">
+        <div className="flex items-center mt-4">
           <SectionHeader
-            title="Discover Our Office Locations"
-            subtitle="Estatein is here to serve you across multiple locations. Whether you're looking to meet our team, discuss real estate opportunities, or simply drop by for a chat, we have offices conveniently located to serve your needs. Explore the categories below to find the Estatein office nearest to you"
+            title="Explore Estatein's World"
+            subtitle="Step inside the world of Estatein, where professionalism meets warmth, and expertise meets passion. Our gallery offers a glimpse into our team and workspaces, inviting you to get to know us better."
             className="mb-10"
             fullWidth
           />

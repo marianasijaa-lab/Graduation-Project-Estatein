@@ -49,7 +49,7 @@ const OfficeLocations = () => {
             >
               <p className="mb-4 text-sm ext-gray">{card.mainTitle}</p>
 
-              <h2 className="mb-4 text-2xl font-semibold">{card.title}</h2>
+              <h2 className="mb-4 text-2xl font-semibold whitespace-nowrap">{card.title}</h2>
 
               <p className="mb-7 max-w-150 leading-7 text-gray">
                 {card.description}

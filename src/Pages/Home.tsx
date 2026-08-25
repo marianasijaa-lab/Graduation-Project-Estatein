@@ -43,6 +43,7 @@ const HomePage = () => {
               </div>
             </section>
         </div>
+          </div>
     );
 };
 

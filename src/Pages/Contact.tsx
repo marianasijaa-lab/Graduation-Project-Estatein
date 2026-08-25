@@ -102,7 +102,9 @@ const Contact = () => {
         />
       </div>
       <OfficeLocations />
-      <TeamCard />
+      <div className="site-container mb-16">
+        <TeamCard />
+      </div>
     </div>
   );
 };
