@@ -39,7 +39,7 @@ const MeetTheEstaein = () => {
   ];
   return (
     <section className="w-full bg-bg-dark-1 py-8 sm:py-10 lg:py-14">
-      <div className="max-w-[1568px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div className="site-container">
         <SectionHeader
           title="Meet the Estatein Team"
           subtitle="At Estatein, our success is driven by the dedication and expertise of our team. Get to know the people behind our mission to make your real estate dreams a reality."

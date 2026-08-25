@@ -12,7 +12,7 @@ const HeroAbout = ({ image1, image2 }: HeroAboutProps) => {
 
   return (
     <section className="w-full bg-bg-dark-1">
-      <div className="max-w-[1568px] mx-auto px-4 sm:px-6 lg:px-10 pt-2 pb-8 sm:py-10 lg:py-14">
+      <div className="site-container pt-2 pb-8 sm:py-10 lg:py-14">
         <div className="flex max-sm:flex-col 2xl:flex-row max-2xl:flex-row max-sm:gap-10 2xl:gap-20 max-2xl:gap-15">
           <div className="max-sm:order-2 max-2xl:order-1 2xl:order-1 2xl:max-w-188.75">
             <SectionHeader
@@ -21,12 +21,12 @@ const HeroAbout = ({ image1, image2 }: HeroAboutProps) => {
             />
             <StatsBar stats={stats} />
           </div>
-          <div className="max-sm:mt-12.5 max-sm:order-1 max-2xl:order-2 2xl:order-2 max-w-188.75 relative border border-bg-gray-1 rounded-xl">
-            <img src={image1} alt="abstract design" className="inset-0 w-full h-full object-cover opacity-20 pointer-events-none z-0" />
+          <div className="max-sm:mt-12.5 max-sm:order-1 max-2xl:order-2 2xl:order-2 w-full max-w-188.75 aspect-[4/3] relative overflow-hidden border border-bg-gray-1 rounded-xl">
+            <img src={image1} alt="abstract design" className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none z-0" />
             <img
               src={image2}
               alt="Our Journey"
-              className="absolute inset-0 m-auto max-w-full h-auto object-contain z-10"
+              className="absolute inset-0 w-full h-full object-contain z-10"
             />
           </div>
         </div>

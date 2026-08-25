@@ -19,7 +19,7 @@ const OurAchievements: React.FC = () => {
     <section
       className={`w-full transition-colors ${isDark ? "bg-bg-dark-1" : "bg-gray-50"}`}
     >
-      <div className="max-w-[1568px] mx-auto px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-20">
+      <div className="site-container py-14 sm:py-16 lg:py-20">
         {/* Header */}
         <SectionHeader
           title="Our Achievements"
@@ -69,7 +69,7 @@ const OurValues: React.FC = () => {
       className={`w-full transition-colors
         ${isDark ? "bg-bg-dark-1" : "bg-gray-50"}`}
     >
-      <div className="max-w-[1568px] mx-auto px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-20">
+      <div className="site-container py-14 sm:py-16 lg:py-20">
         <div className="flex flex-col lg:flex-row gap-6">
           {/* ── Left: Header ── */}
           <div className="lg:w-[35%] flex flex-col justify-center">
@@ -146,7 +146,7 @@ const OurValuedClients: React.FC = () => {
     <section
       className={`w-full transition-colors ${isDark ? "bg-bg-dark-1" : "bg-gray-50"}`}
     >
-      <div className="max-w-[1568px] mx-auto px-4 sm:px-6 lg:px-10 py-14 sm:py-16 lg:py-20">
+      <div className="site-container py-14 sm:py-16 lg:py-20">
         <SectionHeader
           title="Our Valued Clients"
           subtitle="At Estatein, we have had the privilege of working with a diverse range of clients across various industries. Here are some of the clients we've had the pleasure of serving."

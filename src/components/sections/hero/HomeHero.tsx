@@ -36,14 +36,14 @@ const HomeHero = () => {
         {/* Right: Hero Image full height, no border */}
         <div className="flex flex-1 relative min-h-[240px] sm:min-h-[360px] lg:min-h-[480px] order-1 lg:order-2">
           <img
-            src="/assets/Abstract3.png"
+            src="/assets/Abstract_6.png"
             alt=""
-            className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none"
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none bg-bg-dark"
           />
           <img
             src="/assets/Hero Image_1.webp"
             alt="Hero Image"
-            className="relative w-full h-full object-cover object-center z-10"
+            className="relative w-full h-full object-cover object-center z-10 "
           />
         </div>
       </div>

@@ -37,7 +37,7 @@ export function PropertiesGrid() {
         {currentItems.map((item) => (
           <div
             key={item.id}
-            className="card flex flex-col gap-4 lg:gap-5 xl:gap-7.5 bg-[#111111] border border-[#262626] rounded-2xl p-4 lg:p-5"
+            className="card flex flex-col gap-4 lg:gap-5 xl:gap-7.5 bg-bg-dark-1 border border-[#262626] rounded-2xl p-4 lg:p-5"
           >
             {/* Image */}
             <img

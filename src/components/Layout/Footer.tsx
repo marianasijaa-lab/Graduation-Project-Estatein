@@ -45,7 +45,7 @@ const Footer = () => {
   const { theme } = useTheme();
   return (
     <footer>
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8 items-start pb-12 pt-14 px-4 sm:px-8 md:px-11">
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8 items-start pb-12 pt-14 px-4 sm:px-8 md:px-11 bg-bg-dark-1">
         <div>
           <div className="flex items-center mb-4">
             <img src="/assets/logo_icon.png" alt="" className="w-9 h-9 object-contain transition-transform duration-300 group-hover:scale-105" />
@@ -144,7 +144,7 @@ const Footer = () => {
       </div>
       <div
         className={`flex flex-col md:flex-row justify-between items-center pt-8 pb-8 mt-10 ${
-          theme === "dark" ? "bg-bg-dark" : "bg-gray-50"
+          theme === "dark" ? "bg-[#1A1A1A]" : "bg-gray-50"
         }`}
       >
         <div className="flex order-1 md:order-2 pb-6 md:pb-0 px-4 sm:px-8 md:px-11">

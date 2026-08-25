@@ -18,13 +18,13 @@ const ProperityPage = () => {
             />
             <PropitySearchSection className="-mt-10 md:-mt-20" />
             <section className="w-full">
-              <div className="max-w-[1568px] mx-auto px-4 sm:px-6 lg:px-10 py-8 sm:py-10 lg:py-14">
+              <div className="site-container py-8 sm:py-10 lg:py-14">
                 <SectionHeader title='Discover a World of Possibilities' subtitle='Our portfolio of properties is as diverse as your dreams. Explore the following categories to find the perfect property that resonates with your vision of home' />
                 <PropertiesGrid />
               </div>
             </section>
             <section className="w-full">
-              <div className="max-w-[1568px] mx-auto px-4 sm:px-6 lg:px-10 py-8 sm:py-10 lg:py-14">
+              <div className="site-container py-8 sm:py-10 lg:py-14">
                 <SectionHeader title='Lets Make it Happen' subtitle='Ready to take the first step toward your dream property? Fill out the form below, and our real estate wizards will work their magic to find your perfect match. Dont wait; lets embark on this exciting journey together.' />
                 <ContactForm
                     columns={4}

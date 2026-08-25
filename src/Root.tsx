@@ -4,6 +4,7 @@ import { TopBanner } from './components/Layout/TopBanner';
 import Footer from './components/Layout/Footer';
 import type { PageId } from './interfaces';
 import { Navbar } from './components/Layout/Navbar';
+import { CtaSection } from './components/sections/cta/CTA';
 
 
 const pagePaths: Record<PageId, string> = {
@@ -22,7 +23,7 @@ const Root = () => {
 	)?.[0] ?? "home") as PageId;
 
 	return (
-		<div className="min-h-screen bg-bg-dark text-white">
+		<div className="min-h-screen bg-bg-dark-1 text-white">
 			<TopBanner />
 			<Navbar
 				activePage={activePage}
@@ -31,6 +32,7 @@ const Root = () => {
 			<main>
 				<Outlet />
 			</main>
+			<CtaSection />
 			<Footer />
 		</div>
 	);

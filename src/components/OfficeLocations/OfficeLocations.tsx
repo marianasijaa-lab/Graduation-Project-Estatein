@@ -13,9 +13,9 @@ const OfficeLocations = () => {
   });
 
   return (
-    <section className="bg-bg-dark-1 px-4 py-16 text-white sm:px-6 lg:px-10">
-      <div className="mx-auto max-w-300">
-        <div className="mb-10 flex w-fit items-center gap-2 rounded-lg border border-[#333333] bg-[#1A1A1A] p-2">
+    <section className="bg-bg-dark-1 py-16 text-white">
+      <div className="site-container">
+        <div className="mb-10 flex w-fit items-center gap-2 rounded-lg border border-[#333333] bg-[#141414] p-2">
           <button
             onClick={() => setSelectedType("All")}
             className={`rounded-md px-5 py-3 text-sm font-medium transition ${

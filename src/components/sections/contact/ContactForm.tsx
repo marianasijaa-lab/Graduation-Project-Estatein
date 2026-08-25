@@ -60,7 +60,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
   };
 
   const inputBgClass = isDark
-    ? 'bg-[#1A1A1A] border-[#262626] text-white placeholder-gray-500 focus:border-[#703BF7]'
+    ? 'bg-[#141414] border-[#262626] text-white placeholder-gray-500 focus:border-[#703BF7]'
     : 'bg-[#F9F9F9] border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#703BF7]';
 
   const labelClass = `block text-sm font-medium mb-2 ${isDark ? 'text-white' : 'text-gray-900'
@@ -75,7 +75,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className={`w-full max-w-7xl mx-auto rounded-2xl p-6 sm:p-10 lg:p-14 border space-y-6 sm:space-y-8 ${isDark ? 'bg-bg-dark-1 border-bg-gray-1' : 'bg-white border-gray-200 shadow-sm'
+      className={`site-container rounded-2xl p-6 sm:p-10 lg:p-14 border space-y-6 sm:space-y-8 ${isDark ? 'bg-bg-dark-1 border-bg-gray-1' : 'bg-white border-gray-200 shadow-sm'
         }`}
     >
       <div className={`grid ${gridColsClass} gap-6`}>
@@ -189,7 +189,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                       {field.placeholder || 'Select Option'}
                     </option>
                     {field.options?.map((opt) => (
-                      <option key={opt} value={opt} className={isDark ? 'bg-[#1A1A1A]' : 'bg-white'}>
+                      <option key={opt} value={opt} className={isDark ? 'bg-[#141414]' : 'bg-white'}>
                         {opt}
                       </option>
                     ))}

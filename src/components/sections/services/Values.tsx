@@ -8,7 +8,7 @@ const Values: React.FC = () => {
 
   return (
     <section className="w-full bg-bg-dark-1 py-8 sm:py-10 lg:py-14">
-      <div className="max-w-[1568px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div className="site-container">
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-20">
           {/* Header */}
           <div className="lg:w-[35%] flex flex-col justify-center">
