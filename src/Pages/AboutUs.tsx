@@ -11,6 +11,9 @@ import { ErrorMessage } from '../components/ui/ErrorMessage';
 import { useAppDispatch } from '../store';
 import { fetchValues } from '../store/slices/valuesSlice';
 import { fetchAchievements } from '../store/slices/achievementsSlice';
+import MeetTheEstaein from '../components/MeetTheEstaein';
+import { NavigatingTheEstatein } from '../components/NavigatingTheEstatein';
+
 
 // Our Achievements Section
 const OurAchievements: React.FC = () => {
@@ -162,6 +165,8 @@ const AboutUs: React.FC = () => {
       />
       <OurValues />
       <OurAchievements />
+      <NavigatingTheEstatein/>
+      <MeetTheEstaein/>
       <OurValuedClients />
     </main>
   );
