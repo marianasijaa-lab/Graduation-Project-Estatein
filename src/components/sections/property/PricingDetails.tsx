@@ -89,7 +89,13 @@ const PricingCard = ({ title, items }: PricingSection) => {
                   !isMonthlyCosts &&
                   !item.fullWidth &&
                   index % 2 === 1
-                    ? "md:border-l md:pl-[30px]"
+                    ? `relative md:pl-[30px]
+         md:before:absolute
+         md:before:left-0
+         md:before:top-[12px]
+        md:before:bottom-[12px]
+          md:before:w-px
+        md:before:bg-[#262626]`
                     : ""
                 }
 
@@ -273,10 +279,7 @@ const PricingDetails = ({
             className="
               w-full
               xl:w-[230px]
-              mt-[40px]
-               gap-[30px]
-            grid
-            grid-cols-1            "
+            "
           >
             <p
               className="
