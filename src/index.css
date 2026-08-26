@@ -25,6 +25,17 @@ body {
   padding-inline: 1rem;
 }
 
+.autofill-none input:-webkit-autofill,
+.autofill-none input:-webkit-autofill:hover,
+.autofill-none input:-webkit-autofill:focus,
+.autofill-none textarea:-webkit-autofill,
+.autofill-none select:-webkit-autofill {
+  -webkit-text-fill-color: #ffffff !important;
+  -webkit-box-shadow: 0 0 0 1000px #141414 inset !important;
+  box-shadow: 0 0 0 1000px #141414 inset !important;
+  caret-color: #ffffff;
+}
+
 @media (min-width: 640px) {
   .site-container {
     padding-inline: 1.5rem;

@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React from 'react';
 import { useTheme } from '../../../Context/ThemeContext'; 
 
@@ -12,32 +13,29 @@ const PageHero: React.FC<PageHeroProps> = ({ title, description, className = '' 
   const isDark = theme === 'dark';
 
   return (
-    <section 
-      className={`w-full pt-8 md:pt-12 pb-6 md:pb-8 transition-colors duration-300 ${
-        isDark ? 'text-white' : 'bg-white text-gray-900'
-      } ${className}`}
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+      className={`w-full pt-8 md:pt-12 pb-6 md:pb-8 transition-colors duration-300 bg-(--bg-main) text-(--text-main) ${className}`}
       style={isDark ? { background: 'linear-gradient(95.93deg, #262626 -26.82%, rgba(38, 38, 38, 0) 40.46%)' } : undefined}
     >
       <div className="site-container relative z-10">
         {/* Title */}
         <h1
-          className={`font-['Urbanist'] text-2xl sm:text-3xl md:text-5xl font-semibold leading-tight tracking-normal transition-colors ${
-            isDark ? 'text-white' : 'text-gray-900'
-          }`}
+          className={`font-['Urbanist'] text-2xl sm:text-3xl md:text-5xl font-semibold leading-tight tracking-normal transition-colors text-(--text-main)`}
         >
           {title}
         </h1>
 
         {/* Description */}
         <p
-          className={`mt-3 font-['Urbanist'] text-sm sm:text-base md:text-lg font-medium leading-relaxed max-w-6xl transition-colors ${
-            isDark ? 'text-gray' : 'text-gray-600'
-          }`}
+          className={`mt-3 font-['Urbanist'] text-sm sm:text-base md:text-lg font-medium leading-relaxed max-w-6xl transition-colors text-gray`}
         >
           {description}
         </p>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

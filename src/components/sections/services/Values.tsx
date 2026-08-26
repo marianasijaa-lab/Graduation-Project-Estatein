@@ -2,6 +2,7 @@ import React from 'react';
 import { SectionHeader } from '../../common/SectionHeader';
 import ServiceCard from './ServiceCard';
 import { useValues } from '../../../hooks/useValues';
+import { StaggerContainer } from '../../common/StaggerContainer';
 
 const Values: React.FC = () => {
   const { values } = useValues();
@@ -20,7 +21,7 @@ const Values: React.FC = () => {
           </div>
 
           {/* Values Grid */}
-          <div className="lg:w-[65%] grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-10">
+          <StaggerContainer className="lg:w-[65%] grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-10">
             {values.map((value) => (
               <ServiceCard
                 key={value.id}
@@ -30,7 +31,7 @@ const Values: React.FC = () => {
                 description={value.description}
               />
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </div>
     </section>

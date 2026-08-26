@@ -49,21 +49,25 @@ export const ContactForm: React.FC<ContactFormProps> = ({
   });
 
   const [formData, setFormData] = useState(initialFormState);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleChange = (name: string, value: any) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setShowSuccess(false);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (onSubmit) onSubmit(formData);
+    setFormData(initialFormState);
+    setShowSuccess(true);
   };
 
   const inputBgClass = isDark
     ? 'bg-[#141414] border-[#262626] text-white placeholder-gray-500 focus:border-[#703BF7]'
     : 'bg-[#F9F9F9] border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#703BF7]';
 
-  const labelClass = `block text-sm font-medium mb-2 ${isDark ? 'text-white' : 'text-gray-900'
+  const labelClass = `block text-sm font-medium mb-2 text-white ${isDark ? '' : 'drop-shadow-sm'
     }`;
 
   const gridColsClass = {
@@ -75,59 +79,70 @@ export const ContactForm: React.FC<ContactFormProps> = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className={`site-container rounded-2xl p-6 sm:p-10 lg:p-14 border space-y-6 sm:space-y-8 ${isDark ? 'bg-bg-dark-1 border-bg-gray-1' : 'bg-white border-gray-200 shadow-sm'
+      autoComplete="off"
+      className={`autofill-none site-container rounded-2xl p-6 sm:p-10 lg:p-14 border space-y-6 sm:space-y-8 ${isDark ? 'bg-bg-dark-1 border-bg-gray-1' : 'bg-white border-gray-200 shadow-sm'
         }`}
     >
+      {showSuccess && (
+        <div className="rounded-xl border border-green-500/30 bg-green-500/10 px-4 py-3 text-center text-sm font-medium text-green-400">
+          Your message has been sent successfully!
+        </div>
+      )}
+
       <div className={`grid ${gridColsClass} gap-6`}>
         {/* First Name */}
         <div>
-          {columns !== 4 && <label className={labelClass}>First Name</label>}
+          <label className={labelClass}>First Name</label>
           <input
             type="text"
             required
+            autoComplete="off"
             placeholder="Enter First Name"
             value={formData.firstName}
             onChange={(e) => handleChange('firstName', e.target.value)}
-            className={`w-full px-5 py-4 rounded-xl border outline-none transition-all ${inputBgClass}`}
+            className={`w-full px-5 py-4 rounded-xl border outline-none transition-all text-white ${inputBgClass}`}
           />
         </div>
 
         {/* Last Name */}
         <div>
-          {columns !== 4 && <label className={labelClass}>Last Name</label>}
+          <label className={labelClass}>Last Name</label>
           <input
             type="text"
             required
+            autoComplete="off"
             placeholder="Enter Last Name"
             value={formData.lastName}
             onChange={(e) => handleChange('lastName', e.target.value)}
-            className={`w-full px-5 py-4 rounded-xl border outline-none transition-all ${inputBgClass}`}
+            className={`w-full px-5 py-4 rounded-xl border outline-none transition-all text-white ${inputBgClass}`}
           />
         </div>
 
         {/* Email */}
         <div>
-          {columns !== 4 && <label className={labelClass}>Email</label>}
+          <label className={labelClass}>Email</label>
           <input
             type="email"
             required
+            autoComplete="off"
             placeholder="Enter your Email"
             value={formData.email}
             onChange={(e) => handleChange('email', e.target.value)}
-            className={`w-full px-5 py-4 rounded-xl border outline-none transition-all ${inputBgClass}`}
+            className={`w-full px-5 py-4 rounded-xl border outline-none transition-all text-white ${inputBgClass}`}
           />
         </div>
 
         {/* Phone */}
         <div>
-          {columns !== 4 && <label className={labelClass}>Phone</label>}
+          <label className={labelClass}>Phone</label>
           <input
             type="tel"
             required
+            autoComplete="off"
             placeholder="Enter Phone Number"
             value={formData.phone}
             onChange={(e) => handleChange('phone', e.target.value)}
-            className={`w-full px-5 py-4 rounded-xl border outline-none transition-all ${inputBgClass}`}
+            className={`w-full px-5 py-4 rounded-xl border outline-none transition-all text-white ${inputBgClass}`}
           />
         </div>
 
@@ -151,10 +166,11 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                   <input
                     type="text"
                     readOnly={field.readOnly}
+                    autoComplete="off"
                     placeholder={field.placeholder}
                     value={formData[field.name] || ''}
                     onChange={(e) => handleChange(field.name, e.target.value)}
-                    className={`w-full py-4 rounded-xl border outline-none transition-all ${inputBgClass} ${IconComponent ? 'pl-12' : 'pl-5'
+                    className={`w-full py-4 rounded-xl border outline-none transition-all text-white ${inputBgClass} ${IconComponent ? 'pl-12' : 'pl-5'
                       } ${field.hasDot ? 'pr-12' : 'pr-5'} ${field.readOnly ? 'cursor-not-allowed opacity-80' : ''
                       }`}
                   />
@@ -180,9 +196,10 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                   )}
 
                   <select
+                    autoComplete="off"
                     value={formData[field.name] || ''}
                     onChange={(e) => handleChange(field.name, e.target.value)}
-                    className={`w-full py-4 pr-12 rounded-xl border outline-none transition-all appearance-none cursor-pointer ${inputBgClass} ${IconComponent ? 'pl-12' : 'pl-5'
+                    className={`w-full py-4 pr-12 rounded-xl border outline-none transition-all appearance-none cursor-pointer text-white ${inputBgClass} ${IconComponent ? 'pl-12' : 'pl-5'
                       }`}
                   >
                     <option value="" disabled>
@@ -204,14 +221,15 @@ export const ContactForm: React.FC<ContactFormProps> = ({
       </div>
       {/* Message Field */}
       <div>
-        {columns !== 4 && <label className={labelClass}>Message</label>}
+        <label className={labelClass}>Message</label>
         <textarea
           rows={5}
           required
+          autoComplete="off"
           placeholder="Enter your Message here.."
           value={formData.message}
           onChange={(e) => handleChange('message', e.target.value)}
-          className={`w-full px-5 py-4 rounded-xl border outline-none transition-all resize-none ${inputBgClass}`}
+          className={`w-full px-5 py-4 rounded-xl border outline-none transition-all resize-none text-white ${inputBgClass}`}
         />
       </div>
 
@@ -221,6 +239,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
           <input
             type="checkbox"
             required
+            autoComplete="off"
             checked={formData.agreeTerms}
             onChange={(e) => handleChange('agreeTerms', e.target.checked)}
             className={`w-5 h-5 rounded cursor-pointer appearance-none border transition-all relative flex items-center justify-center checked:bg-primary checked:border-primary checked:before:content-['✓'] checked:before:text-white checked:before:text-xs checked:before:font-bold ${isDark
@@ -239,7 +258,8 @@ export const ContactForm: React.FC<ContactFormProps> = ({
             </a>
           </span>
         </label>
-        <Button
+          <Button
+          type="submit"
             text={isSubmitting ? "Sending..." : "Send Your Message"}
             variant="primary"
             onClick={() => {}}

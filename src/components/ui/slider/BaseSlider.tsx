@@ -1,7 +1,8 @@
+import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 
-const GAP   = 24; // px — must match the card width calculations in each slider
-const BLEED = 10; // px — space for card shadows without changing content width
+const GAP   = 24;
+const BLEED = 10;
 
 interface BaseSliderProps {
     children: ReactNode;
@@ -9,12 +10,6 @@ interface BaseSliderProps {
     itemsToShow: number;
 }
 
-/**
- * How it works:
- *
- * Keep the track width aligned with the parent while giving card shadows room
- * outside the visible content area.
- */
 const BaseSlider = ({ children, currentIndex, itemsToShow }: BaseSliderProps) => {
   const itemWidthPercent = 100 / itemsToShow;
   const translateX = -(currentIndex * itemWidthPercent);
@@ -30,17 +25,18 @@ const BaseSlider = ({ children, currentIndex, itemsToShow }: BaseSliderProps) =>
         paddingRight: `${BLEED}px`,
       }}
     >
-      <div
-        className="flex items-stretch transition-[transform] duration-[400ms] ease-in-out *:box-border *:shrink-0"
+      <motion.div
+        className="flex items-stretch *:box-border *:shrink-0"
         style={{
           gap: `${GAP}px`,
           paddingTop:    `${BLEED}px`,
           paddingBottom: `${BLEED}px`,
-          transform: `translateX(calc(${translateX}% - ${translatePx}px))`,
         }}
+        animate={{ x: `calc(${translateX}% - ${translatePx}px)` }}
+        transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
       >
         {children}
-      </div>
+      </motion.div>
     </div>
   );
 };

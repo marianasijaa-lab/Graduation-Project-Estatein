@@ -1,17 +1,16 @@
-import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Button } from "../../ui/Button";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useProperties } from "../../../hooks/useProperties";
 import { LoadingSkeleton } from "../../ui/LoadingSkeleton";
 import { ErrorMessage } from "../../ui/ErrorMessage";
-const ITEMS_PER_PAGE = 3;
-const pad = (n: number) => String(n).padStart(2, "0");
+import { useSlider } from "../../../hooks/useSlider";
+import BaseSlider from "../../ui/slider/BaseSlider";
+import SliderButtons from "../../ui/slider/SliderButtons";
 
 export function PropertiesGrid() {
-  const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
   const { properties, status, error } = useProperties();
+  const { currentIndex, goNext, goPrev, itemsToShow, maxIndex } = useSlider(properties);
 
   if (status === 'loading' || status === 'idle') {
     return <LoadingSkeleton variant="grid" count={3} />;
@@ -26,19 +25,17 @@ export function PropertiesGrid() {
     );
   }
 
-  const totalPages = Math.ceil(properties.length / ITEMS_PER_PAGE);
-  const start = (currentPage - 1) * ITEMS_PER_PAGE;
-  const currentItems = properties.slice(start, start + ITEMS_PER_PAGE);
 
   return (
-    <div className="flex flex-col gap-8">
-      {/* Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {currentItems.map((item) => (
+    <div className="w-full py-8">
+      <BaseSlider currentIndex={currentIndex} itemsToShow={itemsToShow}>
+        {properties.map((item) => (
           <div
             key={item.id}
-            className="card flex flex-col gap-4 lg:gap-5 xl:gap-7.5 bg-bg-dark-1 border border-[#262626] rounded-2xl p-4 lg:p-5"
+            className="flex-shrink-0 flex"
+            style={{ width: `calc(${100 / itemsToShow}% - ${(24 * (itemsToShow - 1)) / itemsToShow}px)` }}
           >
+          <div className="card flex flex-col gap-4 lg:gap-5 xl:gap-7.5 bg-bg-dark-1 border border-[#262626] rounded-2xl p-4 lg:p-5 w-full">
             {/* Image */}
             <img
               src={item.image}
@@ -84,33 +81,17 @@ export function PropertiesGrid() {
               </div>
             </div>
           </div>
+          </div>
         ))}
-      </div>
-
-      {/* Pagination */}
-      <div className="flex items-center justify-between border-t border-bg-gray-1 pt-4 mt-6">
-        <p className="text-gray text-sm">
-          <span className="text-white">{pad(currentPage)}</span>
-          {" of "}
-          {pad(totalPages)}
-        </p>
-        <div className="flex gap-3">
-          <button
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-            disabled={currentPage === 1}
-            className="w-10 h-10 rounded-full border border-bg-gray-1 flex items-center justify-center text-white hover:bg-white/10 transition disabled:opacity-30 disabled:cursor-not-allowed"
-          >
-            <FaArrowLeft size={16} />
-          </button>
-          <button
-            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-            disabled={currentPage === totalPages}
-            className="w-10 h-10 rounded-full border border-bg-gray-1 flex items-center justify-center text-white hover:bg-white/10 transition disabled:opacity-30 disabled:cursor-not-allowed"
-          >
-            <FaArrowRight size={16} />
-          </button>
-        </div>
-      </div>
+      </BaseSlider>
+      <SliderButtons
+        currentIndex={currentIndex}
+        goNext={goNext}
+        goPrev={goPrev}
+        itemsLength={properties.length}
+        itemsToShow={itemsToShow}
+        maxIndex={maxIndex}
+      />
     </div>
   );
 }

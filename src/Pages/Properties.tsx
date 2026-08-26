@@ -29,13 +29,14 @@ const ProperityPage = () => {
                 <ContactForm
                     columns={4}
                     extraFields={[
-                        { name: 'location', type: 'dropdown', placeholder: 'Select Location', options: ['Dubai', 'Malibu'] },
-                        { name: 'propertyType', type: 'dropdown', placeholder: 'Select Property Type', options: ['Villa', 'Apartment'] },
-                        { name: 'bedrooms', type: 'dropdown', placeholder: 'Select no. of Bedrooms', options: ['1', '2', '3+'] },
-                        { name: 'bathrooms', type: 'dropdown', placeholder: 'Select no. of Bedrooms', options: ['1', '2', '3+'] },
-                        { name: 'budget', type: 'dropdown', placeholder: 'Select Budget', options: ['$100k-$500k', '$500k+'], colSpan: 2 },
+                        { name: 'location', label: 'Preferred Location', type: 'dropdown', placeholder: 'Select Location', options: ['Dubai', 'Malibu'] },
+                        { name: 'propertyType', label: 'Property Type', type: 'dropdown', placeholder: 'Select Property Type', options: ['Villa', 'Apartment'] },
+                        { name: 'bathrooms', label: 'No. of Bathrooms', type: 'dropdown', placeholder: 'Select no. of Bathrooms', options: ['1', '2', '3+'] },
+                        { name: 'bedrooms', label: 'No. of Bedrooms', type: 'dropdown', placeholder: 'Select no. of Bedrooms', options: ['1', '2', '3+'] },
+                        { name: 'budget', label: 'Budget', type: 'dropdown', placeholder: 'Select Budget', options: ['$100k-$500k', '$500k+'], colSpan: 2 },
                         {
                             name: 'prefNumber',
+                          label: 'Preferred Contact Method',
                             type: 'input',
                             placeholder: 'Enter Your Number',
                             icon: MdCall,

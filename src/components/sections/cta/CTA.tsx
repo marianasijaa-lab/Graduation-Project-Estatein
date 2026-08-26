@@ -1,5 +1,6 @@
 import React from "react";
 import { useTheme } from '../../../Context/ThemeContext';
+import { Link } from 'react-router';
 
 interface CtaSectionProps {
   title?: string;
@@ -59,9 +60,12 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
           {renderButton ? (
             renderButton()
           ) : (
-            <button className="px-6 py-3.5 bg-primary hover:bg-[#5e2ed9] text-white text-sm font-medium rounded-xl transition-colors shadow-sm">
+            <Link
+              to="/properties"
+              className="px-6 py-3.5 bg-primary hover:burg-[#5e2ed9] text-white text-sm font-medium rounded-xl transition-colors shadow-sm cursor-pointer"
+            >
               Explore Properties
-            </button>
+            </Link>
           )}
         </div>
       </div>
