@@ -1,5 +1,4 @@
 import PropertyForm from "./PropertyForm";
-
 interface InquireSectionProps {
   propertyName?: string;
   propertyLocation?: string;
@@ -28,6 +27,7 @@ const InquireSection = ({
           xl:py-[150px]
         "
       >
+        
         {/* Description */}
         <div
           className="
