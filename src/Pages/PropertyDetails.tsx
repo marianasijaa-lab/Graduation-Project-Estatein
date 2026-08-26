@@ -2,6 +2,9 @@
 import PropertyDescription from "../components/sections/property/PropertyDescription";
 import InquireSection from "../components/sections/property/InquireSection";
 import PricingDetails from "../components/sections/property/PricingDetails";
+import FAQSection from "../components/sections/property/FaqSection";
+import FAQSlider from "../components/ui/slider/FAQSlider";
+import { CtaSection } from "../components/sections/cta/CTA";
 export const  PropertyDetails = () => {
   return (
     <>
@@ -127,6 +130,20 @@ export const  PropertyDetails = () => {
     },
   ]}
 />
+<FAQSection/>
+<FAQSlider/>
+<CtaSection
+            bgLeftImage="public/assets/Abstract2.png"
+            bgRightImage="public/assets/Abstract1.png"
+            renderButton={() => (
+                <a
+                    href="/properties"
+                    className="w-full sm:w-auto text-center bg-primary hover:bg-[#5e2ed9] text-white text-sm font-medium px-6 py-3.5 rounded-lg transition-colors whitespace-nowrap inline-block"
+                >
+                    Explore Properties
+                </a>
+            )}
+        />
     </>
   );
 };
