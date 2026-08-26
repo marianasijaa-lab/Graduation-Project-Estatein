@@ -2,7 +2,7 @@ import React from 'react';
 import { StarCluster } from './StarCluster';
 
 export interface SectionHeaderProps {
-  title: string;
+  title: React.ReactNode;
   subtitle: string;
   actionLabel?: string;
   onAction?: () => void;
@@ -22,9 +22,9 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
     <div className={`flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 sm:mb-14 ${className}`}>
       {/* الجانب الأيسر: النجوم + العنوان h2 + الوصف p */}
       <div className={`space-y-2.5 ${fullWidth ? 'w-full' : 'max-w-4xl'}`}>
-        <StarCluster />
+        <StarCluster  />
         
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white font-['Urbanist',sans-serif]">
+        <h2 className="text-2xl sm:text-3xl lg:text-[40px] font-semibold tracking-tight text-white leading-normal">
           {title}
         </h2>
         

@@ -1,12 +1,14 @@
 import React from 'react';
 import { SectionHeader } from '../../common/SectionHeader';
 import ServiceCard from './ServiceCard';
-import { values } from '../../../data/aboutData';
+import { useValues } from '../../../hooks/useValues';
 
 const Values: React.FC = () => {
+  const { values } = useValues();
+
   return (
-    <section className="w-full bg-bg-dark-1 py-14 sm:py-16 lg:py-22">
-      <div className="max-w-[1568px] mx-auto px-4 sm:px-6 lg:px-10">
+    <section className="w-full bg-bg-dark-1 py-8 sm:py-10 lg:py-14">
+      <div className="site-container">
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-20">
           {/* Header */}
           <div className="lg:w-[35%] flex flex-col justify-center">

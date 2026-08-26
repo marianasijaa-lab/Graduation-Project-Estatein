@@ -18,7 +18,7 @@ export const TopBanner: React.FC<TopBannerProps> = ({
 
   return (
     <aside
-      className="relative w-full border-b border-bg-gray-1 text-white py-3 px-4 sm:px-6 overflow-hidden select-none z-50"
+      className="relative w-full border-b border-bg-gray-1 text-white py-3 px-4 sm:px-6 overflow-hidden select-none z-50 opacity-50"
       style={{ backgroundColor: '#1A1A1A' }}
     >
       {/* Background with opacity only */}
@@ -31,7 +31,7 @@ export const TopBanner: React.FC<TopBannerProps> = ({
           opacity: 0.4,
         }}
       />
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+      <div className="site-container flex items-center justify-between gap-2">
         <div className="flex-1 flex items-center justify-center gap-1.5 sm:gap-2 min-w-0 overflow-hidden">
           <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 text-[#F5C344] fill-[#F5C344]/30 shrink-0" />
           <span className="font-normal text-white/90 text-[8.5px] xs:text-[10px] sm:text-xs md:text-sm whitespace-nowrap shrink min-w-0 overflow-hidden text-ellipsis">

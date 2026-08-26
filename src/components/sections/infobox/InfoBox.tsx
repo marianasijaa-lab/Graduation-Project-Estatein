@@ -11,6 +11,7 @@ interface InfoBoxProps {
    * vertical   → title on top, description in middle, full-width button at the bottom (card style)
    */
   variant?: 'horizontal' | 'vertical';
+  
 }
 
 export const InfoBox: React.FC<InfoBoxProps> = ({
@@ -24,20 +25,20 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
   const isDark = theme === 'dark';
 
   const containerBase = `relative overflow-hidden rounded-2xl border transition-colors ${
-    isDark ? 'bg-[#141414] border-[#262626] text-white' : 'bg-white border-gray-200 text-gray-900'
+    isDark ? 'bg-[#1A1A1A] border-[#262626] text-white' : 'bg-white border-gray-200 text-gray-900'
   }`;
 
   // Shared abstract background overlay
   const bgOverlay = (
     <div
-      className="absolute inset-0 bg-center bg-no-repeat bg-cover opacity-20 pointer-events-none"
+      className="absolute inset-0 bg-center bg-no-repeat bg-cover pointer-events-none"
       style={{ backgroundImage: `url(/assets/Abstract3.png)` }}
     />
   );
 
   if (variant === 'vertical') {
     return (
-      <div className={`${containerBase} flex flex-col p-8 sm:p-10 gap-6 h-full`}>
+    <div className={`${containerBase} flex flex-col p-8 sm:p-10 gap-6 h-auto`}>
         {bgOverlay}
 
         {/* Title */}

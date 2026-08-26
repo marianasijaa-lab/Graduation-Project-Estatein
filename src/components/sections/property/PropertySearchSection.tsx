@@ -10,8 +10,6 @@ import { BsFillBoxFill } from "react-icons/bs";
 import { FaRegCalendar } from "react-icons/fa6";
 import { useTheme } from '../../../Context/ThemeContext';
 
-import { Button } from '../../ui/Button';
-
 const MOCK_PROPERTIES = [
     { id: 1, name: 'Villa Dubai', location: 'Dubai', type: 'Villa', price: '$500k - $1M', size: '2000-3000 sqft', year: '2023' },
     { id: 2, name: 'Modern Apartment', location: 'Cairo', type: 'Apartment', price: '$100k - $300k', size: '1000-2000 sqft', year: '2022' },
@@ -90,7 +88,7 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({ onSearchSub
         <section
             className={`w-full pt-6 pb-10 px-4 md:px-8 lg:px-16 transition-colors duration-300 relative z-10 ${isDark ? 'bg-transparent text-white' : 'bg-transparent text-gray-900'} ${className}`}
         >
-            <div className="max-w-7xl mx-auto flex flex-col items-center" ref={containerRef}>
+            <div className="site-container flex flex-col items-center" ref={containerRef}>
 
                 {/* ===== MOBILE: container موحد ===== */}
                 <div className={`w-full block md:hidden border rounded-2xl p-3 shadow-2xl transition-colors ${isDark ? 'bg-bg-dark border-bg-gray-1' : 'bg-gray-400 border-gray-200'}`}>

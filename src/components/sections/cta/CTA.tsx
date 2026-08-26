@@ -12,8 +12,8 @@ interface CtaSectionProps {
 export const CtaSection: React.FC<CtaSectionProps> = ({
   title = "Start Your Real Estate Journey Today",
   description = "Your dream property is just a click away. Whether you're looking for a new home, a strategic investment, or expert real estate advice, Estatein is here to assist you every step of the way. Take the first step towards your real estate goals and explore our available properties or get in touch with our team for personalized assistance.",
-  bgLeftImage,
-  bgRightImage,
+  bgLeftImage = "/assets/Abstract2.png",
+  bgRightImage = "/assets/Abstract1.png",
   renderButton,
 }) => {
   const { theme } = useTheme();
@@ -21,7 +21,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
 
     return (
         <section
-            className={`relative w-full overflow-hidden transition-colors py-12 sm:py-16 lg:py-20 border-b border-t border-bg-gray-1 ${
+            className={`relative w-full overflow-hidden transition-colors py-8 sm:py-10 lg:py-14 border-b border-t border-bg-gray-1 ${
                 isDark ? 'bg-bg-dark-1 text-white' : 'bg-white text-gray-900'
             }`}
         >
@@ -39,7 +39,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
                 />
             )}
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
+      <div className="site-container relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
         <div className="max-w-6xl text-center lg:text-left mx-auto lg:mx-0 space-y-3">
           {title && (
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight leading-snug">
