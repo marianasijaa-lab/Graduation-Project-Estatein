@@ -9,8 +9,6 @@ import { PiMoneyWavyFill } from "react-icons/pi";
 import { BsFillBoxFill } from "react-icons/bs";
 import { FaRegCalendar } from "react-icons/fa6";
 import { useTheme } from '../../../Context/ThemeContext';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FadeInSection } from '../../common/FadeInSection';
 
 const MOCK_PROPERTIES = [
     { id: 1, name: 'Villa Dubai', location: 'Dubai', type: 'Villa', price: '$500k - $1M', size: '2000-3000 sqft', year: '2023' },
@@ -87,8 +85,7 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({ onSearchSub
     };
 
     return (
-        <FadeInSection
-            direction="up"
+        <section
             className={`w-full pt-6 pb-10 px-4 md:px-8 lg:px-16 transition-colors duration-300 relative z-10 ${isDark ? 'bg-transparent text-white' : 'bg-transparent text-gray-900'} ${className}`}
         >
             <div className="site-container flex flex-col items-center" ref={containerRef}>
@@ -138,30 +135,17 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({ onSearchSub
                                                 {selectedValue || filter.label}
                                             </span>
                                         </div>
-                                        <motion.div
-                                            animate={{ rotate: isOpen ? 180 : 0 }}
-                                            transition={{ duration: 0.2 }}
-                                        >
-                                            <FiChevronDown className={`shrink-0 text-base ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
-                                        </motion.div>
+                                        <FiChevronDown className={`shrink-0 text-base transition-transform duration-200 ${isOpen ? 'rotate-180' : ''} ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
                                     </div>
-                                    <AnimatePresence>
-                                        {isOpen && (
-                                            <motion.div
-                                                initial={{ opacity: 0, y: -8 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                exit={{ opacity: 0, y: -8 }}
-                                                transition={{ duration: 0.18 }}
-                                                className={`absolute top-full left-0 w-full mt-1 rounded-xl border shadow-xl z-50 max-h-48 overflow-y-auto ${isDark ? 'bg-bg-dark border-bg-gray-1 text-white' : 'bg-white border-gray-200 text-gray-800'}`}
-                                            >
-                                                {filter.options.map((option) => (
-                                                    <div key={option} onClick={() => handleSelectOption(filter.id, option)} className={`px-4 py-2.5 text-sm cursor-pointer transition-colors ${isDark ? 'hover:bg-bg-gray-1' : 'hover:bg-gray-100'}`}>
-                                                        {option}
-                                                    </div>
-                                                ))}
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
+                                    {isOpen && (
+                                        <div className={`absolute top-full left-0 w-full mt-1 rounded-xl border shadow-xl z-50 max-h-48 overflow-y-auto ${isDark ? 'bg-bg-dark border-bg-gray-1 text-white' : 'bg-white border-gray-200 text-gray-800'}`}>
+                                            {filter.options.map((option) => (
+                                                <div key={option} onClick={() => handleSelectOption(filter.id, option)} className={`px-4 py-2.5 text-sm cursor-pointer transition-colors ${isDark ? 'hover:bg-bg-gray-1' : 'hover:bg-gray-100'}`}>
+                                                    {option}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             );
                         })}
@@ -222,31 +206,18 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({ onSearchSub
                                                 </span>
                                             </div>
                                             <div className={`shrink-0 w-7 h-7 rounded-full border flex items-center justify-center transition-colors ${isDark ? 'border-bg-gray-1 bg-bg-dark' : 'border-gray-300 bg-gray-100'}`}>
-                                                <motion.div
-                                                    animate={{ rotate: isOpen ? 180 : 0 }}
-                                                    transition={{ duration: 0.2 }}
-                                                >
-                                                    <FiChevronDown className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
-                                                </motion.div>
+                                                <FiChevronDown className={`text-sm transition-transform duration-200 ${isOpen ? 'rotate-180' : ''} ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
                                             </div>
                                         </div>
-                                        <AnimatePresence>
-                                            {isOpen && (
-                                                <motion.div
-                                                    initial={{ opacity: 0, y: -8 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    exit={{ opacity: 0, y: -8 }}
-                                                    transition={{ duration: 0.18 }}
-                                                    className={`absolute top-full left-0 w-full mt-2 rounded-xl border shadow-xl z-50 max-h-48 overflow-y-auto ${isDark ? 'bg-bg-dark border-bg-gray-1 text-white' : 'bg-white border-gray-200 text-gray-800'}`}
-                                                >
-                                                    {filter.options.map((option) => (
-                                                        <div key={option} onClick={() => handleSelectOption(filter.id, option)} className={`px-4 py-2.5 text-sm cursor-pointer transition-colors ${isDark ? 'hover:bg-bg-gray-1' : 'hover:bg-gray-100'}`}>
-                                                            {option}
-                                                        </div>
-                                                    ))}
-                                                </motion.div>
-                                            )}
-                                        </AnimatePresence>
+                                        {isOpen && (
+                                            <div className={`absolute top-full left-0 w-full mt-2 rounded-xl border shadow-xl z-50 max-h-48 overflow-y-auto ${isDark ? 'bg-bg-dark border-bg-gray-1 text-white' : 'bg-white border-gray-200 text-gray-800'}`}>
+                                                {filter.options.map((option) => (
+                                                    <div key={option} onClick={() => handleSelectOption(filter.id, option)} className={`px-4 py-2.5 text-sm cursor-pointer transition-colors ${isDark ? 'hover:bg-bg-gray-1' : 'hover:bg-gray-100'}`}>
+                                                        {option}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
                                     </div>
                                 );
                             })}
@@ -256,6 +227,6 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({ onSearchSub
                 </div>
 
             </div>
-        </FadeInSection>
+        </section>
     );
 };

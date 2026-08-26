@@ -1,7 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { StarCluster } from './StarCluster';
-import { FadeInSection } from './FadeInSection';
 
 export interface SectionHeaderProps {
   title: React.ReactNode;
@@ -21,32 +19,31 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
   fullWidth = false,
 }) => {
   return (
-    <FadeInSection direction="up" className={`flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 sm:mb-14 ${className}`}>
+    <div className={`flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 sm:mb-14 ${className}`}>
       {/* الجانب الأيسر: النجوم + العنوان h2 + الوصف p */}
       <div className={`space-y-2.5 ${fullWidth ? 'w-full' : 'max-w-4xl'}`}>
-        <StarCluster />
-
-        <h2 className="text-2xl sm:text-3xl lg:text-[40px] font-semibold tracking-tight text-(--text-main) leading-normal">
+        <StarCluster  />
+        
+        <h2 className="text-2xl sm:text-3xl lg:text-[40px] font-semibold tracking-tight text-white leading-normal">
           {title}
         </h2>
-
+        
         <p className="text-sm sm:text-base text-gray leading-relaxed font-normal">
           {subtitle}
         </p>
       </div>
 
+     
       {actionLabel && (
-        <div className="shrink-0 self-start lg:self-end">
-          <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
+        <div className="hidden lg:block shrink-0 self-start lg:self-end">
+          <button
             onClick={onAction}
-            className="px-5 py-3.5 rounded-xl bg-(--bg-main) hover:bg-(--bg-secondary) border border-(--color-border) hover:border-primary/50 text-(--text-main) text-sm font-medium transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap"
+            className="px-5 py-3.5 rounded-xl bg-bg-dark hover:bg-[#222222] border border-bg-gray-1 hover:border-primary/50 text-white text-sm font-medium transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap"
           >
             {actionLabel}
-          </motion.button>
+          </button>
         </div>
       )}
-    </FadeInSection>
+    </div>
   );
 };

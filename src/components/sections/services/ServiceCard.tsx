@@ -1,7 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { GoArrowUpRight } from 'react-icons/go';
-import { staggerItem } from '../../common/StaggerContainer';
 
 interface ServiceCardProps {
   type: 'horizontal' | 'vertical';
@@ -13,12 +11,7 @@ interface ServiceCardProps {
 const ServiceCard: React.FC<ServiceCardProps> = ({ type, heading, icon, description }) => {
   if (type === 'vertical') {
     return (
-      <motion.div
-        variants={staggerItem}
-        whileHover={{ y: -4 }}
-        transition={{ duration: 0.25 }}
-        className="group relative flex flex-col items-center justify-center text-center bg-bg-dark border border-bg-gray-1 rounded-[10px] py-6 px-4 sm:py-8 sm:px-10 hover:border-[#703BF7]/50 hover:bg-[#1e1e1e] transition-all duration-300 cursor-pointer overflow-hidden w-full"
-      >
+      <div className="group relative flex flex-col items-center justify-center text-center bg-bg-dark border border-bg-gray-1 rounded-[10px] py-6 px-4 sm:py-8 sm:px-10 hover:border-[#703BF7]/50 hover:bg-[#1e1e1e] transition-all duration-300 cursor-pointer overflow-hidden w-full">
         {/* سهم الزاوية */}
         <GoArrowUpRight
           size={22}
@@ -31,16 +24,16 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ type, heading, icon, descript
         </div>
 
         {/* العنوان */}
-        <h3 className="font-semibold text-white text-[11px] sm:text-[13px] lg:text-base whitespace-nowrap">
+        <h3 className="font-semibold text-white text-[11px] sm:text-[13px] lg:text-base whitespace-nowrap ">
           {heading}
         </h3>
-      </motion.div>
+      </div>
     );
   }
 
   // horizontal
   return (
-    <motion.div variants={staggerItem} className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3">
       <div className="flex items-center gap-3">
         <div className="flex items-center justify-center w-14 h-14 rounded-full shrink-0 bg-bg-dark-1 border border-primary">
           <img src={icon} alt={heading} className="w-6 h-6 object-contain" />
@@ -50,7 +43,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ type, heading, icon, descript
       {description && (
         <p className="text-[15px] font-medium text-gray leading-[150%]">{description}</p>
       )}
-    </motion.div>
+    </div>
   );
 };
 

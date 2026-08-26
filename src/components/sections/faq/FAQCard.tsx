@@ -8,7 +8,8 @@ interface FAQCardProps {
 
 export const FAQCard = ({ question, description, onReadMore }: FAQCardProps) => {
   return (
-    <div className="flex flex-col gap-4 bg-bg-dark-1 border border-white/10 rounded-xl p-6 h-full transition-colors duration-300">
+    <div className="flex flex-col gap-4 bg-bg-dark-1 border border-white/10 rounded-xl p-6 h-full">
+
       {/* question */}
       <h3 className="text-white font-semibold text-[19px] min-h-[3.5rem]">
         {question}
@@ -27,6 +28,7 @@ export const FAQCard = ({ question, description, onReadMore }: FAQCardProps) => 
           onClick={onReadMore}
         />
       </div>
+
     </div>
   );
 };

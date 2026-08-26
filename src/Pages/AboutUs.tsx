@@ -1,13 +1,12 @@
 import React from 'react';
 import { useTheme } from '../Context/ThemeContext';
 import { SectionHeader } from '../components/common/SectionHeader';
+
 import HeroAbout from '../components/sections/hero/AboutHero';
 import CompaniesSlider from '../components/ui/slider/CompaniesSlider';
 import ServiceCard from '../components/sections/services/ServiceCard';
 import { useAchievements } from '../hooks/useAchievements';
 import { useValues } from '../hooks/useValues';
-import { motion } from 'framer-motion';
-import { StaggerContainer, staggerItem } from '../components/common/StaggerContainer';
 
 // Our Achievements Section
 
@@ -29,11 +28,10 @@ const OurAchievements: React.FC = () => {
         />
 
         {/* Cards grid */}
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
           {achievements.map((item) => (
-            <motion.div
+            <div
               key={item.id}
-              variants={staggerItem}
               className="rounded-[10px] p-6 sm:p-8 flex flex-col gap-4"
               style={{
                 backgroundColor: "#141414",
@@ -51,9 +49,9 @@ const OurAchievements: React.FC = () => {
               >
                 {item.description}
               </p>
-            </motion.div>
+            </div>
           ))}
-        </StaggerContainer>
+        </div>
       </div>
     </section>
   );
@@ -83,11 +81,7 @@ const OurValues: React.FC = () => {
           </div>
 
           {/* ── Right: Values Grid container ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
+          <div
             className="lg:w-[65%] rounded-xl overflow-hidden border border-bg-dark-1 "
             style={{
               backgroundColor: "#141414",
@@ -135,7 +129,7 @@ const OurValues: React.FC = () => {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
@@ -149,11 +143,7 @@ const OurValuedClients: React.FC = () => {
   const isDark = theme === "dark";
 
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6 }}
+    <section
       className={`w-full transition-colors ${isDark ? "bg-bg-dark-1" : "bg-gray-50"}`}
     >
       <div className="site-container py-14 sm:py-16 lg:py-20">
@@ -164,7 +154,7 @@ const OurValuedClients: React.FC = () => {
         />
         <CompaniesSlider />
       </div>
-    </motion.section>
+    </section>
   );
 };
 

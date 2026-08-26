@@ -7,7 +7,6 @@ import { useProperties } from "../../../hooks/useProperties";
 import { LoadingSkeleton } from "../LoadingSkeleton";
 import { ErrorMessage } from "../ErrorMessage";
 import type { FirestoreProperty } from "../../../store/types";
-import { motion } from "framer-motion";
 
 interface CardProps {
   item: FirestoreProperty;
@@ -37,7 +36,7 @@ const CardsSlider = () => {
         {properties.map((card) => (
           <div
             key={card.id}
-            className="flex-shrink-0 flex"
+            className="flex-shrink-0"
             style={{ width: `calc(${100 / itemsToShow}% - ${(24 * (itemsToShow - 1)) / itemsToShow}px)` }}
           >
             <Card item={card} />
@@ -67,21 +66,15 @@ function Card({ item }: CardProps) {
   ].filter((d) => d.icon && d.text);
 
   return (
-    <motion.div
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-      className="card flex flex-col gap-4 lg:gap-5 xl:gap-7.5 bg-[#111111] border border-[#262626] rounded-2xl p-4 lg:p-5 w-full h-full"
-    >
-      <div className="w-full h-48 sm:h-56 overflow-hidden rounded-xl">
-        <img
-          src={item.image}
-          alt={item.name}
-          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-        />
-      </div>
+    <div className="card flex flex-col gap-4 lg:gap-5 xl:gap-7.5 bg-[#111111] border border-[#262626] rounded-2xl p-4 lg:p-5">
+      <img
+        src={item.image}
+        alt={item.name}
+        className="w-full h-full object-cover rounded-xl hover:scale-105 transition-transform duration-300"
+      />
 
-      <div className="flex flex-col flex-1 gap-5 lg:gap-6 xl:gap-7.5">
-        <div className="flex flex-col gap-0.5 lg:gap-1 xl:gap-1.5 flex-1">
+      <div className="flex flex-col gap-5 lg:gap-6 xl:gap-7.5">
+        <div className="flex flex-col gap-0.5 lg:gap-1 xl:gap-1.5">
           <h3 className="card-title">{item.name}</h3>
           <p className="font-medium text-gray">
             {item.descriptionShort.length > 60
@@ -116,7 +109,7 @@ function Card({ item }: CardProps) {
           />
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 

@@ -7,9 +7,8 @@ import { useTestimonials } from "../../../hooks/useTestimonials";
 import { LoadingSkeleton } from "../LoadingSkeleton";
 import { ErrorMessage } from "../ErrorMessage";
 import type { FirestoreTestimonial } from "../../../store/types";
-import { motion } from "framer-motion";
 
-const GAP = 24;
+const GAP = 24; // يجب أن يطابق قيمة GAP في BaseSlider
 
 const TestimonialsSlider = () => {
   const { testimonials, status, error } = useTestimonials();
@@ -66,11 +65,7 @@ function Star() {
 
 function TestimonialCard({ testimony }: { testimony: FirestoreTestimonial }) {
   return (
-    <motion.div
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-      className="card flex items-start flex-col gap-4 lg:gap-5 xl:gap-7.5"
-    >
+    <div className="card flex items-start flex-col gap-4 lg:gap-5 xl:gap-7.5">
       <div className="flex gap-2.5">
         {Array.from({ length: testimony.rating || 5 }, (_, index) => (
           <Star key={index} />
@@ -93,7 +88,7 @@ function TestimonialCard({ testimony }: { testimony: FirestoreTestimonial }) {
           <p className="text-[14px] lg:text-[16px] text-gray">{testimony.clientLocation}</p>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 

@@ -1,9 +1,6 @@
 import { SectionHeader } from "../../common/SectionHeader";
 import StatsBar from "../stats/StatsBar";
 import { useStats } from "../../../hooks/useStats";
-import { motion } from 'framer-motion';
-import { StaggerContainer, staggerItem } from "../../common/StaggerContainer";
-import { FadeInSection } from "../../common/FadeInSection";
 
 interface HeroAboutProps {
   image1: string;
@@ -17,30 +14,21 @@ const HeroAbout = ({ image1, image2 }: HeroAboutProps) => {
     <section className="w-full bg-bg-dark-1">
       <div className="site-container pt-2 pb-8 sm:py-10 lg:py-14">
         <div className="flex max-sm:flex-col 2xl:flex-row max-2xl:flex-row max-sm:gap-10 2xl:gap-20 max-2xl:gap-15">
-          <StaggerContainer className="max-sm:order-2 max-2xl:order-1 2xl:order-1 2xl:max-w-188.75">
-            <motion.div variants={staggerItem}>
-              <SectionHeader
-                title="Our Journey"
-                subtitle="Our story is one of continuous growth and evolution. We started as a small team with big dreams, determined to create a real estate platform that transcended the ordinary. Over the years, we've expanded our reach, forged valuable partnerships, and gained the trust of countless clients."
-              />
-            </motion.div>
-            <motion.div variants={staggerItem}>
-              <StatsBar stats={stats} />
-            </motion.div>
-          </StaggerContainer>
-
-          <FadeInSection
-            direction="right"
-            delay={0.15}
-            className="max-sm:mt-12.5 max-sm:order-1 max-2xl:order-2 2xl:order-2 w-full max-w-188.75 aspect-[4/3] relative overflow-hidden border border-bg-gray-1 rounded-xl"
-          >
+          <div className="max-sm:order-2 max-2xl:order-1 2xl:order-1 2xl:max-w-188.75">
+            <SectionHeader
+              title="Our Journey"
+              subtitle="Our story is one of continuous growth and evolution. We started as a small team with big dreams, determined to create a real estate platform that transcended the ordinary. Over the years, we've expanded our reach, forged valuable partnerships, and gained the trust of countless clients."
+            />
+            <StatsBar stats={stats} />
+          </div>
+          <div className="max-sm:mt-12.5 max-sm:order-1 max-2xl:order-2 2xl:order-2 w-full max-w-188.75 aspect-[4/3] relative overflow-hidden border border-bg-gray-1 rounded-xl">
             <img src={image1} alt="abstract design" className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none z-0" />
             <img
               src={image2}
               alt="Our Journey"
               className="absolute inset-0 w-full h-full object-contain z-10"
             />
-          </FadeInSection>
+          </div>
         </div>
       </div>
     </section>
