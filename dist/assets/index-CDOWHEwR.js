@@ -273,4 +273,204 @@ FIREBASE: `))}restoreState_(){this.tryAuth(),this.tryAppCheck();for(let e of thi
               text-[14px] font-medium\r
               leading-[150%] text-[#999999]\r
               md:text-[15px] xl:text-[16px]\r
-            `,children:`Interested in this property? Fill out the form below and our real estate experts will get back to you with more details, including scheduling a viewing and answering any questions you may have.`})]}),(0,k.jsx)(cI,{propertyLocation:t})]})}),uI=({images:e})=>{let[t,n]=(0,_.useState)(0),r=e=>{n(e)},i=()=>{let r=(t+1)%e.length;n(r)},a=()=>{let r=(t-1+e.length)%e.length;n(r)},o=(t+1)%e.length;return(0,k.jsxs)(`div`,{className:`site-container bg-bg-dark py-4 rounded-lg`,children:[(0,k.jsx)(`div`,{className:`mb-4 bg-bg-dark-1 p-2 overflow-x-auto`,children:(0,k.jsx)(`div`,{className:`flex gap-2`,children:e.map((e,n)=>(0,k.jsx)(`button`,{onClick:()=>r(n),className:`shrink-0 lg:flex-1 w-20 h-16 lg:h-20 rounded-md overflow-hidden transition-all duration-200 ${n===t?`ring-2 ring-blue-500 opacity-100`:`opacity-60 hover:opacity-80`}`,children:(0,k.jsx)(`img`,{src:e,alt:`Thumbnail ${n+1}`,className:`w-full h-full object-cover`})},n))})}),(0,k.jsxs)(`div`,{className:`grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6`,children:[(0,k.jsx)(`div`,{className:`relative aspect-video rounded-lg overflow-hidden bg-gray-800`,children:(0,k.jsx)(`img`,{src:e[t],alt:`View ${t+1}`,className:`w-full h-full object-cover`})}),(0,k.jsx)(`div`,{className:`relative aspect-video hidden lg:block rounded-lg overflow-hidden bg-gray-800`,children:(0,k.jsx)(`img`,{src:e[o],alt:`View ${o+1}`,className:`w-full h-full object-cover`})})]}),(0,k.jsxs)(`div`,{className:`flex justify-between max-w-75 mx-auto bg-bg-dark-1 p-2 rounded-full items-center gap-4`,children:[(0,k.jsx)(`button`,{onClick:a,className:`w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-white hover:bg-white/10 transition disabled:opacity-30`,children:(0,k.jsx)(Ma,{size:16})}),(0,k.jsx)(`div`,{className:`flex gap-2`,children:e.map((e,n)=>(0,k.jsx)(`div`,{className:`w-2 h-2 rounded-full transition-all ${n===t?`bg-primary w-6`:`bg-gray-600`}`},n))}),(0,k.jsx)(`button`,{onClick:i,className:`w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-white hover:bg-white/10 transition disabled:opacity-30`,children:(0,k.jsx)(ja,{size:16})})]})]})},dI=()=>{let{id:e}=vr(),{properties:t,status:n}=cF();if(n===`loading`||n===`idle`)return(0,k.jsx)(`div`,{className:`site-container py-14`,children:(0,k.jsx)(lF,{variant:`list`,count:3})});let r=t.find(t=>t.id===e);if(!r)return(0,k.jsx)(`div`,{className:`flex items-center justify-center min-h-[60vh]`,children:(0,k.jsx)(`p`,{className:`text-white text-xl`,children:`Property not found.`})});let i=r.images?.length?r.images:[r.image,...t.filter(e=>e.id!==r.id&&e.image!==r.image).map(e=>e.image)];return(0,k.jsxs)(k.Fragment,{children:[(0,k.jsx)(uI,{images:i}),(0,k.jsx)(oI,{description:r.descriptionLong,bedrooms:String(r.bedrooms??0).padStart(2,`0`),bathrooms:String(r.bathrooms??0).padStart(2,`0`),area:`2,500 Square Feet`,features:[`Expansive oceanfront terrace for outdoor entertaining`,`Gourmet kitchen with top-of-the-line appliances`,`Private beach access for morning strolls and sunset views`,`Master suite with a spa-inspired bathroom and ocean-facing balcony`,`Private garage and ample storage space`]}),(0,k.jsx)(lI,{propertyName:`Seaside Serenity Villa`,propertyLocation:`Seaside Serenity Villa, Malibu, California`})]})},fI=({title:e,description:t,buttonLabel:n=`Learn More`,onButtonClick:r,variant:i=`horizontal`})=>{let{theme:a}=Fa(),o=a===`dark`,s=`relative overflow-hidden rounded-2xl border transition-colors ${o?`bg-[#1A1A1A] border-[#262626] text-white`:`bg-white border-gray-200 text-gray-900`}`,c=(0,k.jsx)(`div`,{className:`absolute inset-0 bg-center bg-no-repeat bg-cover pointer-events-none`,style:{backgroundImage:`url(/assets/Abstract3.png)`}});return i===`vertical`?(0,k.jsxs)(`div`,{className:`${s} flex flex-col p-8 sm:p-10 gap-6 h-auto`,children:[c,(0,k.jsx)(`h3`,{className:`relative z-10 text-xl sm:text-2xl font-semibold leading-snug`,children:e}),(0,k.jsx)(`p`,{className:`relative z-10 text-sm sm:text-base leading-relaxed flex-1 ${o?`text-gray-400`:`text-gray-600`}`,children:t}),(0,k.jsx)(`button`,{onClick:r,className:`relative z-10 w-full py-4 rounded-xl text-sm font-medium transition-colors ${o?`bg-bg-dark-1 border border-bg-gray-1 text-white hover:bg-[#222]`:`bg-gray-100 border border-gray-200 text-gray-900 hover:bg-gray-200`}`,children:n})]}):(0,k.jsxs)(`div`,{className:`${s} flex flex-col sm:flex-row items-center justify-between gap-6 px-8 sm:px-10 py-8`,children:[c,(0,k.jsxs)(`div`,{className:`relative z-10 flex flex-col gap-3 max-w-2xl`,children:[(0,k.jsx)(`h3`,{className:`text-xl sm:text-2xl font-semibold leading-snug`,children:e}),(0,k.jsx)(`p`,{className:`text-sm sm:text-base leading-relaxed ${o?`text-gray-400`:`text-gray-600`}`,children:t})]}),(0,k.jsx)(`div`,{className:`relative z-10 shrink-0 w-full sm:w-auto flex justify-center sm:justify-end`,children:(0,k.jsx)(`button`,{onClick:r,className:`px-6 py-3 rounded-xl text-sm font-medium transition-colors border ${o?`bg-bg-dark-1 border-border-gray-1 text-white hover:bg-[#222]`:`bg-gray-100 border-gray-200 text-gray-900 hover:bg-gray-200`}`,children:n})})]})},pI=[{id:`1`,title:`Valuation Mastery`,description:`Discover the true worth of your property with our expert valuation services.`,icon:`/assets/Icon_19.png`},{id:`2`,title:`Strategic Marketing`,description:`Selling a property requires more than just a listing; it demands a strategic marketing approach.`,icon:`/assets/Icon_20.png`},{id:`3`,title:`Negotiation Wizardry`,description:`Negotiating the best deal is an art, and our negotiation experts are masters of it.`,icon:`/assets/Icon_21.png`},{id:`4`,title:`Closing Success`,description:`A successful sale is not complete until the closing. We guide you through the intricate closing process.`,icon:`/assets/Icon_22.png`}],mI=()=>(0,k.jsx)(`section`,{className:`w-full bg-bg-dark-1 border-t border-bg-gray-1 py-16 sm:py-20 lg:py-24`,children:(0,k.jsxs)(`div`,{className:`site-container`,children:[(0,k.jsx)(Ja,{title:`Unlock Property Value`,subtitle:`Selling your property should be a rewarding experience, and at Estatein, we make sure it is. Our Property Selling Service is designed to maximize the value of your property, ensuring you get the best deal possible. Explore the categories below to see how we can help you at every step of your selling journey`,className:`mb-12 sm:mb-16`,fullWidth:!0}),(0,k.jsxs)(`div`,{className:`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch`,children:[pI.map(e=>(0,k.jsxs)(`div`,{className:`bg-[#141414] border border-[#262626] rounded-[16px] p-5 sm:p-6 flex flex-col justify-start gap-3 hover:border-[#703BF7]/40 transition-all duration-300 h-full min-h-[200px]`,children:[(0,k.jsxs)(`div`,{className:`flex items-center gap-2 sm:gap-3`,children:[(0,k.jsx)(`div`,{className:`w-10 h-10 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center`,children:(0,k.jsx)(`img`,{src:e.icon,alt:e.title,className:`w-full h-full object-contain`})}),(0,k.jsx)(`h3`,{className:`font-bold text-white text-lg xl:text-xl font-['Urbanist',sans-serif]`,children:e.title})]}),(0,k.jsx)(`p`,{className:`text-[15px] sm:text-base font-normal text-[#999999] leading-[150%]`,children:e.description})]},e.id)),(0,k.jsx)(`div`,{className:`md:col-span-2 lg:col-span-2 h-full w-full`,children:(0,k.jsx)(fI,{variant:`horizontal`,title:`Unlock the Value of Your Property Today`,description:`Ready to unlock the true value of your property? Explore our Property Selling Service categories and let us help you achieve the best deal possible for your valuable asset.`,buttonLabel:`Learn More`,onButtonClick:()=>{console.log(`Learn More clicked`)}})})]})]})}),hI=[{id:`1`,title:`Market Insight`,description:`Stay ahead of market trends with our expert Market Analysis. We provide in-depth insights into real estate market conditions`,icon:`/assets/Icon_19.png`},{id:`2`,title:`ROI Assessment`,description:`Make investment decisions with confidence. Our ROI Assessment services evaluate the potential returns on your investments`,icon:`/assets/Icon_27.png`},{id:`3`,title:`Customized Strategies`,description:`Every investor is unique, and so are their goals. We develop Customized Investment Strategies tailored to your specific needs`,icon:`/assets/Icon_28.png`},{id:`4`,title:`Diversification Mastery`,description:`Diversify your real estate portfolio effectively. Our experts guide you in spreading your investments across various property types and locations`,icon:`/assets/Icon_4.png`}],gI=()=>(0,k.jsx)(`section`,{className:`w-full bg-[#141414] border-t border-[#262626] py-16 sm:py-20 lg:py-24`,children:(0,k.jsx)(`div`,{className:`site-container`,children:(0,k.jsxs)(`div`,{className:`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start`,children:[(0,k.jsxs)(`div`,{className:`lg:col-span-5 xl:col-span-4 flex flex-col justify-start gap-0 sm:gap-1`,children:[(0,k.jsx)(Ja,{title:(0,k.jsxs)(k.Fragment,{children:[`Smart Investments,`,(0,k.jsx)(`br`,{}),`Informed Decisions`]}),subtitle:`Building a real estate portfolio requires a strategic approach. Estatein's Investment Advisory Service empowers you to make smart investments and informed decisions.`,className:`mb-0`,fullWidth:!0}),(0,k.jsx)(`div`,{className:`w-full`,children:(0,k.jsx)(`div`,{className:`h-auto`,children:(0,k.jsx)(fI,{variant:`vertical`,title:`Unlock Your Investment Potential`,description:`Explore our Property Management Service categories and let us handle the complexities while you enjoy the benefits of property ownership.`,buttonLabel:`Learn More`,onButtonClick:()=>{console.log(`Learn More clicked`)}})})})]}),(0,k.jsx)(`div`,{className:`lg:col-span-7 xl:col-span-8 rounded-[10px] bg-[#191919] p-1.5 mt-14`,children:(0,k.jsx)(`div`,{className:`grid grid-cols-1 md:grid-cols-2 gap-1.5`,children:hI.map(e=>(0,k.jsxs)(`div`,{className:`bg-[#141414] border border-[#262626] rounded-[8px] px-5 sm:px-6 py-3 sm:py-4 flex flex-col justify-start gap-4 hover:border-[#703BF7]/40 transition-all duration-300`,children:[(0,k.jsxs)(`div`,{className:`flex items-center gap-3`,children:[(0,k.jsx)(`div`,{className:`w-12 h-12 shrink-0 flex items-center justify-center`,children:(0,k.jsx)(`img`,{src:e.icon,alt:e.title,className:`w-full h-full object-contain`})}),(0,k.jsx)(`h3`,{className:`font-bold text-white text-lg xl:text-xl font-['Urbanist',sans-serif]`,children:e.title})]}),(0,k.jsx)(`p`,{className:`text-[15px] sm:text-base font-normal text-[#999999] leading-[150%]`,children:e.description})]},e.id))})})]})})}),_I=[{id:`1`,title:`Tenant Harmony`,description:`Our Tenant Management services ensure that your tenants have a smooth and reducing vacancies.`,icon:`/assets/Icon_23.png`},{id:`2`,title:`Maintenance Ease`,description:`Say goodbye to property maintenance headaches. We handle all aspects of property upkeep.`,icon:`/assets/Icon_24.png`},{id:`3`,title:`Financial Peace of Mind`,description:`Managing property finances can be complex. Our financial experts take care of rent collection`,icon:`/assets/Icon_25.png`},{id:`4`,title:`Legal Guardian`,description:`Stay compliant with property laws and regulations effortlessly.`,icon:`/assets/Icon_27.png`}],vI=()=>(0,k.jsx)(`section`,{className:`w-full bg-[#141414] border-t border-[#262626] py-16 sm:py-20 lg:py-24`,children:(0,k.jsxs)(`div`,{className:`site-container`,children:[(0,k.jsx)(Ja,{title:`Effortless Property Management`,subtitle:`Owning a property should be a pleasure, not a hassle. Estatein's Property Management Service takes the stress out of property ownership, offering comprehensive solutions tailored to your needs. Explore the categories below to see how we can make property management effortless for you`,className:`mb-12 sm:mb-16`,fullWidth:!0}),(0,k.jsxs)(`div`,{className:`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch`,children:[_I.map(e=>(0,k.jsxs)(`div`,{className:`bg-[#141414] border border-[#262626] rounded-[16px] p-5 sm:p-6 flex flex-col justify-start gap-3 hover:border-[#703BF7]/40 transition-all duration-300 h-full min-h-[200px]`,children:[(0,k.jsxs)(`div`,{className:`flex items-center gap-2 sm:gap-3`,children:[(0,k.jsx)(`div`,{className:`w-10 h-10 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center`,children:(0,k.jsx)(`img`,{src:e.icon,alt:e.title,className:`w-full h-full object-contain`})}),(0,k.jsx)(`h3`,{className:`font-bold text-white text-lg xl:text-xl font-['Urbanist',sans-serif]`,children:e.title})]}),(0,k.jsx)(`p`,{className:`text-[15px] sm:text-base font-normal text-[#999999] leading-[150%]`,children:e.description})]},e.id)),(0,k.jsx)(`div`,{className:`md:col-span-2 lg:col-span-2 h-full w-full`,children:(0,k.jsx)(fI,{variant:`horizontal`,title:`Experience Effortless Property Management`,description:`Ready to experience hassle-free property management? Explore our Property Management Service categories and let us handle the complexities while you enjoy the benefits of property ownership.`,buttonLabel:`Learn More`,onButtonClick:()=>{console.log(`Learn More clicked`)}})})]})]})}),yI=Ni([{element:(0,k.jsx)(Ka,{}),children:[{path:``,index:!0,element:(0,k.jsx)(HF,{})},{path:`/about`,element:(0,k.jsx)(eI,{})},{path:`/property-details/:id`,element:(0,k.jsx)(dI,{})},{path:`/properties`,element:(0,k.jsx)(_F,{})},{path:`/services`,element:(0,k.jsx)(()=>(0,k.jsxs)(`div`,{className:`min-h-screen bg-bg-dark-1 text-white`,children:[(0,k.jsx)(eo,{title:`Elevate Your Real Estate Experience`,description:`Welcome to Estatein, where your real estate aspirations meet expert guidance. Explore our comprehensive range of services, each designed to cater to your unique needs and dreams.`,className:`pt-8 pb-8 sm:pt-12 sm:pb-12 lg:pt-14 lg:pb-14`}),(0,k.jsx)(wF,{}),(0,k.jsx)(mI,{}),(0,k.jsx)(vI,{}),(0,k.jsx)(gI,{})]}),{})},{path:`/contact`,element:(0,k.jsx)(aI,{})}]}]);(0,v.createRoot)(document.getElementById(`root`)).render((0,k.jsx)(_.StrictMode,{children:(0,k.jsx)(Bc,{store:_u,children:(0,k.jsx)(Pa,{children:(0,k.jsx)(Hr,{router:yI})})})}));
+            `,children:`Interested in this property? Fill out the form below and our real estate experts will get back to you with more details, including scheduling a viewing and answering any questions you may have.`})]}),(0,k.jsx)(cI,{propertyLocation:t})]})}),uI=({title:e,items:t})=>{let n=e===`Monthly Costs`;return(0,k.jsxs)(`div`,{className:`w-full rounded-[10px] border border-[#262626] bg-[#141414]`,children:[(0,k.jsxs)(`div`,{className:`flex h-[63px] items-center justify-between border-b border-[#262626] px-[50px]`,children:[(0,k.jsx)(`h3`,{className:`font-['Urbanist'] text-[16px] font-semibold text-white`,children:e}),(0,k.jsx)(`button`,{type:`button`,className:`\r
+            h-[40px]\r
+            rounded-[6px]\r
+            border\r
+            border-[#262626]\r
+            bg-[#1A1A1A]\r
+            px-[18px]\r
+            font-['Urbanist']\r
+            text-[12px]\r
+            font-medium\r
+            text-white\r
+            transition\r
+            hover:bg-[#222222]\r
+          `,children:`Learn More`})]}),(0,k.jsx)(`div`,{className:`px-[50px]`,children:(0,k.jsx)(`div`,{className:n?`grid grid-cols-1`:`grid grid-cols-1 md:grid-cols-2`,children:t.map((e,r)=>(0,k.jsxs)(`div`,{className:`
+                min-h-[86px]
+                py-[30px]
+
+                ${r===t.length-1?``:`border-b border-[#262626]`}
+
+                ${!n&&e.fullWidth?`md:col-span-2`:``}
+
+                ${!n&&!e.fullWidth&&r%2==1?`md:border-l md:pl-[30px]`:``}
+
+                ${!n&&!e.fullWidth&&r%2==0?`md:pr-[30px]`:``}`,children:[(0,k.jsx)(`p`,{className:`\r
+                  font-['Urbanist']\r
+                  text-[12px]\r
+                  font-medium\r
+                  text-[#999999]\r
+                `,children:e.label}),(0,k.jsxs)(`div`,{className:`mt-[8px] flex flex-wrap items-center gap-[10px]`,children:[(0,k.jsx)(`span`,{className:`\r
+                    font-['Urbanist']\r
+                    text-[16px]\r
+                    font-semibold\r
+                    text-white\r
+                  `,children:e.value}),e.note&&(0,k.jsx)(`span`,{className:`\r
+                      rounded-full\r
+                      bg-[#1C1C1C]\r
+                      px-[12px]\r
+                      py-[5px]\r
+                      font-['Urbanist']\r
+                      text-[10px]\r
+                      font-medium\r
+                      text-[#999999]\r
+                    `,children:e.note})]})]},r))})})]})},dI=({title:e,description:t,noteTitle:n,noteText:r,listingPrice:i,sections:a})=>(0,k.jsx)(`section`,{className:`w-full overflow-x-hidden bg-[#141414] text-white`,children:(0,k.jsxs)(`div`,{className:`\r
+          mx-auto\r
+          w-full\r
+          max-w-[1596px]\r
+          px-[24px]\r
+          py-[80px]\r
+          lg:px-[162px]\r
+          lg:py-[150px]\r
+          xl:px-[162px]\r
+          xl:py-[150px]\r
+        `,children:[(0,k.jsxs)(`div`,{className:`w-full`,children:[(0,k.jsx)(`h2`,{className:`\r
+              font-['Urbanist']\r
+              text-[24px]\r
+              font-semibold\r
+              leading-[150%]\r
+              text-white\r
+              sm:text-[28px]\r
+              lg:text-[32px]\r
+            `,children:e}),(0,k.jsx)(`p`,{className:`\r
+              mt-[12px]\r
+              max-w-[1200px]\r
+              font-['Urbanist']\r
+              text-[12px]\r
+              font-medium\r
+              leading-[150%]\r
+              text-[#999999]\r
+              sm:text-[13px]\r
+              lg:text-[14px]\r
+            `,children:t})]}),(0,k.jsxs)(`div`,{className:`\r
+            mt-[80px]\r
+            flex\r
+            min-h-[52px]\r
+            w-full\r
+            items-center\r
+            gap-[25px]\r
+            rounded-[8px]\r
+            border\r
+            border-[#262626]\r
+            bg-[#1A1A1A]\r
+            px-[25px]\r
+            py-[15px]\r
+            lg:px-[30px]\r
+          `,children:[(0,k.jsx)(`span`,{className:`\r
+              shrink-0\r
+              font-['Urbanist']\r
+              text-[13px]\r
+              font-semibold\r
+              text-white\r
+            `,children:n}),(0,k.jsx)(`p`,{className:`\r
+              font-['Urbanist']\r
+              text-[11px]\r
+              font-medium\r
+              leading-[150%]\r
+              text-[#999999]\r
+            `,children:r})]}),(0,k.jsxs)(`div`,{className:`\r
+            mt-[40px]\r
+            grid\r
+            grid-cols-1\r
+            gap-[30px]\r
+\r
+            xl:grid-cols-[minmax(0,230px)_minmax(0,1326px)]\r
+            xl:gap-[40px]\r
+          `,children:[(0,k.jsxs)(`div`,{className:`\r
+              w-full\r
+              xl:w-[230px]\r
+              mt-[40px]\r
+               gap-[30px]\r
+            grid\r
+            grid-cols-1            `,children:[(0,k.jsx)(`p`,{className:`\r
+                font-['Urbanist']\r
+                text-[12px]\r
+                font-medium\r
+                text-[#999999]\r
+              `,children:`Listing Price`}),(0,k.jsx)(`h3`,{className:`\r
+                mt-[8px]\r
+                whitespace-nowrap\r
+                font-['Urbanist']\r
+                text-[24px]\r
+                font-semibold\r
+                leading-[150%]\r
+                text-white\r
+                lg:text-[26px]\r
+              `,children:i})]}),(0,k.jsx)(`div`,{className:`\r
+              flex\r
+              w-full\r
+              min-w-0\r
+              flex-col\r
+              gap-[30px]\r
+            `,children:a.map((e,t)=>(0,k.jsx)(uI,{title:e.title,items:e.items},t))})]})]})}),fI=()=>(0,k.jsx)(`section`,{className:`\r
+        w-full\r
+        bg-[#141414]\r
+        px-[24px]\r
+        pt-[80px]\r
+        pb-[40px]\r
+\r
+        md:px-[40px]\r
+        md:pt-[100px]\r
+        md:pb-[50px]\r
+\r
+        lg:px-[80px]\r
+        lg:pt-[120px]\r
+        lg:pb-[60px]\r
+      `,children:(0,k.jsxs)(`div`,{className:`\r
+          mx-auto\r
+          flex\r
+          w-full\r
+          max-w-[1280px]\r
+          flex-col\r
+          gap-[40px]\r
+\r
+          md:flex-row\r
+          md:items-start\r
+          md:justify-between\r
+          md:gap-[80px]\r
+        `,children:[(0,k.jsxs)(`div`,{className:`\r
+            w-full\r
+            max-w-[1003px]\r
+          `,children:[(0,k.jsx)(`h2`,{className:`\r
+              font-['Urbanist']\r
+              text-[20px]\r
+              font-semibold\r
+              leading-[150%]\r
+              text-white\r
+\r
+              sm:text-[24px]\r
+              lg:text-[28px]\r
+            `,children:`Frequently Asked Questions`}),(0,k.jsx)(`p`,{className:`\r
+              mt-[10px]\r
+              w-full\r
+              font-['Urbanist']\r
+              text-[12px]\r
+              font-medium\r
+              leading-[150%]\r
+              text-[#999999]\r
+\r
+              sm:text-[13px]\r
+              lg:text-[14px]\r
+            `,children:`Find answers to common questions about Estatein's services, property listings, and the real estate process. We're here to provide clarity and assist you every step of the way.`})]}),(0,k.jsx)(`div`,{className:`\r
+            flex\r
+            w-full\r
+            shrink-0\r
+            justify-start\r
+\r
+            md:w-[127px]\r
+            md:pt-[66px]\r
+          `,children:(0,k.jsx)(`button`,{type:`button`,className:`\r
+              h-[49px]\r
+              w-[127px]\r
+              rounded-[6px]\r
+              border\r
+              border-[#262626]\r
+              bg-[#1A1A1A]\r
+              font-['Urbanist']\r
+              text-[12px]\r
+              font-medium\r
+              text-white\r
+              transition\r
+              hover:bg-[#222222]\r
+            `,children:`View All FAQ’s`})})]})}),pI=({images:e})=>{let[t,n]=(0,_.useState)(0),r=e=>{n(e)},i=()=>{let r=(t+1)%e.length;n(r)},a=()=>{let r=(t-1+e.length)%e.length;n(r)},o=(t+1)%e.length;return(0,k.jsxs)(`div`,{className:`site-container bg-bg-dark py-4 rounded-lg`,children:[(0,k.jsx)(`div`,{className:`mb-4 bg-bg-dark-1 p-2 overflow-x-auto`,children:(0,k.jsx)(`div`,{className:`flex gap-2`,children:e.map((e,n)=>(0,k.jsx)(`button`,{onClick:()=>r(n),className:`shrink-0 lg:flex-1 w-20 h-16 lg:h-20 rounded-md overflow-hidden transition-all duration-200 ${n===t?`ring-2 ring-blue-500 opacity-100`:`opacity-60 hover:opacity-80`}`,children:(0,k.jsx)(`img`,{src:e,alt:`Thumbnail ${n+1}`,className:`w-full h-full object-cover`})},n))})}),(0,k.jsxs)(`div`,{className:`grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6`,children:[(0,k.jsx)(`div`,{className:`relative aspect-video rounded-lg overflow-hidden bg-gray-800`,children:(0,k.jsx)(`img`,{src:e[t],alt:`View ${t+1}`,className:`w-full h-full object-cover`})}),(0,k.jsx)(`div`,{className:`relative aspect-video hidden lg:block rounded-lg overflow-hidden bg-gray-800`,children:(0,k.jsx)(`img`,{src:e[o],alt:`View ${o+1}`,className:`w-full h-full object-cover`})})]}),(0,k.jsxs)(`div`,{className:`flex justify-between max-w-75 mx-auto bg-bg-dark-1 p-2 rounded-full items-center gap-4`,children:[(0,k.jsx)(`button`,{onClick:a,className:`w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-white hover:bg-white/10 transition disabled:opacity-30`,children:(0,k.jsx)(Ma,{size:16})}),(0,k.jsx)(`div`,{className:`flex gap-2`,children:e.map((e,n)=>(0,k.jsx)(`div`,{className:`w-2 h-2 rounded-full transition-all ${n===t?`bg-primary w-6`:`bg-gray-600`}`},n))}),(0,k.jsx)(`button`,{onClick:i,className:`w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-white hover:bg-white/10 transition disabled:opacity-30`,children:(0,k.jsx)(ja,{size:16})})]})]})},mI=()=>{let{id:e}=vr(),{properties:t,status:n}=cF();if(n===`loading`||n===`idle`)return(0,k.jsx)(`div`,{className:`site-container py-14`,children:(0,k.jsx)(lF,{variant:`list`,count:3})});let r=t.find(t=>t.id===e);if(!r)return(0,k.jsx)(`div`,{className:`flex items-center justify-center min-h-[60vh]`,children:(0,k.jsx)(`p`,{className:`text-white text-xl`,children:`Property not found.`})});let i=r.images?.length?r.images:[r.image,...t.filter(e=>e.id!==r.id&&e.image!==r.image).map(e=>e.image)];return(0,k.jsxs)(k.Fragment,{children:[(0,k.jsx)(pI,{images:i}),(0,k.jsx)(oI,{description:r.descriptionLong,bedrooms:String(r.bedrooms??0).padStart(2,`0`),bathrooms:String(r.bathrooms??0).padStart(2,`0`),area:`2,500 Square Feet`,features:[`Expansive oceanfront terrace for outdoor entertaining`,`Gourmet kitchen with top-of-the-line appliances`,`Private beach access for morning strolls and sunset views`,`Master suite with a spa-inspired bathroom and ocean-facing balcony`,`Private garage and ample storage space`]}),(0,k.jsx)(lI,{propertyName:`Seaside Serenity Villa`,propertyLocation:`Seaside Serenity Villa, Malibu, California`}),(0,k.jsx)(dI,{title:`Comprehensive Pricing Details`,description:`At Estates, transparency is key. We want you to have a clear understanding of all costs associated with your property investment. Below, we break down the pricing for Seaside Serenity Villa to help you make an informed decision.`,noteTitle:`Note`,noteText:`The figures provided above are estimates and may vary depending on the property, location, and individual circumstances.`,listingPrice:`$1,250,000`,sections:[{title:`Additional Fees`,items:[{label:`Property Transfer Tax`,value:`$25,000`,note:`Based on the sale price and local regulations`},{label:`Legal Fees`,value:`$3,000`,note:`Approximate cost for legal services, including title transfer`},{label:`Home Inspection`,value:`$500`,note:`Recommended for due diligence`},{label:`Property Insurance`,value:`$1,200`,note:`Annual cost for comprehensive property insurance`},{label:`Mortgage Fees`,value:`Varies`,note:`If applicable, consult with your lender for specific details`,fullWidth:!0}]},{title:`Monthly Costs`,items:[{label:`Property Taxes`,value:`$1,250`,note:`Approximate monthly property tax based on sale price and local rates`},{label:`Homeowners Association Fee`,value:`$300`,note:`Monthly fee for common area maintenance and security`}]},{title:`Total Initial Costs`,items:[{label:`Listing Price`,value:`$1,250,000`},{label:`Additional Fees`,value:`$29,700`,note:`Property transfer tax, legal fees, inspection, insurance`},{label:`Down Payment`,value:`$250,000`,note:`20%`},{label:`Mortgage Amount`,value:`$1,000,000`,note:`If applicable`}]},{title:`Monthly Expenses`,items:[{label:`Property Taxes`,value:`$1,250`},{label:`Homeowners Association Fee`,value:`$300`},{label:`Mortgage Payment`,value:`Varies based on terms and interest rate`,note:`If applicable`},{label:`Property Insurance`,value:`$100`,note:`Approximate monthly cost`}]}]}),(0,k.jsx)(fI,{}),(0,k.jsx)(IF,{}),(0,k.jsx)(Wa,{bgLeftImage:`public/assets/Abstract2.png`,bgRightImage:`public/assets/Abstract1.png`,renderButton:()=>(0,k.jsx)(`a`,{href:`/properties`,className:`w-full sm:w-auto text-center bg-primary hover:bg-[#5e2ed9] text-white text-sm font-medium px-6 py-3.5 rounded-lg transition-colors whitespace-nowrap inline-block`,children:`Explore Properties`})})]})},hI=({title:e,description:t,buttonLabel:n=`Learn More`,onButtonClick:r,variant:i=`horizontal`})=>{let{theme:a}=Fa(),o=a===`dark`,s=`relative overflow-hidden rounded-2xl border transition-colors ${o?`bg-[#1A1A1A] border-[#262626] text-white`:`bg-white border-gray-200 text-gray-900`}`,c=(0,k.jsx)(`div`,{className:`absolute inset-0 bg-center bg-no-repeat bg-cover pointer-events-none`,style:{backgroundImage:`url(/assets/Abstract3.png)`}});return i===`vertical`?(0,k.jsxs)(`div`,{className:`${s} flex flex-col p-8 sm:p-10 gap-6 h-auto`,children:[c,(0,k.jsx)(`h3`,{className:`relative z-10 text-xl sm:text-2xl font-semibold leading-snug`,children:e}),(0,k.jsx)(`p`,{className:`relative z-10 text-sm sm:text-base leading-relaxed flex-1 ${o?`text-gray-400`:`text-gray-600`}`,children:t}),(0,k.jsx)(`button`,{onClick:r,className:`relative z-10 w-full py-4 rounded-xl text-sm font-medium transition-colors ${o?`bg-bg-dark-1 border border-bg-gray-1 text-white hover:bg-[#222]`:`bg-gray-100 border border-gray-200 text-gray-900 hover:bg-gray-200`}`,children:n})]}):(0,k.jsxs)(`div`,{className:`${s} flex flex-col sm:flex-row items-center justify-between gap-6 px-8 sm:px-10 py-8`,children:[c,(0,k.jsxs)(`div`,{className:`relative z-10 flex flex-col gap-3 max-w-2xl`,children:[(0,k.jsx)(`h3`,{className:`text-xl sm:text-2xl font-semibold leading-snug`,children:e}),(0,k.jsx)(`p`,{className:`text-sm sm:text-base leading-relaxed ${o?`text-gray-400`:`text-gray-600`}`,children:t})]}),(0,k.jsx)(`div`,{className:`relative z-10 shrink-0 w-full sm:w-auto flex justify-center sm:justify-end`,children:(0,k.jsx)(`button`,{onClick:r,className:`px-6 py-3 rounded-xl text-sm font-medium transition-colors border ${o?`bg-bg-dark-1 border-border-gray-1 text-white hover:bg-[#222]`:`bg-gray-100 border-gray-200 text-gray-900 hover:bg-gray-200`}`,children:n})})]})},gI=[{id:`1`,title:`Valuation Mastery`,description:`Discover the true worth of your property with our expert valuation services.`,icon:`/assets/Icon_19.png`},{id:`2`,title:`Strategic Marketing`,description:`Selling a property requires more than just a listing; it demands a strategic marketing approach.`,icon:`/assets/Icon_20.png`},{id:`3`,title:`Negotiation Wizardry`,description:`Negotiating the best deal is an art, and our negotiation experts are masters of it.`,icon:`/assets/Icon_21.png`},{id:`4`,title:`Closing Success`,description:`A successful sale is not complete until the closing. We guide you through the intricate closing process.`,icon:`/assets/Icon_22.png`}],_I=()=>(0,k.jsx)(`section`,{className:`w-full bg-bg-dark-1 border-t border-bg-gray-1 py-16 sm:py-20 lg:py-24`,children:(0,k.jsxs)(`div`,{className:`site-container`,children:[(0,k.jsx)(Ja,{title:`Unlock Property Value`,subtitle:`Selling your property should be a rewarding experience, and at Estatein, we make sure it is. Our Property Selling Service is designed to maximize the value of your property, ensuring you get the best deal possible. Explore the categories below to see how we can help you at every step of your selling journey`,className:`mb-12 sm:mb-16`,fullWidth:!0}),(0,k.jsxs)(`div`,{className:`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch`,children:[gI.map(e=>(0,k.jsxs)(`div`,{className:`bg-[#141414] border border-[#262626] rounded-[16px] p-5 sm:p-6 flex flex-col justify-start gap-3 hover:border-[#703BF7]/40 transition-all duration-300 h-full min-h-[200px]`,children:[(0,k.jsxs)(`div`,{className:`flex items-center gap-2 sm:gap-3`,children:[(0,k.jsx)(`div`,{className:`w-10 h-10 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center`,children:(0,k.jsx)(`img`,{src:e.icon,alt:e.title,className:`w-full h-full object-contain`})}),(0,k.jsx)(`h3`,{className:`font-bold text-white text-lg xl:text-xl font-['Urbanist',sans-serif]`,children:e.title})]}),(0,k.jsx)(`p`,{className:`text-[15px] sm:text-base font-normal text-[#999999] leading-[150%]`,children:e.description})]},e.id)),(0,k.jsx)(`div`,{className:`md:col-span-2 lg:col-span-2 h-full w-full`,children:(0,k.jsx)(hI,{variant:`horizontal`,title:`Unlock the Value of Your Property Today`,description:`Ready to unlock the true value of your property? Explore our Property Selling Service categories and let us help you achieve the best deal possible for your valuable asset.`,buttonLabel:`Learn More`,onButtonClick:()=>{console.log(`Learn More clicked`)}})})]})]})}),vI=[{id:`1`,title:`Market Insight`,description:`Stay ahead of market trends with our expert Market Analysis. We provide in-depth insights into real estate market conditions`,icon:`/assets/Icon_19.png`},{id:`2`,title:`ROI Assessment`,description:`Make investment decisions with confidence. Our ROI Assessment services evaluate the potential returns on your investments`,icon:`/assets/Icon_27.png`},{id:`3`,title:`Customized Strategies`,description:`Every investor is unique, and so are their goals. We develop Customized Investment Strategies tailored to your specific needs`,icon:`/assets/Icon_28.png`},{id:`4`,title:`Diversification Mastery`,description:`Diversify your real estate portfolio effectively. Our experts guide you in spreading your investments across various property types and locations`,icon:`/assets/Icon_4.png`}],yI=()=>(0,k.jsx)(`section`,{className:`w-full bg-[#141414] border-t border-[#262626] py-16 sm:py-20 lg:py-24`,children:(0,k.jsx)(`div`,{className:`site-container`,children:(0,k.jsxs)(`div`,{className:`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start`,children:[(0,k.jsxs)(`div`,{className:`lg:col-span-5 xl:col-span-4 flex flex-col justify-start gap-0 sm:gap-1`,children:[(0,k.jsx)(Ja,{title:(0,k.jsxs)(k.Fragment,{children:[`Smart Investments,`,(0,k.jsx)(`br`,{}),`Informed Decisions`]}),subtitle:`Building a real estate portfolio requires a strategic approach. Estatein's Investment Advisory Service empowers you to make smart investments and informed decisions.`,className:`mb-0`,fullWidth:!0}),(0,k.jsx)(`div`,{className:`w-full`,children:(0,k.jsx)(`div`,{className:`h-auto`,children:(0,k.jsx)(hI,{variant:`vertical`,title:`Unlock Your Investment Potential`,description:`Explore our Property Management Service categories and let us handle the complexities while you enjoy the benefits of property ownership.`,buttonLabel:`Learn More`,onButtonClick:()=>{console.log(`Learn More clicked`)}})})})]}),(0,k.jsx)(`div`,{className:`lg:col-span-7 xl:col-span-8 rounded-[10px] bg-[#191919] p-1.5 mt-14`,children:(0,k.jsx)(`div`,{className:`grid grid-cols-1 md:grid-cols-2 gap-1.5`,children:vI.map(e=>(0,k.jsxs)(`div`,{className:`bg-[#141414] border border-[#262626] rounded-[8px] px-5 sm:px-6 py-3 sm:py-4 flex flex-col justify-start gap-4 hover:border-[#703BF7]/40 transition-all duration-300`,children:[(0,k.jsxs)(`div`,{className:`flex items-center gap-3`,children:[(0,k.jsx)(`div`,{className:`w-12 h-12 shrink-0 flex items-center justify-center`,children:(0,k.jsx)(`img`,{src:e.icon,alt:e.title,className:`w-full h-full object-contain`})}),(0,k.jsx)(`h3`,{className:`font-bold text-white text-lg xl:text-xl font-['Urbanist',sans-serif]`,children:e.title})]}),(0,k.jsx)(`p`,{className:`text-[15px] sm:text-base font-normal text-[#999999] leading-[150%]`,children:e.description})]},e.id))})})]})})}),bI=[{id:`1`,title:`Tenant Harmony`,description:`Our Tenant Management services ensure that your tenants have a smooth and reducing vacancies.`,icon:`/assets/Icon_23.png`},{id:`2`,title:`Maintenance Ease`,description:`Say goodbye to property maintenance headaches. We handle all aspects of property upkeep.`,icon:`/assets/Icon_24.png`},{id:`3`,title:`Financial Peace of Mind`,description:`Managing property finances can be complex. Our financial experts take care of rent collection`,icon:`/assets/Icon_25.png`},{id:`4`,title:`Legal Guardian`,description:`Stay compliant with property laws and regulations effortlessly.`,icon:`/assets/Icon_27.png`}],xI=()=>(0,k.jsx)(`section`,{className:`w-full bg-[#141414] border-t border-[#262626] py-16 sm:py-20 lg:py-24`,children:(0,k.jsxs)(`div`,{className:`site-container`,children:[(0,k.jsx)(Ja,{title:`Effortless Property Management`,subtitle:`Owning a property should be a pleasure, not a hassle. Estatein's Property Management Service takes the stress out of property ownership, offering comprehensive solutions tailored to your needs. Explore the categories below to see how we can make property management effortless for you`,className:`mb-12 sm:mb-16`,fullWidth:!0}),(0,k.jsxs)(`div`,{className:`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch`,children:[bI.map(e=>(0,k.jsxs)(`div`,{className:`bg-[#141414] border border-[#262626] rounded-[16px] p-5 sm:p-6 flex flex-col justify-start gap-3 hover:border-[#703BF7]/40 transition-all duration-300 h-full min-h-[200px]`,children:[(0,k.jsxs)(`div`,{className:`flex items-center gap-2 sm:gap-3`,children:[(0,k.jsx)(`div`,{className:`w-10 h-10 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center`,children:(0,k.jsx)(`img`,{src:e.icon,alt:e.title,className:`w-full h-full object-contain`})}),(0,k.jsx)(`h3`,{className:`font-bold text-white text-lg xl:text-xl font-['Urbanist',sans-serif]`,children:e.title})]}),(0,k.jsx)(`p`,{className:`text-[15px] sm:text-base font-normal text-[#999999] leading-[150%]`,children:e.description})]},e.id)),(0,k.jsx)(`div`,{className:`md:col-span-2 lg:col-span-2 h-full w-full`,children:(0,k.jsx)(hI,{variant:`horizontal`,title:`Experience Effortless Property Management`,description:`Ready to experience hassle-free property management? Explore our Property Management Service categories and let us handle the complexities while you enjoy the benefits of property ownership.`,buttonLabel:`Learn More`,onButtonClick:()=>{console.log(`Learn More clicked`)}})})]})]})}),SI=Ni([{element:(0,k.jsx)(Ka,{}),children:[{path:``,index:!0,element:(0,k.jsx)(HF,{})},{path:`/about`,element:(0,k.jsx)(eI,{})},{path:`/property-details/:id`,element:(0,k.jsx)(mI,{})},{path:`/properties`,element:(0,k.jsx)(_F,{})},{path:`/services`,element:(0,k.jsx)(()=>(0,k.jsxs)(`div`,{className:`min-h-screen bg-bg-dark-1 text-white`,children:[(0,k.jsx)(eo,{title:`Elevate Your Real Estate Experience`,description:`Welcome to Estatein, where your real estate aspirations meet expert guidance. Explore our comprehensive range of services, each designed to cater to your unique needs and dreams.`,className:`pt-8 pb-8 sm:pt-12 sm:pb-12 lg:pt-14 lg:pb-14`}),(0,k.jsx)(wF,{}),(0,k.jsx)(_I,{}),(0,k.jsx)(xI,{}),(0,k.jsx)(yI,{})]}),{})},{path:`/contact`,element:(0,k.jsx)(aI,{})}]}]);(0,v.createRoot)(document.getElementById(`root`)).render((0,k.jsx)(_.StrictMode,{children:(0,k.jsx)(Bc,{store:_u,children:(0,k.jsx)(Pa,{children:(0,k.jsx)(Hr,{router:SI})})})}));

@@ -3,7 +3,7 @@ import { Outlet, useNavigate, useLocation } from 'react-router';
 import { TopBanner } from './components/Layout/TopBanner';
 import Footer from './components/Layout/Footer';
 import type { PageId } from './interfaces';
-import { Navbar } from './components/Layout/Navbar';
+import { Navbar } from './components/Layout/navBar';
 import { CtaSection } from './components/sections/cta/CTA';
 
 

@@ -1,5 +1,3 @@
-import React from "react";
-
 interface PricingItem {
   label: string;
   value: string;

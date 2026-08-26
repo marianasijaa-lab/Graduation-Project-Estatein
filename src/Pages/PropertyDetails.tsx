@@ -5,10 +5,8 @@ import PricingDetails from "../components/sections/property/PricingDetails";
 import FAQSection from "../components/sections/property/FaqSection";
 import FAQSlider from "../components/ui/slider/FAQSlider";
 import { CtaSection } from "../components/sections/cta/CTA";
-export const  PropertyDetails = () => {
 import { useProperties } from "../hooks/useProperties";
 import { LoadingSkeleton } from "../components/ui/LoadingSkeleton";
-import InquireSection from "../components/sections/property/InquireSection";
 import GallerySlider from "../components/ui/slider/GallerySlider";
 
 export const PropertyDetails = () => {
