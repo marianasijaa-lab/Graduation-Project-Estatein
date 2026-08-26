@@ -2,11 +2,13 @@ import { useState } from "react";
 import { SectionHeader } from "../components/common/SectionHeader";
 import OfficeLocations from "../components/OfficeLocations/OfficeLocations";
 import PageHero from "../components/sections/hero/PageHero";
-import Services from "../components/sections/services/Services";
 import TeamCard from "../components/TeamCard/TeamCard";
 import { ContactForm } from "../components/sections/contact/ContactForm";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { firestoreDb } from "../firebase/config";
+import { StaggerContainer } from "../components/common/StaggerContainer";
+import ServiceCard from "../components/sections/services/ServiceCard";
+import { services } from "../data/contactData";
 
 type SubmitStatus = "idle" | "submitting" | "submitted" | "error";
 
@@ -44,8 +46,24 @@ const Contact = () => {
         description="Welcome to Estatein's Contact Us page. We're here to assist you with any inquiries, requests, or feedback you may have. Whether you're looking to buy or sell a property, explore investment opportunities, or simply want to connect, we're just a message away."
       />
 
-      {/* Services Bar */}
-      <Services />
+      {/* Services Bar with Animation */}
+      <section
+        className="w-full bg-(--bg-secondary) border border-(--color-border) py-1 sm:py-2 transition-colors duration-300"
+        style={{ boxShadow: '0px 0px 0px 6px var(--bg-main)' }}
+      >
+        <div className="w-full max-w-[1590px] mx-auto px-2 sm:px-1 lg:px-2">
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+            {services.map((service) => (
+              <ServiceCard
+                key={service.heading}
+                type="vertical"
+                icon={service.icon}
+                heading={service.heading}
+              />
+            ))}
+          </StaggerContainer>
+        </div>
+      </section>
 
       {/* Contact Form */}
       <div className="site-container pt-8 sm:pt-10">

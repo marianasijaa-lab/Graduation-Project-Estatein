@@ -8,6 +8,7 @@ import { useCompanies } from "../../../hooks/useCompanies";
 import { LoadingSkeleton } from "../LoadingSkeleton";
 import { ErrorMessage } from "../ErrorMessage";
 import type { FirestoreCompany } from "../../../store/types";
+import { motion } from "framer-motion";
 
 const GAP = 20;
 
@@ -56,7 +57,9 @@ const CompaniesSlider = () => {
 
 function CompanyCard({ company }: { company: FirestoreCompany }) {
   return (
-    <div
+    <motion.div
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
       className="w-full h-full rounded-xl border border-bg-gray-1 p-5 sm:p-8 lg:p-10 flex flex-col overflow-hidden"
       style={{ backgroundColor: "#141414", boxShadow: "0px 0px 0px 8px #191919" }}
     >
@@ -71,17 +74,24 @@ function CompanyCard({ company }: { company: FirestoreCompany }) {
               </h3>
             </div>
             <div className="shrink-0 mt-1 hidden sm:block">
-              <Button onClick={() => {}} text="Visit Website" variant="secondary" />
+              <motion.div
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <Button onClick={() => {}} text="Visit Website" variant="secondary" />
+              </motion.div>
             </div>
           </div>
           <div className="sm:hidden w-full">
-            <button
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
               onClick={() => {}}
               className="w-full text-white rounded-lg py-3 px-4 text-sm font-medium transition-all"
               style={{ backgroundColor: "#141414", border: "1px solid #262626" }}
             >
               Visit Website
-            </button>
+            </motion.button>
           </div>
         </div>
 
@@ -116,7 +126,7 @@ function CompanyCard({ company }: { company: FirestoreCompany }) {
           </p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import { useTheme } from '../../../Context/ThemeContext';
+import { motion } from 'framer-motion';
+import { FadeInSection } from '../../common/FadeInSection';
 
 interface InfoBoxProps {
   title: string;
@@ -38,7 +40,7 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
 
   if (variant === 'vertical') {
     return (
-    <div className={`${containerBase} flex flex-col p-8 sm:p-10 gap-6 h-auto`}>
+      <div className={`${containerBase} flex flex-col p-8 sm:p-10 gap-6 h-auto`}>
         {bgOverlay}
 
         {/* Title */}
@@ -55,8 +57,10 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
           {description}
         </p>
 
-        {/* Full-width button */}
-        <button
+        {/* Full-width button with animations */}
+        <motion.button
+          whileHover={{ opacity: 1.02 }}
+          whileTap={{ scale: 0.98 }}
           onClick={onButtonClick}
           className={`relative z-10 w-full py-4 rounded-xl text-sm font-medium transition-colors ${
             isDark
@@ -65,14 +69,14 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
           }`}
         >
           {buttonLabel}
-        </button>
+        </motion.button>
       </div>
     );
   }
 
   // horizontal (default)
   return (
-    <div className={`${containerBase} flex flex-col sm:flex-row items-center justify-between gap-6 px-8 sm:px-10 py-8`}>
+    <FadeInSection direction="up" className={`${containerBase} flex flex-col sm:flex-row items-center justify-between gap-6 px-8 sm:px-10 py-8`}>
       {bgOverlay}
 
       {/* Text block */}
@@ -87,9 +91,11 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
         </p>
       </div>
 
-      {/* Button */}
+      {/* Button with animations */}
       <div className="relative z-10 shrink-0 w-full sm:w-auto flex justify-center sm:justify-end">
-        <button
+        <motion.button
+          whileHover={{ opacity: 1.02 }}
+          whileTap={{ scale: 0.98 }}
           onClick={onButtonClick}
           className={`px-6 py-3 rounded-xl text-sm font-medium transition-colors border ${
             isDark
@@ -98,8 +104,8 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
           }`}
         >
           {buttonLabel}
-        </button>
+        </motion.button>
       </div>
-    </div>
+    </FadeInSection>
   );
 };

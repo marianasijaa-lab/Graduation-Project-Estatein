@@ -4,18 +4,47 @@
 @theme {
   --color-gray: #999999;
   --color-bg-dark-1: #141414;
-  --color-bg-dark: #1A1A1A;
+  --color-bg-dark: #1a1a1a;
   --color-bg-gray-1: #262626;
   --color-primary: #703bf7;
   --color-primary-light: #a685fa;
   --color-border: #4d4d4d;
+  --decor-opacity: 1;
+  --hero-gradient: linear-gradient(95.93, #262626 -26.82%, rgba(38, 38, 38, 0) 40.46%)
+
+  --color-bg-main: var(--color-bg-dark);
+  --color-bg-secondary: var(--color-bg-gray-1);
+  --color-text-main: #ffffff;
+  --icon-filter: none;
+  /* --bg-main: var(--color-bg-dark) */
 }
+
+.light {
+  --color-bg-main: #ffffff;
+  --color-bg-secondary: #f5f5f5;
+  --color-border: #d9d9d9;
+  --color-text-main: #141414;
+  --icon-filter: invert(1);
+  --decor-opacity : 0.12;
+  --hero-gradient: none;
+}
+
 
 
 body {
   font-family: "Urbanist", sans-serif;
   margin: 0;
   background-color: #141414;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px var(--bg-secondary) inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .site-container {

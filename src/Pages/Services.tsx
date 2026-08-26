@@ -1,7 +1,6 @@
 // src/pages/Services.tsx
 import React from 'react';
-
-
+import { FadeInSection } from '../components/common/FadeInSection';
 import PageHero from '../components/sections/hero/PageHero';
 import Services from '../components/sections/services/Services';
 import UnlockPropertyValue from '../components/sections/services/UnlockPropertyValue';
@@ -18,14 +17,19 @@ export const ServicesPage: React.FC = () => {
         className="pt-8 pb-8 sm:pt-12 sm:pb-12 lg:pt-14 lg:pb-14"
       />
 
-      
       <Services />
-      
-    <UnlockPropertyValue/>
-    < EffortlessPropertyManagement/>
-    < SmartInvestments />
-          
-        
+
+      <FadeInSection direction="up" delay={0.1}>
+        <UnlockPropertyValue />
+      </FadeInSection>
+
+      <FadeInSection direction="up" delay={0.2}>
+        <EffortlessPropertyManagement />
+      </FadeInSection>
+
+      <FadeInSection direction="up" delay={0.3}>
+        <SmartInvestments />
+      </FadeInSection>
     </div>
   );
 };
