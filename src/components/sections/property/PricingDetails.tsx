@@ -1,3 +1,5 @@
+import { SectionHeader } from "../../common/SectionHeader";
+
 interface PricingItem {
   label: string;
   value: string;
@@ -27,7 +29,7 @@ const PricingCard = ({ title, items }: PricingSection) => {
     <div className="w-full rounded-[10px] border border-[#262626] bg-[#141414]">
       {/* ================= CARD HEADER ================= */}
 
-      <div className="flex h-[63px] items-center justify-between border-b border-[#262626] px-[50px]">
+      <div className="flex h-[96px] items-center justify-between border-b border-[#262626] px-[32px]">
         <h3 className="font-['Urbanist'] text-[16px] font-semibold text-white">
           {title}
         </h3>
@@ -55,7 +57,7 @@ const PricingCard = ({ title, items }: PricingSection) => {
 
       {/* ================= ITEMS ================= */}
 
-      <div className="px-[50px]">
+      <div className="px-[32px]">
         <div
           className={
             isMonthlyCosts
@@ -67,7 +69,7 @@ const PricingCard = ({ title, items }: PricingSection) => {
             <div
               key={index}
               className={`
-                min-h-[86px]
+                min-h-[105px]
                 py-[30px]
 
                 ${
@@ -87,7 +89,7 @@ const PricingCard = ({ title, items }: PricingSection) => {
                   !isMonthlyCosts &&
                   !item.fullWidth &&
                   index % 2 === 1
-                    ? "md:border-l md:pl-[30px]"
+                    ? "md:relative md:pl-[12px] lg:pl-[12px] md:before:absolute md:before:left-0 md:before:top-[30px] md:before:bottom-[30px] md:before:w-px md:before:bg-[#262626]"
                     : ""
                 }
 
@@ -95,7 +97,7 @@ const PricingCard = ({ title, items }: PricingSection) => {
                   !isMonthlyCosts &&
                   !item.fullWidth &&
                   index % 2 === 0
-                    ? "md:pr-[30px]"
+                    ? "md:pr-[12px] lg:pr-[12px]"
                     : ""
                 }`
               }
@@ -167,54 +169,28 @@ const PricingDetails = ({
           w-full
           max-w-[1596px]
           px-[24px]
-          py-[80px]
-          lg:px-[162px]
-          lg:py-[150px]
-          xl:px-[162px]
-          xl:py-[150px]
+          py-[40px]
+          sm:px-[32px]
+          lg:px-[40px]
+          lg:py-[40px]
         "
       >
         {/* ================= HEADER ================= */}
 
-        <div className="w-full">
-          <h2
-            className="
-              font-['Urbanist']
-              text-[24px]
-              font-semibold
-              leading-[150%]
-              text-white
-              sm:text-[28px]
-              lg:text-[32px]
-            "
-          >
-            {title}
-          </h2>
-
-          <p
-            className="
-              mt-[12px]
-              max-w-[1200px]
-              font-['Urbanist']
-              text-[12px]
-              font-medium
-              leading-[150%]
-              text-[#999999]
-              sm:text-[13px]
-              lg:text-[14px]
-            "
-          >
-            {description}
-          </p>
-        </div>
+        <SectionHeader
+          title={title}
+          subtitle={description}
+          fullWidth
+          className="mb-0"
+        />
 
         {/* ================= NOTE ================= */}
 
         <div
           className="
-            mt-[80px]
+            mt-[50px]
             flex
-            min-h-[52px]
+            min-h-[72px]
             w-full
             items-center
             gap-[25px]
@@ -223,17 +199,26 @@ const PricingDetails = ({
             border-[#262626]
             bg-[#1A1A1A]
             px-[25px]
-            py-[15px]
+            py-[22px]
             lg:px-[30px]
           "
         >
           <span
             className="
+              relative
               shrink-0
+              pr-[25px]
               font-['Urbanist']
               text-[13px]
               font-semibold
               text-white
+              after:absolute
+              after:right-0
+              after:top-1/2
+              after:h-[42px]
+              after:w-px
+              after:-translate-y-1/2
+              after:bg-[#262626]
             "
           >
             {noteTitle}
@@ -261,8 +246,8 @@ const PricingDetails = ({
             grid-cols-1
             gap-[30px]
 
-            xl:grid-cols-[minmax(0,230px)_minmax(0,1326px)]
-            xl:gap-[40px]
+            lg:grid-cols-[minmax(0,170px)_minmax(0,1fr)]
+            lg:gap-[40px]
           "
         >
           {/* ================= LISTING PRICE ================= */}
@@ -270,11 +255,12 @@ const PricingDetails = ({
           <div
             className="
               w-full
-              xl:w-[230px]
-              mt-[40px]
-               gap-[30px]
+              lg:w-[170px]
+              gap-[30px]
             grid
-            grid-cols-1            "
+            grid-cols-1
+            self-start
+            "
           >
             <p
               className="
