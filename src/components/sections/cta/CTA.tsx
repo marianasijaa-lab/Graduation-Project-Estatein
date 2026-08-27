@@ -62,6 +62,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
           ) : (
             <Link
               to="/properties"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               className="px-6 py-3.5 bg-primary hover:burg-[#5e2ed9] text-white text-sm font-medium rounded-xl transition-colors shadow-sm cursor-pointer"
             >
               Explore Properties

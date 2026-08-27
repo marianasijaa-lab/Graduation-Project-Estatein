@@ -41,7 +41,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             onClick={onAction}
-            className="px-5 py-3.5 rounded-xl bg-(--bg-main) hover:bg-(--bg-secondary) border border-(--color-border) hover:border-primary/50 text-(--text-main) text-sm font-medium transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap"
+            className="px-5 py-3.5 rounded-xl bg-[#1A1A1A] hover:bg-[#1A1A1A] border border-[#262626] hover:border-[#262626] text-(--text-main) text-sm font-medium transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap"
           >
             {actionLabel}
           </motion.button>

@@ -73,7 +73,7 @@ const Footer = () => {
               type="email"
               placeholder="Enter Your Email"
               autoComplete="off"
-              className="text-sm md:text-base w-full md:w-[80%] rounded-lg border border-border py-3 pl-12 pr-12 placeholder:text-gray bg-(--bg-secondary) text-(--text-main) transition-colors duration-300"
+              className="text-sm md:text-base w-full md:w-[80%] rounded-lg border border-bg-gray-1 py-4 pl-12 pr-12 placeholder:text-gray bg-(--bg-secondary) text-(--text-main) transition-colors duration-300"
               style={{
                 WebkitTextFillColor: 'var(--text-main)',
                 backgroundColor: 'var(--bg-secondary)',
@@ -86,7 +86,7 @@ const Footer = () => {
               src="/assets/Icon_5.png"
               alt="icon5"
               style={{ filter: 'var(--icon-filter)' }}
-              className="absolute right-4 md:right-22.5 top-1/2 w-4 h-4  md:h-5 md:w-5 -translate-y-1/2 transition-all duration-300"
+              className="absolute right-4 md:right-[100px] top-1/2 w-4 h-4  md:h-5 md:w-5 -translate-y-1/2 transition-all duration-300"
             />
           </div>
         </motion.div>

@@ -28,6 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleNavClick = (pageId: PageId) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     onNavigate(pageId);
     setMobileMenuOpen(false);
   };

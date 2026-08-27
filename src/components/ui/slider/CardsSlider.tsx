@@ -131,7 +131,10 @@ function Card({ item }: CardProps) {
             ${Number(item.priceHome).toLocaleString()}
           </p>
           <Button
-            onClick={() => navigate(`/property-details/${item.id}`)}
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              navigate(`/property-details/${item.id}`);
+            }}
             text="View Property Details"
             variant="primary"
             className="text-sm px-4 py-3 md:py-3 md:px-5"

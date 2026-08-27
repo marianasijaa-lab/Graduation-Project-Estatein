@@ -38,7 +38,13 @@ export function PropertiesGrid() {
             className="shrink-0 flex"
             style={{ width: `calc(${100 / itemsToShow}% - ${(GAP * (itemsToShow - 1)) / itemsToShow}px)` }}
           >
-            <PropertyCard item={item} onView={() => navigate(`/property-details/${item.id}`)} />
+            <PropertyCard
+              item={item}
+              onView={() => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+                navigate(`/property-details/${item.id}`);
+              }}
+            />
           </div>
         ))}
       </BaseSlider>
