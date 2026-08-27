@@ -70,9 +70,10 @@ const Footer = () => {
             />
 
             <input
-              type="text"
+              type="email"
               placeholder="Enter Your Email"
-              className="text-sm md:text-base w-full md:w-[80%] rounded-lg border border-(--color-border) py-3 pl-12 pr-12 placeholder:text-gray bg-(--bg-secondary) text-(--text-main) transition-colors duration-300"
+              autoComplete="off"
+              className="text-sm md:text-base w-full md:w-[80%] rounded-lg border border-border py-3 pl-12 pr-12 placeholder:text-gray bg-(--bg-secondary) text-(--text-main) transition-colors duration-300"
               style={{
                 WebkitTextFillColor: 'var(--text-main)',
                 backgroundColor: 'var(--bg-secondary)',
@@ -189,7 +190,8 @@ const Footer = () => {
               key={i}
               whileHover={{ scale: 1.1, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              className="w-10 h-10 rounded-full flex items-center justify-center mr-3 bg-(--bg-main) transition-colors duration-300 cursor-pointer"
+              className="w-10 h-10 rounded-full flex items-center justify-center mr-3 transition-colors duration-300 cursor-pointer"
+              style={{ backgroundColor: '#141414' }}
             >
               <Icon />
             </motion.div>
