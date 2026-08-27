@@ -5,6 +5,7 @@ import Footer from './components/Layout/Footer';
 import type { PageId } from './interfaces';
 import { Navbar } from './components/Layout/navBar';
 import { CtaSection } from './components/sections/cta/CTA';
+import type { MouseEvent } from 'react';
 
 
 const pagePaths: Record<PageId, string> = {
@@ -22,8 +23,14 @@ const Root = () => {
 		([, path]) => path === location.pathname,
 	)?.[0] ?? "home") as PageId;
 
+	const handleButtonClick = (event: MouseEvent<HTMLDivElement>) => {
+		if ((event.target as HTMLElement).closest('button')) {
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+		}
+	};
+
 	return (
-		<div className="min-h-screen bg-bg-dark-1 text-white">
+		<div className="min-h-screen bg-bg-dark-1 text-white" onClick={handleButtonClick}>
 			<TopBanner />
 			<Navbar
 				activePage={activePage}

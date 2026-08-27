@@ -30,11 +30,14 @@ const SliderButtons = ({
     <>
       {/* Desktop */}
       <div className="hidden border-t border-bg-gray-1 lg:flex justify-between items-center pt-4 mt-6">
-        <p className="text-gray text-sm">
-          <span className="text-white">{pad(currentIndex + 1)}</span>
-          {" of "}
-          {pad(total)}
-        </p>
+        <div className="flex items-center gap-6">
+          {children ? children : null}
+          <p className="text-gray text-sm">
+            <span className="text-white">{pad(currentIndex + 1)}</span>
+            {" of "}
+            {pad(total)}
+          </p>
+        </div>
 
         <div className="flex gap-3">
           <motion.button

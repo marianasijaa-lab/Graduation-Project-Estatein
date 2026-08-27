@@ -56,7 +56,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onClick={() => handleNavClick(item.id)}
                 className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer whitespace-nowrap ${
                   isActive
-                    ? "bg-[#1A1A1A] border border-bg-gray-1 text-white shadow-sm"
+                    ? "bg-bg-dark-1 border border-bg-gray-1 text-white shadow-sm"
                     : "text-gray hover:text-white hover:bg-bg-dark/40"
                 }`}
               >
@@ -74,7 +74,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             className={`hidden sm:inline-flex items-center justify-center px-5 py-3 rounded-xl text-sm font-medium transition-all cursor-pointer ${
               activePage === "contact"
                 ? "bg-primary text-white border border-primary"
-                : "bg-[#1A1A1A] hover:bg-bg-gray-1 text-white border border-bg-gray-1 hover:border-primary/50"
+                : "bg-bg-dark-1 hover:bg-bg-gray-1 text-white border border-bg-gray-1 hover:border-primary/50"
             }`}
           >
             Contact Us

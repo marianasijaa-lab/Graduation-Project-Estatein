@@ -11,7 +11,13 @@ import { motion } from "framer-motion";
 
 const GAP = 24;
 
-const TestimonialsSlider = () => {
+const TestimonialsSlider = ({
+  showAll = false,
+  onBack,
+}: {
+  showAll?: boolean;
+  onBack?: () => void;
+}) => {
   const { testimonials, status, error } = useTestimonials();
   const { currentIndex, goNext, goPrev, itemsToShow, maxIndex } =
     useSlider(testimonials);
@@ -26,6 +32,24 @@ const TestimonialsSlider = () => {
         message={error ?? 'فشل جلب آراء العملاء'}
         onRetry={() => window.location.reload()}
       />
+    );
+  }
+
+  if (showAll) {
+    return (
+      <div className="py-8">
+        <Button
+          onClick={onBack ?? (() => {})}
+          text="Back to Slider"
+          variant="secondary"
+          className="mb-6 rounded-xl px-5 py-3.5 text-sm"
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+          {testimonials.map((testimonial) => (
+            <TestimonialCard key={testimonial.id} testimony={testimonial} />
+          ))}
+        </div>
+      </div>
     );
   }
 
@@ -49,9 +73,7 @@ const TestimonialsSlider = () => {
         itemsLength={testimonials.length}
         itemsToShow={itemsToShow}
         maxIndex={maxIndex}
-      >
-        <Button onClick={() => {}} text="View All Testimonials" variant="secondary" />
-      </SliderButtons>
+      />
     </div>
   );
 };

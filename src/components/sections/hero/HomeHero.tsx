@@ -29,7 +29,7 @@ const HomeHero = () => {
               <Button text="Browse Properties" variant="primary" onClick={() => {}} />
             </motion.div>
             <motion.div variants={staggerItem}>
-              {(status === 'loading' || status === 'idle') ? (
+              {(status === 'loading' || status === 'idle') && stats.length === 0 ? (
                 <LoadingSkeleton variant="stats" count={3} />
               ) : (
                 <StatsBar stats={stats} />
@@ -40,7 +40,7 @@ const HomeHero = () => {
 
         {/* Right: Hero Image full height, no border */}
         <FadeInSection direction="right" delay={0.2} className="flex flex-1 relative min-h-[240px] sm:min-h-[360px] lg:min-h-[480px] order-1 lg:order-2">
-          <div className="absolute z-30 -bottom-8 left-0 translate-x-0 translate-y-0 w-20 sm:top-[28%] sm:bottom-auto sm:left-0 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:w-28 lg:w-32 xl:w-44">
+          <div className="absolute z-30 -bottom-8 left-0 translate-x-0 translate-y-0 w-[55px] sm:top-[28%] sm:bottom-auto sm:left-0 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:w-22 lg:w-28 xl:w-36">
             <img src='/assets/HeroSticker.png' alt="" className='w-full h-full animate-[spin_10s_linear_infinite]'/>
           </div>
           <img

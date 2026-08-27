@@ -64,7 +64,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
   };
 
   const inputBgClass = isDark
-    ? 'bg-[#141414] border-[#262626] text-white placeholder-gray-500 focus:border-[#703BF7]'
+    ? 'bg-[#1A1A1A] border-[#262626] text-white placeholder-[#666666] focus:border-[#703BF7]'
     : 'bg-[#F9F9F9] border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#703BF7]';
 
   const labelClass = `block text-sm font-medium mb-2 text-white ${isDark ? '' : 'drop-shadow-sm'
@@ -199,20 +199,20 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                     autoComplete="off"
                     value={formData[field.name] || ''}
                     onChange={(e) => handleChange(field.name, e.target.value)}
-                    className={`w-full py-4 pr-12 rounded-xl border outline-none transition-all appearance-none cursor-pointer text-white ${inputBgClass} ${IconComponent ? 'pl-12' : 'pl-5'
+                    className={`w-full py-4 pr-12 rounded-xl border outline-none transition-all appearance-none cursor-pointer ${inputBgClass.replace('text-white', 'text-[#666666]')} ${IconComponent ? 'pl-12' : 'pl-5'
                       }`}
                   >
-                    <option value="" disabled>
+                    <option value="" disabled className="text-[#666666]">
                       {field.placeholder || 'Select Option'}
                     </option>
                     {field.options?.map((opt) => (
-                      <option key={opt} value={opt} className={isDark ? 'bg-[#141414]' : 'bg-white'}>
+                      <option key={opt} value={opt} className={isDark ? 'bg-[#1A1A1A]' : 'bg-white'}>
                         {opt}
                       </option>
                     ))}
                   </select>
 
-                  <FiChevronDown className="absolute right-5 text-gray-400 text-lg pointer-events-none" />
+                  <FiChevronDown className="absolute right-5 text-white text-lg pointer-events-none" />
                 </div>
               )}
             </div>

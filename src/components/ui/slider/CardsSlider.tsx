@@ -13,7 +13,13 @@ interface CardProps {
   item: FirestoreProperty;
 }
 
-const CardsSlider = () => {
+const CardsSlider = ({
+  showAll = false,
+  onBack,
+}: {
+  showAll?: boolean;
+  onBack?: () => void;
+}) => {
   const { properties, status, error } = useProperties();
   const { currentIndex, goNext, goPrev, itemsToShow, maxIndex } =
     useSlider(properties);
@@ -31,13 +37,31 @@ const CardsSlider = () => {
     );
   }
 
+  if (showAll) {
+    return (
+      <div className="py-8">
+        <Button
+          onClick={onBack ?? (() => {})}
+          text="Back to Slider"
+          variant="secondary"
+          className="mb-6 rounded-xl px-5 py-3.5 text-sm"
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+          {properties.map((card) => (
+            <Card key={card.id} item={card} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full py-8">
       <BaseSlider currentIndex={currentIndex} itemsToShow={itemsToShow}>
         {properties.map((card) => (
           <div
             key={card.id}
-            className="flex-shrink-0 flex"
+            className="shrink-0 flex"
             style={{ width: `calc(${100 / itemsToShow}% - ${(24 * (itemsToShow - 1)) / itemsToShow}px)` }}
           >
             <Card item={card} />
@@ -51,9 +75,7 @@ const CardsSlider = () => {
         itemsLength={properties.length}
         itemsToShow={itemsToShow}
         maxIndex={maxIndex}
-      >
-        <Button onClick={() => {}} text="View All Properties" variant="secondary" />
-      </SliderButtons>
+      />
     </div>
   );
 };
@@ -70,7 +92,7 @@ function Card({ item }: CardProps) {
     <motion.div
       whileHover={{ y: -6 }}
       transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-      className="card flex flex-col gap-4 lg:gap-5 xl:gap-7.5 bg-[#111111] border border-[#262626] rounded-2xl p-4 lg:p-5 w-full h-full"
+      className="card flex flex-col gap-4 lg:gap-5 xl:gap-7.5 bg-[#111111] border border-bg-gray-1 rounded-2xl p-4 lg:p-5 w-full h-full"
     >
       <div className="w-full h-48 sm:h-56 overflow-hidden rounded-xl">
         <img
