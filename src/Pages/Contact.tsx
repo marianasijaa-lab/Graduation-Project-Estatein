@@ -51,8 +51,8 @@ const Contact = () => {
         className="w-full bg-(--bg-secondary) border border-(--color-border) py-1 sm:py-2 transition-colors duration-300"
         style={{ boxShadow: '0px 0px 0px 6px var(--bg-main)' }}
       >
-        <div className="w-full max-w-[1590px] mx-auto px-2 sm:px-1 lg:px-2">
-          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+        <div className="w-full mx-auto px-2 sm:px-1 lg:px-2">
+          <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
             {services.map((service) => (
               <ServiceCard
                 key={service.heading}
@@ -113,10 +113,11 @@ const Contact = () => {
 
       <div className="site-container pt-10 sm:pt-14">
         <SectionHeader
-          title="Explore Estatein's World"
-          subtitle="Step inside the world of Estatein, where professionalism meets warmth, and expertise meets passion. Our gallery offers a glimpse into our team and workspaces, inviting you to get to know us better."
-          className="mb-10"
+          title="Discover Our Office Locations"
+          subtitle="Estatein is here to serve you across multiple locations. Whether you're looking to meet our team, discuss real estate opportunities, or simply drop by for a chat, we have offices conveniently located to serve your needs. Explore the categories below to find the Estatein office nearest to you."
+          className="mb-2"
           fullWidth
+          
         />
       </div>
       <OfficeLocations />

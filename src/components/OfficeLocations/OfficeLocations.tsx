@@ -13,15 +13,15 @@ const OfficeLocations = () => {
   });
 
   return (
-    <section className="bg-bg-dark-1 py-16 text-white">
-      <div className="site-container">
-        <div className="mb-10 flex w-fit items-center gap-2 rounded-lg border border-[#333333] bg-[#141414] p-2">
+    <section className="bg-bg-dark-1 py-4 text-white md:py-16">
+      <div className="site-container max-md:px-2">
+        <div className="mb-10 -mx-2 flex w-[calc(100%+1rem)] items-center gap-1.5 rounded-lg border border-bg-gray-1 bg-bg-dark p-3 md:mx-0 md:w-fit md:gap-2 md:p-2">
           <button
             onClick={() => setSelectedType("All")}
-            className={`rounded-md px-5 py-3 text-sm font-medium transition ${
+            className={`h-11 flex-1 rounded-md border px-3 text-sm font-medium transition md:h-auto md:w-[120px] md:flex-none md:px-5 md:py-3 md:text-sm ${
               selectedType === "All"
-                ? "bg-primary text-white"
-                : "text-gray hover:bg-[#252525] hover:text-white"
+                ? "border-[#262626] bg-[#141414] text-white"
+                : "border-[#262626] bg-[#1A1A1A] text-white hover:bg-[#252525] hover:text-white"
             }`}
           >
             All
@@ -30,10 +30,10 @@ const OfficeLocations = () => {
             <button
               key={type}
               onClick={() => setSelectedType(type)}
-              className={`rounded-md px-5 py-3 text-sm font-medium transition ${
+              className={`h-11 flex-1 rounded-md border px-3 text-sm font-medium transition md:h-auto md:w-[120px] md:flex-none md:px-5 md:py-3 md:text-sm ${
                 selectedType === type
-                  ? "bg-primary text-white"
-                  : "text-gray hover:bg-[#252525] hover:text-white"
+                  ? "border-[#262626] bg-[#141414] text-white"
+                  : "border-[#262626] bg-[#1A1A1A] text-gray hover:bg-[#252525] hover:text-white"
               }`}
             >
               {type}
@@ -45,21 +45,25 @@ const OfficeLocations = () => {
           {filteredCards.map((card) => (
             <div
               key={card.title}
-              className="rounded-xl border border-[#333333] bg-bg-dark p-7"
+              className="rounded-lg border border-bg-gray-1 bg-bg-dark-1 p-7"
             >
               <p className="mb-4 text-sm ext-gray">{card.mainTitle}</p>
 
-              <h2 className="mb-4 text-2xl font-semibold whitespace-nowrap">{card.title}</h2>
+              <h2 className="mb-4 text-xl font-semibold leading-tight sm:text-2xl md:whitespace-nowrap">
+                {card.title}
+              </h2>
 
-              <p className="mb-7 max-w-150 leading-7 text-gray">
+              <p className="mb-7 max-w-150 text-gray">
                 {card.description}
               </p>
 
-              <div className="mb-7 flex flex-wrap gap-3">
-                {card.info.map((item) => (
+              <div className="mb-7 grid grid-cols-2 gap-3 md:flex md:flex-wrap">
+                {card.info.map((item, index) => (
                   <span
                     key={item.text}
-                    className="flex items-center gap-2 rounded-full border border-[#333333] bg-[#222222] px-4 py-2 text-sm text-[#CCCCCC]"
+                    className={`flex min-w-0 w-fit max-w-full items-center gap-2 rounded-full border border-bg-gray-1 bg-bg-dark px-4 py-2 text-[15px] text-white ${
+                      index === 0 ? "col-span-2 md:col-span-1" : ""
+                    }`}
                   >
                     <img
                       src={item.icon}

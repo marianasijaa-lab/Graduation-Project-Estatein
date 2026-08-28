@@ -56,11 +56,11 @@ export const UnlockPropertyValue: React.FC = () => {
           {unlockServices.map((service) => (
             <div
               key={service.id}
-              className="bg-[#141414] border border-[#262626] rounded-[16px] p-5 sm:p-6 flex flex-col justify-start gap-3 hover:border-[#703BF7]/40 transition-all duration-300 h-full min-h-[200px]"
+              className="bg-[#141414] border border-[#262626] rounded-[16px] p-5 sm:p-6 flex flex-col justify-start gap-3 hover:border-[#703BF7]/40 transition-all duration-300 lg:h-full lg:min-h-[200px]"
             >
               {/* الصف العلوي: الأيقونة (82px × 82px بدون إطار خارجي) + العنوان */}
               <div className="flex items-center gap-2 sm:gap-3">
-                <div className="w-10 h-10 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center">
+                <div className="w-14 h-14 shrink-0 flex items-center justify-center">
                   <img
                     src={service.icon}
                     alt={service.title}

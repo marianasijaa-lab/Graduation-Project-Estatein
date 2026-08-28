@@ -26,22 +26,27 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
                 isDark ? 'bg-bg-dark-1 text-white' : 'bg-white text-gray-900'
             }`}
         >
+            <div
+              className="absolute left-0 top-0 block w-full h-1/2 bg-left-top bg-no-repeat bg-auto pointer-events-none z-0 sm:hidden"
+              style={{ backgroundImage: 'url(/assets/AbstractSmall.png)' }}
+            />
+
             {bgLeftImage && (
                 <div
-                    className="absolute left-0 top-0 w-1/2 h-1/2 sm:h-full bg-left bg-no-repeat bg-contain pointer-events-none z-0"
+                className="absolute left-0 top-0 hidden w-1/2 h-full bg-left bg-no-repeat bg-contain pointer-events-none z-0 sm:block"
                     style={{ backgroundImage: `url(${bgLeftImage})` }}
                 />
             )}
 
             {bgRightImage && (
                 <div
-                    className="absolute right-0 bottom-0 w-1/2 h-1/2 sm:h-full bg-right bg-no-repeat bg-contain pointer-events-none z-0"
+                    className="absolute right-0 bottom-0 w-full h-1/2 sm:w-1/2 sm:h-full bg-right bg-no-repeat bg-contain pointer-events-none z-0"
                     style={{ backgroundImage: `url(${bgRightImage})` }}
                 />
             )}
 
       <div className="site-container relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
-        <div className="max-w-6xl text-center lg:text-left mx-auto lg:mx-0 space-y-3">
+        <div className="max-w-6xl text-left lg:text-left mx-0 space-y-3">
           {title && (
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight leading-snug">
               {title}
@@ -56,14 +61,14 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
           </p>
         </div>
 
-        <div className="shrink-0 w-full sm:w-auto flex justify-center lg:justify-end">
+        <div className="shrink-0 w-full sm:w-auto flex justify-start lg:justify-end">
           {renderButton ? (
             renderButton()
           ) : (
             <Link
               to="/properties"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="px-6 py-3.5 bg-primary hover:burg-[#5e2ed9] text-white text-sm font-medium rounded-xl transition-colors shadow-sm cursor-pointer"
+              className="w-full px-6 py-3.5 bg-primary hover:burg-[#5e2ed9] text-white text-sm font-medium text-center rounded-xl transition-colors shadow-sm cursor-pointer sm:w-auto"
             >
               Explore Properties
             </Link>

@@ -247,13 +247,13 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                 : 'bg-gray-400 border-gray-500'
               }`}
           />
-          <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+          <span className={`text-[14px] ${isDark ? 'text-gray' : 'text-gray-600'}`}>
             I agree with{' '}
-            <a href="#" className={`underline ${isDark ? 'text-white' : 'text-gray-900'}`}>
+            <a href="#" className={`underline ${isDark ? 'text-gray' : 'text-gray-900'}`}>
               Terms of Use
             </a>{' '}
             and{' '}
-            <a href="#" className={`underline ${isDark ? 'text-white' : 'text-gray-900'}`}>
+            <a href="#" className={`underline ${isDark ? 'text-gray' : 'text-gray-900'}`}>
               Privacy Policy
             </a>
           </span>
