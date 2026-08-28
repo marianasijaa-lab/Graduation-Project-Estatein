@@ -192,33 +192,47 @@ const PricingDetails = ({
             flex
             min-h-[72px]
             w-full
-            items-center
-            gap-[25px]
+            flex-col
+            items-start
+            gap-[16px]
             rounded-[8px]
             border
             border-[#262626]
             bg-[#1A1A1A]
             px-[25px]
             py-[22px]
+            lg:flex-row
+            lg:items-center
+            lg:gap-[25px]
             lg:px-[30px]
           "
         >
           <span
             className="
               relative
+              w-full
               shrink-0
-              pr-[25px]
+              pb-[16px]
               font-['Urbanist']
               text-[18px]
               font-semibold
               text-white
               after:absolute
+              after:bottom-0
+              after:left-0
               after:right-0
-              after:top-1/2
-              after:h-[42px]
-              after:w-px
-              after:-translate-y-1/2
+              after:h-px
+              after:w-full
               after:bg-[#262626]
+              lg:w-auto
+              lg:pb-0
+              lg:pr-[25px]
+              lg:after:bottom-auto
+              lg:after:left-auto
+              lg:after:top-1/2
+              lg:after:h-[42px]
+              lg:after:w-px
+              lg:after:-translate-y-1/2
             "
           >
             {noteTitle}
