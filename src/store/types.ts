@@ -60,6 +60,13 @@ export interface FirestoreAchievement {
   description: string;
 }
 
+// ── الأسئلة الشائعة (Firestore collection: "faqs") ────────────────────────
+export interface FirestoreFAQ {
+  id: string;
+  question: string;
+  description: string;
+}
+
 // ── الخدمات (Firestore collection: "services") ────────────────────────────
 export interface FirestoreService {
   id: string;
