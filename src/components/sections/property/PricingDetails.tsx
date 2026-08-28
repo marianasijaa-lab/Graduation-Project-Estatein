@@ -57,7 +57,7 @@ const PricingCard = ({ title, items }: PricingSection) => {
 
       {/* ================= ITEMS ================= */}
 
-      <div className="px-[32px]">
+      <div className="px-[15px] md:px-[32px]">
         <div
           className={
             isMonthlyCosts
@@ -107,9 +107,10 @@ const PricingCard = ({ title, items }: PricingSection) => {
               <p
                 className="
                   font-['Urbanist']
-                  text-sm
+                  text-[16px]
                   font-medium
                   text-gray
+                  md:text-sm
                 "
               >
                 {item.label}
@@ -117,12 +118,13 @@ const PricingCard = ({ title, items }: PricingSection) => {
 
               {/* Value + Note */}
 
-              <div className="mt-[8px] flex flex-wrap items-center gap-[10px]">
+              <div className="mt-[8px] grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-[16px] md:flex md:flex-wrap">
                 <span
                   className="
-                    text-[20px]
+                    text-[22px]
                     font-semibold
                     text-white
+                    md:text-[20px]
                   "
                 >
                   {item.value}
@@ -130,17 +132,23 @@ const PricingCard = ({ title, items }: PricingSection) => {
 
                 {item.note && (
                   <span
-                    className="
-                      rounded-full
+                    className={`
+                      min-w-0
+                      w-fit
+                      max-w-full
+                      ${item.note.length > 35 ? "rounded-[6px]" : "rounded-[28px]"}
                       bg-bg-dark
                       border border-bg-gray-1
                       px-[12px]
                       py-[8px]
                       font-['Urbanist']
-                      text-[13px]
+                      text-[16px]
                       font-medium
+                      leading-[150%]
                       text-gray
-                    "
+                      md:rounded-full
+                      md:text-[13px]
+                    `}
                   >
                     {item.note}
                   </span>
