@@ -21,7 +21,7 @@ interface FormFieldProps {
           className="
             h-[68px] w-full rounded-[8px]
             border border-[#262626]
-            bg-[#141414] px-[20px]
+            bg-[#1A1A1A] px-[20px]
             font-['Urbanist'] text-[14px] font-medium
             text-white outline-none
             placeholder:text-[#666666]

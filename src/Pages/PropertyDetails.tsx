@@ -42,11 +42,16 @@ export const PropertyDetails = () => {
 
   return (
     <>
-      <GallerySlider images={galleryImages} />
+      <GallerySlider
+        images={galleryImages}
+        propertyName="Seaside Serenity Villa"
+        location="Malibu, California"
+        price={1250000}
+      />
       <PropertyDescription
-        description={property.descriptionLong}
-        bedrooms={String(property.bedrooms ?? 0).padStart(2, "0")}
-        bathrooms={String(property.bathrooms ?? 0).padStart(2, "0")}
+        description="Discover your own piece of paradise with the Seaside Serenity Villa. With an open floor plan, breathtaking ocean views from every room, and direct access to a pristine sandy beach, this property is the epitome of coastal living."
+        bedrooms="04"
+        bathrooms="03"
         area="2,500 Square Feet"
         features={[
           "Expansive oceanfront terrace for outdoor entertaining",

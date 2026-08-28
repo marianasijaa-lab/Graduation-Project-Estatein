@@ -1,7 +1,5 @@
 import {
-  FaBed,
   FaBath,
-  FaRulerCombined,
   FaBolt,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
@@ -117,11 +115,16 @@ const PropertyDescription = ({
               "
             >
               <div className="flex items-center gap-[8px]">
-                <FaBed className="text-[16px] text-gray" />
+                <img
+                  src="/assets/icon_9.png"
+                  alt=""
+                  className="h-[20px] w-[20px] object-contain"
+                  style={{ filter: "brightness(0) saturate(100%) invert(60%)" }}
+                />
 
                 <span
                   className="
-                    font-['Urbanist']
+                    leading-[150%]
                     text-[14px]
                     font-medium
                     text-gray
@@ -133,7 +136,6 @@ const PropertyDescription = ({
 
               <span
                 className="
-                  font-['Urbanist']
                   text-[18px]
                   font-semibold
                   leading-[150%]
@@ -157,11 +159,11 @@ const PropertyDescription = ({
               "
             >
               <div className="flex items-center gap-[8px]">
-                <FaBath className="text-[16px] text-gray" />
+                <FaBath className="text-[20px] text-gray" />
 
                 <span
                   className="
-                    font-['Urbanist']
+                    leading-[150%]
                     text-[14px]
                     font-medium
                     text-gray
@@ -172,7 +174,6 @@ const PropertyDescription = ({
               </div>
               <span
                 className="
-                  font-['Urbanist']
                   text-[18px]
                   font-semibold
                   leading-[150%]
@@ -201,11 +202,15 @@ const PropertyDescription = ({
               "
             >
               <div className="flex items-center gap-[8px]">
-                <FaRulerCombined className="text-[16px] text-gray" />
+                <img
+                  src="/assets/Icon_36.png"
+                  alt=""
+                  className="h-[18px] w-[18px] object-contain"
+                />
 
                 <span
                   className="
-                    font-['Urbanist']
+                    leading-[150%]
                     text-[14px]
                     font-medium
                     text-gray
@@ -219,11 +224,11 @@ const PropertyDescription = ({
                 className="
                   whitespace-nowrap
                   font-['Urbanist']
-                  text-[13px]
+                  text-[18px]
                   font-semibold
                   leading-[150%]
                   text-white
-                  sm:text-[15px]
+                  
                 "
               >
                 {area}
@@ -241,7 +246,7 @@ const PropertyDescription = ({
             h-auto
             w-full
             flex-col
-            rounded-[10px]
+            rounded-xl
             border
             border-bg-gray-1
             bg-bg-dark-1
@@ -302,9 +307,9 @@ const PropertyDescription = ({
 
                 <p
                   className="
-                    truncate
-                    font-['Urbanist']
-                    text-[14px]
+                   
+                    
+                    text-[15px]
                     font-medium
                     leading-[150%]
                     text-gray
