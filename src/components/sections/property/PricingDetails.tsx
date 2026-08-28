@@ -26,25 +26,25 @@ const PricingCard = ({ title, items }: PricingSection) => {
   const isMonthlyCosts = title === "Monthly Costs";
 
   return (
-    <div className="w-full rounded-[10px] border border-[#262626] bg-[#141414]">
+    <div className="w-full rounded-[10px] border border-bg-gray-1 bg-bg-dark-1">
       {/* ================= CARD HEADER ================= */}
 
-      <div className="flex h-[96px] items-center justify-between border-b border-[#262626] px-[32px]">
-        <h3 className="font-['Urbanist'] text-[16px] font-semibold text-white">
+      <div className="relative flex h-[96px] items-center justify-between px-[32px] after:absolute after:bottom-0 after:left-[32px] after:right-[32px] after:h-px after:bg-[#262626]">
+        <h3 className="font-['Urbanist'] text-[20px] font-semibold text-white">
           {title}
         </h3>
 
         <button
           type="button"
           className="
-            h-[40px]
-            rounded-[6px]
+            h-[50px]
+            rounded-lg
             border
             border-[#262626]
             bg-[#1A1A1A]
             px-[18px]
             font-['Urbanist']
-            text-[12px]
+            text-[14px]
             font-medium
             text-white
             transition
@@ -107,9 +107,9 @@ const PricingCard = ({ title, items }: PricingSection) => {
               <p
                 className="
                   font-['Urbanist']
-                  text-[12px]
+                  text-sm
                   font-medium
-                  text-[#999999]
+                  text-gray
                 "
               >
                 {item.label}
@@ -120,8 +120,7 @@ const PricingCard = ({ title, items }: PricingSection) => {
               <div className="mt-[8px] flex flex-wrap items-center gap-[10px]">
                 <span
                   className="
-                    font-['Urbanist']
-                    text-[16px]
+                    text-[20px]
                     font-semibold
                     text-white
                   "
@@ -133,13 +132,14 @@ const PricingCard = ({ title, items }: PricingSection) => {
                   <span
                     className="
                       rounded-full
-                      bg-[#1C1C1C]
+                      bg-bg-dark
+                      border border-bg-gray-1
                       px-[12px]
-                      py-[5px]
+                      py-[8px]
                       font-['Urbanist']
-                      text-[10px]
+                      text-[13px]
                       font-medium
-                      text-[#999999]
+                      text-gray
                     "
                   >
                     {item.note}
@@ -209,7 +209,7 @@ const PricingDetails = ({
               shrink-0
               pr-[25px]
               font-['Urbanist']
-              text-[13px]
+              text-[18px]
               font-semibold
               text-white
               after:absolute
@@ -227,10 +227,10 @@ const PricingDetails = ({
           <p
             className="
               font-['Urbanist']
-              text-[11px]
+              text-[14px]
               font-medium
               leading-[150%]
-              text-[#999999]
+              text-gray
             "
           >
             {noteText}
@@ -256,7 +256,7 @@ const PricingDetails = ({
             className="
               w-full
               lg:w-[170px]
-              gap-[30px]
+              gap-0
             grid
             grid-cols-1
             self-start
@@ -265,9 +265,9 @@ const PricingDetails = ({
             <p
               className="
                 font-['Urbanist']
-                text-[12px]
+                text-[14px]
                 font-medium
-                text-[#999999]
+                text-gray
               "
             >
               Listing Price
