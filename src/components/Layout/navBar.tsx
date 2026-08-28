@@ -6,7 +6,7 @@ import type { PageId } from "../../interfaces";
 import ThemeToggle from "../ui/ThemeToggle";
 
 interface NavbarProps {
-  activePage: PageId;
+  activePage: PageId | null;
   onNavigate: (page: PageId) => void;
   isDark?: boolean;
   onToggleTheme?: () => void;

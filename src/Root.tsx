@@ -1,5 +1,6 @@
 
 import { Outlet, useNavigate, useLocation } from 'react-router';
+import { useEffect } from 'react';
 import { TopBanner } from './components/Layout/TopBanner';
 import Footer from './components/Layout/Footer';
 import type { PageId } from './interfaces';
@@ -18,9 +19,19 @@ const pagePaths: Record<PageId, string> = {
 const Root = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
-	const activePage = (Object.entries(pagePaths).find(
-		([, path]) => path === location.pathname,
-	)?.[0] ?? "home") as PageId;
+
+	useEffect(() => {
+		history.scrollRestoration = 'manual';
+		window.scrollTo(0, 0);
+	}, []);
+
+	const activePage = (
+		location.pathname.startsWith("/property-details/")
+			? null
+			: Object.entries(pagePaths).find(
+					([, path]) => path === location.pathname,
+				)?.[0] ?? "home"
+	) as PageId | null;
 
 	return (
 		<div className="min-h-screen bg-bg-dark-1 text-white">
