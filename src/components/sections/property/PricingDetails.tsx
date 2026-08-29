@@ -1,4 +1,7 @@
+import { motion } from "framer-motion";
 import { SectionHeader } from "../../common/SectionHeader";
+import { FadeInSection } from "../../common/FadeInSection";
+import { StaggerContainer, staggerItem } from "../../common/StaggerContainer";
 
 interface PricingItem {
   label: string;
@@ -194,7 +197,8 @@ const PricingDetails = ({
 
         {/* ================= NOTE ================= */}
 
-        <div
+        <FadeInSection
+          direction="up"
           className="
             mt-[50px]
             flex
@@ -257,7 +261,7 @@ const PricingDetails = ({
           >
             {noteText}
           </p>
-        </div>
+        </FadeInSection>
 
         {/* ================= PRICING AREA ================= */}
 
@@ -312,24 +316,13 @@ const PricingDetails = ({
           </div>
 
           {/* ================= RIGHT CONTAINERS ================= */}
-
-          <div
-            className="
-              flex
-              w-full
-              min-w-0
-              flex-col
-              gap-[30px]
-            "
-          >
+          <StaggerContainer className="flex w-full min-w-0 flex-col gap-[30px]" staggerDelay={0.1}>
             {sections.map((section, index) => (
-              <PricingCard
-                key={index}
-                title={section.title}
-                items={section.items}
-              />
+              <motion.div key={index} variants={staggerItem}>
+                <PricingCard title={section.title} items={section.items} />
+              </motion.div>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </div>
     </section>
