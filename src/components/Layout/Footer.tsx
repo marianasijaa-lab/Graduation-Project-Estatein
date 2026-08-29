@@ -66,7 +66,15 @@ const Footer = () => {
             <img
               src="/assets/icon_6.png"
               alt="icon6"
-              className="absolute left-4 top-1/2 w-5 h-4.5 md:h-5 md:w-5  -translate-y-1/2"
+              className="absolute left-4 top-1/2 w-5              rules_version = '2';
+              service cloud.firestore {
+                match /databases/{database}/documents {
+                  match /{document=**} {
+                    allow read: if true;
+                    allow write: if request.auth != null;
+                  }
+                }
+              } h-4.5 md:h-5 md:w-5  -translate-y-1/2"
             />
 
             <input
