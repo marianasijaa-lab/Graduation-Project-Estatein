@@ -76,7 +76,7 @@ body {
   @apply p-6 lg:p-8 xl:p-10 bg-bg-dark-1 border-bg-gray-1 border rounded-xl ;
 }
 .card-title{
-  @apply text-bg-dark font-semibold xl:text-2xl
+  @apply text-white font-semibold xl:text-2xl;
 }
 
 /* ── Splash / route-transition animations ──
