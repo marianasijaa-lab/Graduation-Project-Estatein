@@ -204,16 +204,16 @@ const Footer = () => {
             transition={{ staggerChildren: 0.12 }}
           >
             <motion.div variants={staggerItem} className="flex flex-col gap-2 pb-6 pt-2 pr-2">
-              <h3 className="font-medium text-gray text-[11px] sm:text-base">{footerLinks[0].title}</h3>
+              <h3 className="font-medium text-gray text-[17px] sm:text-base">{footerLinks[0].title}</h3>
               {footerLinks[0].links.map((link, i) => (
-                <p key={i} className="text-[10px] sm:text-sm text-(--text-main) hover:text-gray cursor-pointer transition-colors leading-tight">{link}</p>
+                <p key={i} className="text-[15px] sm:text-sm text-(--text-main) hover:text-gray cursor-pointer transition-colors leading-tight">{link}</p>
               ))}
               <div className="mt-2 h-px bg-bg-gray-1" />
             </motion.div>
             <motion.div variants={staggerItem} className="flex flex-col gap-2 pb-6 pt-2 pl-2">
-              <h3 className="font-medium text-gray text-[11px] sm:text-base">{footerLinks[1].title}</h3>
+              <h3 className="font-medium text-gray text-[17px] sm:text-base">{footerLinks[1].title}</h3>
               {footerLinks[1].links.map((link, i) => (
-                <p key={i} className="text-[10px] sm:text-sm text-(--text-main) hover:text-gray cursor-pointer transition-colors leading-tight">{link}</p>
+                <p key={i} className="text-[15px] sm:text-sm text-(--text-main) hover:text-gray cursor-pointer transition-colors leading-tight">{link}</p>
               ))}
               <div className="mt-2 h-px bg-bg-gray-1" />
             </motion.div>
@@ -228,23 +228,23 @@ const Footer = () => {
             transition={{ staggerChildren: 0.12, delayChildren: 0.15 }}
           >
             <motion.div variants={staggerItem} className="flex flex-col gap-2 pb-4 pt-4 pr-2">
-              <h3 className="font-medium text-gray text-[11px] sm:text-base">{footerLinks[2].title}</h3>
+              <h3 className="font-medium text-gray text-[17px] sm:text-base">{footerLinks[2].title}</h3>
               {footerLinks[2].links.map((link, i) => (
-                <p key={i} className="text-[10px] sm:text-sm text-(--text-main) hover:text-gray cursor-pointer transition-colors ">{link}</p>
+                <p key={i} className="text-[15px] sm:text-sm text-(--text-main) hover:text-gray cursor-pointer transition-colors ">{link}</p>
               ))}
               <div className="mt-2 h-px bg-bg-gray-1" />
               <div className="pt-3">
-                <h3 className="font-medium text-gray text-[11px] sm:text-base mb-2">{footerLinks[4].title}</h3>
+                <h3 className="font-medium text-gray text-[17px] sm:text-base mb-2">{footerLinks[4].title}</h3>
                 {footerLinks[4].links.map((link, i) => (
-                  <p key={i} className="text-[10px] sm:text-sm text-(--text-main) hover:text-gray cursor-pointer transition-colors  mb-2">{link}</p>
+                  <p key={i} className="text-[15px] sm:text-sm text-(--text-main) hover:text-gray cursor-pointer transition-colors  mb-2">{link}</p>
                 ))}
                 <div className="mt-2 h-px bg-bg-gray-1" />
               </div>
             </motion.div>
             <motion.div variants={staggerItem} className="flex flex-col gap-2 pb-6 pt-4 pl-2">
-              <h3 className="font-medium text-gray text-[11px] sm:text-base">{footerLinks[3].title}</h3>
+              <h3 className="font-medium text-gray text-[17px] sm:text-base">{footerLinks[3].title}</h3>
               {footerLinks[3].links.map((link, i) => (
-                <p key={i} className="text-[10px] sm:text-sm text-(--text-main) hover:text-gray cursor-pointer transition-colors ">{link}</p>
+                <p key={i} className="text-[15px] sm:text-sm text-(--text-main) hover:text-gray cursor-pointer transition-colors ">{link}</p>
               ))}
               <div className="mt-2 h-px bg-bg-gray-1" />
             </motion.div>

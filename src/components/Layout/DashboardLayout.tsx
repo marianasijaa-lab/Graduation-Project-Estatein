@@ -3,31 +3,17 @@ import { Menu, X } from "lucide-react";
 import { Link, NavLink, Outlet, useLocation } from "react-router";
 import { RouteTransitionOverlay } from "../common/RouteTransitionOverlay";
 import {
-  HiOutlineArrowRightOnRectangle,
-  HiOutlineArrowTrendingUp,
   HiOutlineBuildingOffice2,
-  HiOutlineChatBubbleLeftRight,
   HiOutlineChevronDown,
-  HiOutlineEnvelope,
-  HiOutlineHome,
-  HiOutlineHomeModern,
-  HiOutlineIdentification,
-  HiOutlineInbox,
   HiOutlineInformationCircle,
-  HiOutlineKey,
-  HiOutlineMapPin,
-  HiOutlineNewspaper,
-  HiOutlineQuestionMarkCircle,
   HiOutlineSparkles,
   HiOutlineTrophy,
   HiOutlineUserGroup,
-  HiOutlineWrenchScrewdriver,
 } from "react-icons/hi2";
 import type { IconType } from "react-icons";
 import { Logo } from "../common/Logo";
 import ThemeToggle from "../ui/ThemeToggle";
 import { useTheme } from "../../Context/ThemeContext";
-import { useAuth } from "../../Context/AuthContext";
 
 interface DashboardSectionItem {
   label: string;
@@ -45,12 +31,10 @@ interface DashboardPageGroup {
 // Sidebar groups, by site page.
 const NAV_GROUPS: DashboardPageGroup[] = [
   {
-    label: "Home",
-    icon: HiOutlineHome,
+    label: "Properties",
+    icon: HiOutlineBuildingOffice2,
     sections: [
       { label: "Properties", to: "/dashboard/properties", icon: HiOutlineBuildingOffice2 },
-      { label: "Testimonials", to: "/dashboard/testimonials", icon: HiOutlineChatBubbleLeftRight },
-      { label: "FAQ", to: "/dashboard/faqs", icon: HiOutlineQuestionMarkCircle },
     ],
   },
   {
@@ -60,25 +44,6 @@ const NAV_GROUPS: DashboardPageGroup[] = [
       { label: "Our Values", to: "/dashboard/values", icon: HiOutlineSparkles },
       { label: "Our Achievements", to: "/dashboard/achievements", icon: HiOutlineTrophy },
       { label: "Our Valued Clients", to: "/dashboard/clients", icon: HiOutlineUserGroup },
-    ],
-  },
-  {
-    label: "Services",
-    icon: HiOutlineWrenchScrewdriver,
-    sections: [
-      { label: "Unlock Property Value", to: "/dashboard/unlock-property-value", icon: HiOutlineKey },
-      { label: "Effortless Property Management", to: "/dashboard/effortless-property-management", icon: HiOutlineHomeModern },
-      { label: "Smart Investments", to: "/dashboard/smart-investments", icon: HiOutlineArrowTrendingUp },
-    ],
-  },
-  {
-    label: "Contact",
-    icon: HiOutlineEnvelope,
-    sections: [
-      { label: "Offices", to: "/dashboard/offices", icon: HiOutlineMapPin },
-      { label: "Inquiries", to: "/dashboard/inquiries", icon: HiOutlineInbox },
-      { label: "Contact Info", to: "/dashboard/contact-info", icon: HiOutlineIdentification },
-      { label: "Subscribers", to: "/dashboard/subscribers", icon: HiOutlineNewspaper },
     ],
   },
 ];
@@ -171,7 +136,6 @@ const SidebarLinks = ({ isDark, expandedGroups, onToggleGroup, onNavigate }: Sid
 export const DashboardLayout = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
-  const { logout } = useAuth();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const sectionLabel = useActiveSectionLabel();
   const mainRef = useRef<HTMLElement>(null);
@@ -200,12 +164,6 @@ export const DashboardLayout = () => {
     });
   };
 
-  // Signs the user out; AuthGate takes it from here and shows the login screen.
-  const handleLogout = () => {
-    setMobileNavOpen(false);
-    void logout();
-  };
-
   const shellClass = isDark ? "bg-bg-dark-1 text-white" : "bg-gray-50 text-zinc-900";
   const sidebarClass = isDark ? "bg-bg-dark border-bg-gray-1" : "bg-white border-gray-200";
   const headerClass = isDark ? "bg-bg-dark-1 border-bg-gray-1" : "bg-white border-gray-200";
@@ -229,7 +187,7 @@ export const DashboardLayout = () => {
           expandedGroups={expandedGroups}
           onToggleGroup={toggleGroup}
         />
-        <div className={`px-3 py-4 border-t space-y-1 ${isDark ? "border-bg-gray-1" : "border-gray-200"}`}>
+        <div className={`px-3 py-4 border-t ${isDark ? "border-bg-gray-1" : "border-gray-200"}`}>
           <Link
             to="/"
             className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
@@ -238,16 +196,6 @@ export const DashboardLayout = () => {
           >
             ← Back to website
           </Link>
-          <button
-            type="button"
-            onClick={handleLogout}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors cursor-pointer ${
-              isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-            }`}
-          >
-            <HiOutlineArrowRightOnRectangle className="w-5 h-5" />
-            Log Out
-          </button>
         </div>
       </aside>
 
@@ -282,7 +230,7 @@ export const DashboardLayout = () => {
               onToggleGroup={toggleGroup}
               onNavigate={() => setMobileNavOpen(false)}
             />
-            <div className={`px-3 py-4 border-t space-y-1 ${isDark ? "border-bg-gray-1" : "border-gray-200"}`}>
+            <div className={`px-3 py-4 border-t ${isDark ? "border-bg-gray-1" : "border-gray-200"}`}>
               <Link
                 to="/"
                 onClick={() => setMobileNavOpen(false)}
@@ -292,16 +240,6 @@ export const DashboardLayout = () => {
               >
                 ← Back to website
               </Link>
-              <button
-                type="button"
-                onClick={handleLogout}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors cursor-pointer ${
-                  isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                }`}
-              >
-                <HiOutlineArrowRightOnRectangle className="w-5 h-5" />
-                Log Out
-              </button>
             </div>
           </aside>
         </div>

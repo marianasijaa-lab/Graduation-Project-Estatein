@@ -1,7 +1,46 @@
 import React from 'react';
 import { SectionHeader } from '../../common/SectionHeader';
 import { InfoBox } from '../infobox/InfoBox';
-import { useSmartInvestments } from '../../../hooks/useSmartInvestments';
+import { motion } from 'framer-motion';
+import { StaggerContainer, staggerItem } from '../../common/StaggerContainer';
+
+interface InvestmentServiceItem {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+}
+
+const investmentServices: InvestmentServiceItem[] = [
+  {
+    id: '1',
+    title: 'Market Insight',
+    description:
+      'Stay ahead of market trends with our expert Market Analysis. We provide in-depth insights into real estate market conditions',
+    icon: '/assets/Icon_19.png',
+  },
+  {
+    id: '2',
+    title: 'ROI Assessment',
+    description:
+      'Make investment decisions with confidence. Our ROI Assessment services evaluate the potential returns on your investments',
+    icon: '/assets/Icon_27.png',
+  },
+  {
+    id: '3',
+    title: 'Customized Strategies',
+    description:
+      'Every investor is unique, and so are their goals. We develop Customized Investment Strategies tailored to your specific needs',
+    icon: '/assets/Icon_28.png',
+  },
+  {
+    id: '4',
+    title: 'Diversification Mastery',
+    description:
+      'Diversify your real estate portfolio effectively. Our experts guide you in spreading your investments across various property types and locations',
+    icon: '/assets/Icon_4.png',
+  },
+];
 
 export const SmartInvestments: React.FC = () => {
   const { smartInvestments: cards } = useSmartInvestments();
@@ -47,10 +86,13 @@ export const SmartInvestments: React.FC = () => {
 
 
           <div className="lg:col-span-7 xl:col-span-8 rounded-[10px] bg-[#191919] p-1.5 mt-14">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
-              {cards.map((service) => (
-                <div
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
+              {investmentServices.map((service) => (
+                <motion.div
                   key={service.id}
+                  variants={staggerItem}
+                  whileHover={{y: -4}}
+                  transition={{duration: 0.25}}
                   className="bg-[#141414] border border-[#262626] rounded-[8px] px-5 sm:px-6 py-3 sm:py-4 flex flex-col justify-start gap-4 hover:border-[#703BF7]/40 transition-all duration-300"
                 >
 
@@ -71,9 +113,9 @@ export const SmartInvestments: React.FC = () => {
                   <p className="text-[15px] sm:text-base font-normal text-[#999999] leading-[150%]">
                     {service.description}
                   </p>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
 
         </div>

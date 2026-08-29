@@ -11,11 +11,15 @@ import { DetailModal, type DetailField } from "../../components/sections/dashboa
 
 type FormModalState = { mode: "add" } | { mode: "edit"; property: FirestoreProperty } | null;
 
-// createdAt is stamped server-side (serverTimestamp()) — api/firestore.ts's
-// snapshotToDocs() already converts the Firestore Timestamp to an ISO string
-// before it ever reaches Redux, so this only ever handles a plain string.
+// createdAt is stamped server-side (serverTimestamp()), which Firestore hands
+// back as a Timestamp object, not the plain string the type declares — handle
+// both so the detail view never shows "[object Object]".
 function formatCreatedAt(createdAt: FirestoreProperty["createdAt"]): string {
   if (!createdAt) return "—";
+  const value: unknown = createdAt;
+  if (value !== null && typeof value === "object" && "toDate" in value && typeof (value as { toDate: unknown }).toDate === "function") {
+    return (value as { toDate: () => Date }).toDate().toLocaleString();
+  }
   const parsed = new Date(createdAt);
   return Number.isNaN(parsed.getTime()) ? String(createdAt) : parsed.toLocaleString();
 }
@@ -101,7 +105,6 @@ function buildPropertyDetailFields(property: FirestoreProperty): DetailField[] {
   ];
 }
 
-// Dashboard page: list/search/add/edit/delete properties.
 export const PropertiesManagement = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";

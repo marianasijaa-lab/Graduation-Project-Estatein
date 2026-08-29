@@ -20,7 +20,6 @@ function buildAchievementDetailFields(achievement: FirestoreAchievement): Detail
   ];
 }
 
-// Dashboard page: list/search/add/edit/delete achievements.
 export const AchievementsManagement = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";

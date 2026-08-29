@@ -1,5 +1,6 @@
 import PropertyForm from "./PropertyForm";
 import { SectionHeader } from "../../common/SectionHeader";
+import { FadeInSection } from "../../common/FadeInSection";
 interface InquireSectionProps {
   propertyId?: string;
   propertyName?: string;
@@ -30,14 +31,14 @@ const InquireSection = ({
       >
         
         {/* Description */}
-        <div className="w-full shrink-0 md:w-[30%] xl:w-[519px]">
+        <FadeInSection className="w-full shrink-0 md:w-[30%] xl:w-[519px]">
           <SectionHeader
             title={`Inquire About ${propertyName}`}
             subtitle="Interested in this property? Fill out the form below and our real estate experts will get back to you with more details, including scheduling a viewing and answering any questions you may have."
             className="mb-0"
             fullWidth
           />
-        </div>
+        </FadeInSection>
 
         {/* Form */}
         <div className="w-full min-w-0 md:flex-1">

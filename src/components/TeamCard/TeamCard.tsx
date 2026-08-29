@@ -1,4 +1,7 @@
+import { motion } from "framer-motion";
 import { SectionHeader } from "../common/SectionHeader";
+import { StaggerContainer, staggerItem } from "../common/StaggerContainer";
+
 
 const TeamCard = () => {
   return (
@@ -8,8 +11,9 @@ const TeamCard = () => {
         backgroundImage: "url('/assets/background_2.png')",
       }}
     >
-      <div className="grid grid-cols-4 gap-2.5 md:grid-cols-2">
-        <img
+      <StaggerContainer className="grid grid-cols-4 gap-2.5 md:grid-cols-2">
+        <motion.img
+          variants={staggerItem}
           src="/assets/Contact1.webp"
           alt=""
           loading="lazy"
@@ -17,7 +21,8 @@ const TeamCard = () => {
           className="col-span-2 h-20 w-full rounded-lg object-cover md:col-span-1 md:h-45"
         />
 
-        <img
+        <motion.img
+          variants={staggerItem}
           src="/assets/Contact3.webp"
           alt=""
           loading="lazy"
@@ -25,7 +30,8 @@ const TeamCard = () => {
           className="col-span-2 h-20 w-full rounded-lg object-cover md:col-span-1 md:h-45"
         />
 
-        <img
+        <motion.img
+          variants={staggerItem}
           src="/assets/Contact2.webp"
           alt=""
           loading="lazy"
@@ -33,7 +39,7 @@ const TeamCard = () => {
           className="col-span-2 h-20 w-full rounded-lg object-cover md:col-span-1 md:h-45"
         />
 
-        <div className="col-span-2 grid grid-cols-2 gap-2.5 md:col-span-1">
+        <motion.div variants={staggerItem} className="col-span-2 grid grid-cols-2 gap-2.5 md:col-span-1">
           <img
             src="/assets/Contact5.webp"
             alt=""
@@ -49,7 +55,7 @@ const TeamCard = () => {
             decoding="async"
             className="h-20 w-full rounded-lg object-cover md:h-45"
           />
-        </div>
+        </motion.div>
 
         <div className="col-span-4 flex items-center mt-4 md:col-span-1">
           <SectionHeader
@@ -60,14 +66,15 @@ const TeamCard = () => {
           />
         </div>
 
-        <img
+        <motion.img
+          variants={staggerItem}
           src="/assets/Contact6.webp"
           alt=""
           loading="lazy"
           decoding="async"
           className="col-span-4 h-auto w-full rounded-lg object-contain md:col-span-1 md:h-45 md:object-cover"
         />
-      </div>
+      </StaggerContainer>
     </section>
   );
 };

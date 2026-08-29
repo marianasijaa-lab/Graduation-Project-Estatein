@@ -11,7 +11,6 @@ interface AchievementFormState {
 
 type AchievementFormErrors = Partial<Record<keyof AchievementFormState, string>>;
 
-// Builds the form's starting values — blank for "add", pre-filled for "edit".
 function buildInitialState(initialData?: FirestoreAchievement): AchievementFormState {
   if (!initialData) {
     return { title: "", description: "" };
@@ -22,7 +21,6 @@ function buildInitialState(initialData?: FirestoreAchievement): AchievementFormS
   };
 }
 
-// Checks every field and returns a map of field -> error message.
 function validate(values: AchievementFormState): AchievementFormErrors {
   const errors: AchievementFormErrors = {};
 
@@ -51,7 +49,6 @@ export const AchievementFormModal = ({ mode, initialData, onClose, onSubmit }: A
     setValues((prev) => ({ ...prev, [field]: value }));
   };
 
-  // Validates the form and, if valid, hands the cleaned-up payload to onSubmit.
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -119,7 +116,7 @@ export const AchievementFormModal = ({ mode, initialData, onClose, onSubmit }: A
             <input
               id="af-title"
               type="text"
-              placeholder="Add title"
+              placeholder="e.g. 3+ Years of Excellence"
               value={values.title}
               onChange={(e) => setField("title", e.target.value)}
               className={fieldClass}

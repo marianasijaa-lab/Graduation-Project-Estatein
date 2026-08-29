@@ -1,9 +1,11 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { HiXMark } from "react-icons/hi2";
+import { FiUploadCloud } from "react-icons/fi";
 import { useTheme } from "../../../Context/ThemeContext";
 import { Button } from "../../ui/Button";
-import { ImageUploadField } from "../../ui/ImageUploadField";
 import type { FirestoreValue } from "../../../store/types";
+
+const MAX_IMAGE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
 
 interface ValueFormState {
   title: string;
@@ -13,7 +15,6 @@ interface ValueFormState {
 
 type ValueFormErrors = Partial<Record<keyof ValueFormState, string>>;
 
-// Builds the form's starting values — blank for "add", pre-filled for "edit".
 function buildInitialState(initialData?: FirestoreValue): ValueFormState {
   if (!initialData) {
     return { title: "", description: "", icon: "" };
@@ -25,7 +26,6 @@ function buildInitialState(initialData?: FirestoreValue): ValueFormState {
   };
 }
 
-// Checks every field and returns a map of field -> error message.
 function validate(values: ValueFormState): ValueFormErrors {
   const errors: ValueFormErrors = {};
 
@@ -50,12 +50,58 @@ export const ValueFormModal = ({ mode, initialData, onClose, onSubmit }: ValueFo
   const [values, setValues] = useState<ValueFormState>(() => buildInitialState(initialData));
   const [errors, setErrors] = useState<ValueFormErrors>({});
   const formRef = useRef<HTMLFormElement>(null);
+  const iconInputRef = useRef<HTMLInputElement>(null);
+  // Tracks the object URL created for a locally-picked icon, so it can be revoked.
+  const createdObjectUrlRef = useRef<string | null>(null);
 
   const setField = <K extends keyof ValueFormState>(field: K, value: ValueFormState[K]) => {
     setValues((prev) => ({ ...prev, [field]: value }));
   };
 
-  // Validates the form and, if valid, hands the cleaned-up payload to onSubmit.
+  useEffect(() => {
+    // Revoke the object URL on unmount to avoid a memory leak.
+    return () => {
+      if (createdObjectUrlRef.current) {
+        URL.revokeObjectURL(createdObjectUrlRef.current);
+      }
+    };
+  }, []);
+
+  const handleIconChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    // Reset the input so picking the same file again still fires onChange.
+    e.target.value = "";
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setErrors((prev) => ({ ...prev, icon: "Please select an image file." }));
+      return;
+    }
+    if (file.size > MAX_IMAGE_SIZE_BYTES) {
+      setErrors((prev) => ({ ...prev, icon: "Icon must be 5MB or smaller." }));
+      return;
+    }
+
+    if (createdObjectUrlRef.current) {
+      URL.revokeObjectURL(createdObjectUrlRef.current);
+    }
+
+    // No backend yet, so the file is kept as a local object URL only.
+    const objectUrl = URL.createObjectURL(file);
+    createdObjectUrlRef.current = objectUrl;
+
+    setField("icon", objectUrl);
+    setErrors((prev) => ({ ...prev, icon: undefined }));
+  };
+
+  const handleRemoveIcon = () => {
+    if (createdObjectUrlRef.current) {
+      URL.revokeObjectURL(createdObjectUrlRef.current);
+      createdObjectUrlRef.current = null;
+    }
+    setField("icon", "");
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -124,7 +170,7 @@ export const ValueFormModal = ({ mode, initialData, onClose, onSubmit }: ValueFo
             <input
               id="vf-title"
               type="text"
-              placeholder="Add title"
+              placeholder="e.g. Trust"
               value={values.title}
               onChange={(e) => setField("title", e.target.value)}
               className={fieldClass}
@@ -132,13 +178,59 @@ export const ValueFormModal = ({ mode, initialData, onClose, onSubmit }: ValueFo
             {errors.title && <p className={errorClass}>{errors.title}</p>}
           </div>
 
-          <ImageUploadField
-            label="Icon"
-            value={values.icon}
-            onChange={(url) => setField("icon", url)}
-            folder="values"
-            error={errors.icon}
-          />
+          <div>
+            <label className={labelClass} htmlFor="vf-icon">Icon</label>
+
+            {values.icon && (
+              <div
+                className={`relative mb-3 flex items-center justify-center w-24 h-24 rounded-xl overflow-hidden border ${
+                  isDark ? "border-bg-gray-1 bg-bg-dark" : "border-gray-200 bg-gray-50"
+                }`}
+              >
+                <img src={values.icon} alt="Value icon preview" className="w-12 h-12 object-contain" />
+                <button
+                  type="button"
+                  onClick={handleRemoveIcon}
+                  aria-label="Remove icon"
+                  className="absolute top-1 right-1 inline-flex items-center justify-center w-6 h-6 rounded-lg bg-black/60 text-white hover:bg-black/80 transition-colors cursor-pointer"
+                >
+                  <HiXMark className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            )}
+
+            <button
+              type="button"
+              onClick={() => iconInputRef.current?.click()}
+              className={`flex flex-col items-center justify-center gap-2 w-full py-6 px-4 rounded-xl border border-dashed text-center transition-colors cursor-pointer ${
+                isDark
+                  ? "border-bg-gray-1 text-gray hover:border-primary hover:text-white"
+                  : "border-gray-300 text-gray-500 hover:border-primary hover:text-gray-700"
+              }`}
+            >
+              <FiUploadCloud className="w-5 h-5" />
+              <span className="text-sm font-medium">
+                {values.icon ? "Change Icon" : "Click to upload an icon"}
+              </span>
+            </button>
+            <input
+              ref={iconInputRef}
+              id="vf-icon"
+              type="file"
+              accept="image/*"
+              onChange={handleIconChange}
+              className="sr-only"
+              aria-describedby={errors.icon ? "vf-icon-error" : "vf-icon-hint"}
+            />
+
+            {errors.icon ? (
+              <p id="vf-icon-error" className={errorClass}>{errors.icon}</p>
+            ) : (
+              <p id="vf-icon-hint" className={`mt-1.5 text-xs ${isDark ? "text-gray" : "text-gray-500"}`}>
+                PNG or JPG, up to 5MB.
+              </p>
+            )}
+          </div>
 
           <div>
             <label className={labelClass} htmlFor="vf-description">Description</label>

@@ -15,7 +15,6 @@ interface ClientFormState {
 
 type ClientFormErrors = Partial<Record<keyof ClientFormState, string>>;
 
-// Builds the form's starting values — blank for "add", pre-filled for "edit".
 function buildInitialState(initialData?: FirestoreCompany): ClientFormState {
   if (!initialData) {
     return { heading: "", date: "", domain: "", category: "", link: "", testimony: "" };
@@ -30,7 +29,6 @@ function buildInitialState(initialData?: FirestoreCompany): ClientFormState {
   };
 }
 
-// Checks every field and returns a map of field -> error message.
 function validate(values: ClientFormState): ClientFormErrors {
   const errors: ClientFormErrors = {};
 
@@ -62,7 +60,6 @@ export const ClientFormModal = ({ mode, initialData, onClose, onSubmit }: Client
     setValues((prev) => ({ ...prev, [field]: value }));
   };
 
-  // Validates the form and, if valid, hands the cleaned-up payload to onSubmit.
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -147,7 +144,7 @@ export const ClientFormModal = ({ mode, initialData, onClose, onSubmit }: Client
               <input
                 id="cf-date"
                 type="text"
-                placeholder="Add client since"
+                placeholder="e.g. Since 2019"
                 value={values.date}
                 onChange={(e) => setField("date", e.target.value)}
                 className={fieldClass}
@@ -162,7 +159,7 @@ export const ClientFormModal = ({ mode, initialData, onClose, onSubmit }: Client
               <input
                 id="cf-domain"
                 type="text"
-                placeholder="Add domain"
+                placeholder="e.g. Commercial Real Estate"
                 value={values.domain}
                 onChange={(e) => setField("domain", e.target.value)}
                 className={fieldClass}
@@ -174,7 +171,7 @@ export const ClientFormModal = ({ mode, initialData, onClose, onSubmit }: Client
               <input
                 id="cf-category"
                 type="text"
-                placeholder="Add category"
+                placeholder="e.g. Luxury Home Development"
                 value={values.category}
                 onChange={(e) => setField("category", e.target.value)}
                 className={fieldClass}

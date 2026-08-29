@@ -79,6 +79,26 @@ const router = createBrowserRouter([
       { path: "inquiries", element: <InquiriesManagement /> },
       { path: "contact-info", element: <ContactInfoManagement /> },
       { path: "subscribers", element: <SubscribersManagement /> },
+      {
+        index: true,
+        element: <Navigate to="properties" replace />,
+      },
+      {
+        path: "properties",
+        element: <PropertiesManagement />,
+      },
+      {
+        path: "values",
+        element: <ValuesManagement />,
+      },
+      {
+        path: "achievements",
+        element: <AchievementsManagement />,
+      },
+      {
+        path: "clients",
+        element: <ClientsManagement />,
+      },
     ],
   },
 ]);
@@ -95,6 +115,9 @@ createRoot(document.getElementById("root")!).render(
             </SplashScreen>
           </AuthGate>
         </AuthProvider>
+        <SplashScreen>
+          <RouterProvider router={router} />
+        </SplashScreen>
       </ThemeProvider>
     </Provider>
   </StrictMode>,
