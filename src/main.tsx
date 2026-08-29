@@ -25,6 +25,10 @@ import { TestimonialsManagement } from "./Pages/Dashboard/TestimonialsManagement
 import { UnlockPropertyValueManagement } from "./Pages/Dashboard/UnlockPropertyValueManagement";
 import { EffortlessPropertyManagementManagement } from "./Pages/Dashboard/EffortlessPropertyManagementManagement";
 import { SmartInvestmentsManagement } from "./Pages/Dashboard/SmartInvestmentsManagement";
+import { OfficesManagement } from "./Pages/Dashboard/OfficesManagement";
+import { InquiriesManagement } from "./Pages/Dashboard/InquiriesManagement";
+import { ContactInfoManagement } from "./Pages/Dashboard/ContactInfoManagement";
+import { SubscribersManagement } from "./Pages/Dashboard/SubscribersManagement";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +75,10 @@ const router = createBrowserRouter([
       { path: "unlock-property-value", element: <UnlockPropertyValueManagement /> },
       { path: "effortless-property-management", element: <EffortlessPropertyManagementManagement /> },
       { path: "smart-investments", element: <SmartInvestmentsManagement /> },
+      { path: "offices", element: <OfficesManagement /> },
+      { path: "inquiries", element: <InquiriesManagement /> },
+      { path: "contact-info", element: <ContactInfoManagement /> },
+      { path: "subscribers", element: <SubscribersManagement /> },
     ],
   },
 ]);

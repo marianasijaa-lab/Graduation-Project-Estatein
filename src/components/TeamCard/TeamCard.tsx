@@ -12,18 +12,24 @@ const TeamCard = () => {
         <img
           src="/assets/Contact1.webp"
           alt=""
+          loading="lazy"
+          decoding="async"
           className="col-span-2 h-20 w-full rounded-lg object-cover md:col-span-1 md:h-45"
         />
 
         <img
           src="/assets/Contact3.webp"
           alt=""
+          loading="lazy"
+          decoding="async"
           className="col-span-2 h-20 w-full rounded-lg object-cover md:col-span-1 md:h-45"
         />
 
         <img
           src="/assets/Contact2.webp"
           alt=""
+          loading="lazy"
+          decoding="async"
           className="col-span-2 h-20 w-full rounded-lg object-cover md:col-span-1 md:h-45"
         />
 
@@ -31,12 +37,16 @@ const TeamCard = () => {
           <img
             src="/assets/Contact5.webp"
             alt=""
+            loading="lazy"
+            decoding="async"
             className="h-20 w-full rounded-lg object-cover md:h-45"
           />
 
           <img
             src="/assets/Contact4.webp"
             alt=""
+            loading="lazy"
+            decoding="async"
             className="h-20 w-full rounded-lg object-cover md:h-45"
           />
         </div>
@@ -53,6 +63,8 @@ const TeamCard = () => {
         <img
           src="/assets/Contact6.webp"
           alt=""
+          loading="lazy"
+          decoding="async"
           className="col-span-4 h-auto w-full rounded-lg object-contain md:col-span-1 md:h-45 md:object-cover"
         />
       </div>

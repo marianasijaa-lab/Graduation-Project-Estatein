@@ -387,6 +387,10 @@ const offices = [
     latitude: 40.7484,
     longitude: -73.9967,
     image: '/assets/Contact1.webp',
+    description:
+      'Our flagship office in the heart of Manhattan, home to the leadership team and our largest group of advisors.',
+    directionsUrl: 'https://www.google.com/maps/search/?api=1&query=350+Fifth+Avenue+New+York',
+    order: 1,
   },
   {
     name: 'Estatein — Los Angeles',
@@ -399,6 +403,10 @@ const offices = [
     latitude: 34.0736,
     longitude: -118.3994,
     image: '/assets/Contact2.webp',
+    description:
+      'Serving the West Coast luxury market from Beverly Hills, with a dedicated team for coastal and hillside properties.',
+    directionsUrl: 'https://www.google.com/maps/search/?api=1&query=9465+Wilshire+Boulevard+Los+Angeles',
+    order: 2,
   },
   {
     name: 'Estatein — London',
@@ -411,6 +419,10 @@ const offices = [
     latitude: 51.5045,
     longitude: -0.0199,
     image: '/assets/Contact3.webp',
+    description:
+      'Our European headquarters, coordinating cross-border investments and international client relationships.',
+    directionsUrl: 'https://www.google.com/maps/search/?api=1&query=1+Canada+Square+Canary+Wharf+London',
+    order: 3,
   },
   {
     name: 'Estatein — Dubai',
@@ -423,6 +435,10 @@ const offices = [
     latitude: 25.1972,
     longitude: 55.2744,
     image: '/assets/Contact4.webp',
+    description:
+      'Covering the Middle East with expertise in off-plan developments and high-yield investment opportunities.',
+    directionsUrl: 'https://www.google.com/maps/search/?api=1&query=Emaar+Square+Downtown+Dubai',
+    order: 4,
   },
   {
     name: 'Estatein — Singapore',
@@ -435,6 +451,10 @@ const offices = [
     latitude: 1.2789,
     longitude: 103.8536,
     image: '/assets/Contact5.webp',
+    description:
+      'Our Asia-Pacific hub, connecting regional investors with premium residential and commercial listings worldwide.',
+    directionsUrl: 'https://www.google.com/maps/search/?api=1&query=8+Marina+View+Asia+Square+Singapore',
+    order: 5,
   },
   {
     name: 'Estatein — Sydney',
@@ -447,6 +467,10 @@ const offices = [
     latitude: -33.8674,
     longitude: 151.2071,
     image: '/assets/Contact6.webp',
+    description:
+      'Representing Estatein across Australia and New Zealand, specialising in waterfront and metropolitan homes.',
+    directionsUrl: 'https://www.google.com/maps/search/?api=1&query=1+Martin+Place+Sydney',
+    order: 6,
   },
 ];
 
@@ -530,7 +554,92 @@ const smartInvestments = [
   },
 ];
 
-// ── 12. stats (Realtime Database) ─────────────────────────────────────────
+// ── 12. contacts (inquiries / messages) ──────────────────────────────────
+const contacts = [
+  {
+    firstName: 'Jordan',
+    lastName: 'Rivera',
+    email: 'jordan.rivera@example.com',
+    phone: '+1 (415) 555-0148',
+    message:
+      "I'm relocating to the Bay Area this autumn and would love a call to talk through 3-bedroom options in the $1.2M–$1.6M range.",
+    inquiryType: 'Buying',
+    howDidYouHear: 'Google',
+    status: 'new',
+    createdAt: new Date().toISOString(),
+  },
+  {
+    firstName: 'Amelia',
+    lastName: 'Chen',
+    email: 'amelia.chen@example.com',
+    phone: '+44 20 5555 0192',
+    message:
+      'We are considering listing our Kensington townhouse next spring and would like a valuation and marketing plan.',
+    inquiryType: 'Selling',
+    howDidYouHear: 'Friend',
+    status: 'contacted',
+    assignedTo: 'London desk',
+    adminNote: 'Sent valuation pack on the 12th — following up next week.',
+    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    firstName: 'Marcus',
+    lastName: 'Okafor',
+    email: 'marcus.okafor@example.com',
+    phone: '+971 4 555 0210',
+    message:
+      'Interested in the Azure Skyline Penthouse — can you share the full pricing breakdown and arrange a viewing?',
+    inquiryType: 'Investment',
+    howDidYouHear: 'Advertisement',
+    propertyName: 'Azure Skyline Penthouse',
+    status: 'closed',
+    assignedTo: 'Dubai desk',
+    adminNote: 'Viewing completed, client decided to hold. Archived.',
+    createdAt: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+];
+
+// ── 13. subscribers (newsletter) ─────────────────────────────────────────
+const subscribers = [
+  {
+    email: 'olivia.bennett@example.com',
+    status: 'subscribed',
+    source: 'footer',
+    name: 'Olivia Bennett',
+    createdAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    email: 'noah.kim@example.com',
+    status: 'subscribed',
+    source: 'contact-page',
+    createdAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    email: 'liam.torres@example.com',
+    status: 'unsubscribed',
+    source: 'footer',
+    name: 'Liam Torres',
+    createdAt: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+];
+
+// ── 14. siteSettings/contact (single doc: contact info + social links) ────
+const contactSettings = {
+  email: 'info@estatein.com',
+  phone: '+1 (123) 456-7890',
+  address: '123 Estatein Plaza, City Center, Metropolis',
+  mapUrl: 'https://www.google.com/maps/search/?api=1&query=123+Estatein+Plaza+Metropolis',
+  openingHours: 'Mon–Fri, 9:00 AM – 6:00 PM',
+  socialLinks: [
+    { platform: 'facebook', url: 'https://facebook.com/estatein', enabled: true },
+    { platform: 'linkedin', url: 'https://linkedin.com/company/estatein', enabled: true },
+    { platform: 'twitter', url: 'https://twitter.com/estatein', enabled: true },
+    { platform: 'youtube', url: 'https://youtube.com/@estatein', enabled: true },
+    { platform: 'instagram', url: 'https://instagram.com/estatein', enabled: false },
+  ],
+};
+
+// ── 15. stats (Realtime Database) ─────────────────────────────────────────
 const stats = [
   { value: '200+', label: 'Happy Customers' },
   { value: '10K+', label: 'Properties For Clients' },
@@ -568,6 +677,19 @@ async function seedCollection(
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+//  Writes a single well-known document (e.g. siteSettings/contact)
+// ═══════════════════════════════════════════════════════════════════════════
+async function seedSingletonDoc(
+  collectionName: string,
+  docId: string,
+  data: Record<string, unknown>,
+) {
+  console.log(`\n Writing document: ${collectionName}/${docId}`);
+  await db.collection(collectionName).doc(docId).set(data);
+  console.log(' Document written successfully');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 //  Uploads stats to the Realtime Database
 // ═══════════════════════════════════════════════════════════════════════════
 async function seedRealtimeStats(statsData: { value: string; label: string }[]) {
@@ -594,6 +716,9 @@ async function main() {
   await seedCollection('unlockPropertyValue',           unlockPropertyValue           as Record<string, unknown>[]);
   await seedCollection('effortlessPropertyManagement',  effortlessPropertyManagement  as Record<string, unknown>[]);
   await seedCollection('smartInvestments',              smartInvestments              as Record<string, unknown>[]);
+  await seedCollection('contacts',     contacts     as Record<string, unknown>[]);
+  await seedCollection('subscribers',  subscribers  as Record<string, unknown>[]);
+  await seedSingletonDoc('siteSettings', 'contact', contactSettings as Record<string, unknown>);
   await seedRealtimeStats(stats);
 
   console.log('\n🎉 All data uploaded successfully!');

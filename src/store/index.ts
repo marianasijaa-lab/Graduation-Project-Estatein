@@ -16,6 +16,9 @@ import ctaReducer          from './slices/ctaSlice';
 import unlockPropertyValueReducer from './slices/unlockPropertyValueSlice';
 import effortlessPropertyManagementReducer from './slices/effortlessPropertyManagementSlice';
 import smartInvestmentsReducer from './slices/smartInvestmentsSlice';
+import contactsReducer      from './slices/contactsSlice';
+import contactInfoReducer   from './slices/contactInfoSlice';
+import subscribersReducer   from './slices/subscribersSlice';
 
 export const store = configureStore({
   reducer: {
@@ -33,6 +36,9 @@ export const store = configureStore({
     unlockPropertyValue: unlockPropertyValueReducer,
     effortlessPropertyManagement: effortlessPropertyManagementReducer,
     smartInvestments: smartInvestmentsReducer,
+    contacts:     contactsReducer,
+    contactInfo:  contactInfoReducer,
+    subscribers:  subscribersReducer,
   },
 });
 

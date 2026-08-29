@@ -133,7 +133,9 @@ export interface FirestoreTestimonial {
   createdAt?: string;
 }
 
-// ── Contact messages (Firestore collection: "contacts") ──────────────────────
+//  Contact messages (Firestore collection: "contacts") 
+export type ContactStatus = 'new' | 'contacted' | 'closed';
+
 export interface FirestoreContact {
   id: string;
   firstName: string;
@@ -144,11 +146,51 @@ export interface FirestoreContact {
   inquiryType?: string;      // buying, selling, consulting, etc.
   howDidYouHear?: string;    // how they heard about us
   propertyId?: string;       // related property (optional)
-  status: 'new' | 'processing' | 'replied';
-  createdAt: string;
+  propertyName?: string;     // related property name, for a readable admin list
+  status: ContactStatus;
+  assignedTo?: string;       // internal — team member handling this inquiry
+  adminNote?: string;        // internal — triage notes
+  createdAt?: string;        // stamped server-side by addDocument()
 }
 
-// ── Company offices (Firestore collection: "offices") ─────────────────────────
+//  Newsletter subscribers (Firestore collection: "subscribers") 
+export type SubscriberStatus = 'subscribed' | 'unsubscribed';
+export type SubscriberSource = 'footer' | 'contact-page';
+
+export interface FirestoreSubscriber {
+  id: string;
+  email: string;
+  status: SubscriberStatus;
+  source: SubscriberSource;
+  name?: string;
+  createdAt?: string;     
+}
+
+// Site contact settings (Firestore: single doc "siteSettings/contact")
+export type SocialPlatform =
+  | 'facebook'
+  | 'linkedin'
+  | 'twitter'
+  | 'youtube'
+  | 'instagram';
+
+export interface SocialLink {
+  platform: SocialPlatform;
+  url: string;
+  enabled: boolean;
+}
+
+export interface FirestoreContactInfo {
+  id: string;          
+  email: string;
+  phone: string;
+  address: string;
+  mapUrl?: string;
+  openingHours?: string;
+  socialLinks: SocialLink[];
+}
+
+//  Company offices (Firestore collection: "offices") 
 export interface FirestoreOffice {
   id: string;
   name: string;             // office name
@@ -160,5 +202,8 @@ export interface FirestoreOffice {
   type: 'Regional' | 'International' | 'Local';  // for tab filtering
   latitude?: number;
   longitude?: number;
-  image?: string;           // office photo (optional)
+  image?: string;         
+  description?: string;      
+  directionsUrl?: string;     
+  order?: number;            
 }

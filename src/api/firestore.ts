@@ -51,16 +51,36 @@ function snapshotToDocs<T>(snapshot: QuerySnapshot<DocumentData>): T[] {
   return snapshot.docs.map((d) => serializeTimestamps({ id: d.id, ...d.data() }) as T);
 }
 
-// ─── Real-time Subscription (onSnapshot) ─────────────────────────────────────
+// ─── Real-time Subscriptions (onSnapshot) ────────────────────────────────────
+//
+// Firestore listeners are attached ONCE per collection / document path and then
+// kept open for the lifetime of the tab. Redux is therefore kept continuously in
+// sync, so a component that unmounts and remounts (SPA navigation) keeps seeing
+// live data without re-subscribing — and there is never more than one listener
+// per path no matter how many hooks call these helpers.
+//
+// The returned function is a no-op: callers may still use it as a `useEffect`
+// cleanup, but tearing the listener down on unmount is exactly what left the
+// store stale after navigation, so we intentionally don't. Re-subscribing on
+// every mount would also re-read the whole collection and flash fallback data;
+// keeping one listener open only pays for deltas.
+
+/** No-op teardown — see the note above. */
+const NOOP_UNSUBSCRIBE: Unsubscribe = () => {};
+
+/** Paths with a live listener already running (collection name / `col/doc`). */
+const liveCollectionListeners = new Set<string>();
+const liveDocumentListeners = new Set<string>();
 
 /**
- * Listens live (WebSocket) for any change in a collection.
- * Returns an unsubscribe function to stop listening on unmount.
+ * Listens live for any change in a collection and pushes the updated array to
+ * `onData`. Idempotent per collection — safe to call from multiple hooks / on
+ * every mount; only the first call attaches a listener.
  *
  * @param collectionName  Firestore collection name
  * @param onData          callback that receives the updated array
  * @param onError         callback that receives errors (optional)
- * @param fallbackData     fallback data returned while Firebase is unavailable
+ * @param fallbackData    data to show while Firebase is unavailable / empty
  */
 export function subscribeToCollection<T>(
   collectionName: string,
@@ -68,11 +88,18 @@ export function subscribeToCollection<T>(
   onError?: ErrorCallback,
   fallbackData?: T[],
 ): Unsubscribe {
-  // Firebase isn't configured — use the fallback data and return a no-op.
+  // Firebase isn't configured — hand over the fallback once and stop.
   if (!firestoreDb) {
     if (fallbackData) onData(fallbackData);
-    return () => {};
+    return NOOP_UNSUBSCRIBE;
   }
+
+  // A listener is already running for this collection and keeping Redux in sync.
+  // Don't attach a second one, and don't push fallback over live data.
+  if (liveCollectionListeners.has(collectionName)) {
+    return NOOP_UNSUBSCRIBE;
+  }
+  liveCollectionListeners.add(collectionName);
 
   // Show the fallback data immediately until real Firestore data arrives.
   if (fallbackData) onData(fallbackData);
@@ -89,7 +116,7 @@ export function subscribeToCollection<T>(
       }, 8000)
     : null;
 
-  const unsubscribe = onSnapshot(
+  onSnapshot(
     colRef,
     (snapshot) => {
       receivedFirstSnapshot = true;
@@ -112,10 +139,68 @@ export function subscribeToCollection<T>(
     },
   );
 
-  return () => {
-    if (fallbackTimer) clearTimeout(fallbackTimer);
-    unsubscribe();
-  };
+  return NOOP_UNSUBSCRIBE;
+}
+
+/**
+ * Same contract as subscribeToCollection, but for a single well-known document
+ * (e.g. `siteSettings/contact`). Emits the doc with its `id`, or the fallback /
+ * `null` when the document doesn't exist. Idempotent per `collection/doc` path.
+ */
+export function subscribeToDocument<T>(
+  collectionName: string,
+  documentId: string,
+  onData: (doc: T | null) => void,
+  onError?: ErrorCallback,
+  fallbackData?: T,
+): Unsubscribe {
+  if (!firestoreDb) {
+    onData(fallbackData ?? null);
+    return NOOP_UNSUBSCRIBE;
+  }
+
+  const path = `${collectionName}/${documentId}`;
+  if (liveDocumentListeners.has(path)) {
+    return NOOP_UNSUBSCRIBE;
+  }
+  liveDocumentListeners.add(path);
+
+  onData(fallbackData ?? null);
+
+  const docRef = doc(firestoreDb, collectionName, documentId);
+
+  let receivedFirstSnapshot = false;
+  const fallbackTimer =
+    fallbackData !== undefined
+      ? setTimeout(() => {
+          if (!receivedFirstSnapshot) {
+            onData(fallbackData);
+          }
+        }, 8000)
+      : null;
+
+  onSnapshot(
+    docRef,
+    (snapshot) => {
+      receivedFirstSnapshot = true;
+      if (fallbackTimer) clearTimeout(fallbackTimer);
+      if (!snapshot.exists()) {
+        onData(fallbackData ?? null);
+        return;
+      }
+      onData(serializeTimestamps({ id: snapshot.id, ...snapshot.data() }) as T);
+    },
+    (error) => {
+      if (fallbackTimer) clearTimeout(fallbackTimer);
+      if (fallbackData !== undefined) {
+        onData(fallbackData);
+      } else if (onError) {
+        onError(error);
+      }
+    },
+  );
+
+  return NOOP_UNSUBSCRIBE;
 }
 
 // ─── Helper ───────────────────────────────────────────────────────────────────
