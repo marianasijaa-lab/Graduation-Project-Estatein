@@ -1,11 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { HiXMark } from "react-icons/hi2";
-import { FiUploadCloud } from "react-icons/fi";
 import { useTheme } from "../../../Context/ThemeContext";
 import { Button } from "../../ui/Button";
+import { ImageUploadField } from "../../ui/ImageUploadField";
 import type { FirestoreProperty } from "../../../store/types";
 
-const MAX_IMAGE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
 const MIN_BUILD_YEAR = 1800;
 const MAX_BUILD_YEAR = new Date().getFullYear();
 
@@ -41,6 +40,7 @@ interface PropertyFormState {
 
 type PropertyFormErrors = Partial<Record<keyof PropertyFormState, string>>;
 
+// Builds the form's starting values — blank for "add", pre-filled for "edit".
 function buildInitialState(initialData?: FirestoreProperty): PropertyFormState {
   if (!initialData) {
     return {
@@ -82,6 +82,7 @@ function buildInitialState(initialData?: FirestoreProperty): PropertyFormState {
   };
 }
 
+// Checks every field and returns a map of field -> error message.
 function validate(values: PropertyFormState): PropertyFormErrors {
   const errors: PropertyFormErrors = {};
 
@@ -146,56 +147,9 @@ export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: Prop
   const [errors, setErrors] = useState<PropertyFormErrors>({});
   const [amenityInput, setAmenityInput] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
-  const imageInputRef = useRef<HTMLInputElement>(null);
-  // Tracks the object URL created for a locally-picked image, so it can be revoked.
-  const createdObjectUrlRef = useRef<string | null>(null);
 
   const setField = <K extends keyof PropertyFormState>(field: K, value: PropertyFormState[K]) => {
     setValues((prev) => ({ ...prev, [field]: value }));
-  };
-
-  useEffect(() => {
-    // Revoke the object URL on unmount to avoid a memory leak.
-    return () => {
-      if (createdObjectUrlRef.current) {
-        URL.revokeObjectURL(createdObjectUrlRef.current);
-      }
-    };
-  }, []);
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    // Reset the input so picking the same file again still fires onChange.
-    e.target.value = "";
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) {
-      setErrors((prev) => ({ ...prev, image: "Please select an image file." }));
-      return;
-    }
-    if (file.size > MAX_IMAGE_SIZE_BYTES) {
-      setErrors((prev) => ({ ...prev, image: "Image must be 5MB or smaller." }));
-      return;
-    }
-
-    if (createdObjectUrlRef.current) {
-      URL.revokeObjectURL(createdObjectUrlRef.current);
-    }
-
-    // No backend yet, so the file is kept as a local object URL only.
-    const objectUrl = URL.createObjectURL(file);
-    createdObjectUrlRef.current = objectUrl;
-
-    setField("image", objectUrl);
-    setErrors((prev) => ({ ...prev, image: undefined }));
-  };
-
-  const handleRemoveImage = () => {
-    if (createdObjectUrlRef.current) {
-      URL.revokeObjectURL(createdObjectUrlRef.current);
-      createdObjectUrlRef.current = null;
-    }
-    setField("image", "");
   };
 
   const handleAddAmenity = () => {
@@ -219,6 +173,7 @@ export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: Prop
     setField("amenities", values.amenities.filter((a) => a !== amenity));
   };
 
+  // Validates the form and, if valid, hands the cleaned-up payload to onSubmit.
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -329,59 +284,13 @@ export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: Prop
             </div>
           </div>
 
-          <div>
-            <label className={labelClass} htmlFor="pf-image">Property Image</label>
-
-            {values.image && (
-              <div
-                className={`relative mb-3 w-full h-48 rounded-xl overflow-hidden border ${
-                  isDark ? "border-bg-gray-1" : "border-gray-200"
-                }`}
-              >
-                <img src={values.image} alt="Property preview" className="w-full h-full object-cover" />
-                <button
-                  type="button"
-                  onClick={handleRemoveImage}
-                  aria-label="Remove image"
-                  className="absolute top-2 right-2 inline-flex items-center justify-center w-8 h-8 rounded-lg bg-black/60 text-white hover:bg-black/80 transition-colors cursor-pointer"
-                >
-                  <HiXMark className="w-4 h-4" />
-                </button>
-              </div>
-            )}
-
-            <button
-              type="button"
-              onClick={() => imageInputRef.current?.click()}
-              className={`flex flex-col items-center justify-center gap-2 w-full py-6 px-4 rounded-xl border border-dashed text-center transition-colors cursor-pointer ${
-                isDark
-                  ? "border-bg-gray-1 text-gray hover:border-primary hover:text-white"
-                  : "border-gray-300 text-gray-500 hover:border-primary hover:text-gray-700"
-              }`}
-            >
-              <FiUploadCloud className="w-5 h-5" />
-              <span className="text-sm font-medium">
-                {values.image ? "Change Image" : "Click to upload an image"}
-              </span>
-            </button>
-            <input
-              ref={imageInputRef}
-              id="pf-image"
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="sr-only"
-              aria-describedby={errors.image ? "pf-image-error" : "pf-image-hint"}
-            />
-
-            {errors.image ? (
-              <p id="pf-image-error" className={errorClass}>{errors.image}</p>
-            ) : (
-              <p id="pf-image-hint" className={`mt-1.5 text-xs ${isDark ? "text-gray" : "text-gray-500"}`}>
-                PNG or JPG, up to 5MB.
-              </p>
-            )}
-          </div>
+          <ImageUploadField
+            label="Property Image"
+            value={values.image}
+            onChange={(url) => setField("image", url)}
+            folder="properties"
+            error={errors.image}
+          />
 
           <div>
             <label className={labelClass} htmlFor="pf-tag">Marketing Tag (optional)</label>
@@ -489,7 +398,7 @@ export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: Prop
               <input
                 id="pf-location"
                 type="text"
-                placeholder="e.g. Malibu, California"
+                placeholder="Add location"
                 value={values.location}
                 onChange={(e) => setField("location", e.target.value)}
                 className={fieldClass}
@@ -535,7 +444,7 @@ export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: Prop
                 min={MIN_BUILD_YEAR}
                 max={MAX_BUILD_YEAR}
                 step="1"
-                placeholder="e.g. 2020"
+                placeholder="Add build year"
                 value={values.buildYear}
                 onChange={(e) => setField("buildYear", e.target.value)}
                 className={fieldClass}

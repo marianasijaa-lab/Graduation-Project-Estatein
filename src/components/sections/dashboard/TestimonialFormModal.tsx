@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { HiXMark } from "react-icons/hi2";
 import { useTheme } from "../../../Context/ThemeContext";
 import { Button } from "../../ui/Button";
+import { ImageUploadField } from "../../ui/ImageUploadField";
 import type { FirestoreTestimonial } from "../../../store/types";
 
 const MIN_RATING = 1;
@@ -19,6 +20,7 @@ interface TestimonialFormState {
 
 type TestimonialFormErrors = Partial<Record<keyof TestimonialFormState, string>>;
 
+// Builds the form's starting values — blank for "add", pre-filled for "edit".
 function buildInitialState(initialData?: FirestoreTestimonial): TestimonialFormState {
   if (!initialData) {
     return {
@@ -42,11 +44,12 @@ function buildInitialState(initialData?: FirestoreTestimonial): TestimonialFormS
   };
 }
 
+// Checks every field and returns a map of field -> error message.
 function validate(values: TestimonialFormState): TestimonialFormErrors {
   const errors: TestimonialFormErrors = {};
 
   if (!values.clientName.trim()) errors.clientName = "Client name is required.";
-  if (!values.clientImage.trim()) errors.clientImage = "Client image URL is required.";
+  if (!values.clientImage.trim()) errors.clientImage = "Client image is required.";
   if (!values.clientLocation.trim()) errors.clientLocation = "Client location is required.";
   if (!values.title.trim()) errors.title = "Title is required.";
   if (!values.description.trim()) errors.description = "Description is required.";
@@ -83,6 +86,7 @@ export const TestimonialFormModal = ({ mode, initialData, onClose, onSubmit }: T
     setValues((prev) => ({ ...prev, [field]: value }));
   };
 
+  // Validates the form and, if valid, hands the cleaned-up payload to onSubmit.
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -156,7 +160,7 @@ export const TestimonialFormModal = ({ mode, initialData, onClose, onSubmit }: T
               <input
                 id="tf-client-name"
                 type="text"
-                placeholder="e.g. Wade Warren"
+                placeholder="Add client name"
                 value={values.clientName}
                 onChange={(e) => setField("clientName", e.target.value)}
                 className={fieldClass}
@@ -168,7 +172,7 @@ export const TestimonialFormModal = ({ mode, initialData, onClose, onSubmit }: T
               <input
                 id="tf-client-location"
                 type="text"
-                placeholder="e.g. USA, California"
+                placeholder="Add location"
                 value={values.clientLocation}
                 onChange={(e) => setField("clientLocation", e.target.value)}
                 className={fieldClass}
@@ -177,29 +181,13 @@ export const TestimonialFormModal = ({ mode, initialData, onClose, onSubmit }: T
             </div>
           </div>
 
-          <div>
-            <label className={labelClass} htmlFor="tf-client-image">Client Image URL</label>
-
-            {values.clientImage.trim() && (
-              <div
-                className={`mb-3 flex items-center justify-center w-20 h-20 rounded-full overflow-hidden border ${
-                  isDark ? "border-bg-gray-1 bg-bg-dark" : "border-gray-200 bg-gray-50"
-                }`}
-              >
-                <img src={values.clientImage} alt="Client preview" className="w-full h-full object-cover" />
-              </div>
-            )}
-
-            <input
-              id="tf-client-image"
-              type="text"
-              placeholder="https://example.com/client.jpg"
-              value={values.clientImage}
-              onChange={(e) => setField("clientImage", e.target.value)}
-              className={fieldClass}
-            />
-            {errors.clientImage && <p className={errorClass}>{errors.clientImage}</p>}
-          </div>
+          <ImageUploadField
+            label="Client Image"
+            value={values.clientImage}
+            onChange={(url) => setField("clientImage", url)}
+            folder="testimonials"
+            error={errors.clientImage}
+          />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
@@ -222,7 +210,7 @@ export const TestimonialFormModal = ({ mode, initialData, onClose, onSubmit }: T
                 min={MIN_RATING}
                 max={MAX_RATING}
                 step="1"
-                placeholder="e.g. 5"
+                placeholder="Add rating"
                 value={values.rating}
                 onChange={(e) => setField("rating", e.target.value)}
                 className={fieldClass}
@@ -249,7 +237,7 @@ export const TestimonialFormModal = ({ mode, initialData, onClose, onSubmit }: T
             <input
               id="tf-position"
               type="text"
-              placeholder="e.g. Marketing Director"
+              placeholder="Add position"
               value={values.position}
               onChange={(e) => setField("position", e.target.value)}
               className={fieldClass}

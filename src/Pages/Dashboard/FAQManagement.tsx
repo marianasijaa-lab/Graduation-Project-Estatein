@@ -20,6 +20,7 @@ function buildFAQDetailFields(faq: FirestoreFAQ): DetailField[] {
   ];
 }
 
+// Dashboard page: list/search/add/edit/delete FAQs.
 export const FAQManagement = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";

@@ -2,52 +2,72 @@ import { useRef, useState } from "react";
 import { HiXMark } from "react-icons/hi2";
 import { useTheme } from "../../../Context/ThemeContext";
 import { Button } from "../../ui/Button";
-import type { FirestoreFAQ } from "../../../store/types";
+import { ImageUploadField } from "../../ui/ImageUploadField";
+import type { FirestoreEffortlessPropertyManagementCard } from "../../../store/types";
 
-interface FAQFormState {
-  question: string;
+interface EffortlessPropertyManagementCardFormState {
+  title: string;
   description: string;
+  icon: string;
 }
 
-type FAQFormErrors = Partial<Record<keyof FAQFormState, string>>;
+type EffortlessPropertyManagementCardFormErrors = Partial<
+  Record<keyof EffortlessPropertyManagementCardFormState, string>
+>;
 
 // Builds the form's starting values — blank for "add", pre-filled for "edit".
-function buildInitialState(initialData?: FirestoreFAQ): FAQFormState {
+function buildInitialState(
+  initialData?: FirestoreEffortlessPropertyManagementCard,
+): EffortlessPropertyManagementCardFormState {
   if (!initialData) {
-    return { question: "", description: "" };
+    return { title: "", description: "", icon: "" };
   }
   return {
-    question: initialData.question,
+    title: initialData.title,
     description: initialData.description,
+    icon: initialData.icon,
   };
 }
 
 // Checks every field and returns a map of field -> error message.
-function validate(values: FAQFormState): FAQFormErrors {
-  const errors: FAQFormErrors = {};
+function validate(
+  values: EffortlessPropertyManagementCardFormState,
+): EffortlessPropertyManagementCardFormErrors {
+  const errors: EffortlessPropertyManagementCardFormErrors = {};
 
-  if (!values.question.trim()) errors.question = "Question is required.";
+  if (!values.title.trim()) errors.title = "Title is required.";
   if (!values.description.trim()) errors.description = "Description is required.";
+  if (!values.icon.trim()) errors.icon = "Icon is required.";
 
   return errors;
 }
 
-interface FAQFormModalProps {
+interface EffortlessPropertyManagementFormModalProps {
   mode: "add" | "edit";
-  initialData?: FirestoreFAQ;
+  initialData?: FirestoreEffortlessPropertyManagementCard;
   onClose: () => void;
-  onSubmit: (values: Omit<FirestoreFAQ, "id">) => void;
+  onSubmit: (values: Omit<FirestoreEffortlessPropertyManagementCard, "id">) => void;
 }
 
-export const FAQFormModal = ({ mode, initialData, onClose, onSubmit }: FAQFormModalProps) => {
+export const EffortlessPropertyManagementFormModal = ({
+  mode,
+  initialData,
+  onClose,
+  onSubmit,
+}: EffortlessPropertyManagementFormModalProps) => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const [values, setValues] = useState<FAQFormState>(() => buildInitialState(initialData));
-  const [errors, setErrors] = useState<FAQFormErrors>({});
+  const [values, setValues] = useState<EffortlessPropertyManagementCardFormState>(() =>
+    buildInitialState(initialData),
+  );
+  const [errors, setErrors] = useState<EffortlessPropertyManagementCardFormErrors>({});
   const formRef = useRef<HTMLFormElement>(null);
 
-  const setField = <K extends keyof FAQFormState>(field: K, value: FAQFormState[K]) => {
+  const setField = <K extends keyof EffortlessPropertyManagementCardFormState>(
+    field: K,
+    value: EffortlessPropertyManagementCardFormState[K],
+  ) => {
     setValues((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -59,9 +79,10 @@ export const FAQFormModal = ({ mode, initialData, onClose, onSubmit }: FAQFormMo
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length > 0) return;
 
-    const payload: Omit<FirestoreFAQ, "id"> = {
-      question: values.question.trim(),
+    const payload: Omit<FirestoreEffortlessPropertyManagementCard, "id"> = {
+      title: values.title.trim(),
       description: values.description.trim(),
+      icon: values.icon.trim(),
     };
 
     onSubmit(payload);
@@ -80,7 +101,7 @@ export const FAQFormModal = ({ mode, initialData, onClose, onSubmit }: FAQFormMo
       className="fixed inset-0 z-70 flex items-start sm:items-center justify-center bg-black/60 px-4 py-6 overflow-y-auto"
       role="dialog"
       aria-modal="true"
-      aria-labelledby="faq-form-title"
+      aria-labelledby="epm-card-form-title"
       onClick={onClose}
     >
       <div
@@ -94,8 +115,8 @@ export const FAQFormModal = ({ mode, initialData, onClose, onSubmit }: FAQFormMo
             isDark ? "border-bg-gray-1" : "border-gray-200"
           }`}
         >
-          <h3 id="faq-form-title" className={`text-lg font-semibold ${isDark ? "text-white" : "text-gray-900"}`}>
-            {mode === "add" ? "Add FAQ" : "Edit FAQ"}
+          <h3 id="epm-card-form-title" className={`text-lg font-semibold ${isDark ? "text-white" : "text-gray-900"}`}>
+            {mode === "add" ? "Add Card" : "Edit Card"}
           </h3>
           <button
             type="button"
@@ -115,24 +136,32 @@ export const FAQFormModal = ({ mode, initialData, onClose, onSubmit }: FAQFormMo
           className="px-6 sm:px-8 py-6 space-y-6 max-h-[70vh] overflow-y-auto"
         >
           <div>
-            <label className={labelClass} htmlFor="ff-question">Question</label>
+            <label className={labelClass} htmlFor="epm-card-title">Title</label>
             <input
-              id="ff-question"
+              id="epm-card-title"
               type="text"
-              placeholder="Add question"
-              value={values.question}
-              onChange={(e) => setField("question", e.target.value)}
+              placeholder="Add title"
+              value={values.title}
+              onChange={(e) => setField("title", e.target.value)}
               className={fieldClass}
             />
-            {errors.question && <p className={errorClass}>{errors.question}</p>}
+            {errors.title && <p className={errorClass}>{errors.title}</p>}
           </div>
 
+          <ImageUploadField
+            label="Icon"
+            value={values.icon}
+            onChange={(url) => setField("icon", url)}
+            folder="effortlessPropertyManagement"
+            error={errors.icon}
+          />
+
           <div>
-            <label className={labelClass} htmlFor="ff-description">Description</label>
+            <label className={labelClass} htmlFor="epm-card-description">Description</label>
             <textarea
-              id="ff-description"
+              id="epm-card-description"
               rows={4}
-              placeholder="Answer to the question"
+              placeholder="Description"
               value={values.description}
               onChange={(e) => setField("description", e.target.value)}
               className={`${fieldClass} resize-none`}
@@ -158,7 +187,7 @@ export const FAQFormModal = ({ mode, initialData, onClose, onSubmit }: FAQFormMo
             Cancel
           </button>
           <Button
-            text={mode === "add" ? "Add FAQ" : "Save Changes"}
+            text={mode === "add" ? "Add Card" : "Save Changes"}
             variant="primary"
             type="submit"
             onClick={() => formRef.current?.requestSubmit()}

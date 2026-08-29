@@ -1,16 +1,11 @@
 import React, { useState } from "react";
-<<<<<<< HEAD:src/components/Layout/Navbar.tsx
 import { Link } from "react-router";
-import { Menu, X, LayoutDashboard } from "lucide-react";
-=======
-import { Menu, X } from "lucide-react";
+import { Menu, X, LayoutDashboard, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
->>>>>>> cea23977333ac88dd980c41bfdf2e4e465fa5280:src/components/Layout/navBar.tsx
 import { Logo } from "../common/Logo";
 import type { PageId } from "../../interfaces";
 import ThemeToggle from "../ui/ThemeToggle";
-import { Link } from "react-router";
-import { LayoutDashboard } from "lucide-react";
+import { useAuth } from "../../Context/AuthContext";
 
 interface NavbarProps {
   activePage: PageId;
@@ -33,11 +28,18 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleTheme: _onToggleTheme,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { logout } = useAuth();
 
   const handleNavClick = (pageId: PageId) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     onNavigate(pageId);
     setMobileMenuOpen(false);
+  };
+
+  // Signs the user out; AuthGate takes it from here and shows the login screen.
+  const handleLogout = () => {
+    setMobileMenuOpen(false);
+    void logout();
   };
 
   return (
@@ -91,20 +93,23 @@ export const Navbar: React.FC<NavbarProps> = ({
           <Link
             to="/dashboard"
             aria-label="Go to Admin Dashboard"
-<<<<<<< HEAD:src/components/Layout/Navbar.tsx
             title="Admin Dashboard"
             className="hidden sm:inline-flex items-center justify-center p-2.5 rounded-xl bg-bg-dark border border-bg-gray-1 text-gray hover:text-white hover:border-primary/50 transition-all cursor-pointer"
           >
             <LayoutDashboard className="w-5 h-5" />
           </Link>
 
-=======
-            className="hidden sm:inline-flex items-center justify-center w-11 h-11 rounded-xl bg-bg-dark border border-bg-gray-1 text-gray hover:text-white hover:border-primary/50 transition-all cursor-pointer"
-          >
-            <LayoutDashboard className="w-5 h-5" />
-          </Link>
->>>>>>> cea23977333ac88dd980c41bfdf2e4e465fa5280:src/components/Layout/navBar.tsx
           <ThemeToggle />
+
+          <button
+            type="button"
+            onClick={handleLogout}
+            aria-label="Log out"
+            title="Log out"
+            className="hidden sm:inline-flex items-center justify-center p-2.5 rounded-xl bg-bg-dark border border-bg-gray-1 text-gray hover:text-white hover:border-primary/50 transition-all cursor-pointer"
+          >
+            <LogOut className="w-5 h-5" />
+          </button>
 
           <motion.button
             whileTap={{ scale: 0.9 }}
@@ -134,29 +139,13 @@ export const Navbar: React.FC<NavbarProps> = ({
             transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
             className="md:hidden overflow-hidden border-t border-bg-gray-1 bg-[#1A1A1A] px-4 py-6 space-y-3"
           >
-<<<<<<< HEAD:src/components/Layout/Navbar.tsx
-            Contact Us
-          </button>
-          <Link
-            to="/dashboard"
-            aria-label="Go to Admin Dashboard"
-            onClick={() => setMobileMenuOpen(false)}
-            className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium text-center bg-bg-dark border border-bg-gray-1 text-gray hover:text-white hover:border-primary/50 transition-all"
-          >
-            <LayoutDashboard className="w-4 h-4" />
-            Admin Dashboard
-          </Link>
-        </div>
-      )}
-    </header>
-=======
             <div className="flex flex-col space-y-2">
               {NAV_ITEMS.map((item, index) => (
-                    <motion.button
+                <motion.button
                   key={item.id}
-                      initial={{ x: -12, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ duration: 0.2, delay: index * 0.05 }}
+                  initial={{ x: -12, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ duration: 0.2, delay: index * 0.05 }}
                   onClick={() => handleNavClick(item.id)}
                   className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                     activePage === item.id
@@ -174,10 +163,26 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               Contact Us
             </button>
+            <Link
+              to="/dashboard"
+              aria-label="Go to Admin Dashboard"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium text-center bg-bg-dark border border-bg-gray-1 text-gray hover:text-white hover:border-primary/50 transition-all"
+            >
+              <LayoutDashboard className="w-4 h-4" />
+              Admin Dashboard
+            </Link>
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium text-center bg-bg-dark border border-bg-gray-1 text-gray hover:text-white hover:border-primary/50 transition-all cursor-pointer"
+            >
+              <LogOut className="w-4 h-4" />
+              Log Out
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
     </motion.header>
->>>>>>> cea23977333ac88dd980c41bfdf2e4e465fa5280:src/components/Layout/navBar.tsx
   );
 };

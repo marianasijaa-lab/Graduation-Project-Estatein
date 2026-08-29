@@ -1,47 +1,16 @@
 import React from 'react';
 import { SectionHeader } from '../../common/SectionHeader';
 import { InfoBox } from '../infobox/InfoBox';
-
-interface ServiceItem {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-}
-
-const unlockServices: ServiceItem[] = [
-  {
-    id: '1',
-    title: 'Valuation Mastery',
-    description: 'Discover the true worth of your property with our expert valuation services.',
-    icon: '/assets/Icon_19.png',
-  },
-  {
-    id: '2',
-    title: 'Strategic Marketing',
-    description: 'Selling a property requires more than just a listing; it demands a strategic marketing approach.',
-    icon: '/assets/Icon_20.png',
-  },
-  {
-    id: '3',
-    title: 'Negotiation Wizardry',
-    description: 'Negotiating the best deal is an art, and our negotiation experts are masters of it.',
-    icon: '/assets/Icon_21.png',
-  },
-  {
-    id: '4',
-    title: 'Closing Success',
-    description: 'A successful sale is not complete until the closing. We guide you through the intricate closing process.',
-    icon: '/assets/Icon_22.png',
-  },
-];
+import { useUnlockPropertyValue } from '../../../hooks/useUnlockPropertyValue';
 
 export const UnlockPropertyValue: React.FC = () => {
+  const { unlockPropertyValue: cards } = useUnlockPropertyValue();
+
   return (
     <section className="w-full bg-bg-dark-1 border-t border-bg-gray-1 py-16 sm:py-20 lg:py-24">
       {/* Container مطابق لعرض Figma المحدد 1596px */}
       <div className="site-container">
-        
+
         <SectionHeader
           title="Unlock Property Value"
           subtitle="Selling your property should be a rewarding experience, and at Estatein, we make sure it is. Our Property Selling Service is designed to maximize the value of your property, ensuring you get the best deal possible. Explore the categories below to see how we can help you at every step of your selling journey"
@@ -51,9 +20,9 @@ export const UnlockPropertyValue: React.FC = () => {
 
         {/* 2. شبكة الكروت (3 أعمدة مع items-stretch لارتفاع متساوٍ لكافة العناصر بالصف) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
-          
+
           {/* الكروت الأربعة الأولى (بما فيها كرت Closing Success) */}
-          {unlockServices.map((service) => (
+          {cards.map((service) => (
             <div
               key={service.id}
               className="bg-[#141414] border border-[#262626] rounded-[16px] p-5 sm:p-6 flex flex-col justify-start gap-3 hover:border-[#703BF7]/40 transition-all duration-300 lg:h-full lg:min-h-[200px]"

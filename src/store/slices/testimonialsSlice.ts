@@ -71,6 +71,7 @@ const initialState: TestimonialsState = {
   error: null,
 };
 
+// Redux slice for the testimonials collection.
 const testimonialsSlice = createSlice({
   name: 'testimonials',
   initialState,
@@ -88,16 +89,6 @@ const testimonialsSlice = createSlice({
       state.status = 'failed';
       state.error  = action.payload;
     },
-    addTestimonial(state, action: PayloadAction<FirestoreTestimonial>) {
-      state.data.push(action.payload);
-    },
-    updateTestimonial(state, action: PayloadAction<FirestoreTestimonial>) {
-      const index = state.data.findIndex((t) => t.id === action.payload.id);
-      if (index !== -1) state.data[index] = action.payload;
-    },
-    removeTestimonial(state, action: PayloadAction<string>) {
-      state.data = state.data.filter((t) => t.id !== action.payload);
-    },
   },
 });
 
@@ -105,8 +96,5 @@ export const {
   syncTestimonials,
   setTestimonialsLoading,
   setTestimonialsError,
-  addTestimonial,
-  updateTestimonial,
-  removeTestimonial,
 } = testimonialsSlice.actions;
 export default testimonialsSlice.reducer;

@@ -40,6 +40,7 @@ const initialState: FAQsState = {
   error: null,
 };
 
+// Redux slice for the FAQs collection.
 const faqSlice = createSlice({
   name: 'faqs',
   initialState,
@@ -57,16 +58,6 @@ const faqSlice = createSlice({
       state.status = 'failed';
       state.error  = action.payload;
     },
-    addFAQ(state, action: PayloadAction<FirestoreFAQ>) {
-      state.data.push(action.payload);
-    },
-    updateFAQ(state, action: PayloadAction<FirestoreFAQ>) {
-      const index = state.data.findIndex((f) => f.id === action.payload.id);
-      if (index !== -1) state.data[index] = action.payload;
-    },
-    removeFAQ(state, action: PayloadAction<string>) {
-      state.data = state.data.filter((f) => f.id !== action.payload);
-    },
   },
 });
 
@@ -74,8 +65,5 @@ export const {
   syncFAQs,
   setFAQsLoading,
   setFAQsError,
-  addFAQ,
-  updateFAQ,
-  removeFAQ,
 } = faqSlice.actions;
 export default faqSlice.reducer;

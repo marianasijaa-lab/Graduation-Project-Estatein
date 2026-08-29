@@ -5,7 +5,6 @@ interface LogoProps {
   onClick?: () => void;
   className?: string;
   logoSrc?: string;
-<<<<<<< HEAD
   /**
    * Opt-in entrance animation for the splash/route-transition overlays.
    * "full": animated icon + glow + letter-by-letter text (initial load).
@@ -13,8 +12,6 @@ interface LogoProps {
    * Omitted: static icon + text, as used everywhere else.
    */
   animated?: 'full' | 'quick';
-=======
->>>>>>> cea23977333ac88dd980c41bfdf2e4e465fa5280
 }
 
 const BRAND_NAME = 'Estatein';
@@ -23,7 +20,6 @@ export const Logo: React.FC<LogoProps> = ({
   onClick,
   className = '',
   logoSrc = '/assets/logo_icon.png',
-<<<<<<< HEAD
   animated,
 }) => {
   const icon =
@@ -46,27 +42,18 @@ export const Logo: React.FC<LogoProps> = ({
         className="w-9 h-9 object-contain animate-logo-icon-in-quick"
       />
     ) : (
-=======
-}) => {
-  return (
-    <motion.div
-      onClick={onClick}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.96 }}
-      className={`inline-flex items-center gap-2.5 cursor-pointer select-none group ${className}`}
-    >
->>>>>>> cea23977333ac88dd980c41bfdf2e4e465fa5280
       <img
         src={logoSrc}
         alt="Estatein Logo"
         className="w-9 h-9 object-contain transition-transform duration-300 group-hover:scale-105"
       />
-<<<<<<< HEAD
     );
 
   return (
-    <div
+    <motion.div
       onClick={onClick}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.96 }}
       className={`inline-flex items-center gap-2.5 cursor-pointer select-none group ${className}`}
     >
       {icon}
@@ -84,14 +71,8 @@ export const Logo: React.FC<LogoProps> = ({
           ))}
         </span>
       ) : animated === 'quick' ? null : (
-        <span className="font-semibold text-lg md:text-xl ">{BRAND_NAME}</span>
+        <span className="font-semibold text-lg md:text-xl">{BRAND_NAME}</span>
       )}
-    </div>
-=======
-      <span className="font-semibold text-lg md:text-xl ">
-        Estatein
-      </span>
     </motion.div>
->>>>>>> cea23977333ac88dd980c41bfdf2e4e465fa5280
   );
 };

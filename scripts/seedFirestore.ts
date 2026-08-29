@@ -7,43 +7,43 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 
-// ── تحميل متغيرات البيئة ──────────────────────────────────────────────────
+// ── Load env vars ────────────────────────────────────────────────────────
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-// ── التحقق من وجود Service Account أو استخدام بيانات المشروع مباشرة ────────
+// ── Use a Service Account if present, otherwise fall back to project ID ──
 const serviceAccountPath = path.resolve(__dirname, '../serviceAccount.json');
 
 let app: ReturnType<typeof initializeApp>;
 
 if (fs.existsSync(serviceAccountPath)) {
-  // الطريقة الأولى: Service Account JSON (مُوصى بها)
+  // Preferred: Service Account JSON.
   const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf-8')) as ServiceAccount;
   app = initializeApp({
     credential: cert(serviceAccount),
     databaseURL: process.env.VITE_FIREBASE_DATABASE_URL,
   });
-  console.log('✅ تم الاتصال بـ Firebase عبر Service Account');
+  console.log('✅ Connected to Firebase via Service Account');
 } else {
-  // الطريقة الثانية: Project ID فقط (تحتاج firebase-tools login)
+  // Fallback: project ID only (requires firebase-tools login).
   const projectId = process.env.VITE_FIREBASE_PROJECT_ID;
   if (!projectId) {
-    console.error('❌ لم يتم العثور على VITE_FIREBASE_PROJECT_ID في ملف .env');
-    console.error('   أو ضع ملف serviceAccount.json في مجلد المشروع');
+    console.error('❌ VITE_FIREBASE_PROJECT_ID not found in .env');
+    console.error('   Or place a serviceAccount.json file in the project folder');
     process.exit(1);
   }
   app = initializeApp({
     projectId,
     databaseURL: process.env.VITE_FIREBASE_DATABASE_URL,
   });
-  console.log(`✅ تم الاتصال بـ Firebase (projectId: ${projectId})`);
+  console.log(`✅ Connected to Firebase (projectId: ${projectId})`);
 }
 
 const db  = getFirestore(app);
 const rdb = getDatabase(app);
 
 // ═══════════════════════════════════════════════════════════════════════════
-//  البيانات
+//  Data
 // ═══════════════════════════════════════════════════════════════════════════
 
 // ── 1. properties ────────────────────────────────────────────────────────
@@ -276,22 +276,24 @@ const achievements = [
 ];
 
 // ── 5. services ───────────────────────────────────────────────────────────
+// The 4 short highlight cards at the top of the Services page (heading + icon
+// only) — matches FALLBACK_SERVICES in servicesSlice.ts.
 const services = [
   {
-    icon: '/assets/Icon_22.png',
-    heading: 'info@estatein.com',
+    icon: '/assets/Icon_1.png',
+    heading: 'Find Your Dream Home',
   },
   {
-    icon: '/assets/Icon_23.png',
-    heading: '+1 (123) 456-7890',
+    icon: '/assets/Icon_2.png',
+    heading: 'Unlock Property Value',
   },
   {
-    icon: '/assets/Icon_24.png',
-    heading: 'Main Headquarters',
+    icon: '/assets/Icon_3.png',
+    heading: 'Effortless Property Management',
   },
   {
-    icon: '/assets/Icon_25.png',
-    heading: 'Instagram  LinkedIn  Facebook',
+    icon: '/assets/Icon_4.png',
+    heading: 'Smart Investments, Informed Decisions',
   },
 ];
 
@@ -448,7 +450,87 @@ const offices = [
   },
 ];
 
-// ── 9. stats (Realtime Database) ──────────────────────────────────────────
+// ── 9. unlockPropertyValue ────────────────────────────────────────────────
+// Each card is its own doc — the section's header and banner aren't managed
+// from the dashboard, they stay hardcoded in UnlockPropertyValue.tsx.
+const unlockPropertyValue = [
+  {
+    title: 'Valuation Mastery',
+    description: 'Discover the true worth of your property with our expert valuation services.',
+    icon: '/assets/Icon_19.png',
+  },
+  {
+    title: 'Strategic Marketing',
+    description: 'Selling a property requires more than just a listing; it demands a strategic marketing approach.',
+    icon: '/assets/Icon_20.png',
+  },
+  {
+    title: 'Negotiation Wizardry',
+    description: 'Negotiating the best deal is an art, and our negotiation experts are masters of it.',
+    icon: '/assets/Icon_21.png',
+  },
+  {
+    title: 'Closing Success',
+    description: 'A successful sale is not complete until the closing. We guide you through the intricate closing process.',
+    icon: '/assets/Icon_22.png',
+  },
+];
+
+// ── 10. effortlessPropertyManagement ─────────────────────────────────────
+// Each card is its own doc — same note as above (header/banner stay hardcoded).
+const effortlessPropertyManagement = [
+  {
+    title: 'Tenant Harmony',
+    description: 'Our Tenant Management services ensure that your tenants have a smooth and reducing vacancies.',
+    icon: '/assets/Icon_23.png',
+  },
+  {
+    title: 'Maintenance Ease',
+    description: 'Say goodbye to property maintenance headaches. We handle all aspects of property upkeep.',
+    icon: '/assets/Icon_24.png',
+  },
+  {
+    title: 'Financial Peace of Mind',
+    description: 'Managing property finances can be complex. Our financial experts take care of rent collection',
+    icon: '/assets/Icon_25.png',
+  },
+  {
+    title: 'Legal Guardian',
+    description: 'Stay compliant with property laws and regulations effortlessly.',
+    icon: '/assets/Icon_27.png',
+  },
+];
+
+// ── 11. smartInvestments ──────────────────────────────────────────────────
+// Each card is its own doc — same note as above (header/banner stay hardcoded).
+const smartInvestments = [
+  {
+    title: 'Market Insight',
+    description:
+      'Stay ahead of market trends with our expert Market Analysis. We provide in-depth insights into real estate market conditions',
+    icon: '/assets/Icon_19.png',
+  },
+  {
+    title: 'ROI Assessment',
+    description:
+      'Make investment decisions with confidence. Our ROI Assessment services evaluate the potential returns on your investments',
+    icon: '/assets/Icon_27.png',
+  },
+  {
+    title: 'Customized Strategies',
+    description:
+      'Every investor is unique, and so are their goals. We develop Customized Investment Strategies tailored to your specific needs',
+    icon: '/assets/Icon_28.png',
+  },
+  {
+    title: 'Diversification Mastery',
+    description:
+      'Diversify your real estate portfolio effectively. Our experts guide you in spreading your investments across various property types and locations',
+    icon: '/assets/Icon_4.png',
+  },
+];
+
+// ── 12. stats (Realtime Database) ─────────────────────────────────────────
 const stats = [
   { value: '200+', label: 'Happy Customers' },
   { value: '10K+', label: 'Properties For Clients' },
@@ -456,50 +538,50 @@ const stats = [
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════
-//  دالة رفع collection واحدة إلى Firestore
+//  Uploads a single collection to Firestore
 // ═══════════════════════════════════════════════════════════════════════════
 async function seedCollection(
   collectionName: string,
   documents: Record<string, unknown>[],
 ) {
-  console.log(`\n📦 رفع collection: ${collectionName} (${documents.length} documents)`);
+  console.log(`\n📦 Uploading collection: ${collectionName} (${documents.length} documents)`);
 
   const colRef = db.collection(collectionName);
 
-  // حذف الوثائق القديمة أولاً لتجنب التكرار
+  // Delete old documents first to avoid duplicates.
   const existing = await colRef.get();
   if (!existing.empty) {
     const batch = db.batch();
     existing.docs.forEach((d) => batch.delete(d.ref));
     await batch.commit();
-    console.log(`  🗑  حُذفت ${existing.size} وثيقة قديمة`);
+    console.log(`  🗑  Deleted ${existing.size} old document(s)`);
   }
 
-  // رفع الوثائق الجديدة
+  // Upload the new documents.
   const batch = db.batch();
   documents.forEach((doc) => {
     const docRef = colRef.doc(); // auto-generated ID
     batch.set(docRef, doc);
   });
   await batch.commit();
-  console.log(`  ✅ رُفعت ${documents.length} وثيقة بنجاح`);
+  console.log(`  ✅ Uploaded ${documents.length} document(s) successfully`);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-//  دالة رفع stats إلى Realtime Database
+//  Uploads stats to the Realtime Database
 // ═══════════════════════════════════════════════════════════════════════════
 async function seedRealtimeStats(statsData: { value: string; label: string }[]) {
-  console.log('\n⚡ رفع stats إلى Realtime Database');
+  console.log('\n⚡ Uploading stats to the Realtime Database');
   const statsRef = rdb.ref('stats');
   await statsRef.set(statsData);
-  console.log('  ✅ تم رفع الإحصاءات بنجاح');
+  console.log('  ✅ Stats uploaded successfully');
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-//  التنفيذ الرئيسي
+//  Main entry point
 // ═══════════════════════════════════════════════════════════════════════════
 async function main() {
-  console.log('🚀 بدء رفع البيانات إلى Firebase...\n');
+  console.log('🚀 Starting data upload to Firebase...\n');
 
   await seedCollection('properties',   properties   as Record<string, unknown>[]);
   await seedCollection('companies',    companies    as Record<string, unknown>[]);
@@ -509,14 +591,17 @@ async function main() {
   await seedCollection('infoBoxes',    infoBoxes    as Record<string, unknown>[]);
   await seedCollection('testimonials', testimonials as Record<string, unknown>[]);
   await seedCollection('offices',      offices      as Record<string, unknown>[]);
+  await seedCollection('unlockPropertyValue',           unlockPropertyValue           as Record<string, unknown>[]);
+  await seedCollection('effortlessPropertyManagement',  effortlessPropertyManagement  as Record<string, unknown>[]);
+  await seedCollection('smartInvestments',              smartInvestments              as Record<string, unknown>[]);
   await seedRealtimeStats(stats);
 
-  console.log('\n🎉 اكتمل رفع جميع البيانات بنجاح!');
-  console.log('   يمكنك الآن تشغيل التطبيق بـ: npm run dev\n');
+  console.log('\n🎉 All data uploaded successfully!');
+  console.log('   You can now run the app with: npm run dev\n');
   process.exit(0);
 }
 
 main().catch((err) => {
-  console.error('\n❌ خطأ أثناء رفع البيانات:', err);
+  console.error('\n❌ Error uploading data:', err);
   process.exit(1);
 });

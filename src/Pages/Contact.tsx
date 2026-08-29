@@ -4,13 +4,6 @@ import OfficeLocations from "../components/OfficeLocations/OfficeLocations";
 import PageHero from "../components/sections/hero/PageHero";
 import TeamCard from "../components/TeamCard/TeamCard";
 import { ContactForm } from "../components/sections/contact/ContactForm";
-<<<<<<< HEAD
-import { useServices } from "../hooks/useServices";
-import { LoadingSkeleton } from "../components/ui/LoadingSkeleton";
-import { ErrorMessage } from "../components/ui/ErrorMessage";
-import { OfficesSection } from "../components/sections/contact/OfficesSection";
-=======
->>>>>>> cea23977333ac88dd980c41bfdf2e4e465fa5280
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { firestoreDb } from "../firebase/config";
 import { StaggerContainer } from "../components/common/StaggerContainer";

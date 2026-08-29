@@ -12,6 +12,10 @@ import servicesReducer     from './slices/servicesSlice';
 import infoBoxesReducer    from './slices/infoBoxesSlice';
 import testimonialsReducer from './slices/testimonialsSlice';
 import officesReducer      from './slices/officesSlice';
+import ctaReducer          from './slices/ctaSlice';
+import unlockPropertyValueReducer from './slices/unlockPropertyValueSlice';
+import effortlessPropertyManagementReducer from './slices/effortlessPropertyManagementSlice';
+import smartInvestmentsReducer from './slices/smartInvestmentsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -25,6 +29,10 @@ export const store = configureStore({
     infoBoxes:    infoBoxesReducer,
     testimonials: testimonialsReducer,
     offices:      officesReducer,
+    cta:          ctaReducer,
+    unlockPropertyValue: unlockPropertyValueReducer,
+    effortlessPropertyManagement: effortlessPropertyManagementReducer,
+    smartInvestments: smartInvestmentsReducer,
   },
 });
 

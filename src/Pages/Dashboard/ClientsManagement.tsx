@@ -26,6 +26,7 @@ function buildClientDetailFields(client: FirestoreCompany): DetailField[] {
   ];
 }
 
+// Dashboard page: list/search/add/edit/delete valued clients (companies collection).
 export const ClientsManagement = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";

@@ -40,6 +40,7 @@ const initialState: ValuesState = {
   error: null,
 };
 
+// Redux slice for the core values collection.
 const valuesSlice = createSlice({
   name: 'values',
   initialState,
@@ -57,16 +58,6 @@ const valuesSlice = createSlice({
       state.status = 'failed';
       state.error  = action.payload;
     },
-    addValue(state, action: PayloadAction<FirestoreValue>) {
-      state.data.push(action.payload);
-    },
-    updateValue(state, action: PayloadAction<FirestoreValue>) {
-      const index = state.data.findIndex((v) => v.id === action.payload.id);
-      if (index !== -1) state.data[index] = action.payload;
-    },
-    removeValue(state, action: PayloadAction<string>) {
-      state.data = state.data.filter((v) => v.id !== action.payload);
-    },
   },
 });
 
@@ -74,8 +65,5 @@ export const {
   syncValues,
   setValuesLoading,
   setValuesError,
-  addValue,
-  updateValue,
-  removeValue,
 } = valuesSlice.actions;
 export default valuesSlice.reducer;

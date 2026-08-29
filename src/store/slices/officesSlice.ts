@@ -96,6 +96,7 @@ const initialState: OfficesState = {
   activeTab: 'All',
 };
 
+// Redux slice for the company offices collection.
 const officesSlice = createSlice({
   name: 'offices',
   initialState,
@@ -116,16 +117,6 @@ const officesSlice = createSlice({
     setActiveTab(state, action: PayloadAction<'All' | 'Regional' | 'International'>) {
       state.activeTab = action.payload;
     },
-    addOffice(state, action: PayloadAction<FirestoreOffice>) {
-      state.data.push(action.payload);
-    },
-    updateOffice(state, action: PayloadAction<FirestoreOffice>) {
-      const index = state.data.findIndex((o) => o.id === action.payload.id);
-      if (index !== -1) state.data[index] = action.payload;
-    },
-    removeOffice(state, action: PayloadAction<string>) {
-      state.data = state.data.filter((o) => o.id !== action.payload);
-    },
   },
 });
 
@@ -134,8 +125,5 @@ export const {
   setOfficesLoading,
   setOfficesError,
   setActiveTab,
-  addOffice,
-  updateOffice,
-  removeOffice,
 } = officesSlice.actions;
 export default officesSlice.reducer;

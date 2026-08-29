@@ -1,6 +1,4 @@
-/**
- * قائمة متغيرات البيئة المطلوبة لتهيئة Firebase
- */
+/** Env vars required to initialize Firebase. */
 export const REQUIRED_ENV_VARS = [
   'VITE_FIREBASE_API_KEY',
   'VITE_FIREBASE_AUTH_DOMAIN',
@@ -13,13 +11,7 @@ export const REQUIRED_ENV_VARS = [
 
 export type RequiredEnvVar = (typeof REQUIRED_ENV_VARS)[number];
 
-/**
- * التحقق من وجود متغيرات البيئة المطلوبة.
- * يُسجّل خطأً لكل متغير مفقود ويُرجع قائمة المتغيرات الناقصة.
- *
- * @param env - كائن البيئة (import.meta.env أو أي كائن Record)
- * @returns مصفوفة بأسماء المتغيرات المفقودة
- */
+/** Checks which required env vars are missing; logs and returns the list. */
 export function validateFirebaseEnvVars(
   env: Record<string, string | undefined>
 ): RequiredEnvVar[] {
@@ -27,8 +19,8 @@ export function validateFirebaseEnvVars(
 
   if (missing.length > 0) {
     console.error(
-      `[Firebase] متغيرات البيئة التالية مفقودة: ${missing.join(', ')}\n` +
-        'تأكد من ملء ملف .env بالقيم الصحيحة من لوحة تحكم Firebase.'
+      `[Firebase] Missing required env vars: ${missing.join(', ')}\n` +
+        'Make sure to fill in the .env file with the correct values from your Firebase console.'
     );
   }
 

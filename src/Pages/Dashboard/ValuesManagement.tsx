@@ -24,6 +24,7 @@ function buildValueDetailFields(value: FirestoreValue): DetailField[] {
   ];
 }
 
+// Dashboard page: list/search/add/edit/delete core values.
 export const ValuesManagement = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
