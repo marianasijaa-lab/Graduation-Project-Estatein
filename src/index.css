@@ -11,6 +11,31 @@
   --color-border: #4d4d4d;
 }
 
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Dark mode (default) */
+:root {
+  --bg-main: #141414;
+  --bg-secondary: #1a1a1a;
+  --text-main: #ffffff;
+  --color-border: #4d4d4d;
+}
+
+/* Light mode */
+:root.light {
+  --bg-main: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --text-main: #141414;
+  --color-border: #d1d1d1;
+}
 
 body {
   font-family: "Urbanist", sans-serif;
@@ -51,5 +76,107 @@ body {
   @apply p-6 lg:p-8 xl:p-10 bg-bg-dark-1 border-bg-gray-1 border rounded-xl ;
 }
 .card-title{
-  @apply text-white font-semibold xl:text-2xl
+  @apply text-bg-dark font-semibold xl:text-2xl
+}
+
+/* ── Splash / route-transition animations ──
+   Skipped entirely when the user prefers reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Logo icon entrance for the full splash. */
+  @keyframes logo-icon-in {
+    from {
+      opacity: 0;
+      transform: scale(0.82) rotate(-6deg) translateY(6px);
+      filter: blur(6px);
+    }
+    60% {
+      opacity: 1;
+      filter: blur(0);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) rotate(0deg) translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  .animate-logo-icon-in {
+    animation: logo-icon-in 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /* Logo icon entrance for the route-transition overlay. */
+  @keyframes logo-icon-in-quick {
+    from {
+      opacity: 0;
+      transform: scale(0.9) translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .animate-logo-icon-in-quick {
+    animation: logo-icon-in-quick 380ms ease-out both;
+  }
+
+  /* Ambient glow behind the icon: fades in, then pulses gently. */
+  @keyframes logo-glow-in {
+    from {
+      opacity: 0;
+      transform: scale(0.85);
+    }
+    to {
+      opacity: 0.35;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes logo-glow-pulse {
+    0%,
+    100% {
+      opacity: 0.3;
+      transform: scale(0.95);
+    }
+    50% {
+      opacity: 0.55;
+      transform: scale(1.12);
+    }
+  }
+
+  .animate-logo-glow {
+    animation:
+      logo-glow-in 900ms ease-out both,
+      logo-glow-pulse 2600ms ease-in-out 900ms infinite;
+  }
+
+  /* Site name reveal: staggered per-letter fade + rise. */
+  @keyframes letter-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-letter-in {
+    animation: letter-in 450ms ease-out both;
+  }
+
+  /* Duration must match DISPLAY_DURATION_MS in SplashScreen.tsx. */
+  @keyframes splash-progress {
+    from {
+      width: 0%;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  .animate-splash-progress {
+    animation: splash-progress 2400ms linear forwards;
+  }
 }
