@@ -1,5 +1,7 @@
 import { FaLocationDot } from "react-icons/fa6";
 import FormField from "./FormField";
+import { motion } from "framer-motion";
+
 
 interface PropertyFormProps {
   propertyLocation?: string;
@@ -30,7 +32,11 @@ const PropertyForm = ({
   ];
 
   return (
-    <form
+    <motion.form
+      initial={{opacity: 0, y: 20}}
+      whileInView={{opacity: 1, y: 0}}
+      viewport={{once: true, amount: 0.1}}
+      transition={{duration: 0.6, ease: [0.25, 0.1, 0.25, 1]}}
       className="
         autofill-none min-w-0 max-w-full w-full rounded-[10px] border border-bg-gray-1
         bg-bg-dark-1 p-[25px]
@@ -120,8 +126,10 @@ const PropertyForm = ({
           </span>
         </label>
 
-        <button
+        <motion.button
           type="submit"
+          whileHover={{scale: 1.03}}
+          whileTap={{scale: 0.97}}
           className="
             h-[60px] w-full rounded-[8px]
             bg-[#703BF7]
@@ -132,9 +140,9 @@ const PropertyForm = ({
           "
         >
           Send Your Message
-        </button>
+        </motion.button>
       </div>
-    </form>
+    </motion.form>
   );
 }
 

@@ -3,6 +3,7 @@ import { useTheme } from '../../../Context/ThemeContext';
 import { Button } from '../../ui/Button';
 import { FiChevronDown } from 'react-icons/fi';
 import type { IconType } from 'react-icons';
+import { AnimatePresence, motion } from 'framer-motion';
 
 
 export interface ExtraField {
@@ -77,17 +78,29 @@ export const ContactForm: React.FC<ContactFormProps> = ({
   }[columns];
 
   return (
-    <form
+    <motion.form
       onSubmit={handleSubmit}
       autoComplete="off"
+      initial={{opacity: 0, y: 24}}
+      whileInView={{opacity: 1, y: 0}}
+      viewport={{once: true, amount: 0.1}}
+      transition={{duration: 0.6, ease: [0.25, 0.1, 0.25, 1]}}
       className={`autofill-none site-container rounded-2xl p-6 sm:p-10 lg:p-14 border space-y-6 sm:space-y-8 ${isDark ? 'bg-bg-dark-1 border-bg-gray-1' : 'bg-white border-gray-200 shadow-sm'
         }`}
     >
-      {showSuccess && (
-        <div className="rounded-xl border border-green-500/30 bg-green-500/10 px-4 py-3 text-center text-sm font-medium text-green-400">
-          Your message has been sent successfully!
-        </div>
-      )}
+      <AnimatePresence>
+        {showSuccess && (
+          <motion.div 
+            initial={{opacity: 0, height: 0}}
+            animate={{opacity: 1, height: "auto"}}
+            exit={{opacity: 0, height: 0}}
+            transition={{duration: 0.3}}
+            className="rounded-xl border border-green-500/30 bg-green-500/10 px-4 py-3 text-center text-sm font-medium text-green-400">
+            Your message has been sent successfully!
+          </motion.div>
+        )}
+      </AnimatePresence>
+
 
       <div className={`grid ${gridColsClass} gap-6`}>
         {/* First Name */}
@@ -267,6 +280,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({
           />
 
       </div>
-    </form>
+    </motion.form>
   );
 };

@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+import { StaggerContainer, staggerItem } from "./common/StaggerContainer";
 
 interface StepItem {
   id: string | number;
@@ -11,9 +13,10 @@ interface StepsCardsListProps {
 
 export const StepsCardsList = ({ steps }: StepsCardsListProps) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-sm:gap-[30px] max-2xl:gap-10 2xl:gap-[50px]">
+    <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-sm:gap-[30px] max-2xl:gap-10 2xl:gap-[50px]">
       {steps.map((step, index) => (
-        <div
+        <motion.div
+          variants={staggerItem}
           key={step.id}
           className={`flex-col relative h-full ${index >= 3 ? 'hidden sm:flex' : 'flex'}`}
         >
@@ -49,8 +52,8 @@ export const StepsCardsList = ({ steps }: StepsCardsListProps) => {
             </p>
           </div>
 
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </StaggerContainer>
   );
 };

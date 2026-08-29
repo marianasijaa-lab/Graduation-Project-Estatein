@@ -1,6 +1,8 @@
 import React from 'react';
 import { SectionHeader } from '../../common/SectionHeader';
 import { InfoBox } from '../infobox/InfoBox';
+import { motion } from 'framer-motion';
+import { StaggerContainer, staggerItem } from '../../common/StaggerContainer';
 
 interface ServiceItem {
   id: string;
@@ -49,11 +51,14 @@ export const EffortlessPropertyManagement: React.FC = () => {
         />
 
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
           
           {managementServices.map((service) => (
-            <div
+            <motion.div
               key={service.id}
+              variants={staggerItem}
+              whileHover={{y: -4}}
+              transition={{duration: 0.25}}
               className="bg-[#141414] border border-[#262626] rounded-[16px] p-5 sm:p-6 flex flex-col justify-start gap-3 hover:border-[#703BF7]/40 transition-all duration-300 lg:h-full lg:min-h-[200px]"
             >
              
@@ -74,7 +79,7 @@ export const EffortlessPropertyManagement: React.FC = () => {
               <p className="text-[15px] sm:text-base font-normal text-[#999999] leading-[150%]">
                 {service.description}
               </p>
-            </div>
+            </motion.div>
           ))}
 
           {/* 3. كارت الـ Banner الأفقي الممتد على عمودين بنفس الارتفاع الدقيق 266px */}
@@ -90,7 +95,7 @@ export const EffortlessPropertyManagement: React.FC = () => {
               }}
             />
           </div>
-        </div>
+        </StaggerContainer>
 
       </div>
     </section>

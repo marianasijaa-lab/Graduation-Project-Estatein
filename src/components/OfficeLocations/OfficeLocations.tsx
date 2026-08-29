@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { cards, types } from "./OfficeLocationsData";
+import { motion } from "framer-motion";
+import { FadeInSection } from "../common/FadeInSection";
+import { StaggerContainer, staggerItem } from "../common/StaggerContainer";
+
 
 const OfficeLocations = () => {
   const [selectedType, setSelectedType] = useState("All");
@@ -15,8 +19,10 @@ const OfficeLocations = () => {
   return (
     <section className="bg-bg-dark-1 py-4 text-white md:py-16">
       <div className="site-container max-md:px-2">
-        <div className="mb-10 -mx-2 flex w-[calc(100%+1rem)] items-center gap-1.5 rounded-lg border border-bg-gray-1 bg-bg-dark p-3 md:mx-0 md:w-fit md:gap-2 md:p-2">
-          <button
+        <FadeInSection direction="up" className="mb-10 -mx-2 flex w-[calc(100%+1rem)] items-center gap-1.5 rounded-lg border border-bg-gray-1 bg-bg-dark p-3 md:mx-0 md:w-fit md:gap-2 md:p-2">
+          <motion.button
+            whileHover={{scale: 1.03}}
+            whileTap={{scale: 0.97}}
             onClick={() => setSelectedType("All")}
             className={`h-11 flex-1 rounded-md border px-3 text-sm font-medium transition md:h-auto md:w-[120px] md:flex-none md:px-5 md:py-3 md:text-sm ${
               selectedType === "All"
@@ -25,7 +31,7 @@ const OfficeLocations = () => {
             }`}
           >
             All
-          </button>
+          </motion.button>
           {types.map((type) => (
             <button
               key={type}
@@ -39,11 +45,14 @@ const OfficeLocations = () => {
               {type}
             </button>
           ))}
-        </div>
+        </FadeInSection>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <StaggerContainer className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {filteredCards.map((card) => (
-            <div
+            <motion.div
+              variants={staggerItem}
+              whileHover={{y : -6}}
+              transition={{duration: [0.25, 0.1, 0.25, 1]}}
               key={card.title}
               className="rounded-lg border border-bg-gray-1 bg-bg-dark-1 p-7"
             >
@@ -79,9 +88,9 @@ const OfficeLocations = () => {
               <button className="w-full rounded-md bg-primary py-3 font-medium text-white transition hover:bg-[#5d2de0]">
                 {card.buttonText}
               </button>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );
