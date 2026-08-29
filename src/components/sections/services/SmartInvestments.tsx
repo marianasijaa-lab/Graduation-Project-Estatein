@@ -1,6 +1,8 @@
 import React from 'react';
 import { SectionHeader } from '../../common/SectionHeader';
 import { InfoBox } from '../infobox/InfoBox';
+import { motion } from 'framer-motion';
+import { StaggerContainer, staggerItem } from '../../common/StaggerContainer';
 
 interface InvestmentServiceItem {
   id: string;
@@ -82,10 +84,13 @@ export const SmartInvestments: React.FC = () => {
 
           
           <div className="lg:col-span-7 xl:col-span-8 rounded-[10px] bg-[#191919] p-1.5 mt-14">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
               {investmentServices.map((service) => (
-                <div
+                <motion.div
                   key={service.id}
+                  variants={staggerItem}
+                  whileHover={{y: -4}}
+                  transition={{duration: 0.25}}
                   className="bg-[#141414] border border-[#262626] rounded-[8px] px-5 sm:px-6 py-3 sm:py-4 flex flex-col justify-start gap-4 hover:border-[#703BF7]/40 transition-all duration-300"
                 >
                   
@@ -106,9 +111,9 @@ export const SmartInvestments: React.FC = () => {
                   <p className="text-[15px] sm:text-base font-normal text-[#999999] leading-[150%]">
                     {service.description}
                   </p>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
 
         </div>

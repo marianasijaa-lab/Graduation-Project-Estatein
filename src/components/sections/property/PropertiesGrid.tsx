@@ -7,6 +7,8 @@ import { ErrorMessage } from "../../ui/ErrorMessage";
 import BaseSlider from "../../ui/slider/BaseSlider";
 import SliderButtons from "../../ui/slider/SliderButtons";
 import type { FirestoreProperty } from "../../../store/types";
+import { motion } from "framer-motion";
+import { staggerItem } from "../../common/StaggerContainer";
 
 const GAP = 24;
 
@@ -68,7 +70,11 @@ function PropertyCard({
   onView: () => void;
 }) {
   return (
-    <div className="card flex h-full w-full flex-col gap-4 lg:gap-5 xl:gap-7.5 bg-bg-dark-1 border border-bg-gray-1 rounded-2xl p-4 lg:p-5">
+    <motion.div
+      variants={staggerItem}
+      whileHover={{y: -6}}
+      transition={{duration: 0.25, ease: [0.25, 0.1, 0.25, 1]}}
+      className="card flex h-full w-full flex-col gap-4 lg:gap-5 xl:gap-7.5 bg-bg-dark-1 border border-bg-gray-1 rounded-2xl p-4 lg:p-5">
       <img
         src={item.image}
         alt={item.name}
@@ -104,6 +110,6 @@ function PropertyCard({
           />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

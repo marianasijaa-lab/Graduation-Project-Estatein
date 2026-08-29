@@ -1,4 +1,6 @@
+import { motion } from 'framer-motion';
 import { Button } from '../../ui/Button';
+import { staggerItem } from '../../common/StaggerContainer';
 
 interface FAQCardProps {
   question: string;
@@ -8,7 +10,11 @@ interface FAQCardProps {
 
 export const FAQCard = ({ question, description, onReadMore }: FAQCardProps) => {
   return (
-    <div className="flex flex-col gap-4 bg-bg-dark-1 border border-white/10 rounded-xl p-6 h-full">
+    <motion.div
+      variants={staggerItem}
+      whileHover={{y: -4}}
+      transition={{duration: 0.25}}
+      className="flex flex-col gap-4 bg-bg-dark-1 border border-white/10 rounded-xl p-6 h-full">
 
       {/* question */}
       <h3 className="text-white font-semibold text-[19px] min-h-[3.5rem]">
@@ -29,6 +35,6 @@ export const FAQCard = ({ question, description, onReadMore }: FAQCardProps) => 
         />
       </div>
 
-    </div>
+    </motion.div>
   );
 };

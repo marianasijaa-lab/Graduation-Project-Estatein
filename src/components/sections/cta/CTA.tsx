@@ -1,6 +1,10 @@
 import React from "react";
 import { useTheme } from '../../../Context/ThemeContext';
 import { Link } from 'react-router';
+import { motion } from "framer-motion";
+import { FadeInSection } from "../../common/FadeInSection";
+
+const MotionLink = motion(Link);
 
 interface CtaSectionProps {
   title?: string;
@@ -45,7 +49,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
                 />
             )}
 
-      <div className="site-container relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
+      <FadeInSection direction="up" className="site-container relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
         <div className="max-w-6xl text-left lg:text-left mx-0 space-y-3">
           {title && (
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight leading-snug">
@@ -65,16 +69,18 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
           {renderButton ? (
             renderButton()
           ) : (
-            <Link
+            <MotionLink
               to="/properties"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              whileHover={{scale: 1.03}}
+              whileTap={{scale: 0.97}}
               className="w-full px-6 py-3.5 bg-primary hover:burg-[#5e2ed9] text-white text-sm font-medium text-center rounded-xl transition-colors shadow-sm cursor-pointer sm:w-auto"
             >
               Explore Properties
-            </Link>
+            </MotionLink>
           )}
         </div>
-      </div>
+      </FadeInSection>
     </section>
   );
 };
