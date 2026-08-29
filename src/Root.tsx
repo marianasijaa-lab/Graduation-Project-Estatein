@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router';
 import { Navbar } from './components/Layout/Navbar';
 import { TopBanner } from './components/Layout/TopBanner';
@@ -8,6 +8,14 @@ import { CtaSection } from './components/sections/cta/CTA';
 import { useTheme } from './Context/ThemeContext';
 import { RouteTransitionOverlay } from './components/common/RouteTransitionOverlay';
 
+const pagePaths: Record<PageId, string> = {
+  home: "/",
+  about: "/about",
+  properties: "/properties",
+  services: "/services",
+  contact: "/contact",
+};
+
 function Root() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,8 +24,18 @@ function Root() {
 
   const isDark = theme === 'dark';
 
-  const currentPath = location.pathname.replace("/", "") || "home";
-  const activePage = (currentPath === "" ? "home" : currentPath) as PageId;
+  useEffect(() => {
+    history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+  }, []);
+
+  const activePage = (
+    location.pathname.startsWith("/property-details/")
+      ? null
+      : Object.entries(pagePaths).find(
+          ([, path]) => path === location.pathname,
+        )?.[0] ?? "home"
+  ) as PageId | null;
 
   return (
     <div
@@ -32,7 +50,7 @@ function Root() {
       />
       <Navbar
         activePage={activePage}
-        onNavigate={(page) => navigate(page === "home" ? "/" : `/${page}`)}
+        onNavigate={(page) => navigate(pagePaths[page])}
       />
 
       <RouteTransitionOverlay onTransitionEnd={() => mainRef.current?.focus()} />

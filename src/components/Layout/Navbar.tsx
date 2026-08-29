@@ -8,7 +8,7 @@ import ThemeToggle from "../ui/ThemeToggle";
 import { useAuth } from "../../Context/AuthContext";
 
 interface NavbarProps {
-  activePage: PageId;
+  activePage: PageId | null;
   onNavigate: (page: PageId) => void;
   isDark?: boolean;
   onToggleTheme?: () => void;
