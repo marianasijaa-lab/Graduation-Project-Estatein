@@ -2,6 +2,8 @@ import { SectionHeader } from "../../common/SectionHeader";
 import FAQSlider from "../../ui/slider/FAQSlider";
 import { useState } from "react";
 
+
+
 const FAQSection = () => {
   const [showAllFaqs, setShowAllFaqs] = useState(false);
 
