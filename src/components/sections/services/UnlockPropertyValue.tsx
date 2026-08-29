@@ -39,11 +39,13 @@ const unlockServices: ServiceItem[] = [
 ];
 
 export const UnlockPropertyValue: React.FC = () => {
+  const { unlockPropertyValue: cards } = useUnlockPropertyValue();
+
   return (
     <section className="w-full bg-bg-dark-1 border-t border-bg-gray-1 py-16 sm:py-20 lg:py-24">
       {/* Container مطابق لعرض Figma المحدد 1596px */}
       <div className="site-container">
-        
+
         <SectionHeader
           title="Unlock Property Value"
           subtitle="Selling your property should be a rewarding experience, and at Estatein, we make sure it is. Our Property Selling Service is designed to maximize the value of your property, ensuring you get the best deal possible. Explore the categories below to see how we can help you at every step of your selling journey"

@@ -49,8 +49,10 @@ export const Logo: React.FC<LogoProps> = ({
     );
 
   return (
-    <div
+    <motion.div
       onClick={onClick}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.96 }}
       className={`inline-flex items-center gap-2.5 cursor-pointer select-none group ${className}`}
     >
       {icon}
@@ -68,8 +70,8 @@ export const Logo: React.FC<LogoProps> = ({
           ))}
         </span>
       ) : animated === 'quick' ? null : (
-        <span className="font-semibold text-lg md:text-xl ">{BRAND_NAME}</span>
+        <span className="font-semibold text-lg md:text-xl">{BRAND_NAME}</span>
       )}
-    </div>
+    </motion.div>
   );
 };

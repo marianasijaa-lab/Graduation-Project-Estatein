@@ -5,16 +5,28 @@ import { FadeInSection } from "../common/FadeInSection";
 import { StaggerContainer, staggerItem } from "../common/StaggerContainer";
 
 
+// Public tabs — mirrors officesSlice.activeTab. "Local" offices only surface
+// under "All", matching the slice's tab union.
+const types: Array<Exclude<FirestoreOffice["type"], "Local">> = ["Regional", "International"];
+
+// Builds a usable "Get Direction" link even when an office has no directionsUrl.
+function directionsHref(office: FirestoreOffice): string {
+  if (office.directionsUrl) return office.directionsUrl;
+  const query = encodeURIComponent(`${office.name}, ${office.address}, ${office.city}, ${office.country}`);
+  return `https://www.google.com/maps/search/?api=1&query=${query}`;
+}
+
 const OfficeLocations = () => {
-  const [selectedType, setSelectedType] = useState("All");
+  const dispatch = useAppDispatch();
+  const { offices, status, activeTab } = useOffices();
 
-  const filteredCards = cards.filter((card) => {
-    if (selectedType === "All") {
-      return true;
-    }
-
-    return card.type === selectedType;
-  });
+  const sortedOffices = useMemo(
+    () =>
+      offices
+        .slice()
+        .sort((a, b) => (a.order ?? Number.MAX_SAFE_INTEGER) - (b.order ?? Number.MAX_SAFE_INTEGER)),
+    [offices],
+  );
 
   return (
     <section className="bg-bg-dark-1 py-4 text-white md:py-16">
@@ -25,7 +37,7 @@ const OfficeLocations = () => {
             whileTap={{scale: 0.97}}
             onClick={() => setSelectedType("All")}
             className={`h-11 flex-1 rounded-md border px-3 text-sm font-medium transition md:h-auto md:w-[120px] md:flex-none md:px-5 md:py-3 md:text-sm ${
-              selectedType === "All"
+              activeTab === "All"
                 ? "border-[#262626] bg-[#141414] text-white"
                 : "border-[#262626] bg-[#1A1A1A] text-white hover:bg-[#252525] hover:text-white"
             }`}
@@ -35,9 +47,9 @@ const OfficeLocations = () => {
           {types.map((type) => (
             <button
               key={type}
-              onClick={() => setSelectedType(type)}
+              onClick={() => dispatch(setActiveTab(type))}
               className={`h-11 flex-1 rounded-md border px-3 text-sm font-medium transition md:h-auto md:w-[120px] md:flex-none md:px-5 md:py-3 md:text-sm ${
-                selectedType === type
+                activeTab === type
                   ? "border-[#262626] bg-[#141414] text-white"
                   : "border-[#262626] bg-[#1A1A1A] text-gray hover:bg-[#252525] hover:text-white"
               }`}
@@ -58,32 +70,38 @@ const OfficeLocations = () => {
             >
               <p className="mb-4 text-sm ext-gray">{card.mainTitle}</p>
 
-              <h2 className="mb-4 text-xl font-semibold leading-tight sm:text-2xl md:whitespace-nowrap">
-                {card.title}
-              </h2>
+                <h2 className="mb-4 text-xl font-semibold leading-tight sm:text-2xl md:whitespace-nowrap">
+                  {office.name}
+                </h2>
 
-              <p className="mb-7 max-w-150 text-gray">
-                {card.description}
-              </p>
+                {office.description && (
+                  <p className="mb-7 max-w-150 text-gray">{office.description}</p>
+                )}
 
-              <div className="mb-7 grid grid-cols-2 gap-3 md:flex md:flex-wrap">
-                {card.info.map((item, index) => (
-                  <span
-                    key={item.text}
-                    className={`flex min-w-0 w-fit max-w-full items-center gap-2 rounded-full border border-bg-gray-1 bg-bg-dark px-4 py-2 text-[15px] text-white ${
-                      index === 0 ? "col-span-2 md:col-span-1" : ""
-                    }`}
-                  >
-                    <img
-                      src={item.icon}
-                      alt=""
-                      className="h-4 w-4 object-contain text-white"
-                    />
+                <div className="mb-7 grid grid-cols-2 gap-3 md:flex md:flex-wrap">
+                  {[
+                    { icon: "/assets/icon_18.png", text: office.email },
+                    { icon: "/assets/icon_34.png", text: office.phone },
+                    { icon: "/assets/icon_35.png", text: `${office.city}, ${office.country}` },
+                  ].map((item, index) => (
+                    <span
+                      key={item.text}
+                      className={`flex min-w-0 w-fit max-w-full items-center gap-2 rounded-full border border-bg-gray-1 bg-bg-dark px-4 py-2 text-[15px] text-white ${
+                        index === 0 ? "col-span-2 md:col-span-1" : ""
+                      }`}
+                    >
+                      <img
+                        src={item.icon}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                        className="h-4 w-4 object-contain text-white"
+                      />
 
-                    {item.text}
-                  </span>
-                ))}
-              </div>
+                      {item.text}
+                    </span>
+                  ))}
+                </div>
 
               <button className="w-full rounded-md bg-primary py-3 font-medium text-white transition hover:bg-[#5d2de0]">
                 {card.buttonText}

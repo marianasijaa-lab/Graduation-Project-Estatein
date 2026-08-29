@@ -14,6 +14,10 @@ export const FALLBACK_OFFICES: FirestoreOffice[] = [
     latitude: 40.7484,
     longitude: -73.9967,
     image: '/assets/Contact1.webp',
+    description:
+      'Our flagship office in the heart of Manhattan, home to the leadership team and our largest group of advisors.',
+    directionsUrl: 'https://www.google.com/maps/search/?api=1&query=350+Fifth+Avenue+New+York',
+    order: 1,
   },
   {
     id: 'off-2',
@@ -27,6 +31,10 @@ export const FALLBACK_OFFICES: FirestoreOffice[] = [
     latitude: 34.0736,
     longitude: -118.3994,
     image: '/assets/Contact2.webp',
+    description:
+      'Serving the West Coast luxury market from Beverly Hills, with a dedicated team for coastal and hillside properties.',
+    directionsUrl: 'https://www.google.com/maps/search/?api=1&query=9465+Wilshire+Boulevard+Los+Angeles',
+    order: 2,
   },
   {
     id: 'off-3',
@@ -40,6 +48,10 @@ export const FALLBACK_OFFICES: FirestoreOffice[] = [
     latitude: 51.5045,
     longitude: -0.0199,
     image: '/assets/Contact3.webp',
+    description:
+      'Our European headquarters, coordinating cross-border investments and international client relationships.',
+    directionsUrl: 'https://www.google.com/maps/search/?api=1&query=1+Canada+Square+Canary+Wharf+London',
+    order: 3,
   },
   {
     id: 'off-4',
@@ -53,6 +65,10 @@ export const FALLBACK_OFFICES: FirestoreOffice[] = [
     latitude: 25.1972,
     longitude: 55.2744,
     image: '/assets/Contact4.webp',
+    description:
+      'Covering the Middle East with expertise in off-plan developments and high-yield investment opportunities.',
+    directionsUrl: 'https://www.google.com/maps/search/?api=1&query=Emaar+Square+Downtown+Dubai',
+    order: 4,
   },
   {
     id: 'off-5',
@@ -66,6 +82,10 @@ export const FALLBACK_OFFICES: FirestoreOffice[] = [
     latitude: 1.2789,
     longitude: 103.8536,
     image: '/assets/Contact5.webp',
+    description:
+      'Our Asia-Pacific hub, connecting regional investors with premium residential and commercial listings worldwide.',
+    directionsUrl: 'https://www.google.com/maps/search/?api=1&query=8+Marina+View+Asia+Square+Singapore',
+    order: 5,
   },
   {
     id: 'off-6',
@@ -79,6 +99,10 @@ export const FALLBACK_OFFICES: FirestoreOffice[] = [
     latitude: -33.8674,
     longitude: 151.2071,
     image: '/assets/Contact6.webp',
+    description:
+      'Representing Estatein across Australia and New Zealand, specialising in waterfront and metropolitan homes.',
+    directionsUrl: 'https://www.google.com/maps/search/?api=1&query=1+Martin+Place+Sydney',
+    order: 6,
   },
 ];
 
@@ -96,6 +120,7 @@ const initialState: OfficesState = {
   activeTab: 'All',
 };
 
+// Redux slice for the company offices collection.
 const officesSlice = createSlice({
   name: 'offices',
   initialState,
@@ -116,16 +141,6 @@ const officesSlice = createSlice({
     setActiveTab(state, action: PayloadAction<'All' | 'Regional' | 'International'>) {
       state.activeTab = action.payload;
     },
-    addOffice(state, action: PayloadAction<FirestoreOffice>) {
-      state.data.push(action.payload);
-    },
-    updateOffice(state, action: PayloadAction<FirestoreOffice>) {
-      const index = state.data.findIndex((o) => o.id === action.payload.id);
-      if (index !== -1) state.data[index] = action.payload;
-    },
-    removeOffice(state, action: PayloadAction<string>) {
-      state.data = state.data.filter((o) => o.id !== action.payload);
-    },
   },
 });
 
@@ -134,8 +149,5 @@ export const {
   setOfficesLoading,
   setOfficesError,
   setActiveTab,
-  addOffice,
-  updateOffice,
-  removeOffice,
 } = officesSlice.actions;
 export default officesSlice.reducer;

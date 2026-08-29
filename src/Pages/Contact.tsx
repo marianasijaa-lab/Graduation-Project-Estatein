@@ -24,17 +24,15 @@ const Contact = () => {
     setSubmitStatus("submitting");
     setSubmitError(null);
     try {
-      if (!firestoreDb) throw new Error("Firebase غير مهيأ — يرجى ملء ملف .env");
-      await addDoc(collection(firestoreDb, "contacts"), {
+      await addDocument<FirestoreContact>("contacts", {
         firstName: data.firstName || "",
         lastName: data.lastName || "",
         email: data.email || "",
         phone: data.phone || "",
         message: data.message || "",
-        inquiryType: data.inquiryType || "",
-        howDidYouHear: data.howDidYouHear || "",
+        inquiryType: data.inquiryType || undefined,
+        howDidYouHear: data.howDidYouHear || undefined,
         status: "new",
-        createdAt: serverTimestamp(),
       });
       setSubmitStatus("submitted");
     } catch (err) {
@@ -77,13 +75,6 @@ const Contact = () => {
           className="mb-10"
           fullWidth
         />
-
-        {/* Success state */}
-        {submitStatus === "submitted" && (
-          <div className="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded-xl text-green-400 text-center">
-            ✅ تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.
-          </div>
-        )}
 
         {/* Error state */}
         {submitStatus === "error" && (

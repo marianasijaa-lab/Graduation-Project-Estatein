@@ -39,9 +39,11 @@ const managementServices: ServiceItem[] = [
 ];
 
 export const EffortlessPropertyManagement: React.FC = () => {
+  const { effortlessPropertyManagement: cards } = useEffortlessPropertyManagement();
+
   return (
     <section className="w-full bg-[#141414] border-t border-[#262626] py-16 sm:py-20 lg:py-24">
-      
+
       <div className="site-container">
         <SectionHeader
           title="Effortless Property Management"
@@ -61,7 +63,7 @@ export const EffortlessPropertyManagement: React.FC = () => {
               transition={{duration: 0.25}}
               className="bg-[#141414] border border-[#262626] rounded-[16px] p-5 sm:p-6 flex flex-col justify-start gap-3 hover:border-[#703BF7]/40 transition-all duration-300 lg:h-full lg:min-h-[200px]"
             >
-             
+
               <div className="flex items-center gap-2 sm:gap-3">
                 <div className="w-14 h-14 shrink-0 flex items-center justify-center">
                   <img
