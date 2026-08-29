@@ -4,8 +4,16 @@ import { Link, NavLink, Outlet, useLocation } from "react-router";
 import { RouteTransitionOverlay } from "../common/RouteTransitionOverlay";
 import {
   HiOutlineBuildingOffice2,
+<<<<<<< HEAD
   HiOutlineChevronDown,
   HiOutlineInformationCircle,
+=======
+  HiOutlineChatBubbleLeftRight,
+  HiOutlineChevronDown,
+  HiOutlineHome,
+  HiOutlineInformationCircle,
+  HiOutlineQuestionMarkCircle,
+>>>>>>> cea23977333ac88dd980c41bfdf2e4e465fa5280
   HiOutlineSparkles,
   HiOutlineTrophy,
   HiOutlineUserGroup,
@@ -44,6 +52,17 @@ const NAV_GROUPS: DashboardPageGroup[] = [
       { label: "Our Values", to: "/dashboard/values", icon: HiOutlineSparkles },
       { label: "Our Achievements", to: "/dashboard/achievements", icon: HiOutlineTrophy },
       { label: "Our Valued Clients", to: "/dashboard/clients", icon: HiOutlineUserGroup },
+<<<<<<< HEAD
+=======
+      { label: "Testimonials", to: "/dashboard/testimonials", icon: HiOutlineChatBubbleLeftRight },
+    ],
+  },
+  {
+    label: "Home",
+    icon: HiOutlineHome,
+    sections: [
+      { label: "FAQ", to: "/dashboard/faqs", icon: HiOutlineQuestionMarkCircle },
+>>>>>>> cea23977333ac88dd980c41bfdf2e4e465fa5280
     ],
   },
 ];

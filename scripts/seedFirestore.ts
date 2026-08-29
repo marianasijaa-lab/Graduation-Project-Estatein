@@ -54,7 +54,7 @@ const properties = [
     name: 'Seaside Serenity Villa',
     descriptionShort: 'A stunning 4-bedroom villa nestled along the pristine coastline.',
     descriptionLong:
-      'Experience luxurious living in this beautifully designed villa that offers breathtaking ocean views, a private pool, and direct beach access. The open-plan layout floods every room with natural light, while premium finishes add a touch of elegance throughout.',
+      'Discover your own piece of paradise with the Seaside Serenity Villa. With an open floor plan, breathtaking ocean views from every room, and direct access to a pristine sandy beach, this property is the epitome of coastal living.',
     bedrooms: 4,
     bathrooms: 3,
     propertyType: 'Villa',

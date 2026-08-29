@@ -7,10 +7,17 @@ import { useTestimonials } from "../../../hooks/useTestimonials";
 import { LoadingSkeleton } from "../LoadingSkeleton";
 import { ErrorMessage } from "../ErrorMessage";
 import type { FirestoreTestimonial } from "../../../store/types";
+import { motion } from "framer-motion";
 
-const GAP = 24; // يجب أن يطابق قيمة GAP في BaseSlider
+const GAP = 24;
 
-const TestimonialsSlider = () => {
+const TestimonialsSlider = ({
+  showAll = false,
+  onBack,
+}: {
+  showAll?: boolean;
+  onBack?: () => void;
+}) => {
   const { testimonials, status, error } = useTestimonials();
   const { currentIndex, goNext, goPrev, itemsToShow, maxIndex } =
     useSlider(testimonials);
@@ -28,8 +35,26 @@ const TestimonialsSlider = () => {
     );
   }
 
+  if (showAll) {
+    return (
+      <div className="py-8">
+        <Button
+          onClick={onBack ?? (() => {})}
+          text="Back to Slider"
+          variant="secondary"
+          className="mb-6 rounded-xl px-5 py-3.5 text-sm"
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+          {testimonials.map((testimonial) => (
+            <TestimonialCard key={testimonial.id} testimony={testimonial} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full max-w-400 mx-auto px-0 py-8">
+    <div className="w-full py-8">
       <BaseSlider currentIndex={currentIndex} itemsToShow={itemsToShow}>
         {testimonials.map((testimonial) => (
           <div
@@ -48,9 +73,7 @@ const TestimonialsSlider = () => {
         itemsLength={testimonials.length}
         itemsToShow={itemsToShow}
         maxIndex={maxIndex}
-      >
-        <Button onClick={() => {}} text="View All Testimonials" variant="secondary" />
-      </SliderButtons>
+      />
     </div>
   );
 };
@@ -65,7 +88,11 @@ function Star() {
 
 function TestimonialCard({ testimony }: { testimony: FirestoreTestimonial }) {
   return (
-    <div className="card flex items-start flex-col gap-4 lg:gap-5 xl:gap-7.5">
+    <motion.div
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+      className="card flex items-start flex-col gap-4 lg:gap-5 xl:gap-7.5"
+    >
       <div className="flex gap-2.5">
         {Array.from({ length: testimony.rating || 5 }, (_, index) => (
           <Star key={index} />
@@ -88,7 +115,7 @@ function TestimonialCard({ testimony }: { testimony: FirestoreTestimonial }) {
           <p className="text-[14px] lg:text-[16px] text-gray">{testimony.clientLocation}</p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

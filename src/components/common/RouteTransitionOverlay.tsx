@@ -73,7 +73,11 @@ export const RouteTransitionOverlay = ({ onTransitionEnd }: RouteTransitionOverl
         fadingOut ? "opacity-0" : "opacity-100"
       } ${isDark ? "bg-bg-dark-1" : "bg-[#FAFAFA]"}`}
     >
+<<<<<<< HEAD
       <Logo animated="quick" className="pointer-events-none scale-110" />
+=======
+      <Logo className="pointer-events-none scale-110" />
+>>>>>>> cea23977333ac88dd980c41bfdf2e4e465fa5280
     </div>
   );
 };

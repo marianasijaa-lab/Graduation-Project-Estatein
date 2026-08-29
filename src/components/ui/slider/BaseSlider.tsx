@@ -1,7 +1,9 @@
+import { motion } from "framer-motion";
 import type { ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const GAP   = 40; // px — gap between cards
-const BLEED = 36; // px — extra space on each side so box-shadows are never clipped
+const GAP   = 24;
+const BLEED = 10;
 
 interface BaseSliderProps {
     children: ReactNode;
@@ -9,46 +11,51 @@ interface BaseSliderProps {
     itemsToShow: number;
 }
 
-/**
- * How it works:
- *
- * The visible window is exactly the parent's width.
- * We create an inner wrapper that is WIDER than the window by BLEED on each side,
- * then shift it LEFT by BLEED so it visually aligns with the parent — and the
- * overflow:hidden sits on a separate ancestor that is also WIDER by the same amount.
- *
- * Because the overflow:hidden box is permanently BLEED px wider on every side,
- * any box-shadow up to BLEED px will always be inside that box — regardless of
- * which slide is active, because the overflow boundary never moves.
- */
 const BaseSlider = ({ children, currentIndex, itemsToShow }: BaseSliderProps) => {
-  const itemWidthPercent = 100 / itemsToShow;
-  const translateX = -(currentIndex * itemWidthPercent);
-  const translatePx = currentIndex * GAP;
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const [viewportWidth, setViewportWidth] = useState(0);
+
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+
+    const updateWidth = () => setViewportWidth(viewport.clientWidth);
+    updateWidth();
+
+    const resizeObserver = new ResizeObserver(updateWidth);
+    resizeObserver.observe(viewport);
+    return () => resizeObserver.disconnect();
+  }, []);
+
+  const contentWidth = Math.max(0, viewportWidth - BLEED * 2);
+  const itemWidth = contentWidth
+    ? (contentWidth - GAP * (itemsToShow - 1)) / itemsToShow
+    : 0;
+  const translateX = -(currentIndex * (itemWidth + GAP));
 
   return (
-    /* Step 1: widen the clipping box permanently on both sides */
     <div
+      ref={viewportRef}
       style={{
         overflow: "hidden",
-        marginLeft:  `-${BLEED}px`,
+        marginLeft: `-${BLEED}px`,
         marginRight: `-${BLEED}px`,
-        paddingLeft:  `${BLEED}px`,
+        paddingLeft: `${BLEED}px`,
         paddingRight: `${BLEED}px`,
       }}
     >
-      {/* Step 2: the moving track — width is relative to the padded container above */}
-      <div
-        className="flex items-stretch transition-[transform] duration-[400ms] ease-in-out *:box-border *:shrink-0"
+      <motion.div
+        className="flex items-stretch *:box-border *:shrink-0"
         style={{
           gap: `${GAP}px`,
           paddingTop:    `${BLEED}px`,
           paddingBottom: `${BLEED}px`,
-          transform: `translateX(calc(${translateX}% - ${translatePx}px))`,
         }}
+        animate={{ x: translateX }}
+        transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
       >
         {children}
-      </div>
+      </motion.div>
     </div>
   );
 };

@@ -18,24 +18,25 @@ const ProperityPage = () => {
             />
             <PropitySearchSection className="-mt-10 md:-mt-20" />
             <section className="w-full">
-              <div className="max-w-[1568px] mx-auto px-4 sm:px-6 lg:px-10 py-8 sm:py-10 lg:py-14">
+              <div className="site-container py-8 sm:py-10 lg:py-14">
                 <SectionHeader title='Discover a World of Possibilities' subtitle='Our portfolio of properties is as diverse as your dreams. Explore the following categories to find the perfect property that resonates with your vision of home' />
                 <PropertiesGrid />
               </div>
             </section>
             <section className="w-full">
-              <div className="max-w-[1568px] mx-auto px-4 sm:px-6 lg:px-10 py-8 sm:py-10 lg:py-14">
+              <div className="site-container py-8 sm:py-10 lg:py-14">
                 <SectionHeader title='Lets Make it Happen' subtitle='Ready to take the first step toward your dream property? Fill out the form below, and our real estate wizards will work their magic to find your perfect match. Dont wait; lets embark on this exciting journey together.' />
                 <ContactForm
                     columns={4}
                     extraFields={[
-                        { name: 'location', type: 'dropdown', placeholder: 'Select Location', options: ['Dubai', 'Malibu'] },
-                        { name: 'propertyType', type: 'dropdown', placeholder: 'Select Property Type', options: ['Villa', 'Apartment'] },
-                        { name: 'bedrooms', type: 'dropdown', placeholder: 'Select no. of Bedrooms', options: ['1', '2', '3+'] },
-                        { name: 'bathrooms', type: 'dropdown', placeholder: 'Select no. of Bedrooms', options: ['1', '2', '3+'] },
-                        { name: 'budget', type: 'dropdown', placeholder: 'Select Budget', options: ['$100k-$500k', '$500k+'], colSpan: 2 },
+                        { name: 'location', label: 'Preferred Location', type: 'dropdown', placeholder: 'Select Location', options: ['Dubai', 'Malibu'] },
+                        { name: 'propertyType', label: 'Property Type', type: 'dropdown', placeholder: 'Select Property Type', options: ['Villa', 'Apartment'] },
+                        { name: 'bathrooms', label: 'No. of Bathrooms', type: 'dropdown', placeholder: 'Select no. of Bathrooms', options: ['1', '2', '3+'] },
+                        { name: 'bedrooms', label: 'No. of Bedrooms', type: 'dropdown', placeholder: 'Select no. of Bedrooms', options: ['1', '2', '3+'] },
+                        { name: 'budget', label: 'Budget', type: 'dropdown', placeholder: 'Select Budget', options: ['$100k-$500k', '$500k+'], colSpan: 2 },
                         {
                             name: 'prefNumber',
+                          label: 'Preferred Contact Method',
                             type: 'input',
                             placeholder: 'Enter Your Number',
                             icon: MdCall,

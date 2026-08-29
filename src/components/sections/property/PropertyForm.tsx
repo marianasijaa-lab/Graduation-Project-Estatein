@@ -32,22 +32,24 @@ const PropertyForm = ({
   return (
     <form
       className="
-        w-full rounded-[10px] border border-[#262626]
-        bg-[#141414] p-[25px]
+        autofill-none min-w-0 max-w-full w-full rounded-[10px] border border-bg-gray-1
+        bg-bg-dark-1 p-[25px]
         sm:p-[35px]
-        xl:h-[862px] xl:w-[984px] xl:p-[50px]
+        xl:p-[50px]
       "
     >
       {/* Inputs */}
-      <div className="grid grid-cols-1 gap-[30px] sm:grid-cols-2">
+      <div className="grid min-w-0 grid-cols-1 gap-[30px] sm:grid-cols-2">
         {fields.map((field) => (
-          <FormField key={field.label} {...field} />
+          <div key={field.label} className="min-w-0">
+            <FormField {...field} />
+          </div>
         ))}
       </div>
 
       {/* Selected Property */}
       <div className="mt-[30px]">
-        <label className="mb-[12px] block font-['Urbanist'] text-[14px] font-semibold text-white">
+        <label className="mb-[12px] block font-['Urbanist'] text-base font-semibold text-white">
           Selected Property
         </label>
 
@@ -56,9 +58,9 @@ const PropertyForm = ({
             value={propertyLocation}
             readOnly
             className="
-              h-[72px] w-full rounded-[8px]
+              h-[60px] w-full rounded-[8px]
               border border-[#262626]
-              bg-[#141414] px-[20px] pr-[55px]
+              bg-[#1A1A1A] px-[20px] pr-[55px]
               font-['Urbanist'] text-[14px]
               font-medium text-white outline-none
             "
@@ -75,16 +77,16 @@ const PropertyForm = ({
 
       {/* Message */}
       <div className="mt-[30px]">
-        <label className="mb-[12px] block font-['Urbanist'] text-[14px] font-semibold text-white">
+        <label className="mb-[12px] block font-['Urbanist'] text-base font-semibold text-white">
           Message
         </label>
 
         <textarea
           placeholder="Enter your Message here"
           className="
-            h-[170px] w-full resize-none
+            h-[140px] w-full resize-none
             rounded-[8px] border border-[#262626]
-            bg-[#141414] px-[20px] py-[20px]
+            bg-[#1A1A1A] px-[20px] py-[20px]
             font-['Urbanist'] text-[14px]
             text-white outline-none
             placeholder:text-[#666666]
@@ -113,7 +115,7 @@ const PropertyForm = ({
             "
           />
 
-          <span className="font-['Urbanist'] text-[13px] text-[#999999]">
+          <span className="font-['Urbanist'] text-sm text-[#999999]">
             I agree with Terms of Use and Privacy Policy
           </span>
         </label>
@@ -134,6 +136,6 @@ const PropertyForm = ({
       </div>
     </form>
   );
-};
+}
 
 export default PropertyForm;

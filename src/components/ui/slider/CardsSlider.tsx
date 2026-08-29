@@ -7,12 +7,19 @@ import { useProperties } from "../../../hooks/useProperties";
 import { LoadingSkeleton } from "../LoadingSkeleton";
 import { ErrorMessage } from "../ErrorMessage";
 import type { FirestoreProperty } from "../../../store/types";
+import { motion } from "framer-motion";
 
 interface CardProps {
   item: FirestoreProperty;
 }
 
-const CardsSlider = () => {
+const CardsSlider = ({
+  showAll = false,
+  onBack,
+}: {
+  showAll?: boolean;
+  onBack?: () => void;
+}) => {
   const { properties, status, error } = useProperties();
   const { currentIndex, goNext, goPrev, itemsToShow, maxIndex } =
     useSlider(properties);
@@ -30,13 +37,31 @@ const CardsSlider = () => {
     );
   }
 
+  if (showAll) {
+    return (
+      <div className="py-8">
+        <Button
+          onClick={onBack ?? (() => {})}
+          text="Back to Slider"
+          variant="secondary"
+          className="mb-6 rounded-xl px-5 py-3.5 text-sm"
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+          {properties.map((card) => (
+            <Card key={card.id} item={card} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full max-w-400 mx-auto px-0 py-8">
+    <div className="w-full py-8">
       <BaseSlider currentIndex={currentIndex} itemsToShow={itemsToShow}>
         {properties.map((card) => (
           <div
             key={card.id}
-            className="flex-shrink-0"
+            className="shrink-0 flex"
             style={{ width: `calc(${100 / itemsToShow}% - ${(24 * (itemsToShow - 1)) / itemsToShow}px)` }}
           >
             <Card item={card} />
@@ -50,9 +75,7 @@ const CardsSlider = () => {
         itemsLength={properties.length}
         itemsToShow={itemsToShow}
         maxIndex={maxIndex}
-      >
-        <Button onClick={() => {}} text="View All Properties" variant="secondary" />
-      </SliderButtons>
+      />
     </div>
   );
 };
@@ -66,15 +89,21 @@ function Card({ item }: CardProps) {
   ].filter((d) => d.icon && d.text);
 
   return (
-    <div className="card flex flex-col gap-4 lg:gap-5 xl:gap-7.5 bg-[#111111] border border-[#262626] rounded-2xl p-4 lg:p-5">
-      <img
-        src={item.image}
-        alt={item.name}
-        className="w-full h-full object-cover rounded-xl hover:scale-105 transition-transform duration-300"
-      />
+    <motion.div
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+      className="card flex flex-col gap-4 lg:gap-5 xl:gap-7.5 bg-[#111111] border border-bg-gray-1 rounded-2xl p-4 lg:p-5 w-full h-full"
+    >
+      <div className="w-full h-48 sm:h-56 overflow-hidden rounded-xl">
+        <img
+          src={item.image}
+          alt={item.name}
+          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+        />
+      </div>
 
-      <div className="flex flex-col gap-5 lg:gap-6 xl:gap-7.5">
-        <div className="flex flex-col gap-0.5 lg:gap-1 xl:gap-1.5">
+      <div className="flex flex-col flex-1 gap-5 lg:gap-6 xl:gap-7.5">
+        <div className="flex flex-col gap-0.5 lg:gap-1 xl:gap-1.5 flex-1">
           <h3 className="card-title">{item.name}</h3>
           <p className="font-medium text-gray">
             {item.descriptionShort.length > 60
@@ -102,14 +131,17 @@ function Card({ item }: CardProps) {
             ${Number(item.priceHome).toLocaleString()}
           </p>
           <Button
-            onClick={() => navigate(`/property-details/${item.id}`)}
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              navigate(`/property-details/${item.id}`);
+            }}
             text="View Property Details"
             variant="primary"
             className="text-sm px-4 py-3 md:py-3 md:px-5"
           />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

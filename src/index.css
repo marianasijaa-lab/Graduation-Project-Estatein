@@ -4,13 +4,14 @@
 @theme {
   --color-gray: #999999;
   --color-bg-dark-1: #141414;
-  --color-bg-dark: #1a1a1a;
+  --color-bg-dark: #1A1A1A;
   --color-bg-gray-1: #262626;
   --color-primary: #703bf7;
   --color-primary-light: #a685fa;
   --color-border: #4d4d4d;
 }
 
+<<<<<<< HEAD
 @layer base {
   *,
   *::before,
@@ -36,10 +37,43 @@
   --text-main: #141414;
   --color-border: #d1d1d1;
 }
+=======
+>>>>>>> cea23977333ac88dd980c41bfdf2e4e465fa5280
 
 body {
   font-family: "Urbanist", sans-serif;
-  
+  margin: 0;
+  background-color: #141414;
+}
+
+.site-container {
+  width: 100%;
+  max-width: 1568px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+.autofill-none input:-webkit-autofill,
+.autofill-none input:-webkit-autofill:hover,
+.autofill-none input:-webkit-autofill:focus,
+.autofill-none textarea:-webkit-autofill,
+.autofill-none select:-webkit-autofill {
+  -webkit-text-fill-color: #ffffff !important;
+  -webkit-box-shadow: 0 0 0 1000px #141414 inset !important;
+  box-shadow: 0 0 0 1000px #141414 inset !important;
+  caret-color: #ffffff;
+}
+
+@media (min-width: 640px) {
+  .site-container {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-container {
+    padding-inline: 2.5rem;
+  }
 }
 .card{
   @apply p-6 lg:p-8 xl:p-10 bg-bg-dark-1 border-bg-gray-1 border rounded-xl ;

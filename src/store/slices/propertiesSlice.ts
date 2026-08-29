@@ -8,7 +8,7 @@ const FALLBACK_PROPERTIES: FirestoreProperty[] = [
     tag: 'Coastal Escapes - Where Waves Beckon',
     name: 'Seaside Serenity Villa',
     descriptionShort: 'A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood...',
-    descriptionLong: 'Wake up to the soothing melody of waves. This beachfront villa offers...',
+    descriptionLong: 'Discover your own piece of paradise with the Seaside Serenity Villa. With an open floor plan, breathtaking ocean views from every room, and direct access to a pristine sandy beach, this property is the epitome of coastal living.',
     bedrooms: 4, bathrooms: 3, propertyType: 'Villa',
     bedroomIcon: '/assets/icon_9.png',
     bathroomIcon: '/assets/icon_7.png',

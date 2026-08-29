@@ -45,17 +45,46 @@ const FAQData: FAQItem[] = [
   },
 ];
 
-const FAQSlider = () => {
+const FAQSlider = ({
+  showAll = false,
+  onBack,
+}: {
+  showAll?: boolean;
+  onBack?: () => void;
+}) => {
   const { currentIndex, goNext, goPrev, itemsToShow, maxIndex } =
     useSlider(FAQData);
 
+  if (showAll) {
+    return (
+      <div className="py-8">
+        <Button
+          onClick={onBack ?? (() => {})}
+          text="Back to Slider"
+          variant="secondary"
+          className="mb-6 rounded-xl px-5 py-3.5 text-sm"
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+          {FAQData.map((card) => (
+            <FAQCard
+              key={card.id}
+              question={card.title}
+              description={card.description}
+              onReadMore={() => {}}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full max-w-400 mx-auto px-0 py-8">
+    <div className="w-full py-8">
       <BaseSlider currentIndex={currentIndex} itemsToShow={itemsToShow}>
         {FAQData.map((card) => (
           <div
             key={card.id}
-            className="flex-shrink-0"
+            className="shrink-0"
             style={{ width: `calc(${100 / itemsToShow}% - ${(GAP * (itemsToShow - 1)) / itemsToShow}px)` }}
           >
             <FAQCard
@@ -73,9 +102,7 @@ const FAQSlider = () => {
         itemsLength={FAQData.length}
         itemsToShow={itemsToShow}
         maxIndex={maxIndex}
-      >
-         <Button onClick={()=>{}} text="View All FAQ's" variant="secondary"/>
-      </SliderButtons>
+      />
     </div>
   );
 };

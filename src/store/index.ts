@@ -7,6 +7,7 @@ import companiesReducer    from './slices/companiesSlice';
 import statsReducer        from './slices/statsSlice';
 import valuesReducer       from './slices/valuesSlice';
 import achievementsReducer from './slices/achievementsSlice';
+import faqsReducer         from './slices/faqSlice';
 import servicesReducer     from './slices/servicesSlice';
 import infoBoxesReducer    from './slices/infoBoxesSlice';
 import testimonialsReducer from './slices/testimonialsSlice';
@@ -19,6 +20,7 @@ export const store = configureStore({
     stats:        statsReducer,
     values:       valuesReducer,
     achievements: achievementsReducer,
+    faqs:         faqsReducer,
     services:     servicesReducer,
     infoBoxes:    infoBoxesReducer,
     testimonials: testimonialsReducer,

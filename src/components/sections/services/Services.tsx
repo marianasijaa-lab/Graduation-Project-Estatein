@@ -1,5 +1,6 @@
 import React from 'react';
 import ServiceCard from './ServiceCard';
+import { StaggerContainer } from '../../common/StaggerContainer';
 
 const Services: React.FC = () => {
   const services = [
@@ -10,12 +11,10 @@ const Services: React.FC = () => {
   ];
 
   return (
-    <section
-      className="w-full bg-bg-dark-1 border border-bg-gray-1 py-1 sm:py-2"
-      style={{ boxShadow: '0px 0px 0px 6px #191919' }}
-    >
-      <div className="w-full max-w-[1590px] mx-auto px-2 sm:px-1 lg:px-2">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+    <section className="w-full bg-bg-dark-1 border border-bg-gray-1 py-1 sm:py-2" 
+     style={{ boxShadow: '0px 0px 0px 6px #191919'}}>
+      <div className="w-full mx-auto px-2 sm:px-1 lg:px-2">
+        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
           {services.map((service, index) => (
             <ServiceCard
               key={index}
@@ -24,7 +23,7 @@ const Services: React.FC = () => {
               icon={service.icon}
             />
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );
