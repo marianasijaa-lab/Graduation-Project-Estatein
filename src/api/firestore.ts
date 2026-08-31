@@ -14,7 +14,7 @@ import {
 } from 'firebase/firestore';
 import { firestoreDb } from '../firebase/config';
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// ── Types ────────────────────────────────────────────────────────────────────
 
 /** Called every time the collection changes. */
 export type SnapshotCallback<T> = (docs: T[]) => void;
