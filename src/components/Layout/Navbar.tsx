@@ -109,11 +109,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             <div className="flex flex-col space-y-2">
               {NAV_ITEMS.map((item, index) => (
-                    <motion.button
+                <motion.button
                   key={item.id}
-                      initial={{ x: -12, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ duration: 0.2, delay: index * 0.05 }}
+                  initial={{ x: -12, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ duration: 0.2, delay: index * 0.05 }}
                   onClick={() => handleNavClick(item.id)}
                   className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                     activePage === item.id

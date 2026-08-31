@@ -1,7 +1,7 @@
 
 export type DataStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
 
-// ── العقارات (Firestore collection: "properties") ──────────────────────────
+// ── Properties (Firestore collection: "properties") ────────────────────────
 export interface FirestoreProperty {
   id: string;
   image: string;
@@ -17,7 +17,7 @@ export interface FirestoreProperty {
   propertyTypeIcon?: string;
   priceHome: number;
   priceProperties: number;
-  // حقول موسّعة للـ Dashboard
+  // Extended fields, used by the Dashboard
   location?: string;
   size?: number;
   buildYear?: number;
@@ -28,7 +28,7 @@ export interface FirestoreProperty {
   createdAt?: string;
 }
 
-// ── الشركات (Firestore collection: "companies") ────────────────────────────
+// ── Companies (Firestore collection: "companies") ───────────────────────────
 export interface FirestoreCompany {
   id: string;
   date: string;
@@ -39,13 +39,13 @@ export interface FirestoreCompany {
   testimony: string;
 }
 
-// ── الإحصاءات (Realtime Database path: /stats) ────────────────────────────
+// ── Stats (Realtime Database path: /stats) ──────────────────────────────────
 export interface Stat {
   value: string;
   label: string;
 }
 
-// ── القيم المؤسسية (Firestore collection: "values") ───────────────────────
+// ── Core values (Firestore collection: "values") ────────────────────────────
 export interface FirestoreValue {
   id: string;
   icon: string;
@@ -53,21 +53,65 @@ export interface FirestoreValue {
   description: string;
 }
 
-// ── الإنجازات (Firestore collection: "achievements") ──────────────────────
+// ── Achievements (Firestore collection: "achievements") ─────────────────────
 export interface FirestoreAchievement {
   id: string;
   title: string;
   description: string;
 }
 
-// ── الخدمات (Firestore collection: "services") ────────────────────────────
+// ── FAQs (Firestore collection: "faqs") ──────────────────────────────────────
+export interface FirestoreFAQ {
+  id: string;
+  question: string;
+  description: string;
+}
+
+// ── Home page CTA section (Firestore collection: "cta") ─────────────────────
+export interface FirestoreCTA {
+  id: string;
+  heading: string;
+  subheading: string;
+  buttonText: string;
+  buttonLink: string;
+}
+
+// ── Cards for the "Unlock Property Value" section on the Services page ──────
+// (Firestore collection: "unlockPropertyValue"). Each card is its own doc —
+// the section's header/subtitle and InfoBox banner stay hardcoded in the component.
+export interface FirestoreUnlockPropertyValueCard {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+}
+
+// ── Cards for the "Effortless Property Management" section on the Services page ──
+// (Firestore collection: "effortlessPropertyManagement") — same note as above.
+export interface FirestoreEffortlessPropertyManagementCard {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+}
+
+// ── Cards for the "Smart Investments" section on the Services page ──────────
+// (Firestore collection: "smartInvestments") — same note as above.
+export interface FirestoreSmartInvestmentsCard {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+}
+
+// ── Services (Firestore collection: "services") ─────────────────────────────
 export interface FirestoreService {
   id: string;
   icon: string;
   heading: string;
 }
 
-// ── صناديق المعلومات (Firestore collection: "infoBoxes") ──────────────────
+// ── Info boxes (Firestore collection: "infoBoxes") ───────────────────────────
 export interface FirestoreInfoBox {
   id: string;
   variant: 'horizontal' | 'vertical';
@@ -76,20 +120,22 @@ export interface FirestoreInfoBox {
   buttonLabel?: string;
 }
 
-// ── آراء العملاء (Firestore collection: "testimonials") ───────────────────
+// ── Client testimonials (Firestore collection: "testimonials") ──────────────
 export interface FirestoreTestimonial {
   id: string;
   clientName: string;
-  clientImage: string;       // رابط صورة العميل
-  clientLocation: string;    // مثال: "USA, California"
-  title: string;             // عنوان الشهادة
-  description: string;       // نص الشهادة
+  clientImage: string;       // client photo URL
+  clientLocation: string;    // e.g. "USA, California"
+  title: string;             // testimonial headline
+  description: string;       // testimonial body
   rating: number;            // 1 - 5
-  position?: string;         // المسمى الوظيفي (اختياري)
+  position?: string;         // job title (optional)
   createdAt?: string;
 }
 
-// ── رسائل التواصل (Firestore collection: "contacts") ─────────────────────
+//  Contact messages (Firestore collection: "contacts") 
+export type ContactStatus = 'new' | 'contacted' | 'closed';
+
 export interface FirestoreContact {
   id: string;
   firstName: string;
@@ -97,24 +143,67 @@ export interface FirestoreContact {
   email: string;
   phone: string;
   message: string;
-  inquiryType?: string;      // نوع الاستفسار: شراء، بيع، استشارة
-  howDidYouHear?: string;    // كيف عرفت عنا
-  propertyId?: string;       // معرف العقار (اختياري)
-  status: 'new' | 'processing' | 'replied';   // حالة الرسالة
-  createdAt: string;         // وقت الإرسال
+  inquiryType?: string;      // buying, selling, consulting, etc.
+  howDidYouHear?: string;    // how they heard about us
+  propertyId?: string;       // related property (optional)
+  propertyName?: string;     // related property name, for a readable admin list
+  status: ContactStatus;
+  assignedTo?: string;       // internal — team member handling this inquiry
+  adminNote?: string;        // internal — triage notes
+  createdAt?: string;        // stamped server-side by addDocument()
 }
 
-// ── مكاتب الشركة (Firestore collection: "offices") ───────────────────────
+//  Newsletter subscribers (Firestore collection: "subscribers") 
+export type SubscriberStatus = 'subscribed' | 'unsubscribed';
+export type SubscriberSource = 'footer' | 'contact-page';
+
+export interface FirestoreSubscriber {
+  id: string;
+  email: string;
+  status: SubscriberStatus;
+  source: SubscriberSource;
+  name?: string;
+  createdAt?: string;     
+}
+
+// Site contact settings (Firestore: single doc "siteSettings/contact")
+export type SocialPlatform =
+  | 'facebook'
+  | 'linkedin'
+  | 'twitter'
+  | 'youtube'
+  | 'instagram';
+
+export interface SocialLink {
+  platform: SocialPlatform;
+  url: string;
+  enabled: boolean;
+}
+
+export interface FirestoreContactInfo {
+  id: string;          
+  email: string;
+  phone: string;
+  address: string;
+  mapUrl?: string;
+  openingHours?: string;
+  socialLinks: SocialLink[];
+}
+
+//  Company offices (Firestore collection: "offices") 
 export interface FirestoreOffice {
   id: string;
-  name: string;             // اسم المكتب
-  address: string;          // العنوان الكامل
+  name: string;             // office name
+  address: string;          // full address
   city: string;
   country: string;
   phone: string;
   email: string;
-  type: 'Regional' | 'International' | 'Local';  // للتبويب
+  type: 'Regional' | 'International' | 'Local';  // for tab filtering
   latitude?: number;
   longitude?: number;
-  image?: string;           // صورة المكتب (اختياري)
+  image?: string;         
+  description?: string;      
+  directionsUrl?: string;     
+  order?: number;            
 }

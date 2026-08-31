@@ -2,11 +2,13 @@ import PropertyForm from "./PropertyForm";
 import { SectionHeader } from "../../common/SectionHeader";
 import { FadeInSection } from "../../common/FadeInSection";
 interface InquireSectionProps {
+  propertyId?: string;
   propertyName?: string;
   propertyLocation?: string;
 }
 
 const InquireSection = ({
+  propertyId,
   propertyName = "Seaside Serenity Villa",
   propertyLocation = "Seaside Serenity Villa, Malibu, California",
 }: InquireSectionProps) => {
@@ -40,7 +42,11 @@ const InquireSection = ({
 
         {/* Form */}
         <div className="w-full min-w-0 md:flex-1">
-          <PropertyForm propertyLocation={propertyLocation} />
+          <PropertyForm
+            propertyId={propertyId}
+            propertyName={propertyName}
+            propertyLocation={propertyLocation}
+          />
         </div>
       </div>
     </section>

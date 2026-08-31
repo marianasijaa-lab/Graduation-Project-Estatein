@@ -30,6 +30,7 @@ const initialState: InfoBoxesState = {
   error: null,
 };
 
+// Redux slice for the info box banners collection.
 const infoBoxesSlice = createSlice({
   name: 'infoBoxes',
   initialState,
@@ -47,16 +48,6 @@ const infoBoxesSlice = createSlice({
       state.status = 'failed';
       state.error  = action.payload;
     },
-    addInfoBox(state, action: PayloadAction<FirestoreInfoBox>) {
-      state.data.push(action.payload);
-    },
-    updateInfoBox(state, action: PayloadAction<FirestoreInfoBox>) {
-      const index = state.data.findIndex((b) => b.id === action.payload.id);
-      if (index !== -1) state.data[index] = action.payload;
-    },
-    removeInfoBox(state, action: PayloadAction<string>) {
-      state.data = state.data.filter((b) => b.id !== action.payload);
-    },
   },
 });
 
@@ -64,8 +55,5 @@ export const {
   syncInfoBoxes,
   setInfoBoxesLoading,
   setInfoBoxesError,
-  addInfoBox,
-  updateInfoBox,
-  removeInfoBox,
 } = infoBoxesSlice.actions;
 export default infoBoxesSlice.reducer;

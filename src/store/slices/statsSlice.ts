@@ -1,9 +1,8 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { Stat, DataStatus } from '../types';
 
-// ملاحظة: statsSlice لا تستخدم createAsyncThunk
-// لأن Realtime Database تعمل بـ WebSocket مستمر (onValue callback)
-// التحديثات تصل عبر callback في useStats hook
+// Note: statsSlice doesn't use createAsyncThunk — Realtime Database uses a
+// persistent WebSocket (onValue callback), and updates arrive via useStats hook.
 
 interface StatsState {
   data: Stat[];
@@ -17,6 +16,7 @@ const initialState: StatsState = {
   error: null,
 };
 
+// Redux slice for home page stats (Realtime Database, not Firestore).
 const statsSlice = createSlice({
   name: 'stats',
   initialState,

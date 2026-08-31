@@ -20,6 +20,7 @@ const initialState: ServicesState = {
   error: null,
 };
 
+// Redux slice for the services collection (short highlight cards).
 const servicesSlice = createSlice({
   name: 'services',
   initialState,

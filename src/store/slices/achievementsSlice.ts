@@ -31,6 +31,7 @@ const initialState: AchievementsState = {
   error: null,
 };
 
+// Redux slice for the achievements collection.
 const achievementsSlice = createSlice({
   name: 'achievements',
   initialState,
@@ -48,16 +49,6 @@ const achievementsSlice = createSlice({
       state.status = 'failed';
       state.error  = action.payload;
     },
-    addAchievement(state, action: PayloadAction<FirestoreAchievement>) {
-      state.data.push(action.payload);
-    },
-    updateAchievement(state, action: PayloadAction<FirestoreAchievement>) {
-      const index = state.data.findIndex((a) => a.id === action.payload.id);
-      if (index !== -1) state.data[index] = action.payload;
-    },
-    removeAchievement(state, action: PayloadAction<string>) {
-      state.data = state.data.filter((a) => a.id !== action.payload);
-    },
   },
 });
 
@@ -65,8 +56,5 @@ export const {
   syncAchievements,
   setAchievementsLoading,
   setAchievementsError,
-  addAchievement,
-  updateAchievement,
-  removeAchievement,
 } = achievementsSlice.actions;
 export default achievementsSlice.reducer;

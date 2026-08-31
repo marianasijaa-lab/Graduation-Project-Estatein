@@ -62,8 +62,9 @@ export const PropertyDetails = () => {
         ]}
       />
       <InquireSection
-  propertyName="Seaside Serenity Villa"
-  propertyLocation="Seaside Serenity Villa, Malibu, California"
+  propertyId={property.id}
+  propertyName={property.name}
+  propertyLocation={property.location ? `${property.name}, ${property.location}` : property.name}
 />
 <PricingDetails
   title="Comprehensive Pricing Details"

@@ -61,6 +61,7 @@ const initialState: CompaniesState = {
   error: null,
 };
 
+// Redux slice for the companies collection (shown as "clients" on the dashboard).
 const companiesSlice = createSlice({
   name: 'companies',
   initialState,
@@ -78,16 +79,6 @@ const companiesSlice = createSlice({
       state.status = 'failed';
       state.error  = action.payload;
     },
-    addCompany(state, action: PayloadAction<FirestoreCompany>) {
-      state.data.push(action.payload);
-    },
-    updateCompany(state, action: PayloadAction<FirestoreCompany>) {
-      const index = state.data.findIndex((c) => c.id === action.payload.id);
-      if (index !== -1) state.data[index] = action.payload;
-    },
-    removeCompany(state, action: PayloadAction<string>) {
-      state.data = state.data.filter((c) => c.id !== action.payload);
-    },
   },
 });
 
@@ -95,8 +86,5 @@ export const {
   syncCompanies,
   setCompaniesLoading,
   setCompaniesError,
-  addCompany,
-  updateCompany,
-  removeCompany,
 } = companiesSlice.actions;
 export default companiesSlice.reducer;

@@ -13,7 +13,7 @@ const FALLBACK_PROPERTIES: FirestoreProperty[] = [
     bedroomIcon: '/assets/icon_9.png',
     bathroomIcon: '/assets/icon_7.png',
     propertyTypeIcon: '/assets/icon_8.png',
-    priceHome: 550000, priceProperties: 1250000,
+    priceHome: 550000, priceProperties: 550000,
     location: 'Malibu, California', size: 320, buildYear: 2019,
     amenities: ['Private Pool', 'Beach Access', 'Ocean View', 'Smart Home'],
     featured: true, currency: 'USD',
@@ -29,7 +29,7 @@ const FALLBACK_PROPERTIES: FirestoreProperty[] = [
     bedroomIcon: '/assets/icon_9.png',
     bathroomIcon: '/assets/icon_7.png',
     propertyTypeIcon: '/assets/icon_8.png',
-    priceHome: 550000, priceProperties: 650000,
+    priceHome: 550000, priceProperties: 550000,
     location: 'Manhattan, New York', size: 180, buildYear: 2021,
     amenities: ['City View', 'Concierge', 'Gym', 'Rooftop Terrace'],
     featured: true, currency: 'USD',
@@ -45,7 +45,7 @@ const FALLBACK_PROPERTIES: FirestoreProperty[] = [
     bedroomIcon: '/assets/icon_9.png',
     bathroomIcon: '/assets/icon_7.png',
     propertyTypeIcon: '/assets/icon_8.png',
-    priceHome: 550000, priceProperties: 350000,
+    priceHome: 550000, priceProperties: 550000,
     location: 'Aspen, Colorado', size: 120, buildYear: 2015,
     amenities: ['Garden', 'Fireplace', 'Mountain View'],
     featured: false, currency: 'USD',
@@ -112,13 +112,20 @@ const initialState: PropertiesState = {
   error: null,
 };
 
+// Redux slice for the properties collection.
 const propertiesSlice = createSlice({
   name: 'properties',
   initialState,
   reducers: {
-    // ── onSnapshot يُطلق هذا عند كل تغيير في Firestore ──────────────────
+    // Fired by onSnapshot on every Firestore change.
     syncProperties(state, action: PayloadAction<FirestoreProperty[]>) {
-      state.data   = action.payload;
+      // ترتيب البيانات حسب ID لضمان عرض الأول في الأول
+      const sortedData = [...action.payload].sort((a, b) => {
+        const aNum = parseInt(a.id.replace('prop-', '') || '999', 10);
+        const bNum = parseInt(b.id.replace('prop-', '') || '999', 10);
+        return aNum - bNum;
+      });
+      state.data   = sortedData;
       state.status = 'succeeded';
       state.error  = null;
     },
@@ -130,17 +137,6 @@ const propertiesSlice = createSlice({
       state.status = 'failed';
       state.error  = action.payload;
     },
-    // ── عمليات CRUD المحلية (تُستخدم مع addDocument / updateDocument / deleteDocument) ──
-    addProperty(state, action: PayloadAction<FirestoreProperty>) {
-      state.data.push(action.payload);
-    },
-    updateProperty(state, action: PayloadAction<FirestoreProperty>) {
-      const index = state.data.findIndex((p) => p.id === action.payload.id);
-      if (index !== -1) state.data[index] = action.payload;
-    },
-    removeProperty(state, action: PayloadAction<string>) {
-      state.data = state.data.filter((p) => p.id !== action.payload);
-    },
   },
 });
 
@@ -148,9 +144,6 @@ export const {
   syncProperties,
   setPropertiesLoading,
   setPropertiesError,
-  addProperty,
-  updateProperty,
-  removeProperty,
 } = propertiesSlice.actions;
 export default propertiesSlice.reducer;
 

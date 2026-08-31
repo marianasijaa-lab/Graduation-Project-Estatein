@@ -43,15 +43,17 @@ const investmentServices: InvestmentServiceItem[] = [
 ];
 
 export const SmartInvestments: React.FC = () => {
+  const { smartInvestments: cards } = useSmartInvestments();
+
   return (
     <section className="w-full bg-(--bg-main) border-t border-[#262626] py-16 sm:py-20 lg:py-24">
      
       <div className="site-container">
-        
-        
+
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-          
-       
+
+
           <div className="lg:col-span-5 xl:col-span-4 flex flex-col justify-start gap-0 sm:gap-1">
             <SectionHeader
               title={
@@ -66,7 +68,7 @@ export const SmartInvestments: React.FC = () => {
               fullWidth
             />
 
-           
+
             <div className="w-full">
               <div className="h-auto ">
                 <InfoBox
@@ -93,7 +95,7 @@ export const SmartInvestments: React.FC = () => {
                   transition={{duration: 0.25}}
                   className="bg-(--bg-main) border border-[#262626] rounded-[8px] px-5 sm:px-6 py-3 sm:py-4 flex flex-col justify-start gap-4 hover:border-[#703BF7]/40 transition-all duration-300"
                 >
-                  
+
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 shrink-0 flex items-center justify-center">
                       <img
@@ -107,7 +109,7 @@ export const SmartInvestments: React.FC = () => {
                     </h3>
                   </div>
 
-                
+
                   <p className="text-[15px] sm:text-base font-normal text-[#999999] leading-[150%]">
                     {service.description}
                   </p>
