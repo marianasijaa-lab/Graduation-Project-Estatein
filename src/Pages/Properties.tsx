@@ -14,9 +14,9 @@ const ProperityPage = () => {
                 description="Welcome to Estatein, where your dream property awaits in every corner of our beautiful world.
                         Explore our curated selection of properties, each offering a unique story and a chance to redefine your life.
                         With categories to suit every dreamer, your journey"
-                className="pb-24 lg:pb-32"
+                className="pb-8 lg:pb-32"
             />
-            <PropitySearchSection className="-mt-10 lg:-mt-20" />
+            <PropitySearchSection className="lg:-mt-20" />
             <section className="w-full">
               <div className="site-container py-8 sm:py-10 lg:py-14">
                 <SectionHeader title='Discover a World of Possibilities' subtitle='Our portfolio of properties is as diverse as your dreams. Explore the following categories to find the perfect property that resonates with your vision of home' />
@@ -36,20 +36,23 @@ const ProperityPage = () => {
                         { name: 'budget', label: 'Budget', type: 'dropdown', placeholder: 'Select Budget', options: ['$100k-$500k', '$500k+'], colSpan: 2 },
                         {
                             name: 'prefNumber',
-                          label: 'Preferred Contact Method',
+                            label: 'Preferred Contact Method',
                             type: 'input',
                             placeholder: 'Enter Your Number',
                             icon: MdCall,
                             hasDot: true,
-                            dotSelected: true
+                            dotSelected: true,
+                            colSpan: 1,
                         },
                         {
                             name: 'prefEmail',
+                            label: ' ',
                             type: 'input',
                             placeholder: 'Enter Your Email',
                             icon: MdEmail,
                             hasDot: true,
-                            dotSelected: false
+                            dotSelected: false,
+                            colSpan: 1,
                         },
                     ]}
                 />

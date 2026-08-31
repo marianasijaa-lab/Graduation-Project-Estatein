@@ -121,17 +121,15 @@ const propertiesSlice = createSlice({
     syncProperties(state, action: PayloadAction<FirestoreProperty[]>) {
       // Sort by order field if present, fallback to prop-N id pattern, then alphabetical
       const sortedData = [...action.payload].sort((a, b) => {
-        const aOrder = (a as { order?: number }).order;
-        const bOrder = (b as { order?: number }).order;
-        if (aOrder !== undefined && bOrder !== undefined) return aOrder - bOrder;
-        if (aOrder !== undefined) return -1;
-        if (bOrder !== undefined) return 1;
+        if (a.order !== undefined && b.order !== undefined) return a.order - b.order;
+        if (a.order !== undefined) return -1;
+        if (b.order !== undefined) return 1;
         const aId = typeof a.id === 'string' ? a.id : '';
         const bId = typeof b.id === 'string' ? b.id : '';
         const aNum = parseInt(aId.replace('prop-', ''), 10);
         const bNum = parseInt(bId.replace('prop-', ''), 10);
         if (!Number.isNaN(aNum) && !Number.isNaN(bNum)) return aNum - bNum;
-        return a.id.localeCompare(b.id);
+        return aId.localeCompare(bId);
       });
       state.data   = sortedData;
       state.status = 'succeeded';

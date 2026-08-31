@@ -37,6 +37,7 @@ interface PropertyFormState {
   amenities: string[];
   featured: boolean;
   currency: string;
+  order: string;
 }
 
 type PropertyFormErrors = Partial<Record<keyof PropertyFormState, string>>;
@@ -60,6 +61,7 @@ function buildInitialState(initialData?: FirestoreProperty): PropertyFormState {
       amenities: [],
       featured: false,
       currency: CURRENCY_OPTIONS[0],
+      order: "",
     };
   }
   return {
@@ -79,6 +81,7 @@ function buildInitialState(initialData?: FirestoreProperty): PropertyFormState {
     amenities: initialData.amenities ?? [],
     featured: initialData.featured ?? false,
     currency: initialData.currency ?? CURRENCY_OPTIONS[0],
+    order: initialData.order !== undefined ? String(initialData.order) : "",
   };
 }
 
@@ -228,6 +231,7 @@ export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: Prop
       amenities: values.amenities,
       featured: values.featured,
       currency: values.currency,
+      order: values.order.trim() ? Number(values.order) : undefined,
     };
 
     onSubmit(payload);
@@ -523,6 +527,25 @@ export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: Prop
                 className={fieldClass}
               />
               {errors.buildYear && <p className={errorClass}>{errors.buildYear}</p>}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label className={labelClass} htmlFor="pf-order">Display Order (optional)</label>
+              <input
+                id="pf-order"
+                type="number"
+                min="1"
+                step="1"
+                placeholder="e.g. 1"
+                value={values.order}
+                onChange={(e) => setField("order", e.target.value)}
+                className={fieldClass}
+              />
+              <p className={`mt-1.5 text-xs ${isDark ? "text-gray" : "text-gray-500"}`}>
+                Lower numbers appear first. Leave empty to sort automatically.
+              </p>
             </div>
           </div>
 

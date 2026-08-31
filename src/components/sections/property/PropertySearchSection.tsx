@@ -90,11 +90,11 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({ onSearchSub
         >
             <div className="site-container flex flex-col items-center" ref={containerRef}>
 
-                {/* ===== MOBILE: container موحد ===== */}
-                <div className='w-full block lg:hidden border rounded-2xl p-3 shadow-2xl transition-colors bg-(--bg-secondary) border-bg-gray-1'>
+                {/* ===== MOBILE ===== */}
+                <div className="w-full flex flex-col gap-3 lg:hidden">
 
-                    {/* Search bar موبايل */}
-                    <div className='w-full flex items-center justify-between border rounded-xl px-3 py-2 mb-3 transition-colors bg-(--bg-main) border-bg-gray-1'>
+                    {/* Search bar — container منفصل */}
+                    <div className="w-full flex items-center justify-between px-3 py-2" style={{ background: 'var(--bg-main)', border: '1px solid #262626', boxShadow: '0px 0px 0px 4px #191919', borderRadius: '12px' }}>
                         <input
                             type="text"
                             value={searchTerm}
@@ -104,14 +104,14 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({ onSearchSub
                         />
                         <button
                             onClick={handleSearch}
-                            className="shrink-0 ml-2 w-11 h-11 flex items-center justify-center bg-primary text-white rounded-xl hover:opacity-90 transition-all cursor-pointer"
+                            className="shrink-0 ml-3 w-12 h-10 flex items-center justify-center bg-primary text-(--text-main) rounded-lg hover:opacity-90 transition-all cursor-pointer"
                         >
                             <FiSearch className="text-lg" />
                         </button>
                     </div>
 
-                    {/* Filters موبايل — عمود واحد أو اثنين */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    {/* Filters — container منفصل */}
+                    <div className='w-full flex flex-col gap-2 border rounded-2xl p-3 shadow-xl transition-colors bg-(--bg-secondary) border-bg-gray-1' >
                         {[
                             { id: 'location', label: 'Location', icon: FiMapPin, options: FILTER_OPTIONS.location },
                             { id: 'propertyType', label: 'Property Type', icon: HiHomeModern, options: FILTER_OPTIONS.propertyType },
@@ -126,9 +126,9 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({ onSearchSub
                                 <div key={filter.id} className="relative w-full">
                                     <div
                                         onClick={() => toggleDropdown(filter.id)}
-                                        className='w-full flex items-center justify-between border rounded-xl px-3.5 py-3.5 cursor-pointer transition-colors bg-(--bg-main) border-bg-gray-1'
+                                        className={`w-full flex items-center justify-between border rounded-xl px-4 py-3.5 cursor-pointer transition-colors ${isDark ? 'bg-bg-dark-1 border-bg-gray-1' : 'bg-white border-gray-200'}`}
                                     >
-                                        <div className="flex items-center gap-2.5">
+                                        <div className="flex items-center gap-3">
                                             <Icon className='shrink-0 text-base text-gray-400' />
                                             <div className='w-px h-4 bg-bg-gray-1' />
                                             <span className='text-sm text-gray-300'>
@@ -163,6 +163,7 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({ onSearchSub
                             );
                         })}
                     </div>
+
                 </div>
 
                 {/* ===== DESKTOP: التصميم الأصلي ===== */}

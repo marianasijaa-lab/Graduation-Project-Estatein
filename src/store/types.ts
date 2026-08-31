@@ -25,6 +25,7 @@ export interface FirestoreProperty {
   images?: string[];
   featured?: boolean;
   currency?: string;
+  order?: number;
   createdAt?: string;
 }
 

@@ -156,17 +156,21 @@ export const ContactForm: React.FC<ContactFormProps> = ({
         {extraFields.map((field) => {
           let spanClass = '';
           if (field.colSpan === 2) spanClass = 'col-span-1 sm:col-span-2 md:col-span-2';
+          else if (field.colSpan === 1) spanClass = 'col-span-1';
           else if (field.readOnly || field.type === 'textarea' || field.type === 'radio-input') spanClass = 'col-span-full';
           const IconComponent = field.icon;
           return (
             <div key={field.name} className={spanClass}>
-              {field.label && <label className={labelClass}>{field.label}</label>}
+              {field.label && (
+                <label className={labelClass} style={{ visibility: field.label.trim() === '' ? 'hidden' : 'visible' }}>
+                  {field.label.trim() || 'placeholder'}
+                </label>
+              )}
 
               {field.type === 'input' && (
                 <div className="relative flex items-center">
-                  {/* الأيقونة اليسارية من React Icons */}
                   {IconComponent && (
-                    <IconComponent className="absolute left-5 text-gray-400 text-lg pointer-events-none" />
+                    <IconComponent className="absolute left-5 text-white text-lg pointer-events-none" />
                   )}
 
                   <input
@@ -205,7 +209,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                     autoComplete="off"
                     value={formData[field.name] || ''}
                     onChange={(e) => handleChange(field.name, e.target.value)}
-                    className={`w-full py-4 pr-12 rounded-xl border outline-none transition-all appearance-none cursor-pointer text-sm md:text-[13px] lg:text-sm ${inputBgClass.replace('text-(--text-main)', 'text-[#666666]')} ${IconComponent ? 'pl-12' : 'pl-5'
+                    className={`w-full py-4 pr-12 rounded-xl border outline-none transition-all appearance-none cursor-pointer text-sm md:text-[13px] lg:text-sm ${formData[field.name] ? inputBgClass : inputBgClass.replace('text-(--text-main)', 'text-[#666666]')} ${IconComponent ? 'pl-12' : 'pl-5'
                       }`}
                   >
                     <option value="" disabled className="text-[#666666]">
