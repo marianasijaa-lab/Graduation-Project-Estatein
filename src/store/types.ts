@@ -37,6 +37,7 @@ export interface FirestoreCompany {
   domain: string;
   category: string;
   testimony: string;
+  order?: number;
 }
 
 // ── Stats (Realtime Database path: /stats) ──────────────────────────────────
@@ -58,6 +59,7 @@ export interface FirestoreAchievement {
   id: string;
   title: string;
   description: string;
+  order?: number;
 }
 
 // ── FAQs (Firestore collection: "faqs") ──────────────────────────────────────
@@ -130,6 +132,7 @@ export interface FirestoreTestimonial {
   description: string;       // testimonial body
   rating: number;            // 1 - 5
   position?: string;         // job title (optional)
+  order?: number;            // display order in the UI
   createdAt?: string;
 }
 
@@ -194,15 +197,15 @@ export interface FirestoreContactInfo {
 export interface FirestoreOffice {
   id: string;
   name: string;             // office name
-  address: string;          // full address
+  address: string;
   city: string;
   country: string;
   phone: string;
   email: string;
-  type: 'Regional' | 'International' | 'Local';  // for tab filtering
+  type: string;  // for tab filtering — any value is valid
+  image?: string;
   latitude?: number;
   longitude?: number;
-  image?: string;         
   description?: string;      
   directionsUrl?: string;     
   order?: number;            

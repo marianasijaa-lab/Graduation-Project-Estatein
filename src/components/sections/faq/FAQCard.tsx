@@ -32,6 +32,7 @@ export const FAQCard = ({ question, description, onReadMore }: FAQCardProps) => 
           text="Read More"
           variant="secondary"
           onClick={onReadMore}
+          className="w-full md:w-auto md:px-[18px] md:py-[12px] md:text-[16px] max-sm:text-[14px]"
         />
       </div>
 

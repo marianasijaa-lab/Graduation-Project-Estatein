@@ -8,6 +8,7 @@ import {
 } from '../store/slices/officesSlice';
 import { subscribeToCollection } from '../api/firestore';
 import type { FirestoreOffice } from '../store/types';
+import { filterOfficesByType } from '../components/OfficeLocations/officeFilters';
 
 export function useOffices() {
   const dispatch = useAppDispatch();
@@ -30,7 +31,7 @@ export function useOffices() {
   }, [dispatch]);
 
   const filteredOffices = useMemo(
-    () => (activeTab === 'All' ? data : data.filter((o) => o.type === activeTab)),
+    () => filterOfficesByType(data, activeTab),
     [data, activeTab],
   );
 

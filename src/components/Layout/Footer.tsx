@@ -100,7 +100,7 @@ const Footer = () => {
       transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
       className="bg-(--bg-main) text-(--text-main)"
     >
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8 items-start pb-12 pt-14 px-4 sm:px-8 md:px-11">
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr] lg:grid-cols-[1fr_2fr] gap-8 items-start pb-12 pt-14 px-4 sm:px-8 md:px-10 lg:px-11">
         <motion.div
           initial={{ opacity: 0, x: -24 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -109,13 +109,13 @@ const Footer = () => {
         >
           <div className="flex items-center mb-4">
             <img src="/assets/logo_icon.png" alt="" className="w-9 h-9 object-contain transition-transform duration-300 group-hover:scale-105" />
-            <h2 className="ml-2 font-semibold text-lg md:text-xl">Estatein</h2>
+            <h2 className="ml-2 font-semibold text-lg lg:text-xl">Estatein</h2>
           </div>
           <form onSubmit={handleSubscribe} className="relative w-full">
             <img
               src="/assets/icon_6.png"
               alt="icon6"
-              className="absolute left-4 top-[26px] w-4 h-3.5 md:h-5 md:w-5 -translate-y-1/2 pointer-events-none"
+              className="absolute left-4 top-[26px] w-4 h-3.5 lg:h-5 lg:w-5 -translate-y-1/2 pointer-events-none"
             />
 
             <input
@@ -129,7 +129,7 @@ const Footer = () => {
               }}
               disabled={subscribeStatus === "submitting"}
               aria-label="Email address for newsletter"
-              className="text-sm md:text-base w-full md:w-[80%] rounded-lg border border-bg-gray-1 py-4 pl-12 pr-12 placeholder:text-gray bg-(--bg-secondary) text-(--text-main) transition-colors duration-300 disabled:opacity-60"
+              className="text-sm lg:text-base w-full lg:w-[80%] rounded-lg border border-bg-gray-1 py-4 pl-12 pr-12 placeholder:text-gray bg-(--bg-secondary) text-(--text-main) transition-colors duration-300 disabled:opacity-60"
               style={{
                 WebkitTextFillColor: 'var(--text-main)',
                 backgroundColor: 'var(--bg-secondary)',
@@ -142,13 +142,13 @@ const Footer = () => {
               type="submit"
               disabled={subscribeStatus === "submitting"}
               aria-label="Subscribe to the newsletter"
-              className="absolute right-4 md:right-[100px] top-[26px] -translate-y-1/2 cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
+              className="absolute right-4 lg:right-[calc(20%+1rem)] top-[26px] -translate-y-1/2 cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
             >
               <img
                 src="/assets/Icon_5.png"
                 alt=""
                 style={{ filter: 'var(--icon-filter)' }}
-                className="w-4 h-4 md:h-5 md:w-5 transition-all duration-300"
+                className="w-4 h-4 lg:h-5 lg:w-5 transition-all duration-300"
               />
             </button>
 
@@ -163,8 +163,8 @@ const Footer = () => {
           </form>
         </motion.div>
 
-        {/* ── Links: Desktop (md+) ── */}
-        <StaggerContainer className="hidden md:grid md:grid-cols-5 gap-x-10 gap-y-0" staggerDelay={0.08}>
+        {/* ── Links: Desktop (lg+) ── */}
+        <StaggerContainer className="hidden lg:grid lg:grid-cols-5 gap-x-10 gap-y-0" staggerDelay={0.08}>
           {footerLinks.map((section) => (
             <motion.div key={section.title} variants={staggerItem} className="flex flex-col gap-3">
               <h3 className="font-medium text-gray text-base lg:text-xl">{section.title}</h3>
@@ -181,8 +181,8 @@ const Footer = () => {
           ))}
         </StaggerContainer>
 
-        {/* ── Links: Mobile (< md) ── */}
-        <div className="relative flex flex-col md:hidden">
+        {/* ── Links: Mobile (< lg) ── */}
+        <div className="relative flex flex-col lg:hidden">
 
           {/* خط شاقولي علوي (Row 1 فقط) */}
           <div
@@ -253,10 +253,10 @@ const Footer = () => {
         </div>
       </div>
       <div
-        className="flex flex-col md:flex-row justify-between items-center pt-8 pb-8 mt-10 transition-colors duration-300"
+        className="flex flex-col lg:flex-row justify-between items-center pt-8 pb-8 mt-10 transition-colors duration-300"
         style={{ backgroundColor: '#1A1A1A' }}
       >
-        <div className="flex order-1 md:order-2 pb-6 md:pb-0 px-4 sm:px-8 md:px-11">
+        <div className="flex order-1 lg:order-2 pb-6 lg:pb-0 px-4 sm:px-8 lg:px-11">
           {socialLinks.map((link) => {
             const Icon = SOCIAL_ICON[link.platform];
             return (
@@ -276,7 +276,7 @@ const Footer = () => {
             );
           })}
         </div>
-        <div className="flex md:flex-row flex-col text-center order-2 md:order-1 px-4 sm:px-8 md:px-11">
+        <div className="flex md:flex-row flex-col text-center order-2 md:order-1 px-4 sm:px-8 md:px-10 lg:px-11">
           <p className="pr-6">@2023 Estatein. All Rights Reserved.</p>
           <p>Terms & Conditions</p>
         </div>

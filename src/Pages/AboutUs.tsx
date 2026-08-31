@@ -8,6 +8,8 @@ import { useAchievements } from '../hooks/useAchievements';
 import { useValues } from '../hooks/useValues';
 import { motion } from 'framer-motion';
 import { StaggerContainer, staggerItem } from '../components/common/StaggerContainer';
+import { NavigatingTheEstatein } from '../components/NavigatingTheEstatein';
+import MeetTheEstaein from '../components/MeetTheEstaein';
 
 // Our Achievements Section
 
@@ -29,7 +31,7 @@ const OurAchievements: React.FC = () => {
         />
 
         {/* Cards grid */}
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
           {achievements.map((item) => (
             <motion.div
               key={item.id}
@@ -42,12 +44,13 @@ const OurAchievements: React.FC = () => {
               }}
             >
               <h3
-                className={`font-semibold sm:text-lg md:text-2xl ${isDark ? "text-white" : "text-gray-900"}`}
+                className={`font-semibold sm:text-lg lg:text-2xl ${isDark ? "text-white" : "text-gray-900"}`}
               >
                 {item.title}
               </h3>
               <p
-                className={` sm:text-sm md:text-base   ${isDark ? "text-gray-400" : "text-gray-500"}`}
+                className="sm:text-sm lg:text-base"
+                style={{ color: "#999999" }}
               >
                 {item.description}
               </p>
@@ -179,6 +182,8 @@ const AboutUs: React.FC = () => {
       />
       <OurValues />
       <OurAchievements />
+       <NavigatingTheEstatein/>
+      <MeetTheEstaein/>
       <OurValuedClients />
     </main>
   );

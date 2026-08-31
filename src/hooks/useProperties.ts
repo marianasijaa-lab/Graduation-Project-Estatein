@@ -21,13 +21,12 @@ export function useProperties() {
     const unsubscribe = subscribeToCollection<FirestoreProperty>(
       'properties',
       (docs) => dispatch(syncProperties(docs)),
-      (err)  => dispatch(setPropertiesError(err.message)),
+      (err) => dispatch(setPropertiesError(err.message)),
       FALLBACK_PROPERTIES,
     );
 
     return () => unsubscribe();
-  // status يكون 'idle' مرة واحدة فقط عند أول تحميل
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   return { properties: data, status, error };

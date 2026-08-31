@@ -49,10 +49,10 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
                 />
             )}
 
-      <FadeInSection direction="up" className="site-container relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
+      <FadeInSection direction="up" className="site-container relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 lg:gap-16">
         <div className="max-w-6xl text-left lg:text-left mx-0 space-y-3">
           {title && (
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight leading-snug">
+            <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-semibold tracking-tight leading-snug">
               {title}
             </h2>
           )}
@@ -65,7 +65,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
           </p>
         </div>
 
-        <div className="shrink-0 w-full sm:w-auto flex justify-start lg:justify-end">
+        <div className="shrink-0 w-full sm:w-auto md:w-auto flex justify-start md:justify-end lg:justify-end">
           {renderButton ? (
             renderButton()
           ) : (

@@ -43,7 +43,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="site-container h-20 sm:h-24 flex items-center justify-between gap-4">
         <Logo onClick={() => handleNavClick("home")} />
 
-        <nav className="hidden md:flex items-center gap-2 bg-[#1A1A1A] border border-bg-gray-1 rounded-xl p-1.5 shadow-inner">
+        <nav className="hidden lg:flex items-center gap-2 bg-[#1A1A1A] border border-bg-gray-1 rounded-xl p-1.5 shadow-inner">
           {NAV_ITEMS.map((item, index) => {
             const isActive = activePage === item.id;
             return (
@@ -86,7 +86,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2.5 rounded-xl bg-[#1A1A1A] border border-bg-gray-1 text-white cursor-pointer"
+            className="lg:hidden p-2.5 rounded-xl bg-[#1A1A1A] border border-bg-gray-1 text-white cursor-pointer"
           >
             <motion.div
               animate={{ rotate: mobileMenuOpen ? 90 : 0 }}
@@ -109,7 +109,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-            className="md:hidden overflow-hidden border-t border-bg-gray-1 bg-[#1A1A1A] px-4 py-6 space-y-3"
+            className="lg:hidden overflow-hidden border-t border-bg-gray-1 bg-[#1A1A1A] px-4 py-6 space-y-3"
           >
             <div className="flex flex-col space-y-2">
               {NAV_ITEMS.map((item, index) => (

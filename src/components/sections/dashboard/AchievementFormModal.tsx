@@ -74,7 +74,7 @@ export const AchievementFormModal = ({ mode, initialData, onClose, onSubmit }: A
 
   return (
     <div
-      className="fixed inset-0 z-70 flex items-start sm:items-center justify-center bg-black/60 px-4 py-6 overflow-y-auto"
+      className="modal-scroll fixed inset-0 z-70 flex items-start sm:items-center justify-center bg-black/60 px-4 py-6 overflow-y-auto"
       role="dialog"
       aria-modal="true"
       aria-labelledby="achievement-form-title"
@@ -109,7 +109,7 @@ export const AchievementFormModal = ({ mode, initialData, onClose, onSubmit }: A
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className="px-6 sm:px-8 py-6 space-y-6 max-h-[70vh] overflow-y-auto"
+          className="modal-scroll px-6 sm:px-8 py-6 space-y-6 max-h-[70vh] overflow-y-auto"
         >
           <div>
             <label className={labelClass} htmlFor="af-title">Title</label>

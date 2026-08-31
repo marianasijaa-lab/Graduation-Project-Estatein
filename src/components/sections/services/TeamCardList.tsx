@@ -1,5 +1,4 @@
-import { motion } from "framer-motion";
-import { StaggerContainer, staggerItem } from "./common/StaggerContainer";
+
 
 
 interface TeamMember {
@@ -18,12 +17,9 @@ interface TeamCardsListProps {
 
 export const TeamCardsList = ({ members,hello }:TeamCardsListProps) => {
   return (
-    <StaggerContainer className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 2xl:gap-[30px]">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 2xl:gap-[30px]">
       {members.map((member) => (
-        <motion.div 
-          variants={staggerItem}
-          whileHover={{y: -4}}
-          transition={{duration: 0.25}}
+        <div 
           key={member.id} 
           className=" relative border border-bg-gray-1 rounded-xl  max-sm:p-5 max-2xl:p-6 2xl:p-[30px] flex flex-col items-center text-center"
         >
@@ -61,8 +57,8 @@ export const TeamCardsList = ({ members,hello }:TeamCardsListProps) => {
               />
             </div>
           </div>
-        </motion.div>
+        </div>
       ))}
-    </StaggerContainer>
+    </div>
   );
 };

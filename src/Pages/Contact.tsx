@@ -4,15 +4,11 @@ import OfficeLocations from "../components/OfficeLocations/OfficeLocations";
 import PageHero from "../components/sections/hero/PageHero";
 import TeamCard from "../components/TeamCard/TeamCard";
 import { ContactForm } from "../components/sections/contact/ContactForm";
-import { useServices } from "../hooks/useServices";
-import { LoadingSkeleton } from "../components/ui/LoadingSkeleton";
-import { ErrorMessage } from "../components/ui/ErrorMessage";
-// import { OfficesSection } from "../components/sections/contact/OfficesSection";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { firestoreDb } from "../firebase/config";
 import { StaggerContainer } from "../components/common/StaggerContainer";
 import ServiceCard from "../components/sections/services/ServiceCard";
 import { services } from "../data/contactData";
+import { addDocument } from "../api/firestore";
+import type { FirestoreContact } from "../store/types";
 
 type SubmitStatus = "idle" | "submitting" | "submitted" | "error";
 
@@ -50,8 +46,8 @@ const Contact = () => {
 
       {/* Services Bar with Animation */}
       <section
-        className="w-full bg-(--bg-secondary) border border-(--color-border) py-1 sm:py-2 transition-colors duration-300"
-        style={{ boxShadow: '0px 0px 0px 6px var(--bg-main)' }}
+        className="w-full bg-bg-dark-1 border border-bg-gray-1 py-1 sm:py-2"
+        style={{ boxShadow: '0px 0px 0px 6px #191919' }}
       >
         <div className="w-full mx-auto px-2 sm:px-1 lg:px-2">
           <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">

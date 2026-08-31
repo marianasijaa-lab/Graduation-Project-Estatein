@@ -3,6 +3,7 @@ import { SectionHeader } from '../../common/SectionHeader';
 import { InfoBox } from '../infobox/InfoBox';
 import { motion } from 'framer-motion';
 import { StaggerContainer, staggerItem } from '../../common/StaggerContainer';
+import { useUnlockPropertyValue } from '../../../hooks/useUnlockPropertyValue';
 
 interface ServiceItem {
   id: string;
@@ -39,7 +40,7 @@ const unlockServices: ServiceItem[] = [
 ];
 
 export const UnlockPropertyValue: React.FC = () => {
-  const { unlockPropertyValue: cards } = useUnlockPropertyValue();
+  useUnlockPropertyValue();
 
   return (
     <section className="w-full bg-bg-dark-1 border-t border-bg-gray-1 py-16 sm:py-20 lg:py-24">

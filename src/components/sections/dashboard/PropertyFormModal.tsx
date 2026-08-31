@@ -4,8 +4,8 @@ import { FiUploadCloud } from "react-icons/fi";
 import { useTheme } from "../../../Context/ThemeContext";
 import { Button } from "../../ui/Button";
 import type { FirestoreProperty } from "../../../store/types";
+import { uploadImage, ImageUploadError } from "../../../api/storage";
 
-const MAX_IMAGE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
 const MIN_BUILD_YEAR = 1800;
 const MAX_BUILD_YEAR = new Date().getFullYear();
 
@@ -144,57 +144,38 @@ export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: Prop
 
   const [values, setValues] = useState<PropertyFormState>(() => buildInitialState(initialData));
   const [errors, setErrors] = useState<PropertyFormErrors>({});
+  const [isUploading, setIsUploading] = useState(false);
   const [amenityInput, setAmenityInput] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
-  // Tracks the object URL created for a locally-picked image, so it can be revoked.
-  const createdObjectUrlRef = useRef<string | null>(null);
 
   const setField = <K extends keyof PropertyFormState>(field: K, value: PropertyFormState[K]) => {
     setValues((prev) => ({ ...prev, [field]: value }));
   };
 
-  useEffect(() => {
-    // Revoke the object URL on unmount to avoid a memory leak.
-    return () => {
-      if (createdObjectUrlRef.current) {
-        URL.revokeObjectURL(createdObjectUrlRef.current);
-      }
-    };
-  }, []);
+  // No object URLs are created anymore — cleanup effect removed.
+  useEffect(() => {}, []);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    // Reset the input so picking the same file again still fires onChange.
     e.target.value = "";
     if (!file) return;
 
-    if (!file.type.startsWith("image/")) {
-      setErrors((prev) => ({ ...prev, image: "Please select an image file." }));
-      return;
-    }
-    if (file.size > MAX_IMAGE_SIZE_BYTES) {
-      setErrors((prev) => ({ ...prev, image: "Image must be 5MB or smaller." }));
-      return;
-    }
-
-    if (createdObjectUrlRef.current) {
-      URL.revokeObjectURL(createdObjectUrlRef.current);
-    }
-
-    // No backend yet, so the file is kept as a local object URL only.
-    const objectUrl = URL.createObjectURL(file);
-    createdObjectUrlRef.current = objectUrl;
-
-    setField("image", objectUrl);
+    setIsUploading(true);
     setErrors((prev) => ({ ...prev, image: undefined }));
+
+    try {
+      const url = await uploadImage(file, "properties");
+      setField("image", url);
+    } catch (err) {
+      const message = err instanceof ImageUploadError ? err.message : "Upload failed. Please try again.";
+      setErrors((prev) => ({ ...prev, image: message }));
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleRemoveImage = () => {
-    if (createdObjectUrlRef.current) {
-      URL.revokeObjectURL(createdObjectUrlRef.current);
-      createdObjectUrlRef.current = null;
-    }
     setField("image", "");
   };
 
@@ -262,7 +243,7 @@ export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: Prop
 
   return (
     <div
-      className="fixed inset-0 z-70 flex items-start sm:items-center justify-center bg-black/60 px-4 py-6 overflow-y-auto"
+      className="modal-scroll fixed inset-0 z-70 flex items-start sm:items-center justify-center bg-black/60 px-4 py-6 overflow-y-auto"
       role="dialog"
       aria-modal="true"
       aria-labelledby="property-form-title"
@@ -297,7 +278,7 @@ export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: Prop
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className="px-6 sm:px-8 py-6 space-y-6 max-h-[70vh] overflow-y-auto"
+          className="modal-scroll px-6 sm:px-8 py-6 space-y-6 max-h-[70vh] overflow-y-auto"
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
@@ -353,7 +334,8 @@ export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: Prop
             <button
               type="button"
               onClick={() => imageInputRef.current?.click()}
-              className={`flex flex-col items-center justify-center gap-2 w-full py-6 px-4 rounded-xl border border-dashed text-center transition-colors cursor-pointer ${
+              disabled={isUploading}
+              className={`flex flex-col items-center justify-center gap-2 w-full py-6 px-4 rounded-xl border border-dashed text-center transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed ${
                 isDark
                   ? "border-bg-gray-1 text-gray hover:border-primary hover:text-white"
                   : "border-gray-300 text-gray-500 hover:border-primary hover:text-gray-700"
@@ -361,7 +343,7 @@ export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: Prop
             >
               <FiUploadCloud className="w-5 h-5" />
               <span className="text-sm font-medium">
-                {values.image ? "Change Image" : "Click to upload an image"}
+                {isUploading ? "Uploading…" : values.image ? "Change Image" : "Click to upload an image"}
               </span>
             </button>
             <input
@@ -615,7 +597,7 @@ export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: Prop
             Cancel
           </button>
           <Button
-            text={mode === "add" ? "Add Property" : "Save Changes"}
+            text={isUploading ? "Uploading…" : mode === "add" ? "Add Property" : "Save Changes"}
             variant="primary"
             type="submit"
             onClick={() => formRef.current?.requestSubmit()}

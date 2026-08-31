@@ -89,12 +89,12 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({ onSearchSub
     return (
         <FadeInSection
             direction="up"
-            className={`w-full pt-6 pb-10 px-4 md:px-8 lg:px-16 transition-colors duration-300 relative z-10 ${isDark ? 'bg-transparent text-white' : 'bg-transparent text-gray-900'} ${className}`}
+            className={`w-full pt-6 pb-10 px-4 lg:px-8 xl:px-16 transition-colors duration-300 relative z-10 ${isDark ? 'bg-transparent text-white' : 'bg-transparent text-gray-900'} ${className}`}
         >
             <div className="site-container flex flex-col items-center" ref={containerRef}>
 
                 {/* ===== MOBILE: container موحد ===== */}
-                <div className={`w-full block md:hidden border rounded-2xl p-3 shadow-2xl transition-colors ${isDark ? 'bg-bg-dark border-bg-gray-1' : 'bg-gray-400 border-gray-200'}`}>
+                <div className={`w-full block lg:hidden border rounded-2xl p-3 shadow-2xl transition-colors ${isDark ? 'bg-bg-dark border-bg-gray-1' : 'bg-gray-400 border-gray-200'}`}>
 
                     {/* Search bar موبايل */}
                     <div className={`w-full flex items-center justify-between border rounded-xl px-3 py-2 mb-3 transition-colors ${isDark ? 'bg-bg-dark-1 border-bg-gray-1' : 'bg-white border-gray-200'}`}>
@@ -113,8 +113,8 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({ onSearchSub
                         </button>
                     </div>
 
-                    {/* Filters موبايل — عمود واحد */}
-                    <div className="flex flex-col gap-2">
+                    {/* Filters موبايل — عمود واحد أو اثنين */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                         {[
                             { id: 'location', label: 'Location', icon: FiMapPin, options: FILTER_OPTIONS.location },
                             { id: 'propertyType', label: 'Property Type', icon: HiHomeModern, options: FILTER_OPTIONS.propertyType },
@@ -169,7 +169,7 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({ onSearchSub
                 </div>
 
                 {/* ===== DESKTOP: التصميم الأصلي ===== */}
-                <div className="hidden md:flex w-full flex-col items-center">
+                <div className="hidden lg:flex w-full flex-col items-center">
 
                     {/* Search bar ديسكتوب */}
                     <div className={`w-full max-w-4xl border border-b-0 rounded-t-2xl p-2.5 transition-colors ${isDark ? 'bg-bg-dark border-bg-gray-1' : 'bg-gray-400 border-gray-200'}`}>
@@ -180,7 +180,7 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({ onSearchSub
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                     placeholder="Search For A Property"
-                                    className={`w-full h-13 bg-transparent focus:outline-none text-sm md:text-base ${isDark ? 'text-white placeholder-gray-500' : 'text-gray-900 placeholder-gray-700'}`}
+                                    className={`w-full h-13 bg-transparent focus:outline-none text-sm lg:text-base ${isDark ? 'text-white placeholder-gray-500' : 'text-gray-900 placeholder-gray-700'}`}
                                 />
                             </div>
                             <div className="shrink-0">

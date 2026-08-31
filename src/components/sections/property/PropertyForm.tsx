@@ -22,42 +22,15 @@ const initialFormState = {
 
 const PropertyForm = ({
   propertyLocation = "Seaside Serenity Villa, Malibu, California",
-  propertyId,
-  propertyName,
 }: PropertyFormProps) => {
   const [formData, setFormData] = useState(initialFormState);
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>("idle");
-  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitError] = useState<string | null>(null);
 
   const handleChange = (name: keyof typeof initialFormState, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (submitStatus === "submitted" || submitStatus === "error") setSubmitStatus("idle");
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitStatus("submitting");
-    setSubmitError(null);
-    try {
-      await addDocument<FirestoreContact>("contacts", {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        phone: formData.phone,
-        message: formData.message,
-        inquiryType: "Buying",
-        propertyId: propertyId || undefined,
-        propertyName: propertyName || undefined,
-        status: "new",
-      });
-      setFormData(initialFormState);
-      setAgreeTerms(false);
-      setSubmitStatus("submitted");
-    } catch (err) {
-      setSubmitStatus("error");
-      setSubmitError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
-    }
   };
 
   return (

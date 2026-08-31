@@ -280,15 +280,18 @@ const PropertyDescription = ({
                 variants={staggerItem}
                 className="
                   flex
-                  h-[63px]
+                  min-h-[50px]
                   w-full
                   items-center
                   gap-[14px]
                   border-l-[1.5px]
                   border-l-primary
                   bg-bg-dark
-                  px-[22px]
+                  px-[16px]
+                  py-[12px]
+                  sm:min-h-[63px]
                   sm:px-[24px]
+                  sm:py-[10px]
                 "
               >
 
@@ -296,10 +299,12 @@ const PropertyDescription = ({
 
                 <FaBolt
                   className="
-                    h-[20px]
-                    w-[20px]
+                    h-[16px]
+                    w-[16px]
                     shrink-0
                     text-white
+                    sm:h-[20px]
+                    sm:w-[20px]
                   "
                 />
 
@@ -307,13 +312,12 @@ const PropertyDescription = ({
 
                 <p
                   className="
-                   
-                    
-                    text-[15px]
+                    text-[12px]
                     font-medium
-                    leading-[150%]
+                    leading-[140%]
                     text-gray
                     sm:text-[15px]
+                    sm:leading-[150%]
                   "
                 >
                   {feature}

@@ -93,21 +93,26 @@ export const OfficesManagement = () => {
       } else {
         await addDocument<FirestoreOffice>("offices", values);
       }
+      setFormModal(null);
     } catch (error) {
       console.error("Failed to save office:", error);
+      alert(`Failed to save: ${error instanceof Error ? error.message : String(error)}`);
     }
-    setFormModal(null);
   };
 
   const confirmDelete = async () => {
     if (deleteTarget) {
       try {
         await deleteDocument("offices", deleteTarget.id);
+        setDeleteTarget(null);
       } catch (error) {
         console.error("Failed to delete office:", error);
+        alert(`Failed to delete: ${error instanceof Error ? error.message : String(error)}`);
+        setDeleteTarget(null);
       }
+    } else {
+      setDeleteTarget(null);
     }
-    setDeleteTarget(null);
   };
 
   const openRowDetail = (office: FirestoreOffice) => setDetailTarget(office);

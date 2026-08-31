@@ -1,19 +1,29 @@
 import { useEffect, useRef, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogOut } from "lucide-react";
 import { Link, NavLink, Outlet, useLocation } from "react-router";
 import { RouteTransitionOverlay } from "../common/RouteTransitionOverlay";
 import {
+  HiOutlineHome,
   HiOutlineBuildingOffice2,
   HiOutlineChevronDown,
   HiOutlineInformationCircle,
   HiOutlineSparkles,
   HiOutlineTrophy,
   HiOutlineUserGroup,
+  HiOutlineChatBubbleLeftRight,
+  HiOutlineQuestionMarkCircle,
+  HiOutlineStar,
+  HiOutlineMapPin,
+  HiOutlineEnvelope,
+  HiOutlinePhone,
+  HiOutlineUsers,
+  HiOutlineWrenchScrewdriver,
 } from "react-icons/hi2";
 import type { IconType } from "react-icons";
 import { Logo } from "../common/Logo";
 import ThemeToggle from "../ui/ThemeToggle";
 import { useTheme } from "../../Context/ThemeContext";
+import { useAuth } from "../../Context/AuthContext";
 
 interface DashboardSectionItem {
   label: string;
@@ -31,10 +41,12 @@ interface DashboardPageGroup {
 // Sidebar groups, by site page.
 const NAV_GROUPS: DashboardPageGroup[] = [
   {
-    label: "Properties",
-    icon: HiOutlineBuildingOffice2,
+    label: "Home",
+    icon: HiOutlineHome,
     sections: [
       { label: "Properties", to: "/dashboard/properties", icon: HiOutlineBuildingOffice2 },
+      { label: "Testimonials", to: "/dashboard/testimonials", icon: HiOutlineStar },
+      { label: "FAQs", to: "/dashboard/faqs", icon: HiOutlineQuestionMarkCircle },
     ],
   },
   {
@@ -44,6 +56,25 @@ const NAV_GROUPS: DashboardPageGroup[] = [
       { label: "Our Values", to: "/dashboard/values", icon: HiOutlineSparkles },
       { label: "Our Achievements", to: "/dashboard/achievements", icon: HiOutlineTrophy },
       { label: "Our Valued Clients", to: "/dashboard/clients", icon: HiOutlineUserGroup },
+    ],
+  },
+  {
+    label: "Services",
+    icon: HiOutlineWrenchScrewdriver,
+    sections: [
+      { label: "Unlock Property Value", to: "/dashboard/unlock-property-value", icon: HiOutlineSparkles },
+      { label: "Effortless Management", to: "/dashboard/effortless-property-management", icon: HiOutlineWrenchScrewdriver },
+      { label: "Smart Investments", to: "/dashboard/smart-investments", icon: HiOutlineTrophy },
+    ],
+  },
+  {
+    label: "Contact",
+    icon: HiOutlineEnvelope,
+    sections: [
+      { label: "Offices", to: "/dashboard/offices", icon: HiOutlineMapPin },
+      { label: "Inquiries", to: "/dashboard/inquiries", icon: HiOutlineChatBubbleLeftRight },
+      { label: "Contact Info", to: "/dashboard/contact-info", icon: HiOutlinePhone },
+      { label: "Subscribers", to: "/dashboard/subscribers", icon: HiOutlineUsers },
     ],
   },
 ];
@@ -73,7 +104,7 @@ interface SidebarLinksProps {
 }
 
 const SidebarLinks = ({ isDark, expandedGroups, onToggleGroup, onNavigate }: SidebarLinksProps) => (
-  <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+  <nav className="sidebar-scroll flex-1 overflow-y-auto px-3 py-4 space-y-1">
     {NAV_GROUPS.map((group) => {
       const GroupIcon = group.icon;
       const isExpanded = expandedGroups.has(group.label);
@@ -135,6 +166,7 @@ const SidebarLinks = ({ isDark, expandedGroups, onToggleGroup, onNavigate }: Sid
 
 export const DashboardLayout = () => {
   const { theme } = useTheme();
+  const { logout } = useAuth();
   const isDark = theme === "dark";
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const sectionLabel = useActiveSectionLabel();
@@ -196,6 +228,16 @@ export const DashboardLayout = () => {
           >
             ← Back to website
           </Link>
+          <button
+            type="button"
+            onClick={logout}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors cursor-pointer ${
+              isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+            }`}
+          >
+            <LogOut className="w-4 h-4 shrink-0" />
+            Log Out
+          </button>
         </div>
       </aside>
 
@@ -240,6 +282,16 @@ export const DashboardLayout = () => {
               >
                 ← Back to website
               </Link>
+              <button
+                type="button"
+                onClick={() => { setMobileNavOpen(false); logout(); }}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors cursor-pointer ${
+                  isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                }`}
+              >
+                <LogOut className="w-4 h-4 shrink-0" />
+                Log Out
+              </button>
             </div>
           </aside>
         </div>

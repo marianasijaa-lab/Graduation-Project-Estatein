@@ -106,7 +106,7 @@ function PropertyCard({
             onClick={onView}
             text="View Property Details"
             variant="primary"
-            className="text-sm px-4 py-3 md:py-3 md:px-5"
+            className="text-sm px-4 py-3 lg:py-3 lg:px-5"
           />
         </div>
       </div>

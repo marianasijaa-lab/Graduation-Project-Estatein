@@ -3,6 +3,7 @@ import { SectionHeader } from '../../common/SectionHeader';
 import { InfoBox } from '../infobox/InfoBox';
 import { motion } from 'framer-motion';
 import { StaggerContainer, staggerItem } from '../../common/StaggerContainer';
+import { useEffortlessPropertyManagement } from '../../../hooks/useEffortlessPropertyManagement';
 
 interface ServiceItem {
   id: string;
@@ -39,7 +40,7 @@ const managementServices: ServiceItem[] = [
 ];
 
 export const EffortlessPropertyManagement: React.FC = () => {
-  const { effortlessPropertyManagement: cards } = useEffortlessPropertyManagement();
+  useEffortlessPropertyManagement();
 
   return (
     <section className="w-full bg-[#141414] border-t border-[#262626] py-16 sm:py-20 lg:py-24">

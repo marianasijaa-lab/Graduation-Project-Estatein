@@ -11,39 +11,43 @@ export const FALLBACK_TESTIMONIALS: FirestoreTestimonial[] = [
     description: "Our experience with Estatein was outstanding. Their team's dedication and professionalism made finding our dream home a breeze. Highly recommended!",
     rating: 5,
     position: 'Software Engineer',
+    order: 1,
     createdAt: new Date().toISOString(),
   },
   {
     id: 'test-2',
-    clientName: 'Arlene McCoy',
+    clientName: 'Emelie Thomson',
     clientImage: '/assets/Profile_2.png',
-    clientLocation: 'USA, New York',
-    title: 'Efficient and Transparent!',
-    description: 'Estatein provided us with top-notch service. They helped us sell our property at a great price and found us our perfect new home. Their transparency and efficiency were remarkable.',
+    clientLocation: 'USA, Florida',
+    title: 'Efficient and Reliable',
+    description: "Estatein provided us with top-notch service. They helped us sell our property quickly and at a great price. We couldn't be happier with the results.",
     rating: 5,
     position: 'Business Owner',
+    order: 2,
     createdAt: new Date().toISOString(),
   },
   {
     id: 'test-3',
-    clientName: 'Devon Lane',
+    clientName: 'John Mans',
     clientImage: '/assets/Profile_3.png',
-    clientLocation: 'USA, Texas',
+    clientLocation: 'USA, Nevada',
     title: 'Trusted Advisors!',
-    description: "Estatein guided us through every step of the buying process. Their knowledge and commitment to our needs made all the difference. We couldn't be happier with our new home.",
+    description: "The Estatein team guided us through the entire buying process. Their knowledge and commitment to our needs were impressive. Thank you for your support!",
     rating: 5,
     position: 'Financial Analyst',
+    order: 3,
     createdAt: new Date().toISOString(),
   },
   {
     id: 'test-4',
     clientName: 'Cameron Williamson',
     clientImage: '/assets/Profile_1.png',
-    clientLocation: 'USA, Florida',
+    clientLocation: 'USA',
     title: 'Stress-Free Experience!',
-    description: 'Estatein made the entire buying process incredibly smooth and stress-free. Their expertise and dedication to client satisfaction is truly commendable. We found our perfect home thanks to them.',
+    description: 'Estatein provided us with top-notch service. They helped us sell our property quickly and at a great price. ',
     rating: 5,
     position: 'Corporate Executive',
+    order: 4,
     createdAt: new Date().toISOString(),
   },
   {
@@ -55,6 +59,7 @@ export const FALLBACK_TESTIMONIALS: FirestoreTestimonial[] = [
     description: 'The team at Estatein went above and beyond to help us find our dream home. Their professionalism, attention to detail, and genuine care for their clients sets them apart from the rest.',
     rating: 5,
     position: 'Entrepreneur',
+    order: 5,
     createdAt: new Date().toISOString(),
   },
 ];
@@ -77,7 +82,9 @@ const testimonialsSlice = createSlice({
   initialState,
   reducers: {
     syncTestimonials(state, action: PayloadAction<FirestoreTestimonial[]>) {
-      state.data   = action.payload;
+      state.data = [...action.payload].sort(
+        (a, b) => (a.order ?? Number.MAX_SAFE_INTEGER) - (b.order ?? Number.MAX_SAFE_INTEGER),
+      );
       state.status = 'succeeded';
       state.error  = null;
     },

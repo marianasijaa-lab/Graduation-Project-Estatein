@@ -1,46 +1,57 @@
-import React, { createContext, useContext, useState } from 'react';
-
-// Cosmetic login gate only — NOT real authentication. It just remembers a
-// "logged in" flag in localStorage so the site stays unlocked across page
-// refreshes. See Login.tsx's handleSubmit for where access is actually granted.
-const AUTH_STORAGE_KEY = 'estatein-logged-in';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { onAuthStateChanged, signOut, type User } from 'firebase/auth';
+import { auth } from '../firebase/config';
 
 interface AuthContextType {
-  /** Whether the login gate is currently unlocked. */
+  /** The currently signed-in Firebase user, or null if not logged in. */
+  user: User | null;
+  /** True while Firebase is still resolving the initial auth state. */
+  loading: boolean;
+  /** Whether the user is authenticated. */
   isAuthenticated: boolean;
-  /** Unlocks the gate and persists that across refreshes. */
-  login: () => void;
-  /** Locks the gate again and returns to the login screen. */
-  logout: () => void;
+  /** Signs out the current Firebase user. */
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Reading localStorage is synchronous, so the flag is known immediately —
-  // no async "loading" step needed like a real auth check would have.
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    () => localStorage.getItem(AUTH_STORAGE_KEY) === 'true',
-  );
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const login = () => {
-    localStorage.setItem(AUTH_STORAGE_KEY, 'true');
-    setIsAuthenticated(true);
-  };
+  useEffect(() => {
+    // auth can be null if Firebase env vars are missing.
+    if (!auth) {
+      setLoading(false);
+      return;
+    }
 
-  const logout = () => {
-    localStorage.removeItem(AUTH_STORAGE_KEY);
-    setIsAuthenticated(false);
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser);
+      setLoading(false);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  const logout = async () => {
+    if (auth) await signOut(auth);
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        isAuthenticated: user !== null,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Reads the current gate state and login/logout actions from context.
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {

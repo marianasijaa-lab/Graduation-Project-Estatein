@@ -14,10 +14,10 @@ export const useSlider=(data:any[],type?:"one" | "two" |"three")=>{
       } else if (width < 768)
         setItemsToShow(1); // Mobile
       else if (width < 1024)
-        setItemsToShow(2); // Tablet
-      else if (type==='two' && width > 1024) // Desktop
-        setItemsToShow(2); 
-      else setItemsToShow(3); // Desktop
+        setItemsToShow(2); // Tablet (md)
+      else if (type === 'two' && width >= 1024)
+        setItemsToShow(2); // Desktop (type two)
+      else setItemsToShow(3); // Desktop lg+
     };
 
     handleResize(); // Set initial value on mount
