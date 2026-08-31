@@ -36,20 +36,23 @@ const ProperityPage = () => {
                         { name: 'budget', label: 'Budget', type: 'dropdown', placeholder: 'Select Budget', options: ['$100k-$500k', '$500k+'], colSpan: 2 },
                         {
                             name: 'prefNumber',
-                          label: 'Preferred Contact Method',
+                            label: 'Preferred Contact Method',
                             type: 'input',
                             placeholder: 'Enter Your Number',
                             icon: MdCall,
                             hasDot: true,
-                            dotSelected: true
+                            dotSelected: true,
+                            colSpan: 1,
                         },
                         {
                             name: 'prefEmail',
+                            label: ' ',
                             type: 'input',
                             placeholder: 'Enter Your Email',
                             icon: MdEmail,
                             hasDot: true,
-                            dotSelected: false
+                            dotSelected: false,
+                            colSpan: 1,
                         },
                     ]}
                 />
