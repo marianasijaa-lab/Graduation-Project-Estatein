@@ -44,7 +44,7 @@ const investmentServices: InvestmentServiceItem[] = [
 
 export const SmartInvestments: React.FC = () => {
   return (
-    <section className="w-full bg-[#141414] border-t border-[#262626] py-16 sm:py-20 lg:py-24">
+    <section className="w-full bg-(--bg-main) border-t border-[#262626] py-16 sm:py-20 lg:py-24">
      
       <div className="site-container">
         
@@ -68,7 +68,7 @@ export const SmartInvestments: React.FC = () => {
 
            
             <div className="w-full">
-              <div className="h-auto">
+              <div className="h-auto ">
                 <InfoBox
                 variant="vertical"
                 title="Unlock Your Investment Potential"
@@ -83,7 +83,7 @@ export const SmartInvestments: React.FC = () => {
           </div>
 
           
-          <div className="lg:col-span-7 xl:col-span-8 rounded-[10px] bg-[#191919] p-1.5 mt-14">
+          <div className="lg:col-span-7 xl:col-span-8 rounded-[10px] bg-(--bg-border) p-1.5 mt-14">
             <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
               {investmentServices.map((service) => (
                 <motion.div
@@ -91,7 +91,7 @@ export const SmartInvestments: React.FC = () => {
                   variants={staggerItem}
                   whileHover={{y: -4}}
                   transition={{duration: 0.25}}
-                  className="bg-[#141414] border border-[#262626] rounded-[8px] px-5 sm:px-6 py-3 sm:py-4 flex flex-col justify-start gap-4 hover:border-[#703BF7]/40 transition-all duration-300"
+                  className="bg-(--bg-main) border border-[#262626] rounded-[8px] px-5 sm:px-6 py-3 sm:py-4 flex flex-col justify-start gap-4 hover:border-[#703BF7]/40 transition-all duration-300"
                 >
                   
                   <div className="flex items-center gap-3">
@@ -102,7 +102,7 @@ export const SmartInvestments: React.FC = () => {
                         className="w-full h-full object-contain"
                       />
                     </div>
-                    <h3 className="font-bold text-white text-lg xl:text-xl font-['Urbanist',sans-serif]">
+                    <h3 className="font-bold text-(--text-main) text-lg xl:text-xl font-['Urbanist',sans-serif]">
                       {service.title}
                     </h3>
                   </div>

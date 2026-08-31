@@ -40,7 +40,7 @@ const unlockServices: ServiceItem[] = [
 
 export const UnlockPropertyValue: React.FC = () => {
   return (
-    <section className="w-full bg-bg-dark-1 border-t border-bg-gray-1 py-16 sm:py-20 lg:py-24">
+    <section className="w-full bg-(--bg-main) border-t border-bg-gray-1 py-16 sm:py-20 lg:py-24">
       {/* Container مطابق لعرض Figma المحدد 1596px */}
       <div className="site-container">
         
@@ -61,7 +61,7 @@ export const UnlockPropertyValue: React.FC = () => {
               variants={staggerItem}
               whileHover={{y: -4}}
               transition={{duration: 0.25}}
-              className="bg-[#141414] border border-[#262626] rounded-[16px] p-5 sm:p-6 flex flex-col justify-start gap-3 hover:border-[#703BF7]/40 transition-all duration-300 lg:h-full lg:min-h-[200px]"
+              className="bg-(--bg-main) border border-[#262626] rounded-[16px] p-5 sm:p-6 flex flex-col justify-start gap-3 hover:border-[#703BF7]/40 transition-all duration-300 lg:h-full lg:min-h-[200px]"
             >
               {/* الصف العلوي: الأيقونة (82px × 82px بدون إطار خارجي) + العنوان */}
               <div className="flex items-center gap-2 sm:gap-3">
@@ -72,7 +72,7 @@ export const UnlockPropertyValue: React.FC = () => {
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <h3 className="font-bold text-white text-lg xl:text-xl font-['Urbanist',sans-serif]">
+                <h3 className="font-bold text-(--text-main) text-lg xl:text-xl font-['Urbanist',sans-serif]">
                   {service.title}
                 </h3>
               </div>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useTheme } from '../../../Context/ThemeContext';
 import { Button } from '../../ui/Button';
 import { FiChevronDown } from 'react-icons/fi';
 import type { IconType } from 'react-icons';
@@ -33,8 +32,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({
   onSubmit,
   isSubmitting = false,
 }) => {
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
 
   const initialFormState: Record<string, any> = {
     firstName: '',
@@ -64,12 +61,9 @@ export const ContactForm: React.FC<ContactFormProps> = ({
     setShowSuccess(true);
   };
 
-  const inputBgClass = isDark
-    ? 'bg-[#1A1A1A] border-[#262626] text-white placeholder-[#666666] focus:border-[#703BF7]'
-    : 'bg-[#F9F9F9] border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#703BF7]';
+  const inputBgClass = "bg-(--bg-secondary) border-[#262626] text-(--text-main) placeholder-[#666666] focus:border-[#703BF7]"
 
-  const labelClass = `block text-sm font-medium mb-2 text-white ${isDark ? '' : 'drop-shadow-sm'
-    }`;
+  const labelClass = "block text-sm font-medium mb-2 text-(--text-main) "
 
   const gridColsClass = {
     2: 'grid-cols-1 sm:grid-cols-2',
@@ -85,8 +79,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
       whileInView={{opacity: 1, y: 0}}
       viewport={{once: true, amount: 0.1}}
       transition={{duration: 0.6, ease: [0.25, 0.1, 0.25, 1]}}
-      className={`autofill-none site-container rounded-2xl p-6 sm:p-10 lg:p-14 border space-y-6 sm:space-y-8 ${isDark ? 'bg-bg-dark-1 border-bg-gray-1' : 'bg-white border-gray-200 shadow-sm'
-        }`}
+      className="autofill-none site-container rounded-2xl p-6 sm:p-10 lg:p-14 border space-y-6 sm:space-y-8 border-bg-gray-1 bg-(--bg-main) shadow-sm"
     >
       <AnimatePresence>
         {showSuccess && (
@@ -113,7 +106,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
             placeholder="Enter First Name"
             value={formData.firstName}
             onChange={(e) => handleChange('firstName', e.target.value)}
-            className={`w-full px-5 py-4 rounded-xl border outline-none transition-all text-white ${inputBgClass}`}
+            className={`w-full px-5 py-4 rounded-xl border outline-none transition-all text-(--text-main) ${inputBgClass}`}
           />
         </div>
 
@@ -127,7 +120,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
             placeholder="Enter Last Name"
             value={formData.lastName}
             onChange={(e) => handleChange('lastName', e.target.value)}
-            className={`w-full px-5 py-4 rounded-xl border outline-none transition-all text-white ${inputBgClass}`}
+            className={`w-full px-5 py-4 rounded-xl border outline-none transition-all text-(--text-main) ${inputBgClass}`}
           />
         </div>
 
@@ -141,7 +134,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
             placeholder="Enter your Email"
             value={formData.email}
             onChange={(e) => handleChange('email', e.target.value)}
-            className={`w-full px-5 py-4 rounded-xl border outline-none transition-all text-white ${inputBgClass}`}
+            className={`w-full px-5 py-4 rounded-xl border outline-none transition-all text-(--text-main) ${inputBgClass}`}
           />
         </div>
 
@@ -155,7 +148,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
             placeholder="Enter Phone Number"
             value={formData.phone}
             onChange={(e) => handleChange('phone', e.target.value)}
-            className={`w-full px-5 py-4 rounded-xl border outline-none transition-all text-white ${inputBgClass}`}
+            className={`w-full px-5 py-4 rounded-xl border outline-none transition-all text-(--text-main) ${inputBgClass}`}
           />
         </div>
 
@@ -183,7 +176,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                     placeholder={field.placeholder}
                     value={formData[field.name] || ''}
                     onChange={(e) => handleChange(field.name, e.target.value)}
-                    className={`w-full py-4 rounded-xl border outline-none transition-all text-white ${inputBgClass} ${IconComponent ? 'pl-12' : 'pl-5'
+                    className={`w-full py-4 rounded-xl border outline-none transition-all text-(--text-main) ${inputBgClass} ${IconComponent ? 'pl-12' : 'pl-5'
                       } ${field.hasDot ? 'pr-12' : 'pr-5'} ${field.readOnly ? 'cursor-not-allowed opacity-80' : ''
                       }`}
                   />
@@ -212,20 +205,20 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                     autoComplete="off"
                     value={formData[field.name] || ''}
                     onChange={(e) => handleChange(field.name, e.target.value)}
-                    className={`w-full py-4 pr-12 rounded-xl border outline-none transition-all appearance-none cursor-pointer ${inputBgClass.replace('text-white', 'text-[#666666]')} ${IconComponent ? 'pl-12' : 'pl-5'
+                    className={`w-full py-4 pr-12 rounded-xl border outline-none transition-all appearance-none cursor-pointer ${inputBgClass.replace('text-(--text-main)', 'text-[#666666]')} ${IconComponent ? 'pl-12' : 'pl-5'
                       }`}
                   >
                     <option value="" disabled className="text-[#666666]">
                       {field.placeholder || 'Select Option'}
                     </option>
                     {field.options?.map((opt) => (
-                      <option key={opt} value={opt} className={isDark ? 'bg-[#1A1A1A]' : 'bg-white'}>
+                      <option key={opt} value={opt} className="bg-(--bg-secondary)">
                         {opt}
                       </option>
                     ))}
                   </select>
 
-                  <FiChevronDown className="absolute right-5 text-white text-lg pointer-events-none" />
+                  <FiChevronDown className="absolute right-5 text-(--text-main) text-lg pointer-events-none" />
                 </div>
               )}
             </div>
@@ -242,7 +235,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
           placeholder="Enter your Message here.."
           value={formData.message}
           onChange={(e) => handleChange('message', e.target.value)}
-          className={`w-full px-5 py-4 rounded-xl border outline-none transition-all resize-none text-white ${inputBgClass}`}
+          className={`w-full px-5 py-4 rounded-xl border outline-none transition-all resize-none text-(--text-main) ${inputBgClass}`}
         />
       </div>
 
@@ -255,18 +248,15 @@ export const ContactForm: React.FC<ContactFormProps> = ({
             autoComplete="off"
             checked={formData.agreeTerms}
             onChange={(e) => handleChange('agreeTerms', e.target.checked)}
-            className={`w-5 h-5 rounded cursor-pointer appearance-none border transition-all relative flex items-center justify-center checked:bg-primary checked:border-primary checked:before:content-['✓'] checked:before:text-white checked:before:text-xs checked:before:font-bold ${isDark
-                ? 'bg-bg-dark border-bg-gray-1'
-                : 'bg-gray-400 border-gray-500'
-              }`}
+            className="w-5 h-5 rounded cursor-pointer appearance-none border transition-all relative flex items-center justify-center checked:bg-primary checked:border-primary checked:before:content-['✓'] checked:before:text-white checked:before:text-xs checked:before:font-bold bg-(--bg-main) border-bg-gray-1"
           />
-          <span className={`text-[14px] ${isDark ? 'text-gray' : 'text-gray-600'}`}>
+          <span className="text-[14px] text-gray">
             I agree with{' '}
-            <a href="#" className={`underline ${isDark ? 'text-gray' : 'text-gray-900'}`}>
+            <a href="#" className="underline text-gray">
               Terms of Use
             </a>{' '}
             and{' '}
-            <a href="#" className={`underline ${isDark ? 'text-gray' : 'text-gray-900'}`}>
+            <a href="#" className="underline text-gray">
               Privacy Policy
             </a>
           </span>

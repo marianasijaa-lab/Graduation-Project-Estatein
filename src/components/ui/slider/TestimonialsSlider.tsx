@@ -60,7 +60,7 @@ const TestimonialsSlider = ({
           <div
             key={testimonial.id}
             className="flex-shrink-0"
-            style={{ width: `calc(${100 / itemsToShow}% - ${(GAP * (itemsToShow - 1)) / itemsToShow}px)` }}
+            style={{ width: `calc(${100 / itemsToShow}% - ${(GAP * (itemsToShow - 1)) / itemsToShow}px) ` }}
           >
             <TestimonialCard testimony={testimonial} />
           </div>
@@ -80,7 +80,7 @@ const TestimonialsSlider = ({
 
 function Star() {
   return (
-    <div className="p-1.5 lg:p-2.5 rounded-full bg-bg-dark">
+    <div className="p-1.5 lg:p-2.5 rounded-full bg-(--bg-secondary)">
       <FaStar className="w-4.5 lg:w-5 xl:w-6" color="#FFE500" />
     </div>
   );
@@ -91,7 +91,7 @@ function TestimonialCard({ testimony }: { testimony: FirestoreTestimonial }) {
     <motion.div
       whileHover={{ y: -6 }}
       transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-      className="card flex items-start flex-col gap-4 lg:gap-5 xl:gap-7.5"
+      className="card flex items-start flex-col gap-4 lg:gap-5 xl:gap-7.5 "
     >
       <div className="flex gap-2.5">
         {Array.from({ length: testimony.rating || 5 }, (_, index) => (
@@ -99,7 +99,7 @@ function TestimonialCard({ testimony }: { testimony: FirestoreTestimonial }) {
         ))}
       </div>
       <div className="flex flex-col gap-1.5 lg:gap-2.5 xl:gap-3.5">
-        <h3 className="font-semibold text-lg lg:text-xl 2xl:text-2xl text-white">
+        <h3 className="font-semibold text-lg lg:text-xl 2xl:text-2xl text-(--text-main)">
           {testimony.title}
         </h3>
         <p className="text-[14px] lg:text-[16px] xl:text-[18px]">
@@ -111,7 +111,7 @@ function TestimonialCard({ testimony }: { testimony: FirestoreTestimonial }) {
           <img src={testimony.clientImage} alt={testimony.clientName} />
         </div>
         <div className="flex flex-col gap-0.5">
-          <h4 className="xl:text-lg 2xl:text-xl text-white">{testimony.clientName}</h4>
+          <h4 className="xl:text-lg 2xl:text-xl text-(--text-main)">{testimony.clientName}</h4>
           <p className="text-[14px] lg:text-[16px] text-gray">{testimony.clientLocation}</p>
         </div>
       </div>

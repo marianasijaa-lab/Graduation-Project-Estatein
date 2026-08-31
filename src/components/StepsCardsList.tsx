@@ -30,7 +30,7 @@ export const StepsCardsList = ({ steps }: StepsCardsListProps) => {
             <div className="absolute left-0 bottom-0 w-[180px] h-[2px] bg-gradient-to-r from-primary via-primary/70 to-transparent"></div>
 
             {/* نص Step */}
-            <span className="text-white 2xl:text-xl text-base font-medium tracking-wide">
+            <span className="text-(--text-main) 2xl:text-xl text-base font-medium tracking-wide">
               Step {step.id}
             </span>
           </div>
@@ -44,7 +44,7 @@ export const StepsCardsList = ({ steps }: StepsCardsListProps) => {
             {/* الوهج البنفسجي */}
             <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-primary/25 via-primary/5 to-transparent pointer-events-none rounded-tl-2xl blur-sm"></div>
 
-            <h3 className="text-white max-sm:text-lg max-2xl:text-xl 2xl:text-2xl font-semibold">
+            <h3 className="text-(--text-main) max-sm:text-lg max-2xl:text-xl 2xl:text-2xl font-semibold">
               {step.title}
             </h3>
             <p className="text-gray max-sm:text-sm max-2xl:text-base 2xl:text-lg font-medium leading-relaxed">

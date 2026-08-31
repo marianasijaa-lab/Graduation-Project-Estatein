@@ -10,13 +10,13 @@ const HomeHero = () => {
   const { stats, status } = useStats();
 
   return (
-    <section className="w-full bg-bg-dark-1 overflow-hidden">
+    <section className="w-full bg-(--bg-main) overflow-hidden">
       <div className="flex flex-col lg:flex-row min-h-[480px]">
         {/* Left: Text Content */}
         <div className="flex-1 flex items-center px-4 sm:px-8 lg:px-16 py-12 xl:py-0 order-2 lg:order-1">
           <StaggerContainer className="flex flex-col gap-8 max-w-[580px]">
             <motion.div variants={staggerItem} className="flex flex-col gap-4">
-              <h1 className="text-[1.65rem] sm:text-4xl xl:text-5xl font-semibold leading-tight">
+              <h1 className="text-[1.65rem] text-(--text-main) sm:text-4xl xl:text-5xl font-semibold leading-tight">
                 Discover Your Dream <br /> Property with Estatein
               </h1>
               <p className="text-gray text-sm sm:text-base leading-relaxed max-w-[480px]">
@@ -46,7 +46,7 @@ const HomeHero = () => {
           <img
             src="/assets/Abstract_6.png"
             alt=""
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none bg-bg-dark max-sm:rounded-xl max-sm:border max-sm:border-bg-gray-1"
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none bg-(--bg-secondary) max-sm:rounded-xl max-sm:border max-sm:border-bg-gray-1"
           />
           <img
             src="/assets/Hero Image_1.webp"

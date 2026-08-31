@@ -26,7 +26,7 @@ export const PropertyDetails = () => {
   if (!property) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-white text-xl">Property not found.</p>
+        <p className="text-(--text-main) text-xl">Property not found.</p>
       </div>
     );
   }

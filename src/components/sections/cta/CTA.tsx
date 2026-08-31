@@ -21,14 +21,10 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
   bgRightImage = "/assets/Abstract1.png",
   renderButton,
 }) => {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
 
     return (
         <section
-            className={`relative w-full overflow-hidden transition-colors py-8 sm:py-10 lg:py-14 border-b border-t border-bg-gray-1 ${
-                isDark ? 'bg-bg-dark-1 text-white' : 'bg-white text-gray-900'
-            }`}
+            className='relative w-full overflow-hidden transition-colors py-8 sm:py-10 lg:py-14 border-b border-t border-(--color-border) bg-(--bg-main) text-(--text-main)'
         >
             <div
               className="absolute left-0 top-0 block w-full h-1/2 bg-left-top bg-no-repeat bg-auto pointer-events-none z-0 sm:hidden"
@@ -38,14 +34,14 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
             {bgLeftImage && (
                 <div
                 className="absolute left-0 top-0 hidden w-1/2 h-full bg-left bg-no-repeat bg-contain pointer-events-none z-0 sm:block"
-                    style={{ backgroundImage: `url(${bgLeftImage})` }}
+                    style={{ backgroundImage: `url(${bgLeftImage})`,opacity: 'var(--decor-opacity)' }}
                 />
             )}
 
             {bgRightImage && (
                 <div
                     className="absolute right-0 bottom-0 w-full h-1/2 sm:w-1/2 sm:h-full bg-right bg-no-repeat bg-contain pointer-events-none z-0"
-                    style={{ backgroundImage: `url(${bgRightImage})` }}
+                    style={{ backgroundImage: `url(${bgRightImage})`, opacity: 'var(--decor-opacity)' }}
                 />
             )}
 
@@ -57,9 +53,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
             </h2>
           )}
           <p
-            className={`text-sm sm:text-base leading-relaxed font-normal ${
-              isDark ? "text-gray-300" : "text-gray-700"
-            }`}
+            className="text-sm sm:text-base leading-relaxed font-normal text-gray-500"
           >
             {description}
           </p>

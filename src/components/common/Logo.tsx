@@ -68,7 +68,7 @@ export const Logo: React.FC<LogoProps> = ({
           ))}
         </span>
       ) : animated === 'quick' ? null : (
-        <span className="font-semibold text-lg md:text-xl ">{BRAND_NAME}</span>
+        <span className="font-semibold text-lg md:text-xl text-(--text-main) ">{BRAND_NAME}</span>
       )}
     </div>
   );

@@ -84,7 +84,7 @@ const Footer = () => {
               className="text-[15px] md:text-base w-full md:w-[80%] rounded-lg border border-bg-gray-1 py-4 pl-12 pr-12 placeholder:text-gray bg-(--bg-secondary) text-(--text-main) transition-colors duration-300"
               style={{
                 WebkitTextFillColor: 'var(--text-main)',
-                backgroundColor: 'var(--bg-secondary)',
+                backgroundColor: 'var(--bg-main)',
                 boxShadow: 'none',
                 color: 'var(--text-main)',
               }}
@@ -190,7 +190,7 @@ const Footer = () => {
       </div>
       <div
         className="flex flex-col md:flex-row justify-between items-center pt-8 pb-8 mt-10 transition-colors duration-300"
-        style={{ backgroundColor: '#1A1A1A' }}
+        style={{ backgroundColor: 'var(--bg-secondary)' }}
       >
         <div className="flex order-1 md:order-2 pb-6 md:pb-0 px-4 sm:px-8 md:px-11">
           {[FaFacebookF, FaLinkedinIn, FaTwitter, FaYoutube].map((Icon, i) => (
@@ -199,7 +199,7 @@ const Footer = () => {
               whileHover={{ scale: 1.1, y: -2 }}
               whileTap={{ scale: 0.95 }}
               className="w-10 h-10 rounded-full flex items-center justify-center mr-3 transition-colors duration-300 cursor-pointer"
-              style={{ backgroundColor: '#141414' }}
+              style={{ backgroundColor: 'var(--bg-main)' }}
             >
               <Icon />
             </motion.div>

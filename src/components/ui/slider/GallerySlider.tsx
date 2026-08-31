@@ -31,20 +31,20 @@ const GallerySlider = ({ images, propertyName, location, price }: GallerySliderP
   const secondaryIndex = (primaryIndex + 1) % images.length;
 
   return (
-    <div className="site-container flex flex-col bg-bg-dark py-4 rounded-lg">
+    <div className="site-container flex flex-col bg-(--bg-secondary) py-4 rounded-lg">
       {propertyName && (
         <div className="mb-4 flex flex-col gap-3 sm:hidden">
-          <h1 className="text-xl font-semibold leading-tight text-white">{propertyName}</h1>
+          <h1 className="text-xl font-semibold leading-tight text-(--text-main)">{propertyName}</h1>
           <div className="flex min-w-0 items-center gap-3 whitespace-nowrap">
             {location && (
-              <span className="flex min-w-0 items-center gap-1.5 truncate rounded-lg border border-bg-gray-1 px-2 py-2 text-sm text-white">
-                <FaMapMarkerAlt className="shrink-0 text-white" />
+              <span className="flex min-w-0 items-center gap-1.5 truncate rounded-lg border border-bg-gray-1 px-2 py-2 text-sm text-(--text-main)">
+                <FaMapMarkerAlt className="shrink-0 text-(--text-main) " />
                 <span className="truncate">{location}</span>
               </span>
             )}
             {price !== undefined && (
               <span className="shrink-0 text-sm text-gray">
-                Price <strong className="font-semibold text-lg text-white">${price.toLocaleString()}</strong>
+                Price <strong className="font-semibold text-lg text-(--text-main)">${price.toLocaleString()}</strong>
               </span>
             )}
           </div>
@@ -52,7 +52,7 @@ const GallerySlider = ({ images, propertyName, location, price }: GallerySliderP
       )}
 
       {/* Thumbnail Strip */}
-      <div className="order-2 mb-4 bg-bg-dark-1 p-2 overflow-hidden sm:order-none">
+      <div className="order-2 mb-4 bg-(--bg-main) p-2 overflow-hidden sm:order-none">
         <div className="flex gap-2">
           {images.map((img, index) => (
             <button
@@ -97,10 +97,10 @@ const GallerySlider = ({ images, propertyName, location, price }: GallerySliderP
       </div>
 
       {/* Navigation Controls */}
-      <div className="order-3 flex justify-between max-w-75 mx-auto bg-bg-dark-1 p-2 rounded-full items-center gap-4 sm:order-none">
+      <div className="order-3 flex justify-between max-w-75 mx-auto bg-(--bg-main) p-2 rounded-full items-center gap-4 sm:order-none">
         <button
           onClick={handlePrev}
-          className="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-white hover:bg-white/10 transition disabled:opacity-30"
+          className="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-(text-main) hover:bg-white/10 transition disabled:opacity-30"
         >
           <FaArrowLeft size={16} />
         </button>
@@ -121,7 +121,7 @@ const GallerySlider = ({ images, propertyName, location, price }: GallerySliderP
 
         <button
           onClick={handleNext}
-          className="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-white hover:bg-white/10 transition disabled:opacity-30"
+          className="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-(--text-main) hover:bg-white/10 transition disabled:opacity-30"
         >
          <FaArrowRight size={16} />
         </button>

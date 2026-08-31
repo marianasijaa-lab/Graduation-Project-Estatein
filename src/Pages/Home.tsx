@@ -29,19 +29,19 @@ const HomePage = () => {
             <HomeHero />
             <Services />
             <section className="w-full">
-              <div className="site-container py-8 sm:py-10 lg:py-14">
+              <div className="bg-(--bg-main) site-container py-8 sm:py-10 lg:py-14">
                 <SectionHeader title='Featured Properties' actionLabel='View All Properties' onAction={() => setShowAllProperties(true)} subtitle='Explore our handpicked selection of featured properties. Each listing offers a glimpse into exceptional homes and investments available through Estatein. Click "View Details" for more information.'/>
                 <CardsSlider showAll={showAllProperties} onBack={() => setShowAllProperties(false)}/>
               </div>
             </section>
             <section className="w-full">
-              <div className="site-container py-8 sm:py-10 lg:py-14">
+              <div className="bg-(--bg-main) site-container py-8 sm:py-10 lg:py-14">
                 <SectionHeader title='What Our Clients Say' actionLabel='View All Testimonials' onAction={() => setShowAllTestimonials(true)} subtitle='Read the success stories and heartfelt testimonials from our valued clients. Discover why they chose Estatein for their real estate needs.'/>
                 <TestimonialsSlider showAll={showAllTestimonials} onBack={() => setShowAllTestimonials(false)}/>
               </div>
             </section>
             <section className="w-full">
-              <div className="site-container py-8 sm:py-10 lg:py-14">
+              <div className="bg-(--bg-main) site-container py-8 sm:py-10 lg:py-14">
                 <SectionHeader title='Frequently Asked Questions' actionLabel="View All FAQ's" onAction={() => setShowAllFaqs(true)} subtitle="Find answers to common questions about Estatein's services, property listings, and the real estate process. We're here to provide clarity and assist you every step of the way."/>
                 <FAQSlider showAll={showAllFaqs} onBack={() => setShowAllFaqs(false)}/>
                

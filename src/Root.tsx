@@ -34,7 +34,7 @@ const Root = () => {
 	) as PageId | null;
 
 	return (
-		<div className="min-h-screen bg-bg-dark-1 text-white">
+		<div className="min-h-screen bg-(--bg-main) text-(--text-main)">
 			<TopBanner />
 			<Navbar
 				activePage={activePage}

@@ -79,7 +79,7 @@ const FAQSlider = ({
   }
 
   return (
-    <div className="w-full py-8">
+    <div className="w-full py-8)">
       <BaseSlider currentIndex={currentIndex} itemsToShow={itemsToShow}>
         {FAQData.map((card) => (
           <div

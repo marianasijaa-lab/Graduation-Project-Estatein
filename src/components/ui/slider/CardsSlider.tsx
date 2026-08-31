@@ -109,7 +109,7 @@ function Card({ item }: CardProps) {
             {item.descriptionShort.length > 60
               ? item.descriptionShort.slice(0, 60) + "... "
               : item.descriptionShort + "... "}
-            <button className="text-white underline underline-offset-2 hover:text-white/80 transition-colors whitespace-nowrap">
+            <button className="text-(--text-main) underline underline-offset-2 hover:text-white/80 transition-colors whitespace-nowrap">
               Read More
             </button>
           </p>
@@ -118,7 +118,7 @@ function Card({ item }: CardProps) {
           {details.map((detail) => (
             <div
               key={detail.text}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-bg-dark text-white rounded-[28px] whitespace-nowrap w-fit shrink-0"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-(--bg-secondary) text-(--text-main) rounded-[28px] whitespace-nowrap w-fit shrink-0"
             >
               <img src={detail.icon} alt={detail.text} className="w-4 h-4 shrink-0" />
               <p className="font-medium text-xs">{detail.text}</p>
@@ -126,7 +126,7 @@ function Card({ item }: CardProps) {
           ))}
         </div>
         <div className="flex items-center justify-between gap-4">
-          <p className="font-semibold text-white">
+          <p className="font-semibold text-(--text-main)">
             <span className="block font-normal text-gray text-sm">Price</span>
             ${Number(item.priceHome).toLocaleString()}
           </p>
