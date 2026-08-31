@@ -1,28 +1,46 @@
 import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase/config";
 import { Logo } from "../components/common/Logo";
 import { useTheme } from "../Context/ThemeContext";
-import { useAuth } from "../Context/AuthContext";
 
-// Full-screen login form — shown by AuthGate instead of the site when locked.
+// Full-screen login form — shown by AuthGate when no Firebase user is signed in.
 export const Login = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
-  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  // Cosmetic gate only — NOT real authentication. Any non-empty email and
-  // password is accepted; nothing is checked against Firebase or a backend.
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email.trim() || !password.trim()) {
       setError("Please enter both email and password.");
       return;
     }
+    if (!auth) {
+      setError("Firebase is not configured. Check your .env file.");
+      return;
+    }
     setError(null);
-    login();
+    setLoading(true);
+    try {
+      await signInWithEmailAndPassword(auth, email.trim(), password);
+      // onAuthStateChanged in AuthContext will pick up the new user automatically.
+    } catch (err: unknown) {
+      const code = (err as { code?: string }).code ?? "";
+      if (code === "auth/user-not-found" || code === "auth/wrong-password" || code === "auth/invalid-credential") {
+        setError("Incorrect email or password.");
+      } else if (code === "auth/too-many-requests") {
+        setError("Too many failed attempts. Please try again later.");
+      } else {
+        setError("Login failed. Please try again.");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const inputBgClass = isDark
@@ -77,9 +95,10 @@ export const Login = () => {
 
           <button
             type="submit"
-            className="w-full py-3 rounded-xl text-sm font-medium bg-primary hover:bg-[#5e2ed9] text-white transition-colors cursor-pointer"
+            disabled={loading}
+            className="w-full py-3 rounded-xl text-sm font-medium bg-primary hover:bg-[#5e2ed9] text-white transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Log In
+            {loading ? "Signing in…" : "Log In"}
           </button>
         </form>
       </div>

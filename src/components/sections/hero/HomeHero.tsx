@@ -11,12 +11,12 @@ const HomeHero = () => {
 
   return (
     <section className="w-full bg-(--bg-main) overflow-hidden">
-      <div className="flex flex-col lg:flex-row min-h-[480px]">
+      <div className="flex flex-col md:flex-row min-h-[480px]">
         {/* Left: Text Content */}
-        <div className="flex-1 flex items-center px-4 sm:px-8 lg:px-16 py-12 xl:py-0 order-2 lg:order-1">
-          <StaggerContainer className="flex flex-col gap-8 max-w-[580px]">
+        <div className="flex-1 flex items-center px-4 sm:px-8 md:px-12 lg:px-16 py-12 md:py-8 xl:py-0 order-2 md:order-1">
+          <StaggerContainer className="flex w-full flex-col gap-8 max-w-[580px]">
             <motion.div variants={staggerItem} className="flex flex-col gap-4">
-              <h1 className="text-[1.65rem] text-(--text-main) sm:text-4xl xl:text-5xl font-semibold leading-tight">
+              <h1 className="text-[1.65rem] sm:text-4xl md:text-[2.5rem] xl:text-5xl font-semibold leading-tight">
                 Discover Your Dream <br /> Property with Estatein
               </h1>
               <p className="text-gray text-sm sm:text-base leading-relaxed max-w-[480px]">
@@ -24,11 +24,15 @@ const HomeHero = () => {
                 listings to find the home that matches your dreams.
               </p>
             </motion.div>
-            <motion.div variants={staggerItem} className="flex flex-row gap-4">
-              <Button text="Learn More" variant="secondary" onClick={() => {}} />
-              <Button text="Browse Properties" variant="primary" onClick={() => {}} />
+            <motion.div variants={staggerItem} className="flex flex-col sm:flex-row gap-4">
+              <div className="w-full sm:w-auto">
+                <Button text="Learn More" variant="secondary" onClick={() => {}} fullWidth />
+              </div>
+              <div className="w-full sm:w-auto">
+                <Button text="Browse Properties" variant="primary" onClick={() => {}} fullWidth />
+              </div>
             </motion.div>
-            <motion.div variants={staggerItem}>
+            <motion.div variants={staggerItem} className="w-full">
               {(status === 'loading' || status === 'idle') && stats.length === 0 ? (
                 <LoadingSkeleton variant="stats" count={3} />
               ) : (
@@ -39,8 +43,8 @@ const HomeHero = () => {
         </div>
 
         {/* Right: Hero Image full height, no border */}
-        <FadeInSection direction="right" delay={0.2} className="flex flex-1 relative min-h-[240px] sm:min-h-[360px] lg:min-h-[480px] order-1 lg:order-2">
-          <div className="absolute z-30 -bottom-8 left-0 translate-x-0 translate-y-0 w-[55px] sm:top-[28%] sm:bottom-auto sm:left-0 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:w-22 lg:w-28 xl:w-36">
+        <FadeInSection direction="right" delay={0.2} className="flex flex-1 relative min-h-[240px] sm:min-h-[360px] md:min-h-[480px] order-1 md:order-2">
+          <div className="absolute z-30 -bottom-8 left-0 translate-x-0 translate-y-0 w-[65px] sm:top-[28%] sm:bottom-auto sm:left-0 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:w-24 md:w-26 xl:w-36">
             <img src='/assets/HeroSticker.png' alt="" className='w-full h-full animate-[spin_10s_linear_infinite]'/>
           </div>
           <img

@@ -10,26 +10,15 @@ interface PropertyFormProps {
 const PropertyForm = ({
   propertyLocation = "Seaside Serenity Villa, Malibu, California",
 }: PropertyFormProps) => {
-  const fields = [
-    {
-      label: "First Name",
-      placeholder: "Enter First Name",
-    },
-    {
-      label: "Last Name",
-      placeholder: "Enter Last Name",
-    },
-    {
-      label: "Email",
-      placeholder: "Enter your Email",
-      type: "email",
-    },
-    {
-      label: "Phone",
-      placeholder: "Enter Phone Number",
-      type: "tel",
-    },
-  ];
+  const [formData, setFormData] = useState(initialFormState);
+  const [agreeTerms, setAgreeTerms] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>("idle");
+  const [submitError] = useState<string | null>(null);
+
+  const handleChange = (name: keyof typeof initialFormState, value: string) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (submitStatus === "submitted" || submitStatus === "error") setSubmitStatus("idle");
+  };
 
   return (
     <motion.form

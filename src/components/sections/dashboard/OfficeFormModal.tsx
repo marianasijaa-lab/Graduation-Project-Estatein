@@ -157,7 +157,7 @@ export const OfficeFormModal = ({ mode, initialData, onClose, onSubmit }: Office
 
   return (
     <div
-      className="fixed inset-0 z-70 flex items-start sm:items-center justify-center bg-black/60 px-4 py-6 overflow-y-auto"
+      className="modal-scroll fixed inset-0 z-70 flex items-start sm:items-center justify-center bg-black/60 px-4 py-6 overflow-y-auto"
       role="dialog"
       aria-modal="true"
       aria-labelledby="office-form-title"
@@ -192,7 +192,7 @@ export const OfficeFormModal = ({ mode, initialData, onClose, onSubmit }: Office
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className="px-6 sm:px-8 py-6 space-y-6 max-h-[70vh] overflow-y-auto"
+          className="modal-scroll px-6 sm:px-8 py-6 space-y-6 max-h-[70vh] overflow-y-auto"
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>

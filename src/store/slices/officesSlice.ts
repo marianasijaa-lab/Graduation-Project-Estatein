@@ -4,105 +4,31 @@ import type { FirestoreOffice, DataStatus } from '../types';
 export const FALLBACK_OFFICES: FirestoreOffice[] = [
   {
     id: 'off-1',
-    name: 'Estatein HQ — New York',
-    address: '350 Fifth Avenue, Suite 4200',
-    city: 'New York',
-    country: 'United States',
-    phone: '+1 (212) 555-0100',
-    email: 'newyork@estatein.com',
-    type: 'Regional',
-    latitude: 40.7484,
-    longitude: -73.9967,
-    image: '/assets/Contact1.webp',
+    name: '123 Estatein Plaza, City Center, Metropolis',
+    address: '123 Estatein Plaza, City Center, Metropolis',
+    city: 'Metropolis',
+    country: '',
+    phone: '+1 (123) 456-7890',
+    email: 'info@estatein.com',
+    type: 'International',
     description:
-      'Our flagship office in the heart of Manhattan, home to the leadership team and our largest group of advisors.',
-    directionsUrl: 'https://www.google.com/maps/search/?api=1&query=350+Fifth+Avenue+New+York',
+      'Our main headquarters serve as the heart of Estatein. Located in the bustling city center, this is where our core team of experts operates, driving the excellence and innovation that define us.',
+    directionsUrl: 'https://www.google.com/maps/search/?api=1&query=Metropolis+889+Francisco+Street+Los+Angeles',
     order: 1,
   },
   {
     id: 'off-2',
-    name: 'Estatein — Los Angeles',
-    address: '9465 Wilshire Boulevard, Suite 300',
-    city: 'Los Angeles',
-    country: 'United States',
-    phone: '+1 (310) 555-0200',
-    email: 'losangeles@estatein.com',
+    name: '456 Urban Avenue, Downtown District, Metropolis',
+    address: '456 Urban Avenue, Downtown District, Metropolis',
+    city: 'Metropolis',
+    country: '',
+    phone: '+1 (123) 628-7890',
+    email: 'info@restatein.com',
     type: 'Regional',
-    latitude: 34.0736,
-    longitude: -118.3994,
-    image: '/assets/Contact2.webp',
     description:
-      'Serving the West Coast luxury market from Beverly Hills, with a dedicated team for coastal and hillside properties.',
-    directionsUrl: 'https://www.google.com/maps/search/?api=1&query=9465+Wilshire+Boulevard+Los+Angeles',
+      "Estatein's presence extends to multiple regions, each with its own dynamic real estate landscape. Discover our regional offices, staffed by local experts who understand the nuances of their respective markets.",
+    directionsUrl: 'https://www.google.com/maps/search/?api=1&query=Metropolis+889+Francisco+Street+Los+Angeles',
     order: 2,
-  },
-  {
-    id: 'off-3',
-    name: 'Estatein — London',
-    address: '1 Canada Square, Canary Wharf',
-    city: 'London',
-    country: 'United Kingdom',
-    phone: '+44 20 5555 0300',
-    email: 'london@estatein.com',
-    type: 'International',
-    latitude: 51.5045,
-    longitude: -0.0199,
-    image: '/assets/Contact3.webp',
-    description:
-      'Our European headquarters, coordinating cross-border investments and international client relationships.',
-    directionsUrl: 'https://www.google.com/maps/search/?api=1&query=1+Canada+Square+Canary+Wharf+London',
-    order: 3,
-  },
-  {
-    id: 'off-4',
-    name: 'Estatein — Dubai',
-    address: 'Level 14, Emaar Square, Downtown Dubai',
-    city: 'Dubai',
-    country: 'United Arab Emirates',
-    phone: '+971 4 555 0400',
-    email: 'dubai@estatein.com',
-    type: 'International',
-    latitude: 25.1972,
-    longitude: 55.2744,
-    image: '/assets/Contact4.webp',
-    description:
-      'Covering the Middle East with expertise in off-plan developments and high-yield investment opportunities.',
-    directionsUrl: 'https://www.google.com/maps/search/?api=1&query=Emaar+Square+Downtown+Dubai',
-    order: 4,
-  },
-  {
-    id: 'off-5',
-    name: 'Estatein — Singapore',
-    address: '8 Marina View, Asia Square Tower 1',
-    city: 'Singapore',
-    country: 'Singapore',
-    phone: '+65 6555 0500',
-    email: 'singapore@estatein.com',
-    type: 'International',
-    latitude: 1.2789,
-    longitude: 103.8536,
-    image: '/assets/Contact5.webp',
-    description:
-      'Our Asia-Pacific hub, connecting regional investors with premium residential and commercial listings worldwide.',
-    directionsUrl: 'https://www.google.com/maps/search/?api=1&query=8+Marina+View+Asia+Square+Singapore',
-    order: 5,
-  },
-  {
-    id: 'off-6',
-    name: 'Estatein — Sydney',
-    address: '1 Martin Place, Level 20',
-    city: 'Sydney',
-    country: 'Australia',
-    phone: '+61 2 5555 0600',
-    email: 'sydney@estatein.com',
-    type: 'International',
-    latitude: -33.8674,
-    longitude: 151.2071,
-    image: '/assets/Contact6.webp',
-    description:
-      'Representing Estatein across Australia and New Zealand, specialising in waterfront and metropolitan homes.',
-    directionsUrl: 'https://www.google.com/maps/search/?api=1&query=1+Martin+Place+Sydney',
-    order: 6,
   },
 ];
 
@@ -110,7 +36,7 @@ interface OfficesState {
   data: FirestoreOffice[];
   status: DataStatus;
   error: string | null;
-  activeTab: 'All' | 'Regional' | 'International';
+  activeTab: string;
 }
 
 const initialState: OfficesState = {
@@ -126,9 +52,21 @@ const officesSlice = createSlice({
   initialState,
   reducers: {
     syncOffices(state, action: PayloadAction<FirestoreOffice[]>) {
-      state.data   = action.payload;
+      state.data = action.payload;
       state.status = 'succeeded';
-      state.error  = null;
+      state.error = null;
+
+      // Only reset the active tab if the currently selected type no longer
+      // exists in the new data (e.g. the last office of that type was deleted).
+      // Do NOT reset on every snapshot — that would clear the user's selection
+      // every time Firestore pushes an update.
+      const tabStillValid =
+        state.activeTab === 'All' ||
+        action.payload.some((office) => office.type === state.activeTab);
+
+      if (!tabStillValid) {
+        state.activeTab = 'All';
+      }
     },
     setOfficesLoading(state) {
       state.status = 'loading';
@@ -138,7 +76,7 @@ const officesSlice = createSlice({
       state.status = 'failed';
       state.error  = action.payload;
     },
-    setActiveTab(state, action: PayloadAction<'All' | 'Regional' | 'International'>) {
+    setActiveTab(state, action: PayloadAction<string>) {
       state.activeTab = action.payload;
     },
   },

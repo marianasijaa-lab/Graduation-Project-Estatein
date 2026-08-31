@@ -1,6 +1,6 @@
 export const services = [
-  { icon: "/assets/Icon_1.png", heading: "Find Your Dream Home" },
-  { icon: "/assets/Icon_2.png", heading: "Unlock Property Value" },
-  { icon: "/assets/Icon_3.png", heading: "Effortless Property Management" },
-  { icon: "/assets/Icon_4.png", heading: "Smart Investments, Informed Decisions" },
+  { icon: "/assets/Icon_29.png", heading: "info@estatein.com" },
+  { icon: "/assets/Icon_30.png", heading: "+1 (123) 456-7890" },
+  { icon: "/assets/Icon_31.png", heading: "Main Headquarters" },
+  { icon: "/assets/Icon_32.png", heading: "Instagram\u00A0\u00A0\u00A0\u00A0\u00A0LinkedIn\u00A0\u00A0\u00A0\u00A0\u00A0Facebook" },
 ];

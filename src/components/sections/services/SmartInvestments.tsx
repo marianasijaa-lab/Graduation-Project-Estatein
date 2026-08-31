@@ -3,6 +3,7 @@ import { SectionHeader } from '../../common/SectionHeader';
 import { InfoBox } from '../infobox/InfoBox';
 import { motion } from 'framer-motion';
 import { StaggerContainer, staggerItem } from '../../common/StaggerContainer';
+import { useSmartInvestments } from '../../../hooks/useSmartInvestments';
 
 interface InvestmentServiceItem {
   id: string;
@@ -43,7 +44,7 @@ const investmentServices: InvestmentServiceItem[] = [
 ];
 
 export const SmartInvestments: React.FC = () => {
-  const { smartInvestments: cards } = useSmartInvestments();
+  useSmartInvestments();
 
   return (
     <section className="w-full bg-(--bg-main) border-t border-[#262626] py-16 sm:py-20 lg:py-24">
@@ -51,7 +52,7 @@ export const SmartInvestments: React.FC = () => {
       <div className="site-container">
 
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+        <div className="flex flex-col gap-8 md:gap-10 lg:grid lg:grid-cols-12 lg:gap-10 items-start">
 
 
           <div className="lg:col-span-5 xl:col-span-4 flex flex-col justify-start gap-0 sm:gap-1">
@@ -86,7 +87,7 @@ export const SmartInvestments: React.FC = () => {
 
           
           <div className="lg:col-span-7 xl:col-span-8 rounded-[10px] bg-(--bg-border) p-1.5 mt-14">
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
+            <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
               {investmentServices.map((service) => (
                 <motion.div
                   key={service.id}

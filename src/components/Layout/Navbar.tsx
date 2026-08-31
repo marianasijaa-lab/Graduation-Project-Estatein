@@ -82,7 +82,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2.5 rounded-xl bg-(--bg-secondary) border border-bg-gray-1 text-(--text-main) cursor-pointer"
+            className="lg:hidden p-2.5 rounded-xl bg-(--bg-secondary) border border-bg-gray-1 text-(--text-main) cursor-pointer"
           >
             <motion.div
               animate={{ rotate: mobileMenuOpen ? 90 : 0 }}
@@ -105,7 +105,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-            className="md:hidden overflow-hidden border-t border-bg-gray-1 bg-(--bg-secondary) px-4 py-6 space-y-3"
+            className="lg:hidden overflow-hidden border-t border-bg-gray-1 bg-(--bg-secondary) px-4 py-6 space-y-3"
           >
             <div className="flex flex-col space-y-2">
               {NAV_ITEMS.map((item, index) => (

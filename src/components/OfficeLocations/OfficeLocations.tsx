@@ -1,76 +1,91 @@
-import { useState } from "react";
-import { cards, types } from "./OfficeLocationsData";
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { FadeInSection } from "../common/FadeInSection";
-import { StaggerContainer, staggerItem } from "../common/StaggerContainer";
-
-
-// Public tabs — mirrors officesSlice.activeTab. "Local" offices only surface
-// under "All", matching the slice's tab union.
-const types: Array<Exclude<FirestoreOffice["type"], "Local">> = ["Regional", "International"];
+import { staggerItem } from "../common/StaggerContainer";
+import { useOffices } from "../../hooks/useOffices";
+import { useAppDispatch } from "../../store";
+import { setActiveTab } from "../../store/slices/officesSlice";
+import type { FirestoreOffice } from "../../store/types";
+import { buildOfficeTabs, getNextOfficeTab } from "./officeFilters";
 
 // Builds a usable "Get Direction" link even when an office has no directionsUrl.
 function directionsHref(office: FirestoreOffice): string {
   if (office.directionsUrl) return office.directionsUrl;
-  const query = encodeURIComponent(`${office.name}, ${office.address}, ${office.city}, ${office.country}`);
+  const query = encodeURIComponent(
+    `${office.name}, ${office.city}, ${office.country}`,
+  );
   return `https://www.google.com/maps/search/?api=1&query=${query}`;
 }
 
 const OfficeLocations = () => {
   const dispatch = useAppDispatch();
-  const { offices, status, activeTab } = useOffices();
+  const { offices, allOffices, status, activeTab } = useOffices();
+
+  const tabs = useMemo(() => buildOfficeTabs(allOffices), [allOffices]);
 
   const sortedOffices = useMemo(
     () =>
       offices
         .slice()
-        .sort((a, b) => (a.order ?? Number.MAX_SAFE_INTEGER) - (b.order ?? Number.MAX_SAFE_INTEGER)),
+        .sort(
+          (a, b) =>
+            (a.order ?? Number.MAX_SAFE_INTEGER) -
+            (b.order ?? Number.MAX_SAFE_INTEGER),
+        ),
     [offices],
   );
 
   return (
-    <section className="bg-(--bg-main) py-4 text-(--text-main) md:py-16">
-      <div className="site-container max-md:px-2">
-        <FadeInSection direction="up" className="mb-10 -mx-2 flex w-[calc(100%+1rem)] items-center gap-1.5 rounded-lg border border-bg-gray-1 bg-(--bg-secondary) p-3 md:mx-0 md:w-fit md:gap-2 md:p-2">
-          <motion.button
-            whileHover={{scale: 1.03}}
-            whileTap={{scale: 0.97}}
-            onClick={() => setSelectedType("All")}
-            className={`h-11 flex-1 rounded-md border px-3 text-sm font-medium transition md:h-auto md:w-[120px] md:flex-none md:px-5 md:py-3 md:text-sm ${
-              activeTab === "All"
-                ? "border-[#262626] bg-(--bg-main) text-(--text-main)"
-                : "border-[#262626] bg-(--bg-secondary) text-(--text-main) hover:bg-(--bg-hover) hover:text-(--text-main)"
-            }`}
-          >
-            All
-          </motion.button>
-          {types.map((type) => (
-            <button
-              key={type}
-              onClick={() => dispatch(setActiveTab(type))}
-              className={`h-11 flex-1 rounded-md border px-3 text-sm font-medium transition md:h-auto md:w-[120px] md:flex-none md:px-5 md:py-3 md:text-sm ${
-                activeTab === type
+    <section className="bg-(--bg-main) py-4 text-(--text-main) lg:py-16">
+      <div className="site-container max-lg:px-2">
+        {/* Tab filter */}
+        <FadeInSection
+          direction="up"
+          className="mb-10 -mx-2 flex w-[calc(100%+1rem)] items-center gap-1.5 rounded-lg border border-bg-gray-1 bg-(--bg-secondary) p-3 lg:mx-0 lg:w-fit lg:gap-2 lg:p-2"
+        >
+          {tabs.map((tab) => (
+            <motion.button
+              key={tab}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => dispatch(setActiveTab(getNextOfficeTab(activeTab, tab)))}
+              className={`h-11 flex-1 rounded-md border px-3 text-sm font-medium transition lg:h-auto lg:w-[120px] lg:flex-none lg:px-5 lg:py-3 lg:text-sm ${
+                activeTab === tab
                   ? "border-[#262626] bg-(--bg-main) text-(--text-main)"
-                  : "border-[#262626] bg-(--bg-secondary) text-gray hover:bg-(--bg-hover) hover:text-white"
+                  : "border-[#262626] bg-(--bg-secondary) text-gray hover:bg-[#252525] hover:text-(--text-main)"
               }`}
             >
-              {type}
-            </button>
+              {tab}
+            </motion.button>
           ))}
         </FadeInSection>
 
-        <StaggerContainer className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {filteredCards.map((card) => (
-            <motion.div
-              variants={staggerItem}
-              whileHover={{y : -6}}
-              transition={{duration: [0.25, 0.1, 0.25, 1]}}
-              key={card.title}
-              className="rounded-lg border border-bg-gray-1 bg-(--bg-main) p-7"
-            >
-              <p className="mb-4 text-sm ext-gray">{card.mainTitle}</p>
+        {/* Loading state */}
+        {status === "loading" && (
+          <p className="text-center text-gray py-10">Loading offices…</p>
+        )}
 
-                <h2 className="mb-4 text-xl font-semibold leading-tight sm:text-2xl md:whitespace-nowrap">
+        {/* Office cards */}
+        {status !== "loading" && (
+          <motion.div
+            key={activeTab}
+            initial="hidden"
+            animate="visible"
+            transition={{ staggerChildren: 0.12 }}
+            className="grid grid-cols-1 gap-6 lg:grid-cols-2"
+          >
+            {sortedOffices.map((office) => (
+              <motion.div
+                variants={staggerItem}
+                whileHover={{ y: -6 }}
+                transition={{ duration: 0.25 }}
+                key={office.id}
+                className="rounded-lg border border-bg-gray-1 bg-bg-dark-1 p-7"
+              >
+                {/* Office type badge */}
+                <p className="mb-4 text-sm text-gray">{office.type}</p>
+
+                <h2 className="mb-4 text-xl font-semibold leading-tight sm:text-2xl lg:whitespace-nowrap">
                   {office.name}
                 </h2>
 
@@ -78,37 +93,38 @@ const OfficeLocations = () => {
                   <p className="mb-7 max-w-150 text-gray">{office.description}</p>
                 )}
 
-                <div className="mb-7 grid grid-cols-2 gap-3 md:flex md:flex-wrap">
-                  {[
-                    { icon: "/assets/icon_18.png", text: office.email },
-                    { icon: "/assets/icon_34.png", text: office.phone },
-                    { icon: "/assets/icon_35.png", text: `${office.city}, ${office.country}` },
-                  ].map((item, index) => (
-                    <span
-                      key={item.text}
-                      className={`flex min-w-0 w-fit max-w-full items-center gap-2 rounded-full border border-bg-gray-1 bg-bg-dark px-4 py-2 text-[15px] text-white ${
-                        index === 0 ? "col-span-2 md:col-span-1" : ""
-                      }`}
-                    >
-                      <img
-                        src={item.icon}
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                        className="h-4 w-4 object-contain text-white"
-                      />
+                <div className="mb-7 flex flex-col gap-2 lg:flex lg:flex-row lg:flex-wrap">
+                  {/* Row 1: Email — full width */}
+                  <span className="w-fit flex items-center gap-2 rounded-full border border-bg-gray-1 bg-bg-dark px-3 py-2 text-[12px] sm:text-[14px] lg:text-[15px] text-white whitespace-nowrap">
+                    <img src="/assets/icon_18.png" alt="" loading="lazy" decoding="async" className="h-3.5 w-3.5 sm:h-4 sm:w-4 object-contain shrink-0" />
+                    {office.email}
+                  </span>
 
-                      {item.text}
+                  {/* Row 2: Phone + Location */}
+                  <div className="flex gap-2">
+                    <span className="w-fit flex items-center gap-2 rounded-full border border-bg-gray-1 bg-bg-dark px-3 py-2 text-[12px] sm:text-[14px] lg:text-[15px] text-white whitespace-nowrap">
+                      <img src="/assets/icon_34.png" alt="" loading="lazy" decoding="async" className="h-3.5 w-3.5 sm:h-4 sm:w-4 object-contain shrink-0" />
+                      {office.phone}
                     </span>
-                  ))}
+                    <span className="w-fit flex items-center gap-2 rounded-full border border-bg-gray-1 bg-bg-dark px-3 py-2 text-[12px] sm:text-[14px] lg:text-[15px] text-white whitespace-nowrap">
+                      <img src="/assets/icon_35.png" alt="" loading="lazy" decoding="async" className="h-3.5 w-3.5 sm:h-4 sm:w-4 object-contain shrink-0" />
+                      {office.city}, {office.country}
+                    </span>
+                  </div>
                 </div>
 
-              <button className="w-full rounded-md bg-primary py-3 font-medium text-white transition hover:bg-[#5d2de0]">
-                {card.buttonText}
-              </button>
-            </motion.div>
-          ))}
-        </StaggerContainer>
+                <a
+                  href={directionsHref(office)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full rounded-md bg-primary py-3 text-center font-medium text-white transition hover:bg-[#5d2de0]"
+                >
+                  Get Direction
+                </a>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
       </div>
     </section>
   );

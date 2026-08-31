@@ -107,7 +107,7 @@ interface PropertiesState {
 }
 
 const initialState: PropertiesState = {
-  data: [],
+  data: FALLBACK_PROPERTIES,
   status: 'idle',
   error: null,
 };
@@ -119,11 +119,19 @@ const propertiesSlice = createSlice({
   reducers: {
     // Fired by onSnapshot on every Firestore change.
     syncProperties(state, action: PayloadAction<FirestoreProperty[]>) {
-      // ترتيب البيانات حسب ID لضمان عرض الأول في الأول
+      // Sort by order field if present, fallback to prop-N id pattern, then alphabetical
       const sortedData = [...action.payload].sort((a, b) => {
-        const aNum = parseInt(a.id.replace('prop-', '') || '999', 10);
-        const bNum = parseInt(b.id.replace('prop-', '') || '999', 10);
-        return aNum - bNum;
+        const aOrder = (a as { order?: number }).order;
+        const bOrder = (b as { order?: number }).order;
+        if (aOrder !== undefined && bOrder !== undefined) return aOrder - bOrder;
+        if (aOrder !== undefined) return -1;
+        if (bOrder !== undefined) return 1;
+        const aId = typeof a.id === 'string' ? a.id : '';
+        const bId = typeof b.id === 'string' ? b.id : '';
+        const aNum = parseInt(aId.replace('prop-', ''), 10);
+        const bNum = parseInt(bId.replace('prop-', ''), 10);
+        if (!Number.isNaN(aNum) && !Number.isNaN(bNum)) return aNum - bNum;
+        return a.id.localeCompare(b.id);
       });
       state.data   = sortedData;
       state.status = 'succeeded';

@@ -69,7 +69,7 @@ function CompanyCard({ company }: { company: FirestoreCompany }) {
           <div className="flex items-start justify-between gap-4">
             <div className="flex flex-col gap-1">
               <span className="text-gray text-sm sm:text-base">{company.date}</span>
-              <h3 className="font-semibold text-2xl sm:text-3xl md:text-2xl text-(--text-main)">
+              <h3 className="font-semibold text-2xl sm:text-3xl lg:text-2xl text-(--text-main)">
                 {company.heading}
               </h3>
             </div>
@@ -100,7 +100,7 @@ function CompanyCard({ company }: { company: FirestoreCompany }) {
           <div className="flex flex-col gap-2 flex-1">
             <p className="flex items-center gap-1.5">
               <MdWindow className="text-gray" size={20} />
-              <span className="text-gray text-sm md:text-base">Domain</span>
+              <span className="text-gray text-sm lg:text-base">Domain</span>
             </p>
             <h4 className="text-(--text-main) sm:text-sm md:text-base font-medium">
               {company.domain}
@@ -110,7 +110,7 @@ function CompanyCard({ company }: { company: FirestoreCompany }) {
           <div className="flex flex-col gap-2 flex-1">
             <p className="flex items-center gap-1.5">
               <AiOutlineThunderbolt className="text-gray" size={20} />
-              <span className="text-gray text-sm md:text-base">Category</span>
+              <span className="text-gray text-sm lg:text-base">Category</span>
             </p>
             <h4 className="text-(--text-main) sm:text-sm md:text-base font-medium">
               {company.category}

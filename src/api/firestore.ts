@@ -4,7 +4,6 @@ import {
   doc,
   addDoc,
   setDoc,
-  updateDoc,
   deleteDoc,
   onSnapshot,
   serverTimestamp,
@@ -15,7 +14,7 @@ import {
 } from 'firebase/firestore';
 import { firestoreDb } from '../firebase/config';
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// ── Types ────────────────────────────────────────────────────────────────────
 
 /** Called every time the collection changes. */
 export type SnapshotCallback<T> = (docs: T[]) => void;
@@ -48,7 +47,16 @@ function serializeTimestamps<T>(value: T): T {
 
 /** Turns a QuerySnapshot into a plain array of docs, each with its `id`. */
 function snapshotToDocs<T>(snapshot: QuerySnapshot<DocumentData>): T[] {
-  return snapshot.docs.map((d) => serializeTimestamps({ id: d.id, ...d.data() }) as T);
+  return snapshot.docs.map((d) => {
+    const data = d.data();
+    // Remove any 'id' field stored inside the document body — the canonical id
+    // is always d.id (the Firestore document path segment). A stale 'id' field
+    // written into the document body would shadow d.id after the spread and
+    // cause downstream code (e.g. id.replace) to blow up on a non-string value.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id: _ignored, ...rest } = data;
+    return serializeTimestamps({ id: d.id, ...rest }) as T;
+  });
 }
 
 // ─── Real-time Subscriptions (onSnapshot) ────────────────────────────────────
@@ -96,24 +104,26 @@ export function subscribeToCollection<T>(
 
   // A listener is already running for this collection and keeping Redux in sync.
   // Don't attach a second one, and don't push fallback over live data.
+  // Note: in development (HMR), the module may reload but the Set persists in
+  // the same JS context — so we intentionally keep the single-listener guarantee.
   if (liveCollectionListeners.has(collectionName)) {
     return NOOP_UNSUBSCRIBE;
   }
   liveCollectionListeners.add(collectionName);
 
-  // Show the fallback data immediately until real Firestore data arrives.
   if (fallbackData) onData(fallbackData);
 
   const colRef = collection(firestoreDb, collectionName);
 
-  // Safety timeout: fall back if nothing arrives within 8 seconds.
+  // Safety timeout: if Firebase does not resolve quickly, display the fallback
+  // instead of leaving the section in a permanent loading state.
   let receivedFirstSnapshot = false;
   const fallbackTimer = fallbackData
     ? setTimeout(() => {
         if (!receivedFirstSnapshot) {
           onData(fallbackData);
         }
-      }, 8000)
+      }, 2500)
     : null;
 
   onSnapshot(
@@ -121,12 +131,7 @@ export function subscribeToCollection<T>(
     (snapshot) => {
       receivedFirstSnapshot = true;
       if (fallbackTimer) clearTimeout(fallbackTimer);
-      // Collection is empty in Firebase — use the fallback instead.
-      if (snapshot.empty && fallbackData) {
-        onData(fallbackData);
-      } else {
-        onData(snapshotToDocs<T>(snapshot));
-      }
+      onData(snapshotToDocs<T>(snapshot));
     },
     (error) => {
       if (fallbackTimer) clearTimeout(fallbackTimer);
@@ -165,8 +170,6 @@ export function subscribeToDocument<T>(
   }
   liveDocumentListeners.add(path);
 
-  onData(fallbackData ?? null);
-
   const docRef = doc(firestoreDb, collectionName, documentId);
 
   let receivedFirstSnapshot = false;
@@ -176,7 +179,7 @@ export function subscribeToDocument<T>(
           if (!receivedFirstSnapshot) {
             onData(fallbackData);
           }
-        }, 8000)
+        }, 2500)
       : null;
 
   onSnapshot(
@@ -188,7 +191,10 @@ export function subscribeToDocument<T>(
         onData(fallbackData ?? null);
         return;
       }
-      onData(serializeTimestamps({ id: snapshot.id, ...snapshot.data() }) as T);
+      const data = snapshot.data();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { id: _ignored, ...rest } = data;
+      onData(serializeTimestamps({ id: snapshot.id, ...rest }) as T);
     },
     (error) => {
       if (fallbackTimer) clearTimeout(fallbackTimer);
@@ -227,8 +233,11 @@ export async function addDocument<T extends DocumentData>(
 ): Promise<string> {
   if (!firestoreDb) throw new Error('Firebase is not configured');
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { id: _ignored, ...safeData } = data as Record<string, unknown>;
+
   const docRef = await addDoc(collection(firestoreDb, collectionName), {
-    ...stripUndefined(data),
+    ...stripUndefined(safeData as Omit<T, 'id'>),
     createdAt: serverTimestamp(),
   });
 
@@ -253,7 +262,7 @@ export async function setDocument<T extends DocumentData>(
 
 // ─── Update ───────────────────────────────────────────────────────────────────
 
-/** Updates specific fields on an existing document (partial merge). */
+/** Updates specific fields on an existing document (partial merge). Creates it if it doesn't exist. */
 export async function updateDocument<T extends DocumentData>(
   collectionName: string,
   id: string,
@@ -261,10 +270,14 @@ export async function updateDocument<T extends DocumentData>(
 ): Promise<void> {
   if (!firestoreDb) throw new Error('Firebase is not configured');
 
-  await updateDoc(doc(firestoreDb, collectionName, id), {
-    ...stripUndefined(data),
+  // Guard: never write an 'id' field into the document body.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { id: _ignored, ...safeData } = data as Record<string, unknown>;
+
+  await setDoc(doc(firestoreDb, collectionName, id), {
+    ...stripUndefined(safeData as Partial<Omit<T, 'id'>>),
     updatedAt: serverTimestamp(),
-  } as DocumentData);
+  } as DocumentData, { merge: true });
 }
 
 // ─── Delete ───────────────────────────────────────────────────────────────────

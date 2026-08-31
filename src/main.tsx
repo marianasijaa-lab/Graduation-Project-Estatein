@@ -29,6 +29,7 @@ import { OfficesManagement } from "./Pages/Dashboard/OfficesManagement";
 import { InquiriesManagement } from "./Pages/Dashboard/InquiriesManagement";
 import { ContactInfoManagement } from "./Pages/Dashboard/ContactInfoManagement";
 import { SubscribersManagement } from "./Pages/Dashboard/SubscribersManagement";
+import Login from "./Pages/Login";
 
 const router = createBrowserRouter([
   {
@@ -59,11 +60,19 @@ const router = createBrowserRouter([
         path: "/contact",
         element: <Contact />,
       },
+      {
+        path: "/login",
+        element: <Login />,
+      },
     ],
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <AuthGate>
+        <DashboardLayout />
+      </AuthGate>
+    ),
     children: [
       { index: true, element: <Navigate to="properties" replace /> },
       { path: "properties", element: <PropertiesManagement /> },
@@ -79,26 +88,6 @@ const router = createBrowserRouter([
       { path: "inquiries", element: <InquiriesManagement /> },
       { path: "contact-info", element: <ContactInfoManagement /> },
       { path: "subscribers", element: <SubscribersManagement /> },
-      {
-        index: true,
-        element: <Navigate to="properties" replace />,
-      },
-      {
-        path: "properties",
-        element: <PropertiesManagement />,
-      },
-      {
-        path: "values",
-        element: <ValuesManagement />,
-      },
-      {
-        path: "achievements",
-        element: <AchievementsManagement />,
-      },
-      {
-        path: "clients",
-        element: <ClientsManagement />,
-      },
     ],
   },
 ]);
@@ -108,16 +97,10 @@ createRoot(document.getElementById("root")!).render(
     <Provider store={store}>
       <ThemeProvider>
         <AuthProvider>
-          {/* Nothing past this point renders until the user is signed in. */}
-          <AuthGate>
-            <SplashScreen>
-              <RouterProvider router={router} />
-            </SplashScreen>
-          </AuthGate>
+          <SplashScreen>
+            <RouterProvider router={router} />
+          </SplashScreen>
         </AuthProvider>
-        <SplashScreen>
-          <RouterProvider router={router} />
-        </SplashScreen>
       </ThemeProvider>
     </Provider>
   </StrictMode>,

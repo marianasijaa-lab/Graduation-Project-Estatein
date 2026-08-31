@@ -14,9 +14,9 @@ const ProperityPage = () => {
                 description="Welcome to Estatein, where your dream property awaits in every corner of our beautiful world.
                         Explore our curated selection of properties, each offering a unique story and a chance to redefine your life.
                         With categories to suit every dreamer, your journey"
-                className="pb-24 md:pb-32"
+                className="pb-24 lg:pb-32"
             />
-            <PropitySearchSection className="-mt-10 md:-mt-20" />
+            <PropitySearchSection className="-mt-10 lg:-mt-20" />
             <section className="w-full">
               <div className="site-container py-8 sm:py-10 lg:py-14">
                 <SectionHeader title='Discover a World of Possibilities' subtitle='Our portfolio of properties is as diverse as your dreams. Explore the following categories to find the perfect property that resonates with your vision of home' />

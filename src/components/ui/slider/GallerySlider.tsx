@@ -53,29 +53,41 @@ const GallerySlider = ({ images, propertyName, location, price }: GallerySliderP
 
       {/* Thumbnail Strip */}
       <div className="order-2 mb-4 bg-(--bg-main) p-2 overflow-hidden sm:order-none">
-        <div className="flex gap-2">
-          {images.map((img, index) => (
+        {/* Mobile: 4 فقط — md+: كلهم */}
+        <div className="grid grid-cols-4 md:hidden gap-2">
+          {images.slice(0, 4).map((img, index) => (
             <button
               key={index}
               onClick={() => handleThumbnailClick(index)}
-              className={`shrink-0 lg:flex-1 w-20 h-16 lg:h-20 rounded-md overflow-hidden transition-all duration-200 ${
+              className={`w-full h-16 rounded-md overflow-hidden transition-all duration-200 ${
                 index === primaryIndex
                   ? "ring-2 ring-blue-500 opacity-100"
                   : "opacity-60 hover:opacity-80"
               }`}
             >
-              <img
-                src={img}
-                alt={`Thumbnail ${index + 1}`}
-                className="w-full h-full object-cover"
-              />
+              <img src={img} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover" />
+            </button>
+          ))}
+        </div>
+        <div className="hidden md:grid gap-2" style={{ gridTemplateColumns: `repeat(${images.length}, 1fr)` }}>
+          {images.map((img, index) => (
+            <button
+              key={index}
+              onClick={() => handleThumbnailClick(index)}
+              className={`w-full h-18 lg:h-20 rounded-md overflow-hidden transition-all duration-200 ${
+                index === primaryIndex
+                  ? "ring-2 ring-blue-500 opacity-100"
+                  : "opacity-60 hover:opacity-80"
+              }`}
+            >
+              <img src={img} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover" />
             </button>
           ))}
         </div>
       </div>
 
       {/* Main Image Display - Two Images Side by Side */}
-      <div className="order-1 grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6 sm:order-none">
+      <div className="order-1 grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 sm:order-none">
         {/* Primary Image (Left) */}
         <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-800">
           <img
@@ -86,7 +98,7 @@ const GallerySlider = ({ images, propertyName, location, price }: GallerySliderP
         </div>
 
         {/* Secondary Image (Right) */}
-        <div className="relative aspect-video hidden lg:block rounded-lg overflow-hidden bg-gray-800">
+        <div className="relative aspect-video hidden md:block rounded-lg overflow-hidden bg-gray-800">
           <img
             src={images[secondaryIndex]}
             alt={`View ${secondaryIndex + 1}`}

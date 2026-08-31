@@ -132,21 +132,26 @@ export const PropertiesManagement = () => {
       } else {
         await addDocument<FirestoreProperty>("properties", values);
       }
+      setFormModal(null);
     } catch (error) {
       console.error("Failed to save property:", error);
+      alert(`Failed to save: ${error instanceof Error ? error.message : String(error)}`);
     }
-    setFormModal(null);
   };
 
   const confirmDelete = async () => {
     if (deleteTarget) {
       try {
         await deleteDocument("properties", deleteTarget.id);
+        setDeleteTarget(null);
       } catch (error) {
         console.error("Failed to delete property:", error);
+        alert(`Failed to delete: ${error instanceof Error ? error.message : String(error)}`);
+        setDeleteTarget(null);
       }
+    } else {
+      setDeleteTarget(null);
     }
-    setDeleteTarget(null);
   };
 
   const openRowDetail = (property: FirestoreProperty) => setDetailTarget(property);
@@ -382,6 +387,7 @@ export const PropertiesManagement = () => {
 
       {formModal && (
         <PropertyFormModal
+          key={formModal.mode === "edit" ? formModal.property.id : "add"}
           mode={formModal.mode}
           initialData={formModal.mode === "edit" ? formModal.property : undefined}
           onClose={closeFormModal}
