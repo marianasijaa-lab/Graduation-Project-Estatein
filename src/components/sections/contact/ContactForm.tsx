@@ -212,7 +212,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                     autoComplete="off"
                     value={formData[field.name] || ''}
                     onChange={(e) => handleChange(field.name, e.target.value)}
-                    className={`w-full py-4 pr-12 rounded-xl border outline-none transition-all appearance-none cursor-pointer text-sm md:text-[13px] lg:text-sm ${inputBgClass.replace('text-white', 'text-[#666666]')} ${IconComponent ? 'pl-12' : 'pl-5'
+                    className={`w-full py-4 pr-12 rounded-xl border outline-none transition-all appearance-none cursor-pointer text-sm md:text-[13px] lg:text-sm ${formData[field.name] ? inputBgClass : inputBgClass.replace('text-white', 'text-[#666666]')} ${IconComponent ? 'pl-12' : 'pl-5'
                       }`}
                   >
                     <option value="" disabled className="text-[#666666]">

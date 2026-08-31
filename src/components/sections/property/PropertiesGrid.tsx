@@ -98,15 +98,15 @@ function PropertyCard({
           </p>
         </div>
         <div className="mt-auto flex items-center justify-between gap-4">
-          <p className="font-semibold text-white">
+          <p>
             <span className="block font-normal text-gray text-sm">Price</span>
-            ${item.priceProperties.toLocaleString()}
+           <span className=" font-semibold text-white text-[15px] md:text-[18px] lg:text-2xl whitespace-nowrap"> ${item.priceProperties.toLocaleString()}</span>
           </p>
           <Button
             onClick={onView}
             text="View Property Details"
             variant="primary"
-            className="text-sm px-4 py-3 lg:py-3 lg:px-5"
+            className="text-[11px]  md:text-[13px] lg:text-sm px-3 py-2 md:px-4 md:py-3 lg:py-4 lg:px-5 max-w-[210px]"
           />
         </div>
       </div>

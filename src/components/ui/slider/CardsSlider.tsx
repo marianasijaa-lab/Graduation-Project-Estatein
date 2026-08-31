@@ -138,7 +138,7 @@ function Card({ item }: CardProps) {
         <div className="flex items-end justify-between gap-2 sm:gap-4 pt-1">
           <p className="flex min-w-0 flex-col justify-end font-semibold text-white leading-none">
             <span className="block font-normal text-gray text-[13px] md:text-sm mb-1">Price</span>
-            <span className="text-[15px] md:text-[18px] lg:text-xl whitespace-nowrap">${Number(item.priceHome).toLocaleString()}</span>
+            <span className="text-[15px] md:text-[18px] lg:text-2xl whitespace-nowrap">${Number(item.priceHome).toLocaleString()}</span>
           </p>
           <div className="flex-1 min-w-0 flex justify-end">
             <Button
@@ -148,7 +148,7 @@ function Card({ item }: CardProps) {
               }}
               text="View Property Details"
               variant="primary"
-              className="text-[11px] md:text-[13px] lg:text-sm px-3 py-2 md:px-4 md:py-3 lg:py-4 lg:px-5 max-w-[210px]"
+              className="text-[11px]  md:text-[13px] lg:text-sm px-3 py-2 md:px-4 md:py-3 lg:py-4 lg:px-5 max-w-[210px]"
             />
           </div>
         </div>
