@@ -63,13 +63,8 @@ const TestimonialsSlider = ({
         {testimonials.map((testimonial) => (
           <div
             key={testimonial.id}
-<<<<<<< HEAD
-            className="flex-shrink-0"
-            style={{ width: `calc(${100 / itemsToShow}% - ${(GAP * (itemsToShow - 1)) / itemsToShow}px) ` }}
-=======
             className="h-full flex-shrink-0"
             style={{ width: `calc(${100 / itemsToShow}% - ${(GAP * (itemsToShow - 1)) / itemsToShow}px)` }}
->>>>>>> main
           >
             <TestimonialCard testimony={testimonial} />
           </div>
