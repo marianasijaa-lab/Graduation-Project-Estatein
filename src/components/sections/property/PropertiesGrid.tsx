@@ -1,27 +1,30 @@
 import { useNavigate } from "react-router";
 import { Button } from "../../ui/Button";
-import { useProperties } from "../../../hooks/useProperties";
 import { useSlider } from "../../../hooks/useSlider";
 import { LoadingSkeleton } from "../../ui/LoadingSkeleton";
 import { ErrorMessage } from "../../ui/ErrorMessage";
 import BaseSlider from "../../ui/slider/BaseSlider";
 import SliderButtons from "../../ui/slider/SliderButtons";
-import type { FirestoreProperty } from "../../../store/types";
+import type { DataStatus, FirestoreProperty } from "../../../store/types";
 import { motion } from "framer-motion";
 import { staggerItem } from "../../common/StaggerContainer";
-
+import { RiFileWarningFill } from "react-icons/ri";
+interface PropertiesGridProps{
+  properties:FirestoreProperty[],
+  status:DataStatus,
+  error:string |null
+}
 const GAP = 24;
 
-export function PropertiesGrid() {
+export function PropertiesGrid({error,status,properties}:PropertiesGridProps) {
   const navigate = useNavigate();
-  const { properties, status, error } = useProperties();
+  // const { properties, status, error } = useProperties();
   const { currentIndex, goNext, goPrev, itemsToShow, maxIndex } =
     useSlider(properties);
 
   if (status === 'loading' || status === 'idle') {
     return <LoadingSkeleton variant="grid" count={3} />;
   }
-
   if (status === 'failed') {
     return (
       <ErrorMessage
