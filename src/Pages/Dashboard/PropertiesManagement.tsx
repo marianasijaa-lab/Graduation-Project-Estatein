@@ -37,7 +37,7 @@ function buildPropertyDetailFields(property: FirestoreProperty): DetailField[] {
     { label: "Price — Home Page", value: `${property.currency ?? "USD"} ${property.priceHome.toLocaleString()}` },
     { label: "Price — Properties Page", value: `${property.currency ?? "USD"} ${property.priceProperties.toLocaleString()}` },
     { label: "Location", value: property.location || "—" },
-    { label: "Size", value: property.size !== undefined ? `${property.size.toLocaleString()} sq ft` : "—" },
+    { label: "Size", value: property.size !== undefined ? `${property.size.toLocaleString()} m²` : "—" },
     { label: "Build Year", value: property.buildYear ?? "—" },
     { label: "Featured", value: property.featured ? "Yes" : "No" },
     { label: "Amenities", value: property.amenities && property.amenities.length > 0 ? <div className="flex flex-wrap gap-2">{property.amenities.map((a) => <span key={a} className="px-2.5 py-1 rounded-full text-xs font-medium border border-gray-500/20 bg-gray-500/10 text-current">{a}</span>)}</div> : "—", fullWidth: true },

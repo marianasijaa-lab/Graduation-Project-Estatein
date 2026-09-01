@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { SectionHeader } from "../components/common/SectionHeader";
 import { ContactForm } from "../components/sections/contact/ContactForm";
 import PageHero from "../components/sections/hero/PageHero";
@@ -13,6 +13,14 @@ const ProperityPage = () => {
   const { properties, status, error } = useProperties();
   const [filteredResults, setFilteredResult] =
     useState<FirestoreProperty[]>(properties);
+  const resultsRef = useRef<HTMLDivElement>(null);
+
+  const handleSearchSubmit = (results: FirestoreProperty[]) => {
+    setFilteredResult(results);
+    setTimeout(() => {
+      resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  };
 
   return (
     <div className="bg-(--bg-main)">
@@ -27,26 +35,28 @@ const ProperityPage = () => {
       <PropitySearchSection
         className="lg:-mt-20"
         properties={properties}
-        onSearchSubmit={setFilteredResult}
+        onSearchSubmit={handleSearchSubmit}
       />
 
-      {filteredResults.length <= 0 ? (
-        <EmptyState />
-      ) : (
-        <section className="w-full">
-          <div className="site-container py-8 sm:py-10 lg:py-14">
-            <SectionHeader
-              title="Discover a World of Possibilities"
-              subtitle="Our portfolio of properties is as diverse as your dreams. Explore the following categories to find the perfect property that resonates with your vision of home"
-            />
-            <PropertiesGrid
-              error={error}
-              status={status}
-              properties={filteredResults}
-            />
-          </div>
-        </section>
-      )}
+      <div ref={resultsRef}>
+        {filteredResults.length <= 0 ? (
+          <EmptyState />
+        ) : (
+          <section className="w-full">
+            <div className="site-container py-8 sm:py-10 lg:py-14">
+              <SectionHeader
+                title="Discover a World of Possibilities"
+                subtitle="Our portfolio of properties is as diverse as your dreams. Explore the following categories to find the perfect property that resonates with your vision of home"
+              />
+              <PropertiesGrid
+                error={error}
+                status={status}
+                properties={filteredResults}
+              />
+            </div>
+          </section>
+        )}
+      </div>
 
       <section className="w-full">
         <div className="site-container py-8 sm:py-10 lg:py-14">

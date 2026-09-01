@@ -122,7 +122,7 @@ export const InquiriesManagement = () => {
       )}
 
       {contacts.length > 0 && (
-        <motion.div variants={staggerItem} className={`hidden lg:block overflow-x-auto rounded-2xl border ${panelClass}`}>
+        <motion.div variants={staggerItem} className={`hidden lg:block overflow-x-auto table-scroll rounded-2xl border ${panelClass}`}>
           <table className="w-full text-sm">
             <thead>
               <tr className={`border-b text-left ${isDark ? "border-bg-gray-1 text-gray" : "border-gray-200 text-gray-500"}`}>

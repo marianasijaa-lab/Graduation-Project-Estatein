@@ -406,7 +406,7 @@ export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: Prop
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label className={labelClass} htmlFor="pf-size">Size — sq ft (optional)</label>
+              <label className={labelClass} htmlFor="pf-size">Size — m² (optional)</label>
               <input id="pf-size" type="number" min="0" step="1" placeholder="Size"
                 value={values.size}
                 onChange={(e) => setField("size", e.target.value)}

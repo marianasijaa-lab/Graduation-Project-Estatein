@@ -150,7 +150,7 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.18 }}
-          className={`absolute top-full left-0 w-full ${isMobile ? "mt-1" : "mt-2"} rounded-xl border shadow-xl z-50 max-h-48 overflow-y-auto ${
+          className={`absolute top-full left-0 w-full ${isMobile ? "mt-1" : "mt-2"} rounded-xl border shadow-xl z-50 max-h-48 overflow-y-auto sidebar-scroll ${
             isDark
               ? "bg-bg-dark border-bg-gray-1 text-white"
               : "bg-white border-gray-200 text-gray-800"
