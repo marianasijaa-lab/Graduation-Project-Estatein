@@ -86,7 +86,7 @@ const TestimonialsSlider = ({
 
 function Star() {
   return (
-    <div className="p-1.5 lg:p-2.5 rounded-full bg-bg-dark">
+    <div className="p-1.5 lg:p-2.5 rounded-full bg-(--bg-secondary)">
       <FaStar className="w-4.5 lg:w-5 xl:w-6" color="#FFE500" />
     </div>
   );
@@ -106,7 +106,7 @@ function TestimonialCard({ testimony }: { testimony: FirestoreTestimonial }) {
       </div>
 
       <div className="flex flex-col gap-1.5 lg:gap-2.5 flex-1 min-h-0">
-        <h3 className="font-semibold text-lg md:text-xl lg:text-xl 2xl:text-2xl text-white">
+        <h3 className="font-semibold text-lg md:text-xl lg:text-xl 2xl:text-2xl text-(--text-main)">
           {testimony.title}
         </h3>
         <p className="text-[12px] leading-relaxed md:text-[14px] lg:text-[14px] xl:text-[15.8px] line-clamp-3 lg:line-clamp-4">
@@ -123,7 +123,7 @@ function TestimonialCard({ testimony }: { testimony: FirestoreTestimonial }) {
           />
         </div>
         <div className="flex min-w-0 flex-col gap-0.5">
-          <h4 className="text-base font-medium text-white sm:text-lg md:text-lg xl:text-xl whitespace-nowrap">{testimony.clientName}</h4>
+          <h4 className="text-base font-medium text-(--text-main) sm:text-lg md:text-lg xl:text-xl whitespace-nowrap">{testimony.clientName}</h4>
           <p className="text-[13px] text-gray sm:text-[14px] md:text-[15px] lg:text-[16px]">{testimony.clientLocation}</p>
         </div>
       </div>

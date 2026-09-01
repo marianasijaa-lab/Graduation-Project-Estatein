@@ -29,11 +29,11 @@ const PricingCard = ({ title, items }: PricingSection) => {
   const isMonthlyCosts = title === "Monthly Costs";
 
   return (
-    <div className="w-full rounded-[10px] border border-bg-gray-1 bg-bg-dark-1">
+    <div className="w-full rounded-[10px] border border-bg-gray-1 bg-(--bg-mian)">
       {/* ================= CARD HEADER ================= */}
 
       <div className="relative flex h-[80px] sm:h-[96px] items-center justify-between px-[18px] sm:px-[32px] after:absolute after:bottom-0 after:left-[18px] after:right-[18px] sm:after:left-[32px] sm:after:right-[32px] after:h-px after:bg-[#262626]">
-        <h3 className="font-['Urbanist'] text-[15px] sm:text-[18px] lg:text-[20px] font-semibold text-white">
+        <h3 className="font-['Urbanist'] text-[15px] sm:text-[18px] lg:text-[20px] font-semibold text-(--text-main)">
           {title}
         </h3>
 
@@ -45,14 +45,14 @@ const PricingCard = ({ title, items }: PricingSection) => {
             rounded-lg
             border
             border-[#262626]
-            bg-[#1A1A1A]
+            bg-(--bg-secondary)
             px-[12px]
             sm:px-[18px]
             font-['Urbanist']
             text-[12px]
             sm:text-[14px]
             font-medium
-            text-white
+            text-(--text-main)
             transition
             hover:bg-[#222222]
           "
@@ -129,7 +129,7 @@ const PricingCard = ({ title, items }: PricingSection) => {
                 <span
                   className={`
                     
-                    text-white
+                    text-(--text-main)
                     break-words
                     min-w-0
                     max-w-full
@@ -149,7 +149,7 @@ const PricingCard = ({ title, items }: PricingSection) => {
                       w-fit
                       max-w-full
                       ${item.note.length > 35 ? "rounded-[6px]" : "rounded-[28px]"}
-                      bg-bg-dark
+                      bg-(--bg-secondary)
                       border border-bg-gray-1
                       px-[8px]
                       sm:px-[12px]
@@ -185,7 +185,7 @@ const PricingDetails = ({
   sections,
 }: PricingDetailsProps) => {
   return (
-    <section className="w-full overflow-x-hidden bg-[#141414] text-white">
+    <section className="w-full overflow-x-hidden bg-(--bg-main) text-(--text-main)">
       <div
         className="
           mx-auto
@@ -222,7 +222,7 @@ const PricingDetails = ({
             rounded-[8px]
             border
             border-[#262626]
-            bg-[#1A1A1A]
+            bg-(--bg-secondary)
             px-[25px]
             py-[22px]
             md:flex-row
@@ -244,7 +244,7 @@ const PricingDetails = ({
               font-['Urbanist']
               text-[18px]
               font-semibold
-              text-white
+              text-(--text-main)
               after:absolute
               after:bottom-0
               after:left-0
@@ -335,7 +335,7 @@ const PricingDetails = ({
                 text-[24px]
                 font-semibold
                 leading-[150%]
-                text-white
+                text-(--text-main)
                 lg:text-[26px]
               "
             >

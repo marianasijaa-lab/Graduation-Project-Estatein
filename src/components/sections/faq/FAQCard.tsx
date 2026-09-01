@@ -14,10 +14,10 @@ export const FAQCard = ({ question, description, onReadMore }: FAQCardProps) => 
       variants={staggerItem}
       whileHover={{y: -4}}
       transition={{duration: 0.25}}
-      className="flex flex-col gap-4 bg-bg-dark-1 border border-white/10 rounded-xl p-6 h-full">
+      className="flex flex-col gap-4 bg-(--bg-main) border border-(--color-card) rounded-xl p-6 h-full">
 
       {/* question */}
-      <h3 className="text-white font-semibold text-[19px] min-h-[3.5rem]">
+      <h3 className="text-(--text-main) font-semibold text-[19px] min-h-[3.5rem]">
         {question}
       </h3>
 

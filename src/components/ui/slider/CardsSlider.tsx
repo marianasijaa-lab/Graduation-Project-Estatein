@@ -117,7 +117,7 @@ function Card({ item }: CardProps) {
             {item.descriptionShort.length > 60
               ? item.descriptionShort.slice(0, 60) + "... "
               : item.descriptionShort + "... "}
-            <button className="text-white underline underline-offset-2 hover:text-white/80 transition-colors whitespace-nowrap">
+            <button className="text-(--text-main) underline underline-offset-2 hover:text-white/80 transition-colors whitespace-nowrap">
               Read More
             </button>
           </p>
@@ -127,7 +127,7 @@ function Card({ item }: CardProps) {
           {details.map((detail, index) => (
             <div
               key={detail.text}
-              className={`flex items-center gap-0.5 rounded-[28px] border border-bg-gray-1 bg-bg-dark px-3 py-2  md:px-2 md:py-1.5 text-white whitespace-nowrap min-w-0 ${index < 2 ? '' : 'md:shrink'}`}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-(--bg-secondary) text-(--text-main) rounded-[28px] whitespace-nowrap w-fit shrink-0"
             >
               <img src={detail.icon} alt={detail.text} className="w-3 h-3 md:w-3.5 md:h-3.5 lg:w-3.5 lg:h-3.5 shrink-0" />
               <p className="font-medium text-[12px] md:text-[12px] lg:text-sm">{detail.text}</p>
@@ -136,7 +136,7 @@ function Card({ item }: CardProps) {
         </div>
 
         <div className="flex items-end justify-between gap-2 sm:gap-4 pt-1">
-          <p className="flex min-w-0 flex-col justify-end font-semibold text-white leading-none">
+          <p className="flex min-w-0 flex-col justify-end font-semibold text-(--text-main) leading-none">
             <span className="block font-normal text-gray text-[13px] md:text-sm mb-1">Price</span>
             <span className="text-[15px] md:text-[18px] lg:text-2xl whitespace-nowrap">${Number(item.priceHome).toLocaleString()}</span>
           </p>

@@ -38,7 +38,7 @@ const Contact = () => {
   };
 
   return (
-    <div>
+    <div className="bg-(--bg-main)">
       <PageHero
         title="Get in Touch with Estatein"
         description="Welcome to Estatein's Contact Us page. We're here to assist you with any inquiries, requests, or feedback you may have. Whether you're looking to buy or sell a property, explore investment opportunities, or simply want to connect, we're just a message away."
@@ -46,8 +46,8 @@ const Contact = () => {
 
       {/* Services Bar with Animation */}
       <section
-        className="w-full bg-bg-dark-1 border border-bg-gray-1 py-1 sm:py-2"
-        style={{ boxShadow: '0px 0px 0px 6px #191919' }}
+        className="w-full bg-(--bg-main) border border-bg-gray-1 py-1 sm:py-2"
+        style={{ boxShadow: 'var(--bg-border)' }}
       >
         <div className="w-full mx-auto px-2 sm:px-1 lg:px-2">
           <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
@@ -64,7 +64,7 @@ const Contact = () => {
       </section>
 
       {/* Contact Form */}
-      <div className="site-container pt-8 sm:pt-10">
+      <div className=" site-container pt-8 sm:pt-10">
         <SectionHeader
           title="Let's Connect"
           subtitle="We're excited to connect with you and learn more about your real estate goals. Use the form below to get in touch with Estatein."
@@ -102,7 +102,7 @@ const Contact = () => {
         />
       </div>
 
-      <div className="site-container pt-10 sm:pt-14">
+      <div className="bg-(--bg-main) site-container pt-10 sm:pt-14">
         <SectionHeader
           title="Discover Our Office Locations"
           subtitle="Estatein is here to serve you across multiple locations. Whether you're looking to meet our team, discuss real estate opportunities, or simply drop by for a chat, we have offices conveniently located to serve your needs. Explore the categories below to find the Estatein office nearest to you."
@@ -111,8 +111,8 @@ const Contact = () => {
           
         />
       </div>
-      <OfficeLocations />
-      <div className="site-container mb-16">
+      <OfficeLocations  />
+      <div className=" site-container mb-16">
         <TeamCard />
       </div>
     </div>
