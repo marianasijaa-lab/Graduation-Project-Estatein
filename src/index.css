@@ -90,6 +90,23 @@ select:-webkit-autofill {
   caret-color: #ffffff;
 }
 
+/* Light mode autofill override */
+:root.light .autofill-none input:-webkit-autofill,
+:root.light .autofill-none input:-webkit-autofill:hover,
+:root.light .autofill-none input:-webkit-autofill:focus,
+:root.light .autofill-none textarea:-webkit-autofill,
+:root.light .autofill-none select:-webkit-autofill,
+:root.light input:-webkit-autofill,
+:root.light input:-webkit-autofill:hover,
+:root.light input:-webkit-autofill:focus,
+:root.light textarea:-webkit-autofill,
+:root.light select:-webkit-autofill {
+  -webkit-text-fill-color: #141414 !important;
+  -webkit-box-shadow: 0 0 0 1000px #F9F9F9 inset !important;
+  box-shadow: 0 0 0 1000px #F9F9F9 inset !important;
+  caret-color: #141414;
+}
+
 @media (min-width: 640px) {
   .site-container {
     padding-inline: 1.5rem;

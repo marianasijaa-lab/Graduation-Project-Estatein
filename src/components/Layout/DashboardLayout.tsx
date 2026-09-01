@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Menu, X, LogOut } from "lucide-react";
 import { Link, NavLink, Outlet, useLocation } from "react-router";
+import { AnimatePresence, motion } from "framer-motion";
 import { RouteTransitionOverlay } from "../common/RouteTransitionOverlay";
 import {
   HiOutlineHome,
@@ -129,35 +130,43 @@ const SidebarLinks = ({ isDark, expandedGroups, onToggleGroup, onNavigate }: Sid
             />
           </button>
 
-          {isExpanded && (
-            <div
-              id={panelId}
-              className={`mt-1 ml-4 pl-4 flex flex-col gap-1 border-l ${isDark ? "border-bg-gray-1" : "border-gray-200"}`}
-            >
-              {group.sections.map((section) => {
-                const SectionIcon = section.icon;
-                return (
-                  <NavLink
-                    key={section.to}
-                    to={section.to}
-                    onClick={onNavigate}
-                    className={({ isActive }) =>
-                      `flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
-                        isActive
-                          ? "bg-primary text-white"
-                          : isDark
-                            ? "text-gray hover:bg-bg-gray-1 hover:text-white"
-                            : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                      }`
-                    }
-                  >
-                    <SectionIcon className="w-4 h-4 shrink-0" />
-                    <span className="truncate">{section.label}</span>
-                  </NavLink>
-                );
-              })}
-            </div>
-          )}
+          <AnimatePresence initial={false}>
+            {isExpanded && (
+              <motion.div
+                id={panelId}
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.22, ease: [0.25, 0.1, 0.25, 1] }}
+                style={{ overflow: "hidden" }}
+              >
+                <div className={`mt-1 ml-4 pl-4 flex flex-col gap-1 border-l ${isDark ? "border-bg-gray-1" : "border-gray-200"}`}>
+                  {group.sections.map((section) => {
+                    const SectionIcon = section.icon;
+                    return (
+                      <NavLink
+                        key={section.to}
+                        to={section.to}
+                        onClick={onNavigate}
+                        className={({ isActive }) =>
+                          `flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                            isActive
+                              ? "bg-primary text-white"
+                              : isDark
+                                ? "text-gray hover:bg-bg-gray-1 hover:text-white"
+                                : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                          }`
+                        }
+                      >
+                        <SectionIcon className="w-4 h-4 shrink-0" />
+                        <span className="truncate">{section.label}</span>
+                      </NavLink>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       );
     })}
@@ -203,23 +212,41 @@ export const DashboardLayout = () => {
   return (
     <div className={`min-h-screen ${shellClass} font-['Urbanist',sans-serif]`}>
       {/* ── Desktop sidebar (fixed) ── */}
-      <aside
+      <motion.aside
+        initial={{ x: -40, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
         className={`hidden lg:flex lg:fixed lg:inset-y-0 lg:left-0 lg:w-72 lg:flex-col lg:z-40 border-r ${sidebarClass}`}
       >
-        <div className={`flex items-center justify-between px-5 h-20 border-b ${isDark ? "border-bg-gray-1" : "border-gray-200"}`}>
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15, duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+          className={`flex items-center justify-between px-5 h-20 border-b ${isDark ? "border-bg-gray-1" : "border-gray-200"}`}
+        >
           <Link to="/" aria-label="Back to Estatein website">
             <Logo />
           </Link>
-        </div>
-        <p className={`px-6 pt-4 text-xs font-semibold uppercase tracking-wider ${isDark ? "text-gray" : "text-gray-400"}`}>
+        </motion.div>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.3 }}
+          className={`px-6 pt-4 text-xs font-semibold uppercase tracking-wider ${isDark ? "text-gray" : "text-gray-400"}`}
+        >
           Admin Dashboard
-        </p>
+        </motion.p>
         <SidebarLinks
           isDark={isDark}
           expandedGroups={expandedGroups}
           onToggleGroup={toggleGroup}
         />
-        <div className={`px-3 py-4 border-t ${isDark ? "border-bg-gray-1" : "border-gray-200"}`}>
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25, duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+          className={`px-3 py-4 border-t ${isDark ? "border-bg-gray-1" : "border-gray-200"}`}
+        >
           <Link
             to="/"
             className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
@@ -238,68 +265,87 @@ export const DashboardLayout = () => {
             <LogOut className="w-4 h-4 shrink-0" />
             Log Out
           </button>
-        </div>
-      </aside>
+        </motion.div>
+      </motion.aside>
 
       {/* ── Mobile sidebar (overlay drawer) ── */}
-      {mobileNavOpen && (
-        <div className="lg:hidden fixed inset-0 z-50">
-          <div
-            className="absolute inset-0 bg-black/60"
-            onClick={() => setMobileNavOpen(false)}
-            aria-hidden="true"
-          />
-          <aside className={`absolute inset-y-0 left-0 w-72 max-w-[80vw] flex flex-col border-r ${sidebarClass}`}>
-            <div className={`flex items-center justify-between px-5 h-20 border-b ${isDark ? "border-bg-gray-1" : "border-gray-200"}`}>
-              <Link to="/" aria-label="Back to Estatein website" onClick={() => setMobileNavOpen(false)}>
-                <Logo />
-              </Link>
-              <button
-                type="button"
-                onClick={() => setMobileNavOpen(false)}
-                aria-label="Close menu"
-                className={`p-2 rounded-lg cursor-pointer ${isDark ? "text-white hover:bg-bg-gray-1" : "text-gray-700 hover:bg-gray-100"}`}
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <p className={`px-6 pt-4 text-xs font-semibold uppercase tracking-wider ${isDark ? "text-gray" : "text-gray-400"}`}>
-              Admin Dashboard
-            </p>
-            <SidebarLinks
-              isDark={isDark}
-              expandedGroups={expandedGroups}
-              onToggleGroup={toggleGroup}
-              onNavigate={() => setMobileNavOpen(false)}
+      <AnimatePresence>
+        {mobileNavOpen && (
+          <div className="lg:hidden fixed inset-0 z-50 flex">
+            {/* backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.22 }}
+              className="absolute inset-0 bg-black/60"
+              onClick={() => setMobileNavOpen(false)}
+              aria-hidden="true"
             />
-            <div className={`px-3 py-4 border-t ${isDark ? "border-bg-gray-1" : "border-gray-200"}`}>
-              <Link
-                to="/"
-                onClick={() => setMobileNavOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
-                  isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                }`}
-              >
-                ← Back to website
-              </Link>
-              <button
-                type="button"
-                onClick={() => { setMobileNavOpen(false); logout(); }}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors cursor-pointer ${
-                  isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                }`}
-              >
-                <LogOut className="w-4 h-4 shrink-0" />
-                Log Out
-              </button>
-            </div>
-          </aside>
-        </div>
-      )}
+            {/* drawer */}
+            <motion.aside
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ duration: 0.28, ease: [0.25, 0.1, 0.25, 1] }}
+              className={`relative w-72 max-w-[80vw] flex flex-col border-r ${sidebarClass}`}
+            >
+              <div className={`flex items-center justify-between px-5 h-20 border-b ${isDark ? "border-bg-gray-1" : "border-gray-200"}`}>
+                <Link to="/" aria-label="Back to Estatein website" onClick={() => setMobileNavOpen(false)}>
+                  <Logo />
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => setMobileNavOpen(false)}
+                  aria-label="Close menu"
+                  className={`p-2 rounded-lg cursor-pointer ${isDark ? "text-white hover:bg-bg-gray-1" : "text-gray-700 hover:bg-gray-100"}`}
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <p className={`px-6 pt-4 text-xs font-semibold uppercase tracking-wider ${isDark ? "text-gray" : "text-gray-400"}`}>
+                Admin Dashboard
+              </p>
+              <SidebarLinks
+                isDark={isDark}
+                expandedGroups={expandedGroups}
+                onToggleGroup={toggleGroup}
+                onNavigate={() => setMobileNavOpen(false)}
+              />
+              <div className={`px-3 py-4 border-t ${isDark ? "border-bg-gray-1" : "border-gray-200"}`}>
+                <Link
+                  to="/"
+                  onClick={() => setMobileNavOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+                    isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                  }`}
+                >
+                  ← Back to website
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => { setMobileNavOpen(false); logout(); }}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors cursor-pointer ${
+                    isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                  }`}
+                >
+                  <LogOut className="w-4 h-4 shrink-0" />
+                  Log Out
+                </button>
+              </div>
+            </motion.aside>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* ── Main column ── */}
       <div className="lg:ml-72">
-        <header className={`sticky top-0 z-40 h-20 flex items-center justify-between gap-4 px-4 sm:px-8 border-b ${headerClass}`}>
+        <motion.header
+          initial={{ opacity: 0, y: -12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+          className={`sticky top-0 z-40 h-20 flex items-center justify-between gap-4 px-4 sm:px-8 border-b ${headerClass}`}
+        >
           <div className="flex items-center gap-3 min-w-0">
             <button
               type="button"
@@ -314,7 +360,7 @@ export const DashboardLayout = () => {
             <h1 className="text-lg sm:text-xl font-semibold truncate">{sectionLabel}</h1>
           </div>
           <ThemeToggle />
-        </header>
+        </motion.header>
 
         <RouteTransitionOverlay onTransitionEnd={() => mainRef.current?.focus()} />
 

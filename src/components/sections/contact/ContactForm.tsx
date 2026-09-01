@@ -10,6 +10,7 @@ import {
   validateMessage,
   validateRequired,
 } from '../../../utils/validation';
+import { useTheme } from '../../../Context/ThemeContext';
 
 export interface ExtraField {
   name: string;
@@ -82,6 +83,8 @@ export const ContactForm: React.FC<ContactFormProps> = ({
   onSubmit,
   isSubmitting = false,
 }) => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
 
   // ── form data ──
   const initialFormState: Record<string, unknown> = {
@@ -141,7 +144,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
   };
 
   // ── style helpers ──
-  const inputBase = `w-full px-5 py-4 rounded-xl border outline-none transition-all text-sm md:text-[13px] lg:text-sm text-white`;
+  const inputBase = `w-full px-5 py-4 rounded-xl border outline-none transition-all text-sm md:text-[13px] lg:text-sm ${isDark ? 'text-white' : 'text-gray-900'}`;
 
   const inputBg = (name: string) => {
     const hasError = touched[name] && errors[name];
@@ -155,7 +158,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
       : 'bg-[#F9F9F9] border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#703BF7]';
   };
 
-  const labelClass = `block text-sm font-medium mb-2 text-white`;
+  const labelClass = `block text-sm font-medium mb-2 ${isDark ? 'text-white' : 'text-gray-800'}`;
   const errorClass = 'mt-1.5 text-xs text-red-400 flex items-center gap-1';
 
   const gridColsClass = {
@@ -300,7 +303,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                 <>
                   <div className="relative flex items-center">
                     {IconComponent && (
-                      <IconComponent className="absolute left-5 text-white text-lg pointer-events-none" />
+                      <IconComponent className={`absolute left-5 text-lg pointer-events-none ${isDark ? 'text-white' : 'text-gray-500'}`} />
                     )}
                     <input
                       type="text"
@@ -311,7 +314,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                       onChange={(e) => handleChange(field.name, e.target.value)}
                       onBlur={() => handleBlur(field.name)}
                       aria-invalid={hasErr}
-                      className={`w-full py-4 rounded-xl border outline-none transition-all text-sm md:text-[12px] lg:text-sm text-white ${extraInputBg} ${
+                      className={`w-full py-4 rounded-xl border outline-none transition-all text-sm md:text-[12px] lg:text-sm ${isDark ? 'text-white' : 'text-gray-900'} ${extraInputBg} ${
                         IconComponent ? 'pl-12' : 'pl-5'
                       } ${field.hasDot ? 'pr-12' : 'pr-5'} ${
                         field.readOnly ? 'cursor-not-allowed opacity-80' : ''
@@ -346,7 +349,9 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                     className={`w-full py-4 pr-12 rounded-xl border outline-none transition-all appearance-none cursor-pointer text-sm md:text-[13px] lg:text-sm ${
                       formData[field.name]
                         ? extraInputBg
-                        : extraInputBg.replace('text-white', 'text-[#666666]')
+                        : isDark
+                        ? 'bg-[#1A1A1A] border-[#262626] text-[#666666] placeholder-[#666666] focus:border-[#703BF7]'
+                        : 'bg-[#F9F9F9] border-gray-200 text-gray-400 placeholder-gray-400 focus:border-[#703BF7]'
                     } ${IconComponent ? 'pl-12' : 'pl-5'}`}
                   >
                     <option value="" disabled className="text-[#666666]">
@@ -362,7 +367,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                       </option>
                     ))}
                   </select>
-                  <FiChevronDown className="absolute right-5 text-white text-lg pointer-events-none" />
+                  <FiChevronDown className={`absolute right-5 text-lg pointer-events-none ${isDark ? 'text-white' : 'text-gray-500'}`} />
                 </div>
               )}
             </div>
@@ -381,7 +386,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
           onChange={(e) => handleChange('message', e.target.value)}
           onBlur={() => handleBlur('message')}
           aria-invalid={!!(touched.message && errors.message)}
-          className={`w-full px-5 py-4 rounded-xl border outline-none transition-all resize-none text-sm md:text-[13px] lg:text-sm text-white ${inputBg('message')}`}
+          className={`w-full px-5 py-4 rounded-xl border outline-none transition-all resize-none text-sm md:text-[13px] lg:text-sm ${isDark ? 'text-white' : 'text-gray-900'} ${inputBg('message')}`}
         />
         <ErrorMsg name="message" />
       </div>
