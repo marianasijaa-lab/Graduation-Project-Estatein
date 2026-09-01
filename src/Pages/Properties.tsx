@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { SectionHeader } from "../components/common/SectionHeader";
 import { ContactForm } from "../components/sections/contact/ContactForm";
 import PageHero from "../components/sections/hero/PageHero";
@@ -5,9 +6,13 @@ import { PropitySearchSection } from "../components/sections/property/PropertySe
 import { PropertiesGrid } from "../components/sections/property/PropertiesGrid";
 import { MdCall, MdEmail } from "react-icons/md";
 import { useProperties } from "../hooks/useProperties";
+import type { FirestoreProperty } from "../store/types";
+import EmptyState from "../components/ui/EmptyState";
 
 const ProperityPage = () => {
-  const { properties } = useProperties();
+  const { properties, status, error } = useProperties();
+  const [filteredResults, setFilteredResult] =
+    useState<FirestoreProperty[]>(properties);
 
   return (
     <div className="bg-(--bg-main)">
@@ -22,17 +27,26 @@ const ProperityPage = () => {
       <PropitySearchSection
         className="lg:-mt-20"
         properties={properties}
+        onSearchSubmit={setFilteredResult}
       />
 
-      <section className="w-full">
-        <div className="site-container py-8 sm:py-10 lg:py-14">
-          <SectionHeader
-            title="Discover a World of Possibilities"
-            subtitle="Our portfolio of properties is as diverse as your dreams. Explore the following categories to find the perfect property that resonates with your vision of home"
-          />
-          <PropertiesGrid />
-        </div>
-      </section>
+      {filteredResults.length <= 0 ? (
+        <EmptyState />
+      ) : (
+        <section className="w-full">
+          <div className="site-container py-8 sm:py-10 lg:py-14">
+            <SectionHeader
+              title="Discover a World of Possibilities"
+              subtitle="Our portfolio of properties is as diverse as your dreams. Explore the following categories to find the perfect property that resonates with your vision of home"
+            />
+            <PropertiesGrid
+              error={error}
+              status={status}
+              properties={filteredResults}
+            />
+          </div>
+        </section>
+      )}
 
       <section className="w-full">
         <div className="site-container py-8 sm:py-10 lg:py-14">
@@ -72,12 +86,18 @@ const ProperityPage = () => {
                 options: ["1", "2", "3+"],
               },
               {
+                name: "areaSqm",
+                label: "Area (m²)",
+                type: "dropdown",
+                placeholder: "Select Area",
+                options: ["< 50 m²", "50–100 m²", "100–200 m²", "200–500 m²", "> 500 m²"],
+              },
+              {
                 name: "budget",
                 label: "Budget",
                 type: "dropdown",
                 placeholder: "Select Budget",
                 options: ["$100k-$500k", "$500k+"],
-                colSpan: 2,
               },
               {
                 name: "prefNumber",

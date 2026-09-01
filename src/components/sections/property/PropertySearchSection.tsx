@@ -38,7 +38,6 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  // Build filter options from live data
   const FILTER_OPTIONS = {
     location: ["All", ...Array.from(new Set(properties.map((p) => p.location)))],
     propertyType: ["All", ...Array.from(new Set(properties.map((p) => p.propertyType)))],
@@ -70,7 +69,6 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
@@ -117,16 +115,20 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({
     onSearchSubmit?.(results);
   };
 
-  // ── Shared filter list config ──
-  const filterList = [
-    { id: "location",     label: "Location",      icon: FiMapPin,        options: FILTER_OPTIONS.location },
-    { id: "propertyType", label: "Property Type", icon: HiHomeModern,    options: FILTER_OPTIONS.propertyType },
-    { id: "pricingRange", label: "Pricing Range", icon: PiMoneyWavyFill, options: FILTER_OPTIONS.pricingRange },
-    { id: "propertySize", label: "Property Size", icon: BsFillBoxFill,   options: FILTER_OPTIONS.propertySize },
-    { id: "buildYear",    label: "Build Year",    icon: FaRegCalendar,   options: FILTER_OPTIONS.buildYear },
-  ] as const;
+  // ── Filter list config ──
+  const filterList: Array<{
+    id: string;
+    label: string;
+    icon: React.ElementType;
+    options: FilterOption[];
+  }> = [
+    { id: "location",     label: "Location",      icon: FiMapPin,        options: FILTER_OPTIONS.location as FilterOption[] },
+    { id: "propertyType", label: "Property Type", icon: HiHomeModern,    options: FILTER_OPTIONS.propertyType as FilterOption[] },
+    { id: "pricingRange", label: "Pricing Range", icon: PiMoneyWavyFill, options: FILTER_OPTIONS.pricingRange as FilterOption[] },
+    { id: "propertySize", label: "Property Size", icon: BsFillBoxFill,   options: FILTER_OPTIONS.propertySize as FilterOption[] },
+    { id: "buildYear",    label: "Build Year",    icon: FaRegCalendar,   options: FILTER_OPTIONS.buildYear as FilterOption[] },
+  ];
 
-  // Returns display label for a filter
   const getSelectedLabel = (id: string): string => {
     if (id === "pricingRange" || id === "propertySize") {
       return filters[id as "pricingRange" | "propertySize"].label;
@@ -134,12 +136,13 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({
     return filters[id as keyof Filters] as string;
   };
 
+  // ── Shared input class ──
+  const searchInputClass = `flex-1 bg-transparent focus:outline-none text-sm ${
+    isDark ? "text-white placeholder-gray-500" : "text-gray-800 placeholder-gray-400"
+  }`;
+
   // ── Dropdown menu renderer ──
-  const renderDropdownMenu = (
-    filterId: string,
-    options: readonly FilterOption[],
-    isMobile = false,
-  ) => (
+  const renderDropdownMenu = (filterId: string, options: readonly FilterOption[], isMobile = false) => (
     <AnimatePresence>
       {activeDropdown === filterId && (
         <motion.div
@@ -174,11 +177,6 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({
     </AnimatePresence>
   );
 
-  // ── Shared search input styles ──
-  const searchInputClass = `flex-1 bg-transparent focus:outline-none text-sm ${
-    isDark ? "text-white placeholder-gray-500" : "text-gray-800 placeholder-gray-400"
-  }`;
-
   return (
     <FadeInSection
       direction="up"
@@ -192,9 +190,7 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({
           {/* Search bar */}
           <div
             className={`w-full flex items-center justify-between px-3 py-2 rounded-xl border transition-colors ${
-              isDark
-                ? "bg-bg-dark-1 border-bg-gray-1"
-                : "bg-white border-gray-200 shadow-sm"
+              isDark ? "bg-bg-dark-1 border-bg-gray-1" : "bg-white border-gray-200 shadow-sm"
             }`}
           >
             <input
@@ -228,9 +224,7 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({
                   <div
                     onClick={() => toggleDropdown(filter.id)}
                     className={`w-full flex items-center justify-between border rounded-xl px-4 py-3.5 cursor-pointer transition-colors ${
-                      isDark
-                        ? "bg-bg-dark-1 border-bg-gray-1"
-                        : "bg-white border-gray-200"
+                      isDark ? "bg-bg-dark-1 border-bg-gray-1" : "bg-white border-gray-200"
                     }`}
                   >
                     <div className="flex items-center gap-3">
@@ -319,11 +313,7 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({
                       <div className="flex items-center gap-2.5 truncate">
                         <Icon className={`shrink-0 text-base ${isDark ? "text-gray-400" : "text-gray-500"}`} />
                         <div className={`w-px h-4 ${isDark ? "bg-bg-gray-1" : "bg-gray-200"}`} />
-                        <span
-                          className={`text-sm truncate ${
-                            isDark ? "text-gray-300" : "text-gray-700"
-                          }`}
-                        >
+                        <span className={`text-sm truncate ${isDark ? "text-gray-300" : "text-gray-700"}`}>
                           {selectedValue || filter.label}
                         </span>
                       </div>
@@ -344,6 +334,7 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({
             </div>
           </div>
         </div>
+
       </div>
     </FadeInSection>
   );
