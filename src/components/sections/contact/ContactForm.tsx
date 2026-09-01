@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useTheme } from '../../../Context/ThemeContext';
 import { Button } from '../../ui/Button';
 import { FiChevronDown } from 'react-icons/fi';
 import type { IconType } from 'react-icons';
@@ -83,8 +82,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({
   onSubmit,
   isSubmitting = false,
 }) => {
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
 
   // ── form data ──
   const initialFormState: Record<string, unknown> = {
@@ -402,13 +399,13 @@ export const ContactForm: React.FC<ContactFormProps> = ({
               isDark ? 'bg-bg-dark border-bg-gray-1' : 'bg-gray-400 border-gray-500'
             }`}
           />
-          <span className={`text-[11px] sm:text-[14px] ${isDark ? 'text-gray' : 'text-gray-600'}`}>
+          <span className='text-[11px] sm:text-[14px] text-gray'>
             I agree with{' '}
-            <a href="#" className={`underline ${isDark ? 'text-gray' : 'text-gray-900'}`}>
+            <a href="#" className="underline text-gray">
               Terms of Use
             </a>{' '}
             and{' '}
-            <a href="#" className={`underline ${isDark ? 'text-gray' : 'text-gray-900'}`}>
+            <a href="#" className="underline text-gray">
               Privacy Policy
             </a>
           </span>

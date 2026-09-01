@@ -74,7 +74,7 @@ function PropertyCard({
       variants={staggerItem}
       whileHover={{y: -6}}
       transition={{duration: 0.25, ease: [0.25, 0.1, 0.25, 1]}}
-      className="card flex h-full w-full flex-col gap-4 lg:gap-5 xl:gap-7.5 bg-bg-dark-1 border border-bg-gray-1 rounded-2xl p-4 lg:p-5">
+      className="card flex h-full w-full flex-col gap-4 lg:gap-5 xl:gap-7.5 bg-(--bg-main) border border-bg-gray-1 rounded-2xl p-4 lg:p-5">
       <img
         src={item.image}
         alt={item.name}
@@ -92,13 +92,13 @@ function PropertyCard({
             {item.descriptionLong.length > 60
               ? item.descriptionLong.slice(0, 60) + "... "
               : item.descriptionLong + "... "}
-            <button className="text-white underline underline-offset-2 hover:text-white/80 transition-colors whitespace-nowrap">
+            <button className="text-(--text-main) underline underline-offset-2 hover:text-white/80 transition-colors whitespace-nowrap">
               Read More
             </button>
           </p>
         </div>
         <div className="mt-auto flex items-center justify-between gap-4">
-          <p>
+          <p className="font-semibold text-(--text-main)">
             <span className="block font-normal text-gray text-sm">Price</span>
            <span className=" font-semibold text-white text-[15px] md:text-[18px] lg:text-2xl whitespace-nowrap"> ${item.priceProperties.toLocaleString()}</span>
           </p>

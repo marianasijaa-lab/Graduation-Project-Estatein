@@ -36,12 +36,12 @@ const OfficeLocations = () => {
   );
 
   return (
-    <section className="bg-bg-dark-1 py-4 text-white lg:py-16">
+    <section className="bg-(--bg-main) py-4 text-(--text-main) lg:py-16">
       <div className="site-container max-lg:px-2">
         {/* Tab filter */}
         <FadeInSection
           direction="up"
-          className="mb-10 -mx-2 flex w-[calc(100%+1rem)] items-center gap-1.5 rounded-lg border border-bg-gray-1 bg-bg-dark p-3 lg:mx-0 lg:w-fit lg:gap-2 lg:p-2"
+          className="mb-10 -mx-2 flex w-[calc(100%+1rem)] items-center gap-1.5 rounded-lg border border-bg-gray-1 bg-(--bg-secondary) p-3 lg:mx-0 lg:w-fit lg:gap-2 lg:p-2"
         >
           {tabs.map((tab) => (
             <motion.button
@@ -51,8 +51,8 @@ const OfficeLocations = () => {
               onClick={() => dispatch(setActiveTab(getNextOfficeTab(activeTab, tab)))}
               className={`h-11 flex-1 rounded-md border px-3 text-sm font-medium transition lg:h-auto lg:w-[120px] lg:flex-none lg:px-5 lg:py-3 lg:text-sm ${
                 activeTab === tab
-                  ? "border-[#262626] bg-[#141414] text-white"
-                  : "border-[#262626] bg-[#1A1A1A] text-gray hover:bg-[#252525] hover:text-white"
+                  ? "border-[#262626] bg-(--bg-main) text-(--text-main)"
+                  : "border-[#262626] bg-(--bg-secondary) text-gray hover:bg-[#252525] hover:text-(--text-main)"
               }`}
             >
               {tab}
@@ -80,7 +80,7 @@ const OfficeLocations = () => {
                 whileHover={{ y: -6 }}
                 transition={{ duration: 0.25 }}
                 key={office.id}
-                className="rounded-lg border border-bg-gray-1 bg-bg-dark-1 p-7"
+                className="rounded-lg border border-bg-gray-1 bg-(--bg-main) p-7"
               >
                 {/* Office type badge */}
                 <p className="mb-4 text-sm text-gray">{office.type}</p>

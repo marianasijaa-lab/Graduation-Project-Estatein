@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import React from 'react';
-import { useTheme } from '../../../Context/ThemeContext'; 
 
 interface PageHeroProps {
   title: string;
@@ -9,8 +8,6 @@ interface PageHeroProps {
 }
 
 const PageHero: React.FC<PageHeroProps> = ({ title, description, className = '' }) => {
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
 
   return (
     <motion.section
@@ -18,7 +15,7 @@ const PageHero: React.FC<PageHeroProps> = ({ title, description, className = '' 
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
       className={`w-full pt-12 md:pt-16 lg:pt-24 pb-12 md:pb-16 lg:pb-24 transition-colors duration-300 bg-(--bg-main) text-(--text-main) border-b border-[#262626] ${className}`}
-      style={isDark ? { background: 'linear-gradient(95.93deg, #262626 -26.82%, rgba(38, 38, 38, 0) 40.46%)' } : undefined}
+      style={{ background: 'var(--bg-shadow)' }}
     >
       <div className="site-container relative z-10">
         {/* Title */}

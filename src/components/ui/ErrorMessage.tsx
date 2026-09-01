@@ -10,7 +10,7 @@ export function ErrorMessage({ message, onRetry }: ErrorMessageProps) {
         <span className="text-red-400 text-2xl">⚠</span>
       </div>
       <div>
-        <h3 className="text-white font-semibold text-lg mb-1">
+        <h3 className="text-(--text-main) font-semibold text-lg mb-1">
           حدث خطأ في جلب البيانات
         </h3>
         <p className="text-gray-400 text-sm max-w-sm">{message}</p>
@@ -18,7 +18,7 @@ export function ErrorMessage({ message, onRetry }: ErrorMessageProps) {
       {onRetry && (
         <button
           onClick={onRetry}
-          className="px-6 py-2.5 bg-white text-black font-medium rounded-lg hover:bg-white/90 transition-colors"
+          className="px-6 py-2.5 bg-white text-(--bg-main) font-medium rounded-lg hover:bg-white/90 transition-colors"
         >
           إعادة المحاولة
         </button>

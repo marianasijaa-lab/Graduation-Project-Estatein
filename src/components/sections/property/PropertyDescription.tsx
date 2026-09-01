@@ -23,7 +23,7 @@ const PropertyDescription = ({
 }: PropertyDescriptionProps) => {
   
   return (
-    <section className="w-full overflow-x-hidden bg-[#141414] text-white py-[60px]">
+    <section className="w-full overflow-x-hidden bg-(--bg-main) text-(--text-main) py-[60px]">
       <div
         className="
           site-container
@@ -47,7 +47,7 @@ const PropertyDescription = ({
             rounded-[10px]
             border
             border-bg-gray-1
-            bg-bg-dark-1
+            bg-(--bg-main)
             p-[30px]
             sm:p-[40px]
             lg:flex-1
@@ -62,7 +62,7 @@ const PropertyDescription = ({
               text-[20px]
               font-semibold
               leading-[150%]
-              text-white
+              text-(--text-main)
               sm:text-[22px]
             "
           >
@@ -139,7 +139,7 @@ const PropertyDescription = ({
                   text-[18px]
                   font-semibold
                   leading-[150%]
-                  text-white
+                  text-(--text-main)
                 "
               >
                 {bedrooms}
@@ -177,7 +177,7 @@ const PropertyDescription = ({
                   text-[18px]
                   font-semibold
                   leading-[150%]
-                  text-white
+                  text-(--text-main)
                 "
               >
                 {bathrooms}
@@ -227,7 +227,7 @@ const PropertyDescription = ({
                   text-[18px]
                   font-semibold
                   leading-[150%]
-                  text-white
+                  text-(--text-main)
                   
                 "
               >
@@ -249,7 +249,7 @@ const PropertyDescription = ({
             rounded-xl
             border
             border-bg-gray-1
-            bg-bg-dark-1
+            bg-(--bg-main)
             p-[30px]
             sm:p-[40px]
             lg:flex-1
@@ -264,7 +264,7 @@ const PropertyDescription = ({
               text-[20px]
               font-semibold
               leading-[150%]
-              text-white
+              text-(--text-main)
               sm:text-[22px]
             "
           >
@@ -286,7 +286,7 @@ const PropertyDescription = ({
                   gap-[14px]
                   border-l-[1.5px]
                   border-l-primary
-                  bg-bg-dark
+                  bg-(--bg-secondary)
                   px-[16px]
                   py-[12px]
                   sm:min-h-[63px]
@@ -302,7 +302,7 @@ const PropertyDescription = ({
                     h-[16px]
                     w-[16px]
                     shrink-0
-                    text-white
+                    text-(--text-main)
                     sm:h-[20px]
                     sm:w-[20px]
                   "

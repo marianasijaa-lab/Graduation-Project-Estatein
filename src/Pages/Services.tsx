@@ -9,7 +9,7 @@ import EffortlessPropertyManagement from '../components/sections/services/Effort
 
 export const ServicesPage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-bg-dark-1 text-white">
+    <div className="min-h-screen bg-(--bg-main) text-(--text-main)">
       {/* الجزء العلوي */}
       <PageHero
         title="Elevate Your Real Estate Experience"

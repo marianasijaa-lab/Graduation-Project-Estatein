@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTheme } from '../../../Context/ThemeContext';
 import { motion } from 'framer-motion';
 import { FadeInSection } from '../../common/FadeInSection';
 
@@ -23,12 +22,8 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
   onButtonClick,
   variant = 'horizontal',
 }) => {
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
 
-  const containerBase = `relative overflow-hidden rounded-2xl border transition-colors ${
-    isDark ? 'bg-[#1A1A1A] border-[#262626] text-white' : 'bg-white border-gray-200 text-gray-900'
-  }`;
+  const containerBase = 'relative overflow-hidden rounded-2xl border transition-colors bg-(--secondary) border-[#262626] text-white' ;
 
   // Shared abstract background overlay
   const bgOverlay = (
@@ -44,15 +39,13 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
         {bgOverlay}
 
         {/* Title */}
-        <h3 className="relative z-10 text-xl sm:text-2xl font-semibold leading-snug">
+        <h3 className="relative z-10 text-xl sm:text-2xl font-semibold leading-snug text-(--text-main)">
           {title}
         </h3>
 
         {/* Description */}
         <p
-          className={`relative z-10 text-sm sm:text-base leading-relaxed flex-1 ${
-            isDark ? 'text-gray-400' : 'text-gray-600'
-          }`}
+          className='relative z-10 text-sm sm:text-base leading-relaxed flex-1 text-gray-400'
         >
           {description}
         </p>
@@ -62,11 +55,7 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
           whileHover={{ opacity: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={onButtonClick}
-          className={`relative z-10 w-full py-4 rounded-xl text-sm font-medium transition-colors ${
-            isDark
-              ? 'bg-bg-dark-1 border border-bg-gray-1 text-white hover:bg-[#222]'
-              : 'bg-gray-100 border border-gray-200 text-gray-900 hover:bg-gray-200'
-          }`}
+          className='relative z-10 w-full py-4 rounded-xl text-sm font-medium transition-colors bg-(--bg-main) border border-bg-gray-1 text-(--text-main) hover:bg-(--bg-hover)'
         >
           {buttonLabel}
         </motion.button>
@@ -80,12 +69,10 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
       {bgOverlay}
 
       {/* Text block */}
-      <div className="relative z-10 flex flex-col gap-3 max-w-2xl">
-        <h3 className="text-xl sm:text-2xl font-semibold leading-snug">{title}</h3>
+      <div className="relative z-10 flex flex-col gap-3 max-w-2xl text-(--text-main)">
+        <h3 className="text-xl sm:text-2xl font-semibold leading-snug text-(--text-main)">{title}</h3>
         <p
-          className={`text-sm sm:text-base leading-relaxed ${
-            isDark ? 'text-gray-400' : 'text-gray-600'
-          }`}
+          className='text-sm sm:text-base leading-relaxed text-gray-400'
         >
           {description}
         </p>
@@ -97,11 +84,7 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
           whileHover={{ opacity: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={onButtonClick}
-          className={`px-6 py-3 rounded-xl text-sm font-medium transition-colors border ${
-            isDark
-              ? 'bg-bg-dark-1 border-border-gray-1 text-white hover:bg-[#222]'
-              : 'bg-gray-100 border-gray-200 text-gray-900 hover:bg-gray-200'
-          }`}
+          className='px-6 py-3 rounded-xl text-sm font-medium transition-colors border bg-(--bg-main) border-border-gray-1 text-(--text-main) hover:bg-(--bg-hover)'
         >
           {buttonLabel}
         </motion.button>

@@ -42,6 +42,7 @@ const BaseSlider = ({ children, currentIndex, itemsToShow }: BaseSliderProps) =>
         marginRight: `-${BLEED}px`,
         paddingLeft: `${BLEED}px`,
         paddingRight: `${BLEED}px`,
+        backgroundColor: "var(--bg-main)"
       }}
     >
       <motion.div

@@ -8,7 +8,7 @@ import { MdCall, MdEmail } from "react-icons/md"
 
 const ProperityPage = () => {
     return (
-        <div>
+        <div className="bg-(--bg-main)">
             <PageHero
                 title="Find Your Dream Property"
                 description="Welcome to Estatein, where your dream property awaits in every corner of our beautiful world.

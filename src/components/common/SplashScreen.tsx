@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { Logo } from "./Logo";
-import { useTheme } from "../../Context/ThemeContext";
 
 // How long the splash stays fully visible before fading out.
 const DISPLAY_DURATION_MS = 2400;
@@ -20,8 +19,6 @@ interface SplashScreenProps {
 // Full-screen brand splash shown once on initial load, for every route.
 
 export const SplashScreen = ({ children }: SplashScreenProps) => {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
 
   const [visible, setVisible] = useState(true);
   const [fadingOut, setFadingOut] = useState(false);
@@ -50,16 +47,16 @@ export const SplashScreen = ({ children }: SplashScreenProps) => {
       {visible && (
         <div
           aria-hidden="true"
-          className={`fixed inset-0 z-100 flex flex-col items-center justify-center gap-8 transition-opacity duration-[600ms] ease-out ${
+          className={`fixed inset-0 z-100 flex flex-col items-center bg-(--bg-main) justify-center gap-8 transition-opacity duration-[600ms] ease-out ${
             fadingOut ? "opacity-0" : "opacity-100"
-          } ${isDark ? "bg-bg-dark-1" : "bg-[#FAFAFA]"}`}
+          }`}
         >
-          <div className={isDark ? "text-white" : "text-zinc-900"}>
+          <div className="text-(--text-main) ">
             <Logo animated="full" className="pointer-events-none scale-125 sm:scale-150" />
           </div>
 
           <div
-            className={`w-40 h-1 rounded-full overflow-hidden ${isDark ? "bg-bg-gray-1" : "bg-gray-200"}`}
+            className="w-40 h-1 rounded-full overflow-hidden bg-(--bg-main)"
           >
             <div className="h-full bg-primary rounded-full animate-splash-progress" />
           </div>
