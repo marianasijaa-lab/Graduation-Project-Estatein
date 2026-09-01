@@ -126,7 +126,7 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({ onSearchSub
                                 <div key={filter.id} className="relative w-full">
                                     <div
                                         onClick={() => toggleDropdown(filter.id)}
-                                        className={`w-full flex items-center justify-between border rounded-xl px-4 py-3.5 cursor-pointer transition-colors ${isDark ? 'bg-bg-dark-1 border-bg-gray-1' : 'bg-white border-gray-200'}`}
+                                        className='w-full flex items-center justify-between border rounded-xl px-4 py-3.5 cursor-pointer transition-colors bg-(--bg-main) border-bg-gray-1'
                                     >
                                         <div className="flex items-center gap-3">
                                             <Icon className='shrink-0 text-base text-gray-400' />

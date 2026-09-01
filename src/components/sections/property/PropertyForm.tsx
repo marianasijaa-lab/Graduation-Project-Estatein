@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import FormField from "./FormField";
 import { motion } from "framer-motion";
@@ -5,7 +6,19 @@ import { motion } from "framer-motion";
 
 interface PropertyFormProps {
   propertyLocation?: string;
+  propertyId?: string;
+  propertyName?: string;
 }
+
+type SubmitStatus = "idle" | "submitting" | "submitted" | "error";
+
+const initialFormState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  message: "",
+};
 
 const PropertyForm = ({
   propertyLocation = "Seaside Serenity Villa, Malibu, California",
@@ -28,23 +41,67 @@ const PropertyForm = ({
       transition={{duration: 0.6, ease: [0.25, 0.1, 0.25, 1]}}
       className="
         autofill-none min-w-0 max-w-full w-full rounded-[10px] border border-bg-gray-1
-        bg-bg-dark-1 p-[25px]
+        bg-(--bg-main) p-[25px]
         sm:p-[35px]
         xl:p-[50px]
       "
     >
+      {submitStatus === "submitted" && (
+        <div className="mb-[30px] rounded-[8px] border border-green-500/30 bg-green-500/10 px-4 py-3 text-center text-sm font-medium text-green-400">
+          Your inquiry has been sent successfully! Our team will get back to you soon.
+        </div>
+      )}
+      {submitStatus === "error" && (
+        <div className="mb-[30px] rounded-[8px] border border-red-500/30 bg-red-500/10 px-4 py-3 text-center text-sm font-medium text-red-400">
+          {submitError ?? "Something went wrong. Please try again."}
+        </div>
+      )}
+
       {/* Inputs */}
       <div className="grid min-w-0 grid-cols-1 gap-[30px] sm:grid-cols-2">
-        {fields.map((field) => (
-          <div key={field.label} className="min-w-0">
-            <FormField {...field} />
-          </div>
-        ))}
+        <div className="min-w-0">
+          <FormField
+            label="First Name"
+            placeholder="Enter First Name"
+            required
+            value={formData.firstName}
+            onChange={(value) => handleChange("firstName", value)}
+          />
+        </div>
+        <div className="min-w-0">
+          <FormField
+            label="Last Name"
+            placeholder="Enter Last Name"
+            required
+            value={formData.lastName}
+            onChange={(value) => handleChange("lastName", value)}
+          />
+        </div>
+        <div className="min-w-0">
+          <FormField
+            label="Email"
+            placeholder="Enter your Email"
+            type="email"
+            required
+            value={formData.email}
+            onChange={(value) => handleChange("email", value)}
+          />
+        </div>
+        <div className="min-w-0">
+          <FormField
+            label="Phone"
+            placeholder="Enter Phone Number"
+            type="tel"
+            required
+            value={formData.phone}
+            onChange={(value) => handleChange("phone", value)}
+          />
+        </div>
       </div>
 
       {/* Selected Property */}
       <div className="mt-[30px]">
-        <label className="mb-[12px] block font-['Urbanist'] text-base font-semibold text-white">
+        <label className="mb-[12px] block font-['Urbanist'] text-base font-semibold text-(--text-main)">
           Selected Property
         </label>
 
@@ -55,35 +112,37 @@ const PropertyForm = ({
             className="
               h-[60px] w-full rounded-[8px]
               border border-[#262626]
-              bg-[#1A1A1A] px-[20px] pr-[55px]
+              bg-(--bg-secondary) px-[20px] pr-[55px]
               font-['Urbanist'] text-[14px]
-              font-medium text-white outline-none
+              font-medium text-(--text-main) outline-none
             "
           />
 
           <FaLocationDot
             className="
               absolute right-[20px] top-1/2
-              -translate-y-1/2 text-[18px] text-white
+              -translate-y-1/2 text-[18px] text-(--text-main)
             "
           />
         </div>
       </div>
-
-      {/* Message */}
+       {/* Message */}
       <div className="mt-[30px]">
-        <label className="mb-[12px] block font-['Urbanist'] text-base font-semibold text-white">
+        <label className="mb-[12px] block font-['Urbanist'] text-base font-semibold text-(--text-main)">
           Message
         </label>
 
         <textarea
           placeholder="Enter your Message here"
+          required
+          value={formData.message}
+          onChange={(e) => handleChange("message", e.target.value)}
           className="
             h-[140px] w-full resize-none
             rounded-[8px] border border-[#262626]
-            bg-[#1A1A1A] px-[20px] py-[20px]
+            bg-(--bg-secondary) px-[20px] py-[20px]
             font-['Urbanist'] text-[14px]
-            text-white outline-none
+            text-(--text-main) outline-none
             placeholder:text-[#666666]
             focus:border-[#703BF7]
           "
@@ -101,11 +160,14 @@ const PropertyForm = ({
         <label className="flex min-h-[28px] max-w-[584px] items-center gap-[10px]">
           <input
             type="checkbox"
+            required
+            checked={agreeTerms}
+            onChange={(e) => setAgreeTerms(e.target.checked)}
             className="
               h-[20px] w-[20px] shrink-0
               appearance-none rounded-[4px]
               border border-[#262626]
-              bg-[#141414]
+              bg-(--bg-main)
               checked:bg-[#703BF7]
             "
           />
@@ -125,6 +187,7 @@ const PropertyForm = ({
             font-['Urbanist'] text-[14px]
             font-semibold text-white
             hover:bg-[#5f2fe0]
+            disabled:cursor-not-allowed disabled:opacity-60
             sm:w-[250px]
           "
         >
@@ -133,6 +196,6 @@ const PropertyForm = ({
       </div>
     </motion.form>
   );
-}
+};
 
 export default PropertyForm;

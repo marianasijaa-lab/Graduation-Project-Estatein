@@ -46,8 +46,8 @@ const Contact = () => {
 
       {/* Services Bar with Animation */}
       <section
-        className="w-full bg-bg-dark-1 border border-bg-gray-1 py-1 sm:py-2"
-        style={{ boxShadow: '0px 0px 0px 6px #191919' }}
+        className="w-full bg-(--bg-main) border border-bg-gray-1 py-1 sm:py-2"
+        style={{ boxShadow: 'var(--bg-border)' }}
       >
         <div className="w-full mx-auto px-2 sm:px-1 lg:px-2">
           <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">

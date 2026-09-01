@@ -47,10 +47,10 @@ export const TopBanner: React.FC<TopBannerProps> = ({
 
         <button
           onClick={() => setIsVisible(false)}
-          className=" w-6 h-6 md:w-8 md:h-8 flex items-center justify-center rounded-full border border-bg-gray-1 bg-bg-gray-1 hover:bg-white/10 text-(--text-main)  transition-colors cursor-pointer shrink-0 -mr-5 md:-mr-10"
+          className="bg-(--bg-main) w-6 h-6 md:w-8 md:h-8 flex items-center justify-center rounded-full border border-bg-gray-1 hover:bg-white/10 text-(--text-main)  transition-colors cursor-pointer shrink-0 -mr-5 md:-mr-10"
           aria-label="Close"
         >
-          <X className=" w-4 h-4 md:w-5 md:h-5 text-(--text-main)" />
+          <X className="  w-4 h-4 md:w-5 md:h-5 text-(--text-main)" />
         </button>
       </div>
     </aside>
