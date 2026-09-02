@@ -6,16 +6,11 @@
  *     (keyed by pathname so Framer Motion unmounts/remounts correctly)
  *   • A stagger context so direct children animate in sequence
  *
- * Usage
- * ─────
- *   <DashboardPageShell>
- *     <HeaderRow />        ← child 0 → delay 0
- *     <SearchBar />        ← child 1 → delay 0.06
- *     <Table />            ← child 2 → delay 0.12
- *   </DashboardPageShell>
+ * Also exports shared animation variants and utility components used across
+ * all dashboard pages.
  */
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { useLocation } from "react-router";
 
@@ -52,25 +47,115 @@ export const staggerItem = {
   },
 };
 
-/** Table row / mobile card — lighter movement. */
+/** Table row / mobile card — no animation to prevent re-render flicker. */
 export const rowVariants = {
-  hidden:  { opacity: 0, x: -8 },
+  hidden:  { opacity: 1 },
+  visible: { opacity: 1 },
+};
+
+/** Passthrough — kept for API compatibility across all pages. */
+export const rowStagger = {
+  hidden: {},
+  visible: {},
+};
+
+/**
+ * Use this on motion.tbody / motion.div row containers instead of rowStagger.
+ * Triggers a one-shot stagger fade only when the table first mounts.
+ */
+export const tableBodyVariants = {
+  hidden: {},
   visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.26, ease: [0.25, 0.1, 0.25, 1] },
+    transition: { staggerChildren: 0.04, delayChildren: 0.05 },
   },
 };
 
-/** Stagger container specifically for table rows / mobile cards. */
-export const rowStagger = {
-  hidden: {},
+export const tableRowVariants = {
+  hidden:  { opacity: 0, y: 6 },
   visible: {
-    transition: {
-      staggerChildren: 0.045,
-      delayChildren: 0.1,
-    },
+    opacity: 1, y: 0,
+    transition: { duration: 0.2, ease: "easeOut" },
   },
+};
+
+/** Icon action button — scale + rotate on hover, squish on tap. */
+export const iconBtnHover = {
+  whileHover: { scale: 1.18, rotate: 4 },
+  whileTap:   { scale: 0.88 },
+  transition: { duration: 0.15 },
+};
+
+/** Destructive icon button (delete) — scale + red glow on hover. */
+export const deleteBtnHover = {
+  whileHover: { scale: 1.18, rotate: -4 },
+  whileTap:   { scale: 0.88 },
+  transition: { duration: 0.15 },
+};
+
+/** Mobile card hover — gentle lift + shadow. */
+export const cardHoverProps = {
+  whileHover: { y: -2, boxShadow: "0 8px 24px rgba(0,0,0,0.18)" },
+  whileTap:   { scale: 0.985 },
+  transition: { duration: 0.18, ease: [0.25, 0.1, 0.25, 1] },
+};
+
+// ── SkeletonRow ────────────────────────────────────────────────────────────────
+
+interface SkeletonRowProps {
+  cols?: number;
+  isDark: boolean;
+}
+
+/** Animated shimmer skeleton row used in loading states for all pages. */
+export const SkeletonRow = ({ cols = 4, isDark }: SkeletonRowProps) => {
+  const widths = ["w-8", "w-24", "w-32", "w-20", "w-16", "w-12", "w-28"];
+  return (
+    <tr className={`border-b ${isDark ? "border-bg-gray-1" : "border-gray-200"}`}>
+      {Array.from({ length: cols }).map((_, i) => (
+        <td key={i} className="px-5 py-3.5">
+          <motion.div
+            className={`h-3 rounded-full ${isDark ? "bg-bg-gray-1" : "bg-gray-200"} ${widths[i % widths.length]}`}
+            animate={{ opacity: [0.4, 0.8, 0.4] }}
+            transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut", delay: i * 0.1 }}
+          />
+        </td>
+      ))}
+    </tr>
+  );
+};
+
+// ── SkeletonCard ───────────────────────────────────────────────────────────────
+
+interface SkeletonCardProps {
+  isDark: boolean;
+}
+
+/** Animated shimmer skeleton card used in mobile loading states. */
+export const SkeletonCard = ({ isDark }: SkeletonCardProps) => {
+  const bar = (w: string, h = "h-3") => (
+    <motion.div
+      className={`${h} ${w} rounded-full ${isDark ? "bg-bg-gray-1" : "bg-gray-200"}`}
+      animate={{ opacity: [0.4, 0.8, 0.4] }}
+      transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+    />
+  );
+  return (
+    <div className={`rounded-2xl border p-4 space-y-3 ${isDark ? "bg-bg-dark-1 border-bg-gray-1" : "bg-white border-gray-200"}`}>
+      <div className="flex gap-3">
+        <motion.div
+          className={`w-12 h-12 rounded-xl shrink-0 ${isDark ? "bg-bg-gray-1" : "bg-gray-200"}`}
+          animate={{ opacity: [0.4, 0.8, 0.4] }}
+          transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <div className="flex-1 space-y-2 py-1">
+          {bar("w-3/4")}
+          {bar("w-1/2", "h-2")}
+        </div>
+      </div>
+      {bar("w-full", "h-2")}
+      {bar("w-4/5", "h-2")}
+    </div>
+  );
 };
 
 // ── Component ─────────────────────────────────────────────────────────────────
@@ -83,14 +168,17 @@ export const DashboardPageShell = ({ children }: DashboardPageShellProps) => {
   const { pathname } = useLocation();
 
   return (
-    <motion.div
-      key={pathname}
-      variants={staggerContainer}
-      initial="hidden"
-      animate="visible"
-      className="flex flex-col gap-6"
-    >
-      {children}
-    </motion.div>
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        key={pathname}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -6 }}
+        transition={{ duration: 0.22, ease: [0.25, 0.1, 0.25, 1] }}
+        className="flex flex-col gap-6"
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
   );
 };

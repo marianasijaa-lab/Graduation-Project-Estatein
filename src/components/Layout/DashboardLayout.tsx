@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Menu, X, LogOut } from "lucide-react";
 import { Link, NavLink, Outlet, useLocation } from "react-router";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { RouteTransitionOverlay } from "../common/RouteTransitionOverlay";
 import {
   HiOutlineHome,
@@ -97,6 +97,16 @@ function useActiveSectionLabel(): string {
   return match?.label ?? "Dashboard";
 }
 
+// Stagger variants for sidebar nav groups on first mount
+const sidebarNavVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.06, delayChildren: 0.28 } },
+};
+const navGroupVariants = {
+  hidden:  { opacity: 0, x: -14 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.32, ease: [0.25, 0.1, 0.25, 1] } },
+};
+
 interface SidebarLinksProps {
   isDark: boolean;
   expandedGroups: Set<string>;
@@ -105,14 +115,19 @@ interface SidebarLinksProps {
 }
 
 const SidebarLinks = ({ isDark, expandedGroups, onToggleGroup, onNavigate }: SidebarLinksProps) => (
-  <nav className="sidebar-scroll flex-1 overflow-y-auto px-3 py-4 space-y-1">
+  <motion.nav
+    variants={sidebarNavVariants}
+    initial="hidden"
+    animate="visible"
+    className="sidebar-scroll flex-1 overflow-y-auto px-3 py-4 space-y-1"
+  >
     {NAV_GROUPS.map((group) => {
       const GroupIcon = group.icon;
       const isExpanded = expandedGroups.has(group.label);
       const panelId = groupIdFor(group.label);
 
       return (
-        <div key={group.label}>
+        <motion.div key={group.label} variants={navGroupVariants}>
           <button
             type="button"
             onClick={() => onToggleGroup(group.label)}
@@ -167,10 +182,10 @@ const SidebarLinks = ({ isDark, expandedGroups, onToggleGroup, onNavigate }: Sid
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
+        </motion.div>
       );
     })}
-  </nav>
+  </motion.nav>
 );
 
 export const DashboardLayout = () => {
@@ -179,6 +194,7 @@ export const DashboardLayout = () => {
   const isDark = theme === "dark";
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const sectionLabel = useActiveSectionLabel();
+  const shouldReduceMotion = useReducedMotion();
   const mainRef = useRef<HTMLElement>(null);
   const location = useLocation();
   const activeGroupLabel = findActiveGroupLabel(location.pathname);
@@ -357,7 +373,20 @@ export const DashboardLayout = () => {
             >
               <Menu className="w-5 h-5" />
             </button>
-            <h1 className="text-lg sm:text-xl font-semibold truncate">{sectionLabel}</h1>
+            <h1 className="text-lg sm:text-xl font-semibold truncate overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={sectionLabel}
+                    initial={shouldReduceMotion ? {} : { opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={shouldReduceMotion ? {} : { opacity: 0, y: -8 }}
+                    transition={{ duration: 0.22, ease: [0.25, 0.1, 0.25, 1] }}
+                    className="block"
+                  >
+                    {sectionLabel}
+                  </motion.span>
+                </AnimatePresence>
+              </h1>
           </div>
           <ThemeToggle />
         </motion.header>

@@ -4,7 +4,9 @@ import { Logo } from "./Logo";
 import { useTheme } from "../../Context/ThemeContext";
 
 // Brief and subtle — noticeably shorter than the full initial-load splash.
-const TRANSITION_DURATION_MS = 800;
+// Inside the dashboard all routes share the same layout so we skip the overlay
+// entirely (set to 0) to avoid the white-flash "karmasha" on every nav click.
+const TRANSITION_DURATION_MS = 0;
 const REDUCED_TRANSITION_DURATION_MS = 0;
 
 interface RouteTransitionOverlayProps {
