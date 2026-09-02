@@ -300,3 +300,12 @@ select:-webkit-autofill {
     animation: splash-progress 2400ms linear forwards;
   }
 }
+
+/* Footer email input placeholder color */
+input.footer-email-input::placeholder,
+input.footer-email-input::-webkit-input-placeholder,
+input.footer-email-input::-moz-placeholder {
+  color: #999999 !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: #999999 !important;
+}

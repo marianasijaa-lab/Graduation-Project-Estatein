@@ -1,7 +1,7 @@
 
 export type DataStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
 
-// ── Properties (Firestore collection: "properties") ────────────────────────
+// ── Properties (Firestore collection: "properties") ──
 export interface FirestoreProperty {
   id: string;
   image: string;
@@ -29,7 +29,7 @@ export interface FirestoreProperty {
   createdAt?: string;
 }
 
-// ── Companies (Firestore collection: "companies") ───────────────────────────
+// ── Companies (Firestore collection: "companies") ──
 export interface FirestoreCompany {
   id: string;
   date: string;
@@ -41,13 +41,13 @@ export interface FirestoreCompany {
   order?: number;
 }
 
-// ── Stats (Realtime Database path: /stats) ──────────────────────────────────
+// ── Stats (Realtime Database path: /stats) ──
 export interface Stat {
   value: string;
   label: string;
 }
 
-// ── Core values (Firestore collection: "values") ────────────────────────────
+// ── Core values (Firestore collection: "values") ──
 export interface FirestoreValue {
   id: string;
   icon: string;
@@ -55,7 +55,7 @@ export interface FirestoreValue {
   description: string;
 }
 
-// ── Achievements (Firestore collection: "achievements") ─────────────────────
+// ── Achievements (Firestore collection: "achievements") ──
 export interface FirestoreAchievement {
   id: string;
   title: string;
@@ -63,14 +63,14 @@ export interface FirestoreAchievement {
   order?: number;
 }
 
-// ── FAQs (Firestore collection: "faqs") ──────────────────────────────────────
+// ── FAQs (Firestore collection: "faqs") ──
 export interface FirestoreFAQ {
   id: string;
   question: string;
   description: string;
 }
 
-// ── Home page CTA section (Firestore collection: "cta") ─────────────────────
+// ── Home page CTA section (Firestore collection: "cta") ──
 export interface FirestoreCTA {
   id: string;
   heading: string;
@@ -79,9 +79,6 @@ export interface FirestoreCTA {
   buttonLink: string;
 }
 
-// ── Cards for the "Unlock Property Value" section on the Services page ──────
-// (Firestore collection: "unlockPropertyValue"). Each card is its own doc —
-// the section's header/subtitle and InfoBox banner stay hardcoded in the component.
 export interface FirestoreUnlockPropertyValueCard {
   id: string;
   title: string;
@@ -89,8 +86,6 @@ export interface FirestoreUnlockPropertyValueCard {
   icon: string;
 }
 
-// ── Cards for the "Effortless Property Management" section on the Services page ──
-// (Firestore collection: "effortlessPropertyManagement") — same note as above.
 export interface FirestoreEffortlessPropertyManagementCard {
   id: string;
   title: string;
@@ -98,8 +93,6 @@ export interface FirestoreEffortlessPropertyManagementCard {
   icon: string;
 }
 
-// ── Cards for the "Smart Investments" section on the Services page ──────────
-// (Firestore collection: "smartInvestments") — same note as above.
 export interface FirestoreSmartInvestmentsCard {
   id: string;
   title: string;
@@ -107,14 +100,14 @@ export interface FirestoreSmartInvestmentsCard {
   icon: string;
 }
 
-// ── Services (Firestore collection: "services") ─────────────────────────────
+// ── Services (Firestore collection: "services") ──
 export interface FirestoreService {
   id: string;
   icon: string;
   heading: string;
 }
 
-// ── Info boxes (Firestore collection: "infoBoxes") ───────────────────────────
+// ── Info boxes (Firestore collection: "infoBoxes") ──
 export interface FirestoreInfoBox {
   id: string;
   variant: 'horizontal' | 'vertical';
@@ -123,7 +116,7 @@ export interface FirestoreInfoBox {
   buttonLabel?: string;
 }
 
-// ── Client testimonials (Firestore collection: "testimonials") ──────────────
+// ── Client testimonials (Firestore collection: "testimonials") ──
 export interface FirestoreTestimonial {
   id: string;
   clientName: string;

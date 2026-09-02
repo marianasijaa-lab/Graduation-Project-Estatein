@@ -129,9 +129,8 @@ const Footer = () => {
               }}
               disabled={subscribeStatus === "submitting"}
               aria-label="Email address for newsletter"
-              className="text-sm lg:text-base w-full lg:w-[80%] rounded-lg border border-bg-gray-1 py-4 pl-12 pr-12 placeholder:text-gray bg-(--bg-secondary) text-(--text-main) transition-colors duration-300 disabled:opacity-60"
+              className="footer-email-input text-sm lg:text-base w-full lg:w-[80%] rounded-lg border border-bg-gray-1 py-4 pl-12 pr-12 bg-(--bg-secondary) text-(--text-main) transition-colors duration-300 disabled:opacity-60"
               style={{
-                WebkitTextFillColor: 'var(--text-main)',
                 backgroundColor: 'var(--bg-main)',
                 boxShadow: 'none',
                 color: 'var(--text-main)',

@@ -39,15 +39,15 @@ const FormField = ({
         aria-invalid={showError}
         aria-describedby={showError ? `ff-err-${label.replace(/\s+/g, '-').toLowerCase()}` : undefined}
         className={`
-          h-[52px] w-full rounded-[8px] border
-          bg-[#1A1A1A] px-[20px]
+          h-[52px] w-full rounded-lg border
+          bg-bg-dark px-[20px]
           font-['Urbanist'] text-[14px] font-medium
           text-(--text-main) outline-none
-          placeholder:text-[#666666]
+          placeholder:text-placeholder
           transition-colors
           ${showError
             ? 'border-red-500 focus:border-red-400'
-            : 'border-[#262626] focus:border-[#703BF7]'
+            : 'border-bg-gray-1 focus:border-primary'
           }
         `}
       />

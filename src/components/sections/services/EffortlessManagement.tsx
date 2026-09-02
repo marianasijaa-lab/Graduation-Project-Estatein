@@ -43,7 +43,7 @@ export const EffortlessPropertyManagement: React.FC = () => {
   useEffortlessPropertyManagement();
 
   return (
-    <section className="w-full bg-(--bg-main) border-t border-[#262626] py-16 sm:py-20 lg:py-24">
+    <section className="w-full bg-(--bg-main) border-t border-bg-gray-1 py-16 sm:py-20 lg:py-24">
       
       <div className="site-container">
         <SectionHeader
@@ -62,7 +62,7 @@ export const EffortlessPropertyManagement: React.FC = () => {
               variants={staggerItem}
               whileHover={{y: -4}}
               transition={{duration: 0.25}}
-              className="bg-(--bg-main) border border-[#262626] rounded-[16px] p-5 sm:p-6 flex flex-col justify-start gap-3 hover:border-[#703BF7]/40 transition-all duration-300 lg:h-full lg:min-h-[200px]"
+              className="bg-(--bg-main) border border-bg-gray-1 rounded-2xl p-5 sm:p-6 flex flex-col justify-start gap-3 hover:border-primary/40 transition-all duration-300 lg:h-full lg:min-h-[200px]"
             >
 
               <div className="flex items-center gap-2 sm:gap-3">
@@ -79,7 +79,7 @@ export const EffortlessPropertyManagement: React.FC = () => {
               </div>
 
               {/* الوصف */}
-              <p className="text-[15px] sm:text-base font-normal text-[#999999] leading-[150%]">
+              <p className="text-[15px] sm:text-base font-normal text-gray-1 leading-[150%]">
                 {service.description}
               </p>
             </motion.div>

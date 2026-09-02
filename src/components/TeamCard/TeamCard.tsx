@@ -6,7 +6,7 @@ import { StaggerContainer, staggerItem } from "../common/StaggerContainer";
 const TeamCard = () => {
   return (
     <section
-      className="rounded-xl border border-[#262626] bg-(--bg-seocodary) bg-cover bg-center bg-no-repeat p-2.5 md:p-8"
+      className="rounded-xl border border-bg-gray-1 bg-(--bg-seocodary) bg-cover bg-center bg-no-repeat p-2.5 md:p-8"
       style={{
         backgroundImage: "url('/assets/background_2.png')",
       }}

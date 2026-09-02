@@ -7,7 +7,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 
-// ── Load env vars ────────────────────────────────────────────────────────
+// ── Load env vars ──
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
@@ -42,11 +42,9 @@ if (fs.existsSync(serviceAccountPath)) {
 const db  = getFirestore(app);
 const rdb = getDatabase(app);
 
-// ═══════════════════════════════════════════════════════════════════════════
 //  Data
-// ═══════════════════════════════════════════════════════════════════════════
 
-// ── 1. properties ────────────────────────────────────────────────────────
+// ── 1. properties ──
 const properties = [
   {
     id:1,
@@ -194,7 +192,7 @@ const properties = [
   },
 ];
 
-// ── 2. companies ──────────────────────────────────────────────────────────
+// ── 2. companies ──
 const companies = [
    {
     id: 'comp-1',
@@ -248,7 +246,7 @@ const companies = [
   },
 ];
 
-// ── 3. values ────────────────────────────────────────────────────────────
+// ── 3. values ──
 const values = [
   {
     icon: '/assets/Icon_33.png',
@@ -272,7 +270,7 @@ const values = [
   },
 ];
 
-// ── 4. achievements ───────────────────────────────────────────────────────
+// ── 4. achievements ──
 const achievements = [
   {
     title: '3+ Years of Excellence',
@@ -294,9 +292,7 @@ const achievements = [
   },
 ];
 
-// ── 5. services ───────────────────────────────────────────────────────────
-// The 4 short highlight cards at the top of the Services page (heading + icon
-// only) — matches FALLBACK_SERVICES in servicesSlice.ts.
+// ── 5. services ──
 const services = [
   {
     icon: '/assets/Icon_1.png',
@@ -316,7 +312,7 @@ const services = [
   },
 ];
 
-// ── 6. infoBoxes ──────────────────────────────────────────────────────────
+// ── 6. infoBoxes ──
 const infoBoxes = [
   {
     variant: 'horizontal',
@@ -334,7 +330,7 @@ const infoBoxes = [
   },
 ];
 
-// ── 7. testimonials ───────────────────────────────────────────────────────
+// ── 7. testimonials ──
 const testimonials = [
   {
     id: 1,
@@ -400,7 +396,7 @@ const testimonials = [
   },
 ];
 
-// ── 8. offices ────────────────────────────────────────────────────────────
+// ── 8. offices ──
 const offices = [
   
      {
@@ -432,7 +428,7 @@ const offices = [
 
 ];
 
-// ── 9. unlockPropertyValue ────────────────────────────────────────────────
+// ── 9. unlockPropertyValue ──
 // Each card is its own doc — the section's header and banner aren't managed
 // from the dashboard, they stay hardcoded in UnlockPropertyValue.tsx.
 const unlockPropertyValue = [
@@ -458,7 +454,7 @@ const unlockPropertyValue = [
   },
 ];
 
-// ── 10. effortlessPropertyManagement ─────────────────────────────────────
+// ── 10. effortlessPropertyManagement ──
 // Each card is its own doc — same note as above (header/banner stay hardcoded).
 const effortlessPropertyManagement = [
   {
@@ -483,7 +479,7 @@ const effortlessPropertyManagement = [
   },
 ];
 
-// ── 11. smartInvestments ──────────────────────────────────────────────────
+// ── 11. smartInvestments ──
 // Each card is its own doc — same note as above (header/banner stay hardcoded).
 const smartInvestments = [
   {
@@ -512,7 +508,7 @@ const smartInvestments = [
   },
 ];
 
-// ── 12. contacts (inquiries / messages) ──────────────────────────────────
+// ── 12. contacts (inquiries / messages) ──
 const contacts = [
   {
     firstName: 'Jordan',
@@ -558,7 +554,7 @@ const contacts = [
   },
 ];
 
-// ── 13. subscribers (newsletter) ─────────────────────────────────────────
+// ── 13. subscribers (newsletter) ───
 const subscribers = [
   {
     email: 'olivia.bennett@example.com',
@@ -582,7 +578,7 @@ const subscribers = [
   },
 ];
 
-// ── 14. siteSettings/contact (single doc: contact info + social links) ────
+// ── 14. siteSettings/contact (single doc: contact info + social links) ──
 const contactSettings = {
   email: 'info@estatein.com',
   phone: '+1 (123) 456-7890',
@@ -598,7 +594,7 @@ const contactSettings = {
   ],
 };
 
-// ── 15. faqs ──────────────────────────────────────────────────────────────
+// ── 15. faqs ──
 const faqs = [
   {
     question: 'How do I search for properties on Estatein?',
@@ -622,7 +618,7 @@ const faqs = [
   },
 ];
 
-// ── 16. cta ────────────────────────────────────────────────────────────────
+// ── 16. cta ──
 const cta = [
   {
     heading: 'Start Your Real Estate Journey Today',
@@ -633,16 +629,16 @@ const cta = [
   },
 ];
 
-// ── 17. stats (Realtime Database) ─────────────────────────────────────────
+// ── 17. stats (Realtime Database) ──
 const stats = [
   { value: '200+', label: 'Happy Customers' },
   { value: '10K+', label: 'Properties For Clients' },
   { value: '16+',  label: 'Years of Experience' },
 ];
 
-// ═══════════════════════════════════════════════════════════════════════════
+
 //  Uploads a single collection to Firestore
-// ═══════════════════════════════════════════════════════════════════════════
+
 async function seedCollection(
   collectionName: string,
   documents: Record<string, unknown>[],
@@ -670,9 +666,9 @@ async function seedCollection(
   console.log(`  ✅ Uploaded ${documents.length} document(s) successfully`);
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
+
 //  Writes a single well-known document (e.g. siteSettings/contact)
-// ═══════════════════════════════════════════════════════════════════════════
+
 async function seedSingletonDoc(
   collectionName: string,
   docId: string,
@@ -683,9 +679,9 @@ async function seedSingletonDoc(
   console.log(' Document written successfully');
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
+
 //  Uploads stats to the Realtime Database
-// ═══════════════════════════════════════════════════════════════════════════
+
 async function seedRealtimeStats(statsData: { value: string; label: string }[]) {
   console.log('\n⚡ Uploading stats to the Realtime Database');
   const statsRef = rdb.ref('stats');
@@ -693,9 +689,9 @@ async function seedRealtimeStats(statsData: { value: string; label: string }[]) 
   console.log('  ✅ Stats uploaded successfully');
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
+
 //  Main entry point
-// ═══════════════════════════════════════════════════════════════════════════
+
 async function main() {
   console.log('🚀 Starting data upload to Firebase...\n');
 

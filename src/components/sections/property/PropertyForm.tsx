@@ -29,7 +29,7 @@ const initialFormState: Record<FormFields, string> = {
   message: "",
 };
 
-// ─── per-field validators ────────────────────────────────────────────────────
+// ─── per-field validators ───
 
 function validateField(name: FormFields, value: string): string {
   switch (name) {
@@ -50,7 +50,7 @@ function validateAll(data: Record<FormFields, string>): Partial<Record<FormField
   return errors;
 }
 
-// ─── Component ───────────────────────────────────────────────────────────────
+// ─── Component ───
 
 const PropertyForm = ({
   propertyLocation = "Seaside Serenity Villa, Malibu, California",
@@ -64,7 +64,7 @@ const PropertyForm = ({
   const [errors, setErrors]   = useState<Partial<Record<FormFields, string>>>({});
   const [touched, setTouched] = useState<Partial<Record<FormFields, boolean>>>({});
 
-  // ── handlers ──────────────────────────────────────────────────────────────
+  // ── handlers ──
 
   const handleChange = (name: FormFields, value: string) => {
     const updated = { ...formData, [name]: value };
@@ -119,12 +119,12 @@ const PropertyForm = ({
     }, 0);
   };
 
-  // ── style helpers ─────────────────────────────────────────────────────────
+  // ── style helpers ──
 
   const messageHasErr = !!(touched.message && errors.message);
   const messageBorder = messageHasErr
     ? "border-red-500 focus:border-red-400"
-    : "border-[#262626] focus:border-[#703BF7]";
+    : "border-bg-gray-1 focus:border-primary";
 
   return (
     <motion.form
@@ -145,7 +145,7 @@ const PropertyForm = ({
       {submitStatus === "submitted" && (
         <div
           role="status"
-          className="mb-[30px] rounded-[8px] border border-green-500/30 bg-green-500/10 px-4 py-3 text-center text-sm font-medium text-green-400"
+          className="mb-[30px] rounded-lg border border-green-500/30 bg-green-500/10 px-4 py-3 text-center text-sm font-medium text-green-400"
         >
           Your inquiry has been sent successfully! Our team will get back to you soon.
         </div>
@@ -153,7 +153,7 @@ const PropertyForm = ({
       {submitStatus === "error" && (
         <div
           role="alert"
-          className="mb-[30px] rounded-[8px] border border-red-500/30 bg-red-500/10 px-4 py-3 text-center text-sm font-medium text-red-400"
+          className="mb-[30px] rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-center text-sm font-medium text-red-400"
         >
           Something went wrong. Please try again.
         </div>
@@ -223,8 +223,8 @@ const PropertyForm = ({
             value={propertyLocation}
             readOnly
             className="
-              h-[60px] w-full rounded-[8px]
-              border border-[#262626]
+              h-[60px] w-full rounded-lg
+              border border-bg-gray-1
               bg-(--bg-secondary) px-[20px] pr-[55px]
               font-['Urbanist'] text-[14px]
               font-medium text-white outline-none
@@ -247,11 +247,11 @@ const PropertyForm = ({
           aria-invalid={messageHasErr}
           className={`
             h-[140px] w-full resize-none
-            rounded-[8px] border
-            bg-[#1A1A1A] px-[20px] py-[20px]
+            rounded-lg border
+            bg-bg-dark px-[20px] py-[20px]
             font-['Urbanist'] text-[14px]
             text-(--text-main) outline-none
-            placeholder:text-[#666666]
+            placeholder:text-placeholder
             transition-colors
             ${messageBorder}
           `}
@@ -277,14 +277,14 @@ const PropertyForm = ({
               }}
               className="
                 h-[20px] w-[20px] shrink-0
-                appearance-none rounded-[4px]
-                border border-[#262626]
-                bg-[#141414]
-                checked:bg-[#703BF7]
+                appearance-none rounded-sm
+                border border-bg-gay-1
+                bg-bg-dark-1
+                checked:bg-primary
                 cursor-pointer
               "
             />
-            <span className="font-['Urbanist'] text-sm text-[#999999]">
+            <span className="font-['Urbanist'] text-sm text-gray-1">
               I agree with Terms of Use and Privacy Policy
             </span>
           </label>
@@ -302,9 +302,9 @@ const PropertyForm = ({
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
           className="
-            h-[60px] w-full rounded-[8px]
-            bg-[#703BF7]
-            font-['Urbanist'] text-[14px]
+            h-[60px] w-full rounded-lg
+            bg-primary
+             text-[14px]
             font-semibold text-white
             hover:bg-[#5f2fe0]
             disabled:cursor-not-allowed disabled:opacity-60

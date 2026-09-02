@@ -47,7 +47,7 @@ export const SmartInvestments: React.FC = () => {
   useSmartInvestments();
 
   return (
-    <section className="w-full bg-(--bg-main) border-t border-[#262626] py-16 sm:py-20 lg:py-24">
+    <section className="w-full bg-(--bg-main) border-t border-b border-bg-gray-1 py-16 sm:py-20 lg:py-24">
      
       <div className="site-container">
 
@@ -94,7 +94,7 @@ export const SmartInvestments: React.FC = () => {
                   variants={staggerItem}
                   whileHover={{y: -4}}
                   transition={{duration: 0.25}}
-                  className="bg-(--bg-main) border border-[#262626] rounded-[8px] px-5 sm:px-6 py-3 sm:py-4 flex flex-col justify-start gap-4 hover:border-[#703BF7]/40 transition-all duration-300"
+                  className="bg-(--bg-main) border border-bg-gray-1 rounded-lg px-5 sm:px-6 py-3 sm:py-4 flex flex-col justify-start gap-4 hover:border-primary/40 transition-all duration-300"
                 >
 
                   <div className="flex items-center gap-3">
@@ -111,7 +111,7 @@ export const SmartInvestments: React.FC = () => {
                   </div>
 
 
-                  <p className="text-[15px] sm:text-base font-normal text-[#999999] leading-[150%]">
+                  <p className="text-[15px] sm:text-base font-normal text-gray-1 leading-[150%]">
                     {service.description}
                   </p>
                 </motion.div>

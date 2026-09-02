@@ -14,7 +14,7 @@ import {
 } from 'firebase/firestore';
 import { firestoreDb } from '../firebase/config';
 
-// ── Types ────────────────────────────────────────────────────────────────────
+// ── Types ──
 
 /** Called every time the collection changes. */
 export type SnapshotCallback<T> = (docs: T[]) => void;
@@ -22,9 +22,9 @@ export type SnapshotCallback<T> = (docs: T[]) => void;
 /** Called if the listener hits an error. */
 export type ErrorCallback = (error: Error) => void;
 
-// ─── Helper ───────────────────────────────────────────────────────────────────
+// ─── Helper ───
 
-/**
+/*
  * Recursively converts any Firestore Timestamp in a value to an ISO string,
  * so it's safe to store in Redux (Timestamps aren't serializable).
  */
@@ -49,29 +49,12 @@ function serializeTimestamps<T>(value: T): T {
 function snapshotToDocs<T>(snapshot: QuerySnapshot<DocumentData>): T[] {
   return snapshot.docs.map((d) => {
     const data = d.data();
-    // Remove any 'id' field stored inside the document body — the canonical id
-    // is always d.id (the Firestore document path segment). A stale 'id' field
-    // written into the document body would shadow d.id after the spread and
-    // cause downstream code (e.g. id.replace) to blow up on a non-string value.
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id: _ignored, ...rest } = data;
     return serializeTimestamps({ id: d.id, ...rest }) as T;
   });
 }
 
-// ─── Real-time Subscriptions (onSnapshot) ────────────────────────────────────
-//
-// Firestore listeners are attached ONCE per collection / document path and then
-// kept open for the lifetime of the tab. Redux is therefore kept continuously in
-// sync, so a component that unmounts and remounts (SPA navigation) keeps seeing
-// live data without re-subscribing — and there is never more than one listener
-// per path no matter how many hooks call these helpers.
-//
-// The returned function is a no-op: callers may still use it as a `useEffect`
-// cleanup, but tearing the listener down on unmount is exactly what left the
-// store stale after navigation, so we intentionally don't. Re-subscribing on
-// every mount would also re-read the whole collection and flash fallback data;
-// keeping one listener open only pays for deltas.
+// ─── Real-time Subscriptions (onSnapshot) ───
 
 /** No-op teardown — see the note above. */
 const NOOP_UNSUBSCRIBE: Unsubscribe = () => {};
@@ -80,16 +63,6 @@ const NOOP_UNSUBSCRIBE: Unsubscribe = () => {};
 const liveCollectionListeners = new Set<string>();
 const liveDocumentListeners = new Set<string>();
 
-/**
- * Listens live for any change in a collection and pushes the updated array to
- * `onData`. Idempotent per collection — safe to call from multiple hooks / on
- * every mount; only the first call attaches a listener.
- *
- * @param collectionName  Firestore collection name
- * @param onData          callback that receives the updated array
- * @param onError         callback that receives errors (optional)
- * @param fallbackData    data to show while Firebase is unavailable / empty
- */
 export function subscribeToCollection<T>(
   collectionName: string,
   onData: SnapshotCallback<T>,
@@ -102,10 +75,6 @@ export function subscribeToCollection<T>(
     return NOOP_UNSUBSCRIBE;
   }
 
-  // A listener is already running for this collection and keeping Redux in sync.
-  // Don't attach a second one, and don't push fallback over live data.
-  // Note: in development (HMR), the module may reload but the Set persists in
-  // the same JS context — so we intentionally keep the single-listener guarantee.
   if (liveCollectionListeners.has(collectionName)) {
     return NOOP_UNSUBSCRIBE;
   }
@@ -209,22 +178,15 @@ export function subscribeToDocument<T>(
   return NOOP_UNSUBSCRIBE;
 }
 
-// ─── Helper ───────────────────────────────────────────────────────────────────
+// ─── Helper ───
 
-/**
- * Firestore rejects any field whose value is `undefined` — addDoc/setDoc/updateDoc
- * throw "Unsupported field value: undefined" instead of just ignoring the key.
- * Dashboard forms routinely produce `undefined` for optional fields the user left
- * blank (e.g. bedroomIcon, tag, location…), so every write is passed through this
- * first to drop those keys before they ever reach Firestore.
- */
 function stripUndefined<T extends object>(data: T): Partial<T> {
   return Object.fromEntries(
     Object.entries(data).filter(([, value]) => value !== undefined),
   ) as Partial<T>;
 }
 
-// ─── Add ──────────────────────────────────────────────────────────────────────
+// ─── Add ───
 
 /** Adds a new document with an auto-generated ID and returns that ID. */
 export async function addDocument<T extends DocumentData>(
@@ -244,7 +206,7 @@ export async function addDocument<T extends DocumentData>(
   return docRef.id;
 }
 
-// ─── Set (Upsert) ─────────────────────────────────────────────────────────────
+// ─── Set (Upsert) ───
 
 /** Writes a document at a specific ID (creates it, or replaces it). */
 export async function setDocument<T extends DocumentData>(
@@ -260,7 +222,7 @@ export async function setDocument<T extends DocumentData>(
   });
 }
 
-// ─── Update ───────────────────────────────────────────────────────────────────
+// ─── Update ───
 
 /** Updates specific fields on an existing document (partial merge). Creates it if it doesn't exist. */
 export async function updateDocument<T extends DocumentData>(
@@ -280,7 +242,7 @@ export async function updateDocument<T extends DocumentData>(
   } as DocumentData, { merge: true });
 }
 
-// ─── Delete ───────────────────────────────────────────────────────────────────
+// ─── Delete ───
 
 /** Deletes a document by ID. */
 export async function deleteDocument(
@@ -292,7 +254,7 @@ export async function deleteDocument(
   await deleteDoc(doc(firestoreDb, collectionName, id));
 }
 
-// ─── Rename (copy + delete) ───────────────────────────────────────────────────
+// ─── Rename (copy + delete) ───
 
 /**
  * "Renames" a Firestore document by:

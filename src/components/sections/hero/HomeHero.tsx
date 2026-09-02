@@ -11,15 +11,15 @@ const HomeHero = () => {
 
   return (
     <section className="w-full bg-(--bg-main) overflow-hidden">
-      <div className="flex flex-col md:flex-row min-h-[480px]">
+      <div className="flex flex-col md:flex-row min-h-120">
         {/* Left: Text Content */}
         <div className="flex-1 flex items-center px-4 sm:px-8 md:px-12 lg:px-16 py-12 md:py-8 xl:py-0 order-2 md:order-1">
-          <StaggerContainer className="flex w-full flex-col gap-8 max-w-[580px]">
+          <StaggerContainer className="flex w-full flex-col gap-8 max-w-145">
             <motion.div variants={staggerItem} className="flex flex-col gap-4">
               <h1 className="text-[1.65rem] sm:text-4xl md:text-[2.5rem] xl:text-5xl font-semibold leading-tight">
                 Discover Your Dream <br /> Property with Estatein
               </h1>
-              <p className="text-gray text-sm sm:text-base leading-relaxed max-w-[480px]">
+              <p className="text-gray text-sm sm:text-base leading-relaxed max-w-120">
                 Your journey to finding the perfect property begins here. Explore our
                 listings to find the home that matches your dreams.
               </p>

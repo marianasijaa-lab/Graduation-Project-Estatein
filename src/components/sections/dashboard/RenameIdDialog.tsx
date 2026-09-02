@@ -10,11 +10,6 @@ interface RenameIdDialogProps {
   onCancel: () => void;
 }
 
-/**
- * Dialog that lets the user rename a Firestore document ID.
- * It calls onConfirm with the new ID — the parent is responsible
- * for the actual copy+delete operation via renameDocumentId().
- */
 export const RenameIdDialog = ({
   open,
   currentId,

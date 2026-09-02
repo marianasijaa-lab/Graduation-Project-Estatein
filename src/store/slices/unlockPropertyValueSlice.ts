@@ -1,9 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { FirestoreUnlockPropertyValueCard, DataStatus } from '../types';
 
-// Each card is its own Firestore document, same as values/achievements/etc.
-// The section's header and InfoBox banner are NOT stored here — they stay
-// hardcoded in UnlockPropertyValue.tsx.
 export const FALLBACK_UNLOCK_PROPERTY_VALUE: FirestoreUnlockPropertyValueCard[] = [
   {
     id: 'unlock-1',

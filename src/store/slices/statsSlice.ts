@@ -1,8 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { Stat, DataStatus } from '../types';
 
-// Note: statsSlice doesn't use createAsyncThunk — Realtime Database uses a
-// persistent WebSocket (onValue callback), and updates arrive via useStats hook.
 
 interface StatsState {
   data: Stat[];

@@ -35,7 +35,7 @@ interface ContactFormProps {
   isSubmitting?: boolean;
 }
 
-// ─── Validation ───────────────────────────────────────────────────────────────
+// ─── Validation ───
 
 type CoreField = 'firstName' | 'lastName' | 'email' | 'phone' | 'message';
 
@@ -75,7 +75,7 @@ function validateAll(
   return errors;
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
+// ─── Component ───
 
 export const ContactForm: React.FC<ContactFormProps> = ({
   extraFields = [],
@@ -325,8 +325,8 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                         <span
                           className={`w-3.5 h-3.5 rounded-full transition-all ${
                             field.dotSelected
-                              ? 'bg-[#703BF7]'
-                              : 'border-2 border-[#703BF7] bg-transparent'
+                              ? 'bg-primary'
+                              : 'border-2 border-primary bg-transparent'
                           }`}
                         />
                       </div>
@@ -350,18 +350,18 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                       formData[field.name]
                         ? extraInputBg
                         : isDark
-                        ? 'bg-[#1A1A1A] border-[#262626] text-[#666666] placeholder-[#666666] focus:border-[#703BF7]'
-                        : 'bg-[#F9F9F9] border-gray-200 text-gray-400 placeholder-gray-400 focus:border-[#703BF7]'
+                        ? 'bg-bg-dark border-bg-gray-1 text-placeholder placeholder-placeholder focus:border-primary'
+                        : 'bg-[#F9F9F9] border-gray-200 text-gray-400 placeholder-gray-400 focus:border-primary'
                     } ${IconComponent ? 'pl-12' : 'pl-5'}`}
                   >
-                    <option value="" disabled className="text-[#666666]">
+                    <option value="" disabled className="text-placeholder">
                       {field.placeholder || 'Select Option'}
                     </option>
                     {field.options?.map((opt) => (
                       <option
                         key={opt}
                         value={opt}
-                        className={isDark ? 'bg-[#1A1A1A]' : 'bg-white'}
+                        className={isDark ? 'bg-bg-dark' : 'bg-white'}
                       >
                         {opt}
                       </option>

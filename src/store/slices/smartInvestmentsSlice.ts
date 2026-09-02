@@ -1,9 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { FirestoreSmartInvestmentsCard, DataStatus } from '../types';
-
-// Each card is its own Firestore document, same as values/achievements/etc.
-// The section's header and InfoBox banner are NOT stored here — they stay
-// hardcoded in SmartInvestments.tsx.
 export const FALLBACK_SMART_INVESTMENTS: FirestoreSmartInvestmentsCard[] = [
   {
     id: 'investment-1',

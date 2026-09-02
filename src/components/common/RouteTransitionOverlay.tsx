@@ -3,9 +3,7 @@ import { useLocation } from "react-router";
 import { Logo } from "./Logo";
 import { useTheme } from "../../Context/ThemeContext";
 
-// Brief and subtle — noticeably shorter than the full initial-load splash.
-// Inside the dashboard all routes share the same layout so we skip the overlay
-// entirely (set to 0) to avoid the white-flash "karmasha" on every nav click.
+
 const TRANSITION_DURATION_MS = 0;
 const REDUCED_TRANSITION_DURATION_MS = 0;
 
@@ -13,11 +11,6 @@ interface RouteTransitionOverlayProps {
   /** Called once the overlay has fully dismissed. */
   onTransitionEnd?: () => void;
 }
-
-// Brief animated-logo overlay shown on every in-app route change.
-// Mounted separately in Root.tsx and DashboardLayout.tsx, one per route tree.
-// Fixed (not absolute) so it always covers the full viewport, regardless of
-// scroll position. Navbar/header stay on top via a higher z-index.
 export const RouteTransitionOverlay = ({ onTransitionEnd }: RouteTransitionOverlayProps) => {
   const { theme } = useTheme();
   const isDark = theme === "dark";

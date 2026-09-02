@@ -5,12 +5,6 @@ interface LogoProps {
   onClick?: () => void;
   className?: string;
   logoSrc?: string;
-  /**
-   * Opt-in entrance animation for the splash/route-transition overlays.
-   * "full": animated icon + glow + letter-by-letter text (initial load).
-   * "quick": animated icon only, no glow or text (route changes).
-   * Omitted: static icon + text, as used everywhere else.
-   */
   animated?: 'full' | 'quick';
 }
 

@@ -13,7 +13,7 @@ import { DetailModal, type DetailField } from "../../components/sections/dashboa
 import {
   DashboardPageShell, staggerItem, rowStagger, rowVariants,
   iconBtnHover, deleteBtnHover, cardHoverProps, SkeletonRow, SkeletonCard,
-  tableBodyVariants, tableRowVariants,
+  tableRowVariants,
 } from "../../components/dashboard/DashboardPageShell";
 
 const shortId = (id: string) => id.length > 8 ? id.slice(0, 8) : id;

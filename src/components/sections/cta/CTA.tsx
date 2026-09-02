@@ -24,10 +24,10 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
 
     return (
         <section
-            className='relative w-full overflow-hidden transition-colors py-8 sm:py-10 lg:py-14 border-b border-t border-(--color-border) bg-(--bg-main) text-(--text-main)'
+            className='relative w-full overflow-hidden transition-colors py-8 sm:py-10 lg:py-14 border-b border-t border-bg-gray-1 bg-(--bg-main) text-(--text-main)'
         >
             <div
-              className="absolute left-0 top-0 block w-full h-1/2 bg-left-top bg-no-repeat bg-auto pointer-events-none z-0 sm:hidden"
+              className="absolute left-0 top-0 block w-full h-1/2 bg-top-left bg-no-repeat bg-auto pointer-events-none z-0 sm:hidden"
               style={{ backgroundImage: 'url(/assets/AbstractSmall.png)' }}
             />
 
@@ -68,7 +68,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               whileHover={{scale: 1.03}}
               whileTap={{scale: 0.97}}
-              className="w-full px-6 py-3.5 bg-primary hover:burg-[#5e2ed9] text-white text-sm font-medium text-center rounded-xl transition-colors shadow-sm cursor-pointer sm:w-auto"
+              className="w-full px-6 py-3.5 bg-primary hover:bg-[#5e2ed9] text-white text-sm font-medium text-center rounded-xl transition-colors shadow-sm cursor-pointer sm:w-auto"
             >
               Explore Properties
             </MotionLink>

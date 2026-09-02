@@ -14,7 +14,7 @@ const PageHero: React.FC<PageHeroProps> = ({ title, description, className = '' 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-      className={`w-full pt-12 md:pt-16 lg:pt-24 pb-12 md:pb-16 lg:pb-24 transition-colors duration-300 bg-(--bg-main) text-(--text-main) border-b border-[#262626] ${className}`}
+      className={`w-full pt-12 md:pt-16 lg:pt-24 pb-12 md:pb-16 lg:pb-24 transition-colors duration-300 bg-(--bg-main) text-(--text-main) border-b border-bg-gray-1 ${className}`}
       style={{ background: 'var(--bg-shadow)' }}
     >
       <div className="site-container relative z-10">

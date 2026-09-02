@@ -20,7 +20,7 @@ export const PropertyDetails = () => {
     );
   }
 
-  // البحث عن العقار — id الآن string (Firestore document ID)
+  // البحث عن العقار 
   const property = properties.find((p) => p.id === id);
 
   if (!property) {

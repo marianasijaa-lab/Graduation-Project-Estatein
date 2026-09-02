@@ -1,20 +1,8 @@
-/**
- * DashboardPageShell
- * ─────────────────────────────────────────────────────────────────────────────
- * Wraps every dashboard management page with:
- *   • A fade + slide-up entrance that re-triggers on every route change
- *     (keyed by pathname so Framer Motion unmounts/remounts correctly)
- *   • A stagger context so direct children animate in sequence
- *
- * Also exports shared animation variants and utility components used across
- * all dashboard pages.
- */
-
 import { AnimatePresence, motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { useLocation } from "react-router";
 
-// ── Shared variants ────────────────────────────────────────────────────────────
+// ── Shared variants ───
 
 /** Outer page wrapper — fades + rises as a whole. */
 export const pageVariants = {
@@ -59,17 +47,6 @@ export const rowStagger = {
   visible: {},
 };
 
-/**
- * Use this on motion.tbody / motion.div row containers instead of rowStagger.
- * Triggers a one-shot stagger fade only when the table first mounts.
- */
-export const tableBodyVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.04, delayChildren: 0.05 },
-  },
-};
-
 export const tableRowVariants = {
   hidden:  { opacity: 0, y: 6 },
   visible: {
@@ -99,7 +76,7 @@ export const cardHoverProps = {
   transition: { duration: 0.18, ease: [0.25, 0.1, 0.25, 1] },
 };
 
-// ── SkeletonRow ────────────────────────────────────────────────────────────────
+// ── SkeletonRow ──
 
 interface SkeletonRowProps {
   cols?: number;
@@ -124,7 +101,7 @@ export const SkeletonRow = ({ cols = 4, isDark }: SkeletonRowProps) => {
   );
 };
 
-// ── SkeletonCard ───────────────────────────────────────────────────────────────
+// ── SkeletonCard ──
 
 interface SkeletonCardProps {
   isDark: boolean;
@@ -158,7 +135,7 @@ export const SkeletonCard = ({ isDark }: SkeletonCardProps) => {
   );
 };
 
-// ── Component ─────────────────────────────────────────────────────────────────
+// ── Component ──
 
 interface DashboardPageShellProps {
   children: ReactNode;

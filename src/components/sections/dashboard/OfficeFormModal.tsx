@@ -133,7 +133,7 @@ export const OfficeFormModal = ({ mode, initialData, onClose, onSubmit }: Office
     });
   };
 
-  // ── style helpers ──────────────────────────────────────────────────────────
+  // ── style helpers ──
   const inputBgClass = (field: F) => {
     const hasErr = touched[field] && errors[field];
     if (hasErr)

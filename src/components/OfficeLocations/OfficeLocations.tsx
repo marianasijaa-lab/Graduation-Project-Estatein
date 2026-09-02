@@ -51,8 +51,8 @@ const OfficeLocations = () => {
               onClick={() => dispatch(setActiveTab(getNextOfficeTab(activeTab, tab)))}
               className={`h-11 flex-1 rounded-md border px-3 text-sm font-medium transition lg:h-auto lg:w-[120px] lg:flex-none lg:px-5 lg:py-3 lg:text-sm ${
                 activeTab === tab
-                  ? "border-[#262626] bg-(--bg-main) text-(--text-main)"
-                  : "border-[#262626] bg-(--bg-secondary) text-gray hover:bg-[#252525] hover:text-(--text-main)"
+                  ? "border-bg-gray-1 bg-(--bg-main) text-(--text-main)"
+                  : "border-bg-gray-1 bg-(--bg-secondary) text-gray hover:bg-[#252525] hover:text-(--text-main)"
               }`}
             >
               {tab}

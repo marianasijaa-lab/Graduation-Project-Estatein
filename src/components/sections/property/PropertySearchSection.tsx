@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FadeInSection } from "../../common/FadeInSection";
 import type { FirestoreProperty } from "../../../store/types";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// ─── Types ───
 
 type RangeOption = { label: string; value: [number, number] };
 type FilterOption = string | RangeOption;
@@ -28,7 +28,7 @@ interface SearchSectionProps {
   properties: FirestoreProperty[];
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
+// ─── Component ───
 
 export const PropitySearchSection: React.FC<SearchSectionProps> = ({
   properties,

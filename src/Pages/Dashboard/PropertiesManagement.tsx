@@ -11,9 +11,8 @@ import { ConfirmDialog } from "../../components/sections/dashboard/ConfirmDialog
 import { RenameIdDialog } from "../../components/sections/dashboard/RenameIdDialog";
 import { DetailModal, type DetailField } from "../../components/sections/dashboard/DetailModal";
 import {
-  DashboardPageShell, staggerItem, rowStagger, rowVariants,
-  iconBtnHover, deleteBtnHover, cardHoverProps, SkeletonRow, SkeletonCard,
-  tableBodyVariants, tableRowVariants,
+  DashboardPageShell, staggerItem, rowStagger, rowVariants, iconBtnHover, deleteBtnHover, cardHoverProps, SkeletonRow, SkeletonCard,
+  tableRowVariants,
 } from "../../components/dashboard/DashboardPageShell";
 
 const shortId = (id: string) => id.length > 8 ? id.slice(0, 8) : id;

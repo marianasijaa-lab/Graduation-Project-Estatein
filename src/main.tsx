@@ -29,7 +29,6 @@ import { OfficesManagement } from "./Pages/Dashboard/OfficesManagement";
 import { InquiriesManagement } from "./Pages/Dashboard/InquiriesManagement";
 import { ContactInfoManagement } from "./Pages/Dashboard/ContactInfoManagement";
 import { SubscribersManagement } from "./Pages/Dashboard/SubscribersManagement";
-import Login from "./Pages/Login";
 
 const router = createBrowserRouter([
   {
@@ -59,10 +58,6 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
       },
     ],
   },

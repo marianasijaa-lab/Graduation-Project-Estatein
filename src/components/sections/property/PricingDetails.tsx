@@ -44,7 +44,7 @@ const PricingCard = ({ title, items }: PricingSection) => {
             sm:h-[50px]
             rounded-lg
             border
-            border-[#262626]
+            border-bg-gray-1
             bg-(--bg-secondary)
             px-[12px]
             sm:px-[18px]
@@ -80,7 +80,7 @@ const PricingCard = ({ title, items }: PricingSection) => {
 
                 ${
                   index !== items.length - 1
-                    ? "border-b border-[#262626]"
+                    ? "border-b border-bg-gray-1"
                     : ""
                 }
 
@@ -95,7 +95,7 @@ const PricingCard = ({ title, items }: PricingSection) => {
                   !isMonthlyCosts &&
                   !item.fullWidth &&
                   index % 2 === 1
-                    ? "lg:relative lg:pl-[12px] lg:before:absolute lg:before:left-0 lg:before:top-[30px] lg:before:bottom-[30px] lg:before:w-px lg:before:bg-[#262626]"
+                    ? "lg:relative lg:pl-[12px] lg:before:absolute lg:before:left-0 lg:before:top-[30px] lg:before:bottom-[30px] lg:before:w-px lg:before:bg-bg-gray-1"
                     : ""
                 }
 
@@ -148,7 +148,7 @@ const PricingCard = ({ title, items }: PricingSection) => {
                       min-w-0
                       w-fit
                       max-w-full
-                      ${item.note.length > 35 ? "rounded-[6px]" : "rounded-[28px]"}
+                      ${item.note.length > 35 ? "rounded-md" : "rounded-[28px]"}
                       bg-(--bg-secondary)
                       border border-bg-gray-1
                       px-[8px]
@@ -219,9 +219,9 @@ const PricingDetails = ({
             flex-col
             items-start
             gap-[16px]
-            rounded-[8px]
+            rounded-lg
             border
-            border-[#262626]
+            border-bg-gray-1
             bg-(--bg-secondary)
             px-[25px]
             py-[22px]
@@ -251,7 +251,7 @@ const PricingDetails = ({
               after:right-0
               after:h-px
               after:w-full
-              after:bg-[#262626]
+              after:bg-bg-gray-1
               md:w-auto
               md:pb-0
               md:pr-[25px]

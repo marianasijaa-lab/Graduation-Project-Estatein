@@ -3,7 +3,7 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "fire
 import { auth } from "../firebase/config";
 import { Logo } from "../components/common/Logo";
 import { useTheme } from "../Context/ThemeContext";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import {
   validateEmail,
   validatePassword,
@@ -14,7 +14,7 @@ import {
 
 type Mode = "login" | "signup";
 
-// ─── Password strength bar ────────────────────────────────────────────────────
+// ─── Password strength bar ───
 
 const STRENGTH_META: Record<
   Exclude<PasswordStrength, "empty">,
@@ -65,7 +65,7 @@ const PasswordStrengthBar = ({ value }: { value: string }) => {
   );
 };
 
-// ─── Email suggestions ────────────────────────────────────────────────────────
+// ─── Email suggestions ───
 
 const EmailSuggestions = ({
   suggestions,
@@ -97,23 +97,23 @@ const EmailSuggestions = ({
   </motion.div>
 );
 
-// ─── Animation variants ───────────────────────────────────────────────────────
+// ─── Animation variants ───
 
 /* page bg fades in instantly */
-const pageVariants = {
+const pageVariants: Variants = {
   hidden:  { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0.4 } },
 };
 
 /* orbs scale-up from 0 with a slight delay */
-const orb1Intro = {
+const orb1Intro: Variants = {
   hidden:  { opacity: 0, scale: 0.4 },
   visible: {
     opacity: 1, scale: 1,
     transition: { duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: 0.1 },
   },
 };
-const orb2Intro = {
+const orb2Intro: Variants = {
   hidden:  { opacity: 0, scale: 0.4 },
   visible: {
     opacity: 1, scale: 1,
@@ -122,14 +122,14 @@ const orb2Intro = {
 };
 
 /* floating shapes drift in from edges */
-const floatInRight = {
+const floatInRight: Variants = {
   hidden:  { opacity: 0, x: 40, y: -10 },
   visible: {
     opacity: 0.07, x: 0, y: 0,
     transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.35 },
   },
 };
-const floatInLeft = {
+const floatInLeft: Variants = {
   hidden:  { opacity: 0, x: -40, y: 10 },
   visible: {
     opacity: 0.07, x: 0, y: 0,
@@ -138,7 +138,7 @@ const floatInLeft = {
 };
 
 /* card drops in with spring bounce */
-const cardEntrance = {
+const cardEntrance: Variants = {
   hidden:  { opacity: 0, y: 60, scale: 0.94, rotateX: 6 },
   visible: {
     opacity: 1, y: 0, scale: 1, rotateX: 0,
@@ -146,7 +146,6 @@ const cardEntrance = {
       duration: 0.75,
       ease: [0.22, 1, 0.36, 1],
       delay: 0.3,
-      /* propagate to children */
       staggerChildren: 0.08,
       delayChildren: 0.55,
     },
@@ -154,7 +153,7 @@ const cardEntrance = {
 };
 
 /* each child inside the card */
-const childItem = {
+const childItem: Variants = {
   hidden:  { opacity: 0, y: 18 },
   visible: {
     opacity: 1, y: 0,
@@ -163,7 +162,7 @@ const childItem = {
 };
 
 /* accent line draws left → right */
-const accentLine = {
+const accentLine: Variants = {
   hidden:  { scaleX: 0, opacity: 0 },
   visible: {
     scaleX: 1, opacity: 1,
@@ -172,27 +171,27 @@ const accentLine = {
 };
 
 /* ── idle loop after entrance ── */
-const orb1Loop = {
+const orb1Loop: Variants = {
   animate: {
     scale: [1, 1.18, 1],
     opacity: [0.18, 0.28, 0.18],
     transition: { duration: 9, repeat: Infinity, ease: "easeInOut" },
   },
 };
-const orb2Loop = {
+const orb2Loop: Variants = {
   animate: {
     scale: [1, 1.25, 1],
     opacity: [0.1, 0.2, 0.1],
     transition: { duration: 11, repeat: Infinity, ease: "easeInOut", delay: 3 },
   },
 };
-const floatLoop1 = {
+const floatLoop1: Variants = {
   animate: {
     y: [-12, 12, -12],
     transition: { duration: 6, repeat: Infinity, ease: "easeInOut" },
   },
 };
-const floatLoop2 = {
+const floatLoop2: Variants = {
   animate: {
     y: [10, -10, 10],
     transition: { duration: 7.5, repeat: Infinity, ease: "easeInOut" },
@@ -200,13 +199,13 @@ const floatLoop2 = {
 };
 
 /* form slide on mode change */
-const formVariants = {
+const formVariants: Variants = {
   hidden:  { opacity: 0, x: 16 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] } },
   exit:    { opacity: 0, x: -16, transition: { duration: 0.25 } },
 };
 
-const errorAlertVariants = {
+const errorAlertVariants: Variants = {
   hidden:  { opacity: 0, y: -8, height: 0 },
   visible: { opacity: 1, y: 0,  height: "auto", transition: { duration: 0.3 } },
   exit:    { opacity: 0, y: -8, height: 0,       transition: { duration: 0.2 } },
@@ -217,7 +216,7 @@ const shakeAnim = {
   transition: { duration: 0.45 },
 };
 
-// ─── Main component ───────────────────────────────────────────────────────────
+// ─── Main component ───
 
 export const Login = () => {
   const { theme } = useTheme();
@@ -239,7 +238,7 @@ export const Login = () => {
   const [authError, setAuthError] = useState<string | null>(null);
   const [loading,   setLoading]   = useState(false);
 
-  // ── mode switch ───────────────────────────────────────────────────────────
+  // ── mode switch ──
 
   const switchMode = (next: Mode) => {
     setMode(next);
@@ -250,7 +249,7 @@ export const Login = () => {
     setAuthError(null);
   };
 
-  // ── field handlers ────────────────────────────────────────────────────────
+  // ── field handlers ──
 
   const handleEmailChange = (val: string) => {
     setEmail(val);
@@ -287,7 +286,7 @@ export const Login = () => {
     setEmailError("");
   };
 
-  // ── submit ────────────────────────────────────────────────────────────────
+  // ── submit ──
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -344,7 +343,7 @@ export const Login = () => {
     setTimeout(() => setShake(false), 500);
   };
 
-  // ── style helpers ─────────────────────────────────────────────────────────
+  // ── style helpers ──
 
   const baseField = "w-full px-4 py-3 rounded-xl border outline-none transition-all duration-200";
 
@@ -365,7 +364,6 @@ export const Login = () => {
   const showEmailErr    = emailTouched && !!emailError;
   const showPasswordErr = passwordTouched && !!passwordError;
 
-  // ─────────────────────────────────────────────────────────────────────────
 
   return (
     <motion.div

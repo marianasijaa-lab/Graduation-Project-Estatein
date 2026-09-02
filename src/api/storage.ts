@@ -3,14 +3,6 @@ const MAX_IMAGE_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
 /** Thrown by uploadImage() for any validation or upload failure. */
 export class ImageUploadError extends Error {}
 
-/**
- * Uploads a single image file to Cloudinary using an *unsigned* upload preset
- * and returns the permanent secure URL — safe to store in Firestore.
- *
- * Required env vars:
- *   VITE_CLOUDINARY_CLOUD_NAME   — e.g. "my-cloud"
- *   VITE_CLOUDINARY_UPLOAD_PRESET — e.g. "ml_default"  (must be set to Unsigned)
- */
 export async function uploadImage(file: File, folder: string): Promise<string> {
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME as string | undefined;
   const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET as string | undefined;

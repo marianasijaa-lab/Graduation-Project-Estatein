@@ -210,7 +210,7 @@ export const PropertyFormModal = ({ mode, initialData, onClose, onSubmit }: Prop
     });
   };
 
-  // ── style helpers ──────────────────────────────────────────────────────────
+  // ── style helpers ──
   const inputBgClass = (field: F) => {
     const hasErr = touched[field] && errors[field];
     if (hasErr)

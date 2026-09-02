@@ -1,9 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { FirestoreEffortlessPropertyManagementCard, DataStatus } from '../types';
 
-// Each card is its own Firestore document, same as values/achievements/etc.
-// The section's header and InfoBox banner are NOT stored here — they stay
-// hardcoded in EffortlessManagement.tsx.
 export const FALLBACK_EFFORTLESS_PROPERTY_MANAGEMENT: FirestoreEffortlessPropertyManagementCard[] = [
   {
     id: 'effortless-1',
