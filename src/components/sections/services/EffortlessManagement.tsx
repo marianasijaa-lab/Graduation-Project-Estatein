@@ -3,9 +3,12 @@ import { InfoBox } from '../infobox/InfoBox';
 import { motion } from 'framer-motion';
 import { StaggerContainer, staggerItem } from '../../common/StaggerContainer';
 import { useEffortlessPropertyManagement } from '../../../hooks/useEffortlessPropertyManagement';
+import { useTheme } from '../../../Context/ThemeContext';
 
 export const EffortlessPropertyManagement = () => {
   const { effortlessPropertyManagement } = useEffortlessPropertyManagement();
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
 
   return (
     <section className="w-full bg-(--bg-main) border-t border-bg-gray-1 py-16 sm:py-20 lg:py-24">
@@ -44,7 +47,7 @@ export const EffortlessPropertyManagement = () => {
               </div>
 
               {/* الوصف */}
-              <p className="text-[15px] sm:text-base font-normal text-gray-1 leading-[150%]">
+              <p className="text-[15px] sm:text-base font-normal leading-[150%]" style={{ color: isDark ? '#999999' : undefined }}>
                 {service.description}
               </p>
             </motion.div>

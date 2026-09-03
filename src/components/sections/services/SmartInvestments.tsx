@@ -3,9 +3,12 @@ import { InfoBox } from '../infobox/InfoBox';
 import { motion } from 'framer-motion';
 import { StaggerContainer, staggerItem } from '../../common/StaggerContainer';
 import { useSmartInvestments } from '../../../hooks/useSmartInvestments';
+import { useTheme } from '../../../Context/ThemeContext';
 
 export const SmartInvestments = () => {
   const { smartInvestments } = useSmartInvestments();
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
 
   return (
     <section className="w-full bg-(--bg-main) border-t border-b border-bg-gray-1 py-16 sm:py-20 lg:py-24">
@@ -66,13 +69,13 @@ export const SmartInvestments = () => {
                         className="w-full h-full object-contain"
                       />
                     </div>
-                    <h3 className="font-bold text-(--text-main) text-lg xl:text-xl font-['Urbanist',sans-serif]">
+                    <h3 className="font-bold text-(--text-main) text-base sm:text-lg xl:text-xl font-['Urbanist',sans-serif] whitespace-nowrap overflow-hidden text-ellipsis">
                       {service.title}
                     </h3>
                   </div>
 
 
-                  <p className="text-[15px] sm:text-base font-normal text-gray-1 leading-[150%]">
+                  <p className="text-[15px] sm:text-base font-normal leading-[150%]" style={{ color: isDark ? '#999999' : undefined }}>
                     {service.description}
                   </p>
                 </motion.div>

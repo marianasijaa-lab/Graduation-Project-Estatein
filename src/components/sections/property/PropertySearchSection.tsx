@@ -192,6 +192,7 @@ export const PropitySearchSection: React.FC<SearchSectionProps> = ({
             className={`w-full flex items-center justify-between px-3 py-2 rounded-xl border transition-colors ${
               isDark ? "bg-bg-dark-1 border-bg-gray-1" : "bg-white border-gray-200 shadow-sm"
             }`}
+            style={{ boxShadow: '0px 0px 0px 4px #191919' }}
           >
             <input
               type="text"

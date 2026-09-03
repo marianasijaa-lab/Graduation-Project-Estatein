@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion';
-import type { ReactNode } from 'react';
+import type { ReactNode, CSSProperties } from 'react';
 
 interface FadeInSectionProps {
   children: ReactNode;
   delay?: number;
   className?: string;
   direction?: 'up' | 'down' | 'left' | 'right' | 'none';
+  style?: CSSProperties;
 }
 
 const directionOffset = {
@@ -21,6 +22,7 @@ export const FadeInSection = ({
   delay = 0,
   className = '',
   direction = 'up',
+  style,
 }: FadeInSectionProps) => {
   const offset = directionOffset[direction];
 
@@ -31,6 +33,7 @@ export const FadeInSection = ({
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6, delay, ease: [0.25, 0.1, 0.25, 1] }}
       className={className}
+      style={style}
     >
       {children}
     </motion.div>

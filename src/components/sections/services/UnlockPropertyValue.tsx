@@ -3,9 +3,12 @@ import { InfoBox } from '../infobox/InfoBox';
 import { motion } from 'framer-motion';
 import { StaggerContainer, staggerItem } from '../../common/StaggerContainer';
 import { useUnlockPropertyValue } from '../../../hooks/useUnlockPropertyValue';
+import { useTheme } from '../../../Context/ThemeContext';
 
 export const UnlockPropertyValue = () => {
   const { unlockPropertyValue } = useUnlockPropertyValue();
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
 
   return (
     <section className="w-full bg-(--bg-main) border-t border-bg-gray-1 py-16 sm:py-20 lg:py-24">
@@ -42,7 +45,7 @@ export const UnlockPropertyValue = () => {
                 </h3>
               </div>
 
-              <p className="text-[15px] sm:text-base font-normal text-gray leading-[150%]">
+              <p className="text-[15px] sm:text-base font-normal leading-[150%]" style={{ color: isDark ? '#999999' : undefined }}>
                 {service.description}
               </p>
             </motion.div>

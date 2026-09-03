@@ -1,18 +1,14 @@
 import type { FC } from 'react';
 import { motion } from 'framer-motion';
 import { FadeInSection } from '../../common/FadeInSection';
+import { useTheme } from '../../../Context/ThemeContext';
 
 interface InfoBoxProps {
   title: string;
   description: string;
   buttonLabel?: string;
   onButtonClick?: () => void;
-  /**
-   * horizontal → title + description on the left, button on the far right (wide banner style)
-   * vertical   → title on top, description in middle, full-width button at the bottom (card style)
-   */
   variant?: 'horizontal' | 'vertical';
-  
 }
 
 export const InfoBox: FC<InfoBoxProps> = ({
@@ -22,8 +18,11 @@ export const InfoBox: FC<InfoBoxProps> = ({
   onButtonClick,
   variant = 'horizontal',
 }) => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
 
-  const containerBase = 'relative overflow-hidden rounded-2xl border transition-colors bg-(--secondary) border-[#262626] text-white' ;
+  const containerBase = `relative overflow-hidden rounded-2xl border transition-colors border-[#262626] text-white ${isDark ? 'bg-[#1a1a1a]' : 'bg-(--bg-secondary)'}`;
+  const containerStyle = {};
 
   // Shared abstract background overlay
   const bgOverlay = (
@@ -35,7 +34,7 @@ export const InfoBox: FC<InfoBoxProps> = ({
 
   if (variant === 'vertical') {
     return (
-      <div className={`${containerBase} flex flex-col p-8 sm:p-10 gap-6 h-auto`}>
+      <div className={`${containerBase} flex flex-col p-8 sm:p-10 gap-6 h-auto`} style={containerStyle}>
         {bgOverlay}
 
         {/* Title */}
@@ -45,7 +44,7 @@ export const InfoBox: FC<InfoBoxProps> = ({
 
         {/* Description */}
         <p
-          className='relative z-10 text-sm sm:text-base leading-relaxed flex-1 text-gray-400'
+          className='relative z-10 text-sm sm:text-base leading-relaxed flex-1 text-gray'
         >
           {description}
         </p>
@@ -55,7 +54,7 @@ export const InfoBox: FC<InfoBoxProps> = ({
           whileHover={{ opacity: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={onButtonClick}
-          className='relative z-10 w-full py-4 rounded-xl text-sm font-medium transition-colors bg-(--bg-main) border border-bg-gray-1 text-(--text-main) hover:bg-(--bg-hover)'
+        className='relative z-10 w-full py-4 rounded-[10px] text-sm font-medium transition-colors bg-(--bg-main) border border-[#262626] text-(--text-main) hover:bg-(--bg-hover)'
         >
           {buttonLabel}
         </motion.button>
@@ -65,30 +64,40 @@ export const InfoBox: FC<InfoBoxProps> = ({
 
   // horizontal (default)
   return (
-    <FadeInSection direction="up" className={`${containerBase} flex flex-col sm:flex-row items-center justify-between gap-6 px-8 sm:px-10 py-8`}>
+    <FadeInSection direction="up" className={`${containerBase} flex flex-col gap-4 px-8 sm:px-10 py-8`} style={containerStyle}>
       {bgOverlay}
 
-      {/* Text block */}
-      <div className="relative z-10 flex flex-col gap-3 max-w-2xl text-(--text-main)">
+      {/* الصف العلوي: العنوان + الزر */}
+      <div className="relative z-10 flex items-center justify-between gap-4 w-full">
         <h3 className="text-xl sm:text-2xl font-semibold leading-snug text-(--text-main)">{title}</h3>
-        <p
-          className='text-sm sm:text-base leading-relaxed text-gray-400'
-        >
-          {description}
-        </p>
-      </div>
 
-      {/* Button with animations */}
-      <div className="relative z-10 shrink-0 w-full sm:w-auto flex justify-center sm:justify-end">
+        {/* الزر — مخفي على الشاشات الصغيرة */}
         <motion.button
           whileHover={{ opacity: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={onButtonClick}
-          className='px-6 py-3 rounded-xl text-sm font-medium transition-colors border bg-(--bg-main) border-border-gray-1 text-(--text-main) hover:bg-(--bg-hover)'
+          className='hidden sm:block shrink-0 px-6 py-3 rounded-[10px] text-sm font-medium transition-colors border bg-(--bg-main) border-[#262626] text-(--text-main) hover:bg-(--bg-hover)'
         >
           {buttonLabel}
         </motion.button>
       </div>
+
+      {/* الزر — يظهر فقط على الشاشات الصغيرة */}
+      <div className="relative z-10 w-full sm:hidden">
+        <motion.button
+          whileHover={{ opacity: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          onClick={onButtonClick}
+          className='w-full py-3 rounded-[10px] text-sm font-medium transition-colors border bg-(--bg-main) border-[#262626] text-(--text-main) hover:bg-(--bg-hover)'
+        >
+          {buttonLabel}
+        </motion.button>
+      </div>
+
+      {/* الوصف — على كامل العرض */}
+      <p className='relative z-10 text-sm sm:text-base leading-relaxed text-gray w-full'>
+        {description}
+      </p>
     </FadeInSection>
   );
 };

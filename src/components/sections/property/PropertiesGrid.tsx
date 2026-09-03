@@ -82,15 +82,15 @@ function PropertyCard({
         alt={item.name}
         className="w-full aspect-16/10 object-cover rounded-xl hover:scale-105 transition-transform duration-300"
       />
-      <div className="flex flex-1 flex-col gap-5 lg:gap-6 xl:gap-7.5">
-        <div className="flex min-h-38 flex-col gap-0.5 lg:gap-1 xl:gap-1.5">
+      <div className="flex flex-1 flex-col gap-3 lg:gap-6 xl:gap-7.5">
+        <div className="flex flex-col gap-0.5 lg:gap-1 xl:gap-1.5 lg:min-h-38">
           {item.tag && (
-            <span className="block text-gray-300 text-[13px] border border-bg-gray-1 rounded-full px-3 py-1.5 mb-1 whitespace-nowrap overflow-hidden text-ellipsis">
+            <span className=" w-fit block text-white text-[12px] md:text-[13px] border border-bg-gray-1 rounded-full px-3 py-1.5 mb-1 whitespace-nowrap overflow-hidden text-ellipsis bg-bg-dark">
               {item.tag}
             </span>
           )}
           <h3 className="card-title">{item.name}</h3>
-          <p className="font-medium text-gray">
+          <p className="font-medium text-gray text-[14px] sm:text-base">
             {item.descriptionLong.length > 60
               ? item.descriptionLong.slice(0, 60) + "... "
               : item.descriptionLong + "... "}

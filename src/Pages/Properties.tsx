@@ -63,6 +63,7 @@ const ProperityPage = () => {
           <SectionHeader
             title="Lets Make it Happen"
             subtitle="Ready to take the first step toward your dream property? Fill out the form below, and our real estate wizards will work their magic to find your perfect match. Dont wait; lets embark on this exciting journey together."
+            className="mb-8 sm:mb-14"
           />
           <ContactForm
             columns={4}
