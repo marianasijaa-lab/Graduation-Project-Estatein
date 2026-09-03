@@ -72,7 +72,7 @@ const SliderButtons = ({
           <button
             type="button"
             onClick={onAction}
-            className="h-11 lg:h-9 rounded-lg border border-bg-gray-1 bg-(--bg-secondary) px-3.5 text-xs font-medium text-(--text-main) whitespace-nowrap flex items-center"
+            className="md:hidden h-11 lg:h-9 rounded-lg border border-bg-gray-1 bg-(--bg-secondary) px-3.5 text-xs font-medium text-(--text-main) whitespace-nowrap flex items-center"
           >
             {actionLabel}
           </button>
