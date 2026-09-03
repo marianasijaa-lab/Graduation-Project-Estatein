@@ -1,7 +1,6 @@
 // GallerySlider.tsx
 import { useState } from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { FaMapMarkerAlt } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaMapMarkerAlt } from "react-icons/fa";
 interface GallerySliderProps {
   images: string[];
   propertyName?: string;
@@ -143,59 +142,3 @@ const GallerySlider = ({ images, propertyName, location, price }: GallerySliderP
 };
 
 export default GallerySlider;
-
-      
-//   const { goNext, goPrev, itemsToShow, currentIndex, maxIndex } = useSlider(
-//     propertyImages,
-//     "two"
-//   );
-
-//   return (
-//     <div className="w-full flex flex-col  bg-bg-dark p-12.5 rounded-lg">
-//       {/* Thumbnails using BaseSlider for horizontal scroll */}
-//       <div className="mb-4 order-2 flex rounded-md px-2 bg-bg-dark-1">
-//         <BaseSlider currentIndex={0} itemsToShow={9}>
-//           {propertyImages.map((img, index) => (
-//             <div key={index} className="flex-1 px-1">
-//               <img
-//                 src={img}
-//                 alt="property image"
-//                 className={`w-full h-18.5 object-cover rounded cursor-pointer ${
-//                   index === currentIndex ? "ring-2 ring-blue-500" : "opacity-60"
-//                 }`}
-//               />
-//             </div>
-//           ))}
-//         </BaseSlider>
-//       </div>
-
-//       {/* Main images */}
-//       <div className="grid grid-cols-1 order-3 xl:grid-cols-2 items-stretch gap-4 mb-6">
-//         <div className="relative h-62 lg:h-140 xl:h-146">
-//         <img src={propertyImages[currentIndex]} className="rounded-lg object-cover h-full w-full" />
-//         </div>
-//         <div className="relative hidden lg:block h-62 lg:h-140 xl:h-146">
-          
-//         <img 
-//           src={propertyImages[Math.min(currentIndex + 1, propertyImages.length - 1)]} 
-//           className="rounded-lg h-full object-cover w-full" 
-//         />
-//         </div>
-      
-//       </div>
-
-//       {/* Your existing SliderButtons */}
-//     <div className=" order-4">
-      
-//       <SliderButtons
-//         currentIndex={currentIndex}
-//         goNext={goNext}
-//         goPrev={goPrev}
-//         itemsLength={propertyImages.length}
-//         maxIndex={maxIndex}
-//         itemsToShow={itemsToShow}
-//       />
-//     </div>
-//     </div>
-//   );
-// };

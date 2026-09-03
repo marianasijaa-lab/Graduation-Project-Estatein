@@ -1,4 +1,3 @@
-import React from 'react';
 import { SectionHeader } from '../components/common/SectionHeader';
 import HeroAbout from '../components/sections/hero/AboutHero';
 import CompaniesSlider from '../components/ui/slider/CompaniesSlider';

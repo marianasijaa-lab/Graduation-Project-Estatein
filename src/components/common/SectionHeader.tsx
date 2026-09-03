@@ -1,10 +1,10 @@
-import React from 'react';
+import type { FC, ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { StarCluster } from './StarCluster';
 import { FadeInSection } from './FadeInSection';
 
 export interface SectionHeaderProps {
-  title: React.ReactNode;
+  title: ReactNode;
   subtitle: string;
   actionLabel?: string;
   onAction?: () => void;
@@ -12,7 +12,7 @@ export interface SectionHeaderProps {
   fullWidth?: boolean;
 }
 
-export const SectionHeader: React.FC<SectionHeaderProps> = ({
+export const SectionHeader: FC<SectionHeaderProps> = ({
   title,
   subtitle,
   actionLabel,
@@ -21,7 +21,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
   fullWidth = false,
 }) => {
   return (
-    <FadeInSection direction="up" className={`flex flex-col items-start gap-4 sm:gap-6 mb-10 sm:mb-14 md:flex-row md:items-end md:justify-between overflow-visible ${className}`}>
+    <FadeInSection direction="up" className={`flex flex-col items-start gap-4 sm:gap-6 mb-0 sm:mb-14 md:flex-row md:items-end md:justify-between overflow-visible ${className}`}>
       {/* الجانب الأيسر: النجوم + العنوان h2 + الوصف p */}
       <div className={`space-y-2.5 ${fullWidth ? 'w-full' : 'max-w-4xl'}`}>
         <StarCluster />
@@ -30,7 +30,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
           {title}
         </h2>
 
-        <p className="text-sm sm:text-base text-gray leading-relaxed font-normal">
+        <p className="text-[13px] sm:text-base text-gray leading-relaxed font-normal">
           {subtitle}
         </p>
       </div>

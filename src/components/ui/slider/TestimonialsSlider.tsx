@@ -97,7 +97,7 @@ function TestimonialCard({ testimony }: { testimony: FirestoreTestimonial }) {
     <motion.div
       whileHover={{ y: -6 }}
       transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-      className="card flex h-[280px] md:h-[340px] lg:h-[370px] w-full flex-col items-stretch gap-3 sm:gap-4 lg:gap-5 overflow-hidden"
+      className="card flex h-auto md:h-[340px] lg:h-[370px] w-full flex-col items-stretch gap-3 sm:gap-4 lg:gap-5 overflow-hidden"
     >
       <div className="flex gap-1.5 sm:gap-2.5">
         {Array.from({ length: testimony.rating || 5 }, (_, index) => (
@@ -109,7 +109,7 @@ function TestimonialCard({ testimony }: { testimony: FirestoreTestimonial }) {
         <h3 className="font-semibold text-lg md:text-xl lg:text-xl 2xl:text-2xl text-(--text-main)">
           {testimony.title}
         </h3>
-        <p className="text-[12px] leading-relaxed md:text-[14px] lg:text-[14px] xl:text-[15.8px] line-clamp-3 lg:line-clamp-4">
+        <p className="text-[12px] leading-relaxed md:text-[14px] lg:text-[14px] xl:text-[15.8px] md:line-clamp-3 lg:line-clamp-4">
           {testimony.description}
         </p>
       </div>

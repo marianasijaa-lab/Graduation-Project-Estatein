@@ -8,7 +8,6 @@ import SliderButtons from "../../ui/slider/SliderButtons";
 import type { DataStatus, FirestoreProperty } from "../../../store/types";
 import { motion } from "framer-motion";
 import { staggerItem } from "../../common/StaggerContainer";
-import { RiFileWarningFill } from "react-icons/ri";
 interface PropertiesGridProps{
   properties:FirestoreProperty[],
   status:DataStatus,

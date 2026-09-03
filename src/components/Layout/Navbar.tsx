@@ -8,8 +8,6 @@ import ThemeToggle from "../ui/ThemeToggle";
 interface NavbarProps {
   activePage: PageId | null;
   onNavigate: (page: PageId) => void;
-  isDark?: boolean;
-  onToggleTheme?: () => void;
 }
 
 const NAV_ITEMS: { id: PageId; label: string }[] = [
@@ -22,8 +20,6 @@ const NAV_ITEMS: { id: PageId; label: string }[] = [
 export const Navbar: React.FC<NavbarProps> = ({
   activePage,
   onNavigate,
-  isDark: _isDark = true,
-  onToggleTheme: _onToggleTheme,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 

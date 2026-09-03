@@ -1,5 +1,4 @@
 import React from "react";
-import { useTheme } from '../../../Context/ThemeContext';
 import { Link } from 'react-router';
 import { motion } from "framer-motion";
 import { FadeInSection } from "../../common/FadeInSection";
@@ -53,7 +52,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
             </h2>
           )}
           <p
-            className="text-sm sm:text-base leading-relaxed font-normal text-gray-500"
+            className="text-sm sm:text-base leading-relaxed font-normal text-gray"
           >
             {description}
           </p>

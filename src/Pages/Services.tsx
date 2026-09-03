@@ -1,5 +1,4 @@
 // src/pages/Services.tsx
-import React from 'react';
 import { FadeInSection } from '../components/common/FadeInSection';
 import PageHero from '../components/sections/hero/PageHero';
 import Services from '../components/sections/services/Services';
@@ -34,4 +33,3 @@ export const ServicesPage: React.FC = () => {
   );
 };
 
-export default ServicesPage;

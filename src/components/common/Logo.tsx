@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import React from 'react';
+import type { FC } from 'react';
 
 interface LogoProps {
   onClick?: () => void;
@@ -10,7 +10,7 @@ interface LogoProps {
 
 const BRAND_NAME = 'Estatein';
 
-export const Logo: React.FC<LogoProps> = ({
+export const Logo: FC<LogoProps> = ({
   onClick,
   className = '',
   logoSrc = '/assets/logo_icon.png',

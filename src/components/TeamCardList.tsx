@@ -13,10 +13,10 @@ interface TeamMember {
 
 interface TeamCardsListProps {
   members: TeamMember[];
-  hello:string 
+  contactLabel: string;
 }
 
-export const TeamCardsList = ({ members,hello }:TeamCardsListProps) => {
+export const TeamCardsList = ({ members, contactLabel }: TeamCardsListProps) => {
   return (
     <StaggerContainer className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 2xl:gap-[30px]">
       {members.map((member) => (
@@ -50,7 +50,7 @@ export const TeamCardsList = ({ members,hello }:TeamCardsListProps) => {
 
        
           <div className="w-full bg-(--bg-secondary) border border-bg-gray-1 rounded-[100px] max-sm:py-2 max-2xl:py-[10px] 2xl:py-[14px]  max-sm:pr-2 max-2xl:pr-[10px] 2xl:pr-[14px]  max-sm:pl-6 max-2xl:pl-5 2xl:pl-6 flex items-center justify-between gap-5">
-            <span className="text-(--text-main) max-sm:text-sm max-2xl:text-base 2xl:text-lg font-medium">{hello}</span>
+            <span className="text-(--text-main) max-sm:text-sm max-2xl:text-base 2xl:text-lg font-medium">{contactLabel}</span>
             
 
             <div className="bg-primary max-sm:p-[14px] max-2xl:p-2 2xl:p-[10px] rounded-full cursor-pointer hover:bg-opacity-80 transition flex items-center justify-center">

@@ -1,46 +1,11 @@
-import React from 'react';
 import { SectionHeader } from '../../common/SectionHeader';
 import { InfoBox } from '../infobox/InfoBox';
 import { motion } from 'framer-motion';
 import { StaggerContainer, staggerItem } from '../../common/StaggerContainer';
 import { useEffortlessPropertyManagement } from '../../../hooks/useEffortlessPropertyManagement';
 
-interface ServiceItem {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-}
-
-const managementServices: ServiceItem[] = [
-  {
-    id: '1',
-    title: 'Tenant Harmony',
-    description: 'Our Tenant Management services ensure that your tenants have a smooth and reducing vacancies.',
-    icon: '/assets/Icon_23.png',
-  },
-  {
-    id: '2',
-    title: 'Maintenance Ease',
-    description: 'Say goodbye to property maintenance headaches. We handle all aspects of property upkeep.',
-    icon: '/assets/Icon_24.png',
-  },
-  {
-    id: '3',
-    title: 'Financial Peace of Mind',
-    description: 'Managing property finances can be complex. Our financial experts take care of rent collection',
-    icon: '/assets/Icon_25.png',
-  },
-  {
-    id: '4',
-    title: 'Legal Guardian',
-    description: 'Stay compliant with property laws and regulations effortlessly.',
-    icon: '/assets/Icon_27.png',
-  },
-];
-
-export const EffortlessPropertyManagement: React.FC = () => {
-  useEffortlessPropertyManagement();
+export const EffortlessPropertyManagement = () => {
+  const { effortlessPropertyManagement } = useEffortlessPropertyManagement();
 
   return (
     <section className="w-full bg-(--bg-main) border-t border-bg-gray-1 py-16 sm:py-20 lg:py-24">
@@ -56,7 +21,7 @@ export const EffortlessPropertyManagement: React.FC = () => {
         
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
           
-          {managementServices.map((service) => (
+          {effortlessPropertyManagement.map((service) => (
             <motion.div
               key={service.id}
               variants={staggerItem}

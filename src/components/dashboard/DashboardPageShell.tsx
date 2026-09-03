@@ -4,27 +4,6 @@ import { useLocation } from "react-router";
 
 // ── Shared variants ───
 
-/** Outer page wrapper — fades + rises as a whole. */
-export const pageVariants = {
-  hidden: { opacity: 0, y: 18 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.38, ease: [0.25, 0.1, 0.25, 1] },
-  },
-};
-
-/** Stagger container — orchestrates children one after another. */
-export const staggerContainer = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.07,
-      delayChildren: 0.05,
-    },
-  },
-};
-
 /** Each staggered child — slides up from 12 px with a fade. */
 export const staggerItem = {
   hidden:  { opacity: 0, y: 12 },

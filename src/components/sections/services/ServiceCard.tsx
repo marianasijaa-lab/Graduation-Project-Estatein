@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { GoArrowUpRight } from 'react-icons/go';
 import { staggerItem } from '../../common/StaggerContainer';
@@ -31,7 +30,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ type, heading, icon, descript
         </div>
 
         {/* العنوان */}
-        <h3 className="font-semibold text-(--text-main) text-[11px] sm:text-[13px] lg:text-base whitespace-nowrap">
+        <h3 className="font-semibold text-(--text-main) text-[11px] sm:text-[13px] lg:text-base text-center break-words w-full">
           {heading}
         </h3>
       </motion.div>

@@ -8,6 +8,8 @@ import {
   validatePhone,
   validateMessage,
 } from "../../../utils/validation";
+import { addDocument } from "../../../api/firestore";
+import type { FirestoreContact } from "../../../store/types";
 
 interface PropertyFormProps {
   propertyLocation?: string;
@@ -54,6 +56,8 @@ function validateAll(data: Record<FormFields, string>): Partial<Record<FormField
 
 const PropertyForm = ({
   propertyLocation = "Seaside Serenity Villa, Malibu, California",
+  propertyId,
+  propertyName,
 }: PropertyFormProps) => {
   const [formData, setFormData]     = useState<Record<FormFields, string>>(initialFormState);
   const [agreeTerms, setAgreeTerms] = useState(false);
@@ -106,17 +110,31 @@ const PropertyForm = ({
 
     if (Object.keys(allErrors).length > 0 || !agreeTerms) return;
 
-    // ── submit ──
+    // ── submit to Firestore ──
     setSubmitStatus("submitting");
-    // Firestore write can be wired here; simulating success for now
-    setTimeout(() => {
-      setFormData(initialFormState);
-      setErrors({});
-      setTouched({});
-      setAgreeTerms(false);
-      setAgreeError("");
-      setSubmitStatus("submitted");
-    }, 0);
+
+    addDocument<FirestoreContact>("contacts", {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      phone: formData.phone,
+      message: formData.message,
+      propertyId: propertyId,
+      propertyName: propertyName,
+      inquiryType: "property",
+      status: "new",
+    })
+      .then(() => {
+        setFormData(initialFormState);
+        setErrors({});
+        setTouched({});
+        setAgreeTerms(false);
+        setAgreeError("");
+        setSubmitStatus("submitted");
+      })
+      .catch(() => {
+        setSubmitStatus("error");
+      });
   };
 
   // ── style helpers ──

@@ -1,50 +1,11 @@
-import React from 'react';
 import { SectionHeader } from '../../common/SectionHeader';
 import { InfoBox } from '../infobox/InfoBox';
 import { motion } from 'framer-motion';
 import { StaggerContainer, staggerItem } from '../../common/StaggerContainer';
 import { useSmartInvestments } from '../../../hooks/useSmartInvestments';
 
-interface InvestmentServiceItem {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-}
-
-const investmentServices: InvestmentServiceItem[] = [
-  {
-    id: '1',
-    title: 'Market Insight',
-    description:
-      'Stay ahead of market trends with our expert Market Analysis. We provide in-depth insights into real estate market conditions',
-    icon: '/assets/Icon_19.png',
-  },
-  {
-    id: '2',
-    title: 'ROI Assessment',
-    description:
-      'Make investment decisions with confidence. Our ROI Assessment services evaluate the potential returns on your investments',
-    icon: '/assets/Icon_27.png',
-  },
-  {
-    id: '3',
-    title: 'Customized Strategies',
-    description:
-      'Every investor is unique, and so are their goals. We develop Customized Investment Strategies tailored to your specific needs',
-    icon: '/assets/Icon_28.png',
-  },
-  {
-    id: '4',
-    title: 'Diversification Mastery',
-    description:
-      'Diversify your real estate portfolio effectively. Our experts guide you in spreading your investments across various property types and locations',
-    icon: '/assets/Icon_4.png',
-  },
-];
-
-export const SmartInvestments: React.FC = () => {
-  useSmartInvestments();
+export const SmartInvestments = () => {
+  const { smartInvestments } = useSmartInvestments();
 
   return (
     <section className="w-full bg-(--bg-main) border-t border-b border-bg-gray-1 py-16 sm:py-20 lg:py-24">
@@ -88,7 +49,7 @@ export const SmartInvestments: React.FC = () => {
           
           <div className="lg:col-span-7 xl:col-span-8 rounded-[10px] bg-(--bg-border) p-1.5 mt-14">
             <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-              {investmentServices.map((service) => (
+              {smartInvestments.map((service) => (
                 <motion.div
                   key={service.id}
                   variants={staggerItem}

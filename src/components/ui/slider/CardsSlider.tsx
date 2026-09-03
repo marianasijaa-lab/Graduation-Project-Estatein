@@ -108,7 +108,7 @@ function Card({ item }: CardProps) {
         />
       </div>
 
-      <div className="flex flex-col flex-1 gap-3 sm:gap-4 lg:gap-6 xl:gap-7.5">
+      <div className="flex flex-col flex-1 gap-1.5 sm:gap-2 lg:gap-2 xl:gap-3">
         <div className="flex flex-col gap-1.5 sm:gap-2  lg:gap-1 xl:gap-1.5 flex-1">
           <h3 className="card-title text-[18px] sm:text-[20px] lg:text-[22px]">
             {item.name}
@@ -123,7 +123,7 @@ function Card({ item }: CardProps) {
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-1 overflow-hidden">
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-1 overflow-hidden">
           {details.map((detail, index) => (
             <div
               key={detail.text}

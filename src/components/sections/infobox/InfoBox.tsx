@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 import { motion } from 'framer-motion';
 import { FadeInSection } from '../../common/FadeInSection';
 
@@ -15,7 +15,7 @@ interface InfoBoxProps {
   
 }
 
-export const InfoBox: React.FC<InfoBoxProps> = ({
+export const InfoBox: FC<InfoBoxProps> = ({
   title,
   description,
   buttonLabel = 'Learn More',

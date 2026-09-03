@@ -30,7 +30,7 @@ const StatsBar = ({ stats }: PropsStatsBar) => {
               {stat.value}
             </h3>
             <p
-              className="text-[10px] sm:text-[13px] md:text-[12px] lg:text-[15px] text-center mt-1 whitespace-normal md:whitespace-nowrap lg:whitespace-nowrap leading-snug px-1 text-gray"
+              className="text-[12px] sm:text-[13px] md:text-[12px] lg:text-[15px] text-center mt-1 whitespace-nowrap leading-snug px-1 text-gray"
             >
               {stat.label}
             </p>
