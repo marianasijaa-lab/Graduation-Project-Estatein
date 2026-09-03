@@ -1,24 +1,22 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiEdit2, FiSearch, FiTrash2, FiHash } from "react-icons/fi";
+import { FiEdit2, FiSearch, FiTrash2 } from "react-icons/fi";
 import { HiOutlineEye } from "react-icons/hi2";
 import { useTheme } from "../../Context/ThemeContext";
 import { useCompanies } from "../../hooks/useCompanies";
-import { addDocument, updateDocument, deleteDocument, renameDocumentId } from "../../api/firestore";
+import { addDocument, updateDocument, deleteDocument } from "../../api/firestore";
 import { notifySuccess, notifyError, getErrorMessage } from "../../utils/notify";
 import type { FirestoreCompany } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { ClientFormModal } from "../../components/sections/dashboard/ClientFormModal";
 import { ConfirmDialog } from "../../components/sections/dashboard/ConfirmDialog";
-import { RenameIdDialog } from "../../components/sections/dashboard/RenameIdDialog";
 import { DetailModal, type DetailField } from "../../components/sections/dashboard/DetailModal";
 import {
-  DashboardPageShell, staggerItem, rowStagger, rowVariants, iconBtnHover, deleteBtnHover, cardHoverProps, SkeletonRow, SkeletonCard,
+  DashboardPageShell, staggerItem, iconBtnHover, deleteBtnHover, cardHoverProps, SkeletonRow,
   tableRowVariants,
 } from "../../components/dashboard/DashboardPageShell";
 
 const shortId = (id: string) => id.length > 8 ? id.slice(0, 8) : id;
-
 const ALL_DOMAINS = "All";
 
 type FormModalState = { mode: "add" } | { mode: "edit"; client: FirestoreCompany } | null;
@@ -44,7 +42,6 @@ export const ClientsManagement = () => {
   const [domainFilter, setDomainFilter] = useState(ALL_DOMAINS);
   const [formModal, setFormModal] = useState<FormModalState>(null);
   const [deleteTarget, setDeleteTarget] = useState<FirestoreCompany | null>(null);
-  const [renameTarget, setRenameTarget] = useState<typeof deleteTarget>(null);
   const [detailTarget, setDetailTarget] = useState<FirestoreCompany | null>(null);
 
   const domainOptions = useMemo(
@@ -91,18 +88,6 @@ export const ClientsManagement = () => {
     setDeleteTarget(null);
   };
 
-    const handleRename = async (newId: string) => {
-    if (!renameTarget) return;
-    try {
-      await renameDocumentId("companies", renameTarget.id, newId);
-      setRenameTarget(null);
-      notifySuccess("Client ID renamed");
-    } catch (error) {
-      notifyError(getErrorMessage(error, "Couldn't rename the ID."));
-      throw error; // keep RenameIdDialog's inline error visible
-    }
-  };
-
   const openRowDetail = (c: FirestoreCompany) => setDetailTarget(c);
   const handleRowKeyDown = (e: React.KeyboardEvent, c: FirestoreCompany) => {
     if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openRowDetail(c); }
@@ -110,8 +95,8 @@ export const ClientsManagement = () => {
 
   const panelClass = isDark ? "bg-bg-dark-1 border-bg-gray-1" : "bg-white border-gray-200";
   const inputClass = `w-full rounded-xl border outline-none transition-colors ${isDark ? "bg-bg-dark border-bg-gray-1 text-white placeholder-gray-500 focus:border-primary" : "bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-primary"}`;
-    const rowHoverClass = isDark ? "hover:bg-bg-gray-1/40" : "hover:bg-gray-50";
-  const renameBtnClass = `p-2 rounded-lg transition-colors cursor-pointer ${isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-500 hover:bg-gray-100"}`;
+  const rowHoverClass = isDark ? "hover:bg-bg-gray-1/40" : "hover:bg-gray-50";
+  const iconBtnClass = `p-2 rounded-lg transition-colors cursor-pointer ${isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-500 hover:bg-gray-100"}`;
 
   return (
     <DashboardPageShell>
@@ -137,7 +122,9 @@ export const ClientsManagement = () => {
       </motion.div>
 
       {status !== "succeeded" && status !== "failed" && (
-        <motion.div variants={staggerItem} className={`rounded-2xl border py-16 text-center text-sm ${panelClass} ${isDark ? "text-gray" : "text-gray-500"}`}>Loading clients…</motion.div>
+        <motion.div variants={staggerItem} className={`hidden lg:block rounded-2xl border overflow-hidden ${panelClass}`}>
+          <table className="w-full text-sm"><tbody>{Array.from({ length: 4 }).map((_, i) => <SkeletonRow key={i} cols={8} isDark={isDark} />)}</tbody></table>
+        </motion.div>
       )}
       {status === "failed" && (
         <motion.div variants={staggerItem} className="rounded-2xl border border-rose-500/30 bg-rose-500/10 py-16 text-center text-sm text-rose-500">Couldn't load clients. Please try again.</motion.div>
@@ -173,21 +160,16 @@ export const ClientsManagement = () => {
                   <td className={`px-5 py-3 max-w-[180px] truncate ${isDark ? "text-gray" : "text-gray-600"}`} title={client.testimony}>{client.testimony}</td>
                   <td className="px-5 py-3">
                     <div className="flex items-center justify-end gap-2">
-                        <motion.a href="/about#valued-clients"
-                          onClick={(e) => e.stopPropagation()} aria-label="View on site" title="View on site"
-                          {...iconBtnHover} className={renameBtnClass}>
-                          <HiOutlineEye className="w-4 h-4" />
-                        </motion.a>
-                        <motion.button type="button" onClick={(e) => { e.stopPropagation(); setRenameTarget(client); }}
-                          aria-label={`Rename ID`} {...iconBtnHover} className={renameBtnClass}>
-                          <FiHash className="w-4 h-4" />
-                        </motion.button>
-                      <motion.button type="button" onClick={(e) => { e.stopPropagation(); openEditModal(client); }} aria-label={`Edit ${client.heading}`} {...iconBtnHover}
-                        className={`p-2 rounded-lg transition-colors cursor-pointer ${isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-500 hover:bg-gray-100"}`}>
-                        <FiEdit2 className="w-4 h-4" /></motion.button>
+                      <motion.a href="/about#valued-clients" onClick={(e) => e.stopPropagation()} aria-label="View on site" title="View on site" {...iconBtnHover} className={iconBtnClass}>
+                        <HiOutlineEye className="w-4 h-4" />
+                      </motion.a>
+                      <motion.button type="button" onClick={(e) => { e.stopPropagation(); openEditModal(client); }} aria-label={`Edit ${client.heading}`} {...iconBtnHover} className={iconBtnClass}>
+                        <FiEdit2 className="w-4 h-4" />
+                      </motion.button>
                       <motion.button type="button" onClick={(e) => { e.stopPropagation(); setDeleteTarget(client); }} aria-label={`Delete ${client.heading}`} {...deleteBtnHover}
                         className={`p-2 rounded-lg text-rose-500 transition-colors cursor-pointer ${isDark ? "hover:bg-rose-500/10" : "hover:bg-rose-50"}`}>
-                        <FiTrash2 className="w-4 h-4" /></motion.button>
+                        <FiTrash2 className="w-4 h-4" />
+                      </motion.button>
                     </div>
                   </td>
                 </motion.tr>
@@ -234,14 +216,7 @@ export const ClientsManagement = () => {
 
       {formModal && <ClientFormModal mode={formModal.mode} initialData={formModal.mode === "edit" ? formModal.client : undefined} onClose={closeFormModal} onSubmit={handleFormSubmit} />}
       {detailTarget && <DetailModal title={detailTarget.heading} fields={buildClientDetailFields(detailTarget)} onClose={() => setDetailTarget(null)} />}
-      <RenameIdDialog
-        open={renameTarget !== null}
-        currentId={renameTarget?.id ?? ""}
-        collectionName="companies"
-        onConfirm={handleRename}
-        onCancel={() => setRenameTarget(null)}
-      />
-            <ConfirmDialog open={deleteTarget !== null} title="Delete this client?"
+      <ConfirmDialog open={deleteTarget !== null} title="Delete this client?"
         description={deleteTarget ? `"${deleteTarget.heading}" will be permanently removed from the clients slider. This can't be undone.` : ""}
         confirmLabel="Delete" onConfirm={confirmDelete} onCancel={() => setDeleteTarget(null)} />
     </DashboardPageShell>

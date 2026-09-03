@@ -1,19 +1,18 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiEdit2, FiSearch, FiTrash2, FiHash } from "react-icons/fi";
+import { FiEdit2, FiSearch, FiTrash2 } from "react-icons/fi";
 import { HiOutlineEye } from "react-icons/hi2";
 import { useTheme } from "../../Context/ThemeContext";
 import { useFAQs } from "../../hooks/useFAQs";
-import { addDocument, updateDocument, deleteDocument, renameDocumentId } from "../../api/firestore";
+import { addDocument, updateDocument, deleteDocument } from "../../api/firestore";
 import { notifySuccess, notifyError, getErrorMessage } from "../../utils/notify";
 import type { FirestoreFAQ } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { FAQFormModal } from "../../components/sections/dashboard/FAQFormModal";
 import { ConfirmDialog } from "../../components/sections/dashboard/ConfirmDialog";
-import { RenameIdDialog } from "../../components/sections/dashboard/RenameIdDialog";
 import { DetailModal, type DetailField } from "../../components/sections/dashboard/DetailModal";
 import {
-  DashboardPageShell, staggerItem, rowStagger, rowVariants, iconBtnHover, deleteBtnHover, cardHoverProps, SkeletonRow, SkeletonCard,
+  DashboardPageShell, staggerItem, iconBtnHover, deleteBtnHover, cardHoverProps, SkeletonRow,
   tableRowVariants,
 } from "../../components/dashboard/DashboardPageShell";
 
@@ -37,7 +36,6 @@ export const FAQManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [formModal, setFormModal] = useState<FormModalState>(null);
   const [deleteTarget, setDeleteTarget] = useState<FirestoreFAQ | null>(null);
-  const [renameTarget, setRenameTarget] = useState<typeof deleteTarget>(null);
   const [detailTarget, setDetailTarget] = useState<FirestoreFAQ | null>(null);
 
   const filteredFAQs = faqs.filter((f) => f.question.toLowerCase().includes(searchTerm.trim().toLowerCase()));
@@ -75,18 +73,6 @@ export const FAQManagement = () => {
     setDeleteTarget(null);
   };
 
-    const handleRename = async (newId: string) => {
-    if (!renameTarget) return;
-    try {
-      await renameDocumentId("faqs", renameTarget.id, newId);
-      setRenameTarget(null);
-      notifySuccess("FAQ ID renamed");
-    } catch (error) {
-      notifyError(getErrorMessage(error, "Couldn't rename the ID."));
-      throw error; // keep RenameIdDialog's inline error visible
-    }
-  };
-
   const openRowDetail = (faq: FirestoreFAQ) => setDetailTarget(faq);
   const handleRowKeyDown = (e: React.KeyboardEvent, faq: FirestoreFAQ) => {
     if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openRowDetail(faq); }
@@ -94,8 +80,8 @@ export const FAQManagement = () => {
 
   const panelClass = isDark ? "bg-bg-dark-1 border-bg-gray-1" : "bg-white border-gray-200";
   const inputClass = `w-full rounded-xl border outline-none transition-colors ${isDark ? "bg-bg-dark border-bg-gray-1 text-white placeholder-gray-500 focus:border-primary" : "bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-primary"}`;
-    const rowHoverClass = isDark ? "hover:bg-bg-gray-1/40" : "hover:bg-gray-50";
-  const renameBtnClass = `p-2 rounded-lg transition-colors cursor-pointer ${isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-500 hover:bg-gray-100"}`;
+  const rowHoverClass = isDark ? "hover:bg-bg-gray-1/40" : "hover:bg-gray-50";
+  const iconBtnClass = `p-2 rounded-lg transition-colors cursor-pointer ${isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-500 hover:bg-gray-100"}`;
 
   return (
     <DashboardPageShell>
@@ -114,7 +100,9 @@ export const FAQManagement = () => {
       </motion.div>
 
       {status !== "succeeded" && status !== "failed" && (
-        <motion.div variants={staggerItem} className={`rounded-2xl border py-16 text-center text-sm ${panelClass} ${isDark ? "text-gray" : "text-gray-500"}`}>Loading FAQs…</motion.div>
+        <motion.div variants={staggerItem} className={`hidden lg:block rounded-2xl border overflow-hidden ${panelClass}`}>
+          <table className="w-full text-sm"><tbody>{Array.from({ length: 4 }).map((_, i) => <SkeletonRow key={i} cols={4} isDark={isDark} />)}</tbody></table>
+        </motion.div>
       )}
       {status === "failed" && (
         <motion.div variants={staggerItem} className="rounded-2xl border border-rose-500/30 bg-rose-500/10 py-16 text-center text-sm text-rose-500">Couldn't load FAQs. Please try again.</motion.div>
@@ -142,21 +130,16 @@ export const FAQManagement = () => {
                   <td className={`px-5 py-3 max-w-md truncate ${isDark ? "text-gray" : "text-gray-600"}`} title={faq.description}>{faq.description}</td>
                   <td className="px-5 py-3">
                     <div className="flex items-center justify-end gap-2">
-                        <motion.a href="/#faqs"
-                          onClick={(e) => e.stopPropagation()} aria-label="View on site" title="View on site"
-                          {...iconBtnHover} className={renameBtnClass}>
-                          <HiOutlineEye className="w-4 h-4" />
-                        </motion.a>
-                        <motion.button type="button" onClick={(e) => { e.stopPropagation(); setRenameTarget(faq); }}
-                          aria-label={`Rename ID`} {...iconBtnHover} className={renameBtnClass}>
-                          <FiHash className="w-4 h-4" />
-                        </motion.button>
-                      <motion.button type="button" onClick={(e) => { e.stopPropagation(); openEditModal(faq); }} aria-label={`Edit ${faq.question}`} {...iconBtnHover}
-                        className={`p-2 rounded-lg transition-colors cursor-pointer ${isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-500 hover:bg-gray-100"}`}>
-                        <FiEdit2 className="w-4 h-4" /></motion.button>
+                      <motion.a href="/#faqs" onClick={(e) => e.stopPropagation()} aria-label="View on site" title="View on site" {...iconBtnHover} className={iconBtnClass}>
+                        <HiOutlineEye className="w-4 h-4" />
+                      </motion.a>
+                      <motion.button type="button" onClick={(e) => { e.stopPropagation(); openEditModal(faq); }} aria-label={`Edit ${faq.question}`} {...iconBtnHover} className={iconBtnClass}>
+                        <FiEdit2 className="w-4 h-4" />
+                      </motion.button>
                       <motion.button type="button" onClick={(e) => { e.stopPropagation(); setDeleteTarget(faq); }} aria-label={`Delete ${faq.question}`} {...deleteBtnHover}
                         className={`p-2 rounded-lg text-rose-500 transition-colors cursor-pointer ${isDark ? "hover:bg-rose-500/10" : "hover:bg-rose-50"}`}>
-                        <FiTrash2 className="w-4 h-4" /></motion.button>
+                        <FiTrash2 className="w-4 h-4" />
+                      </motion.button>
                     </div>
                   </td>
                 </motion.tr>
@@ -195,14 +178,7 @@ export const FAQManagement = () => {
 
       {formModal && <FAQFormModal mode={formModal.mode} initialData={formModal.mode === "edit" ? formModal.faq : undefined} onClose={closeFormModal} onSubmit={handleFormSubmit} />}
       {detailTarget && <DetailModal title={detailTarget.question} fields={buildFAQDetailFields(detailTarget)} onClose={() => setDetailTarget(null)} />}
-      <RenameIdDialog
-        open={renameTarget !== null}
-        currentId={renameTarget?.id ?? ""}
-        collectionName="faqs"
-        onConfirm={handleRename}
-        onCancel={() => setRenameTarget(null)}
-      />
-            <ConfirmDialog open={deleteTarget !== null} title="Delete this FAQ?"
+      <ConfirmDialog open={deleteTarget !== null} title="Delete this FAQ?"
         description={deleteTarget ? `"${deleteTarget.question}" will be permanently removed from the site. This can't be undone.` : ""}
         confirmLabel="Delete" onConfirm={confirmDelete} onCancel={() => setDeleteTarget(null)} />
     </DashboardPageShell>

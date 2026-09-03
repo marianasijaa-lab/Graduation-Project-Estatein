@@ -102,7 +102,7 @@ function PropertyCard({
         <div className="mt-auto flex items-center justify-between gap-4">
           <p className="font-semibold text-(--text-main)">
             <span className="block font-normal text-gray text-sm">Price</span>
-           <span className=" font-semibold text-white text-[15px] md:text-[18px] lg:text-2xl whitespace-nowrap"> ${item.priceProperties.toLocaleString()}</span>
+           <span className=" font-semibold text-(--text-main) text-[15px] md:text-[18px] lg:text-2xl whitespace-nowrap"> ${item.priceProperties.toLocaleString()}</span>
           </p>
           <Button
             onClick={onView}

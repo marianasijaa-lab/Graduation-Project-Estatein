@@ -323,40 +323,4 @@ export async function deleteDocument(
   await deleteDoc(ref);
 }
 
-// ─── Rename (copy + delete) ───
 
-/**
- * "Renames" a Firestore document by:
- *   1. Reading all existing fields
- *   2. Writing them to a new document with the desired ID
- *   3. Deleting the old document
- *
- * Throws if the new ID is already taken or Firebase isn't configured.
- */
-export async function renameDocumentId(
-  collectionName: string,
-  oldId: string,
-  newId: string,
-): Promise<void> {
-  if (!firestoreDb) throw new Error("Firebase is not configured");
-
-  const { getDoc: getDocFn } = await import("firebase/firestore");
-
-  // 1. Read the existing document
-  const oldRef = doc(firestoreDb, collectionName, oldId);
-  const oldSnap = await getDocFn(oldRef);
-  if (!oldSnap.exists()) throw new Error(`Document "${oldId}" not found.`);
-
-  // 2. Check target ID is free
-  const newRef = doc(firestoreDb, collectionName, newId);
-  const newSnap = await getDocFn(newRef);
-  if (newSnap.exists()) throw new Error(`ID "${newId}" is already taken.`);
-
-  // 3. Copy all fields to the new document (strip any stale body 'id' field)
-  const raw = oldSnap.data() as Record<string, unknown>;
-  delete raw["id"];
-  await setDoc(newRef, raw);
-
-  // 4. Delete the old document
-  await deleteDoc(oldRef);
-}

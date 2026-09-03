@@ -687,6 +687,24 @@ const faqs = [
     description:
       'Discover the different ways you can get in touch with our experienced agents.',
   },
+  {
+    id: 'faq-4',
+    question: 'What are the fees associated with buying a property?',
+    description:
+      'Understand all costs involved in purchasing a property, including taxes, legal fees, and agent commissions.',
+  },
+  {
+    id: 'faq-5',
+    question: 'Can I schedule a property viewing online?',
+    description:
+      'Yes, you can easily book a viewing through our platform by selecting your preferred date and time.',
+  },
+  {
+    id: 'faq-6',
+    question: 'Does Estatein offer mortgage or financing assistance?',
+    description:
+      'We partner with trusted financial institutions to help you explore the best financing options available for your purchase.',
+  },
 ];
 
 // ── 16. cta ──

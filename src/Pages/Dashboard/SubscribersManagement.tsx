@@ -1,16 +1,15 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiSearch, FiTrash2, FiHash } from "react-icons/fi";
+import { FiSearch, FiTrash2 } from "react-icons/fi";
 import { useTheme } from "../../Context/ThemeContext";
 import { useSubscribers } from "../../hooks/useSubscribers";
-import { updateDocument, deleteDocument, renameDocumentId } from "../../api/firestore";
+import { updateDocument, deleteDocument } from "../../api/firestore";
 import { notifySuccess, notifyError, getErrorMessage } from "../../utils/notify";
 import type { FirestoreSubscriber, SubscriberStatus } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { ConfirmDialog } from "../../components/sections/dashboard/ConfirmDialog";
-import { RenameIdDialog } from "../../components/sections/dashboard/RenameIdDialog";
 import {
-  DashboardPageShell, staggerItem, iconBtnHover,
+  DashboardPageShell, staggerItem,
   deleteBtnHover, cardHoverProps, SkeletonRow, SkeletonCard,
   tableRowVariants,
 } from "../../components/dashboard/DashboardPageShell";
@@ -41,7 +40,6 @@ export const SubscribersManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState(ALL_STATUSES);
   const [deleteTarget, setDeleteTarget] = useState<FirestoreSubscriber | null>(null);
-  const [renameTarget, setRenameTarget] = useState<typeof deleteTarget>(null);
 
   const filteredSubscribers = useMemo(() => {
     const term = searchTerm.trim().toLowerCase();
@@ -79,18 +77,6 @@ export const SubscribersManagement = () => {
     setDeleteTarget(null);
   };
 
-  const handleRename = async (newId: string) => {
-    if (!renameTarget) return;
-    try {
-      await renameDocumentId("subscribers", renameTarget.id, newId);
-      setRenameTarget(null);
-      notifySuccess("Subscriber ID renamed");
-    } catch (error) {
-      notifyError(getErrorMessage(error, "Couldn't rename the ID."));
-      throw error; // keep RenameIdDialog's inline error visible
-    }
-  };
-
   const handleExportCsv = () => {
     const csv = buildCsv(filteredSubscribers);
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
@@ -106,8 +92,7 @@ export const SubscribersManagement = () => {
 
   const panelClass = isDark ? "bg-bg-dark-1 border-bg-gray-1" : "bg-white border-gray-200";
   const inputClass = `w-full rounded-xl border outline-none transition-colors ${isDark ? "bg-bg-dark border-bg-gray-1 text-white placeholder-gray-500 focus:border-primary" : "bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-primary"}`;
-    const rowHoverClass = isDark ? "hover:bg-bg-gray-1/40" : "hover:bg-gray-50";
-  const renameBtnClass = `p-2 rounded-lg transition-colors cursor-pointer ${isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-500 hover:bg-gray-100"}`;
+  const rowHoverClass = isDark ? "hover:bg-bg-gray-1/40" : "hover:bg-gray-50";
   const statusSelectClass = `rounded-lg border px-2.5 py-1.5 text-xs font-medium outline-none cursor-pointer transition-colors ${isDark ? "bg-bg-dark border-bg-gray-1 text-white focus:border-primary" : "bg-gray-50 border-gray-200 text-gray-900 focus:border-primary"}`;
 
   return (
@@ -131,7 +116,6 @@ export const SubscribersManagement = () => {
         </select>
       </motion.div>
 
-      {/* ── Loading skeleton ── */}
       {status !== "succeeded" && status !== "failed" && (
         <motion.div variants={staggerItem} className={`hidden lg:block rounded-2xl border overflow-hidden ${panelClass}`}>
           <table className="w-full text-sm">
@@ -177,10 +161,6 @@ export const SubscribersManagement = () => {
                   </td>
                   <td className="px-5 py-3">
                     <div className="flex items-center justify-end gap-2">
-                        <motion.button type="button" onClick={(e) => { e.stopPropagation(); setRenameTarget(subscriber); }}
-                          aria-label={`Rename ID`} {...iconBtnHover} className={renameBtnClass}>
-                          <FiHash className="w-4 h-4" />
-                        </motion.button>
                       <motion.button type="button" onClick={() => setDeleteTarget(subscriber)}
                         aria-label={`Delete ${subscriber.email}`} {...deleteBtnHover}
                         className={`p-2 rounded-lg text-rose-500 transition-colors cursor-pointer ${isDark ? "hover:bg-rose-500/10" : "hover:bg-rose-50"}`}>
@@ -229,14 +209,7 @@ export const SubscribersManagement = () => {
         </motion.div>
       )}
 
-      <RenameIdDialog
-        open={renameTarget !== null}
-        currentId={renameTarget?.id ?? ""}
-        collectionName="subscribers"
-        onConfirm={handleRename}
-        onCancel={() => setRenameTarget(null)}
-      />
-            <ConfirmDialog open={deleteTarget !== null} title="Delete this subscriber?"
+      <ConfirmDialog open={deleteTarget !== null} title="Delete this subscriber?"
         description={deleteTarget ? `"${deleteTarget.email}" will be permanently removed from the mailing list. This can't be undone.` : ""}
         confirmLabel="Delete" onConfirm={confirmDelete} onCancel={() => setDeleteTarget(null)} />
     </DashboardPageShell>

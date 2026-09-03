@@ -1,22 +1,20 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiSearch, FiTrash2, FiHash } from "react-icons/fi";
+import { FiSearch, FiTrash2 } from "react-icons/fi";
 import { useTheme } from "../../Context/ThemeContext";
 import { useContacts } from "../../hooks/useContacts";
-import { updateDocument, deleteDocument, renameDocumentId } from "../../api/firestore";
+import { updateDocument, deleteDocument } from "../../api/firestore";
 import { notifySuccess, notifyError, getErrorMessage } from "../../utils/notify";
 import type { ContactStatus, FirestoreContact } from "../../store/types";
 import { ConfirmDialog } from "../../components/sections/dashboard/ConfirmDialog";
-import { RenameIdDialog } from "../../components/sections/dashboard/RenameIdDialog";
 import { DetailModal, type DetailField } from "../../components/sections/dashboard/DetailModal";
 import {
-  DashboardPageShell, staggerItem, iconBtnHover,
+  DashboardPageShell, staggerItem,
   deleteBtnHover, cardHoverProps, SkeletonRow, SkeletonCard,
   tableRowVariants,
 } from "../../components/dashboard/DashboardPageShell";
 
 const ALL_STATUSES = "All";
-
 const ALL_TYPES = "All";
 const STATUS_OPTIONS: ContactStatus[] = ["new", "contacted", "closed"];
 const STATUS_LABEL: Record<ContactStatus, string> = { new: "New", contacted: "Contacted", closed: "Closed" };
@@ -57,7 +55,6 @@ export const InquiriesManagement = () => {
   const [statusFilter, setStatusFilter] = useState(ALL_STATUSES);
   const [typeFilter, setTypeFilter] = useState(ALL_TYPES);
   const [deleteTarget, setDeleteTarget] = useState<FirestoreContact | null>(null);
-  const [renameTarget, setRenameTarget] = useState<typeof deleteTarget>(null);
   const [detailTarget, setDetailTarget] = useState<FirestoreContact | null>(null);
 
   const typeOptions = useMemo(() => [ALL_TYPES, ...Array.from(new Set(contacts.map((c) => c.inquiryType).filter((t): t is string => !!t))).sort()], [contacts]);
@@ -99,18 +96,6 @@ export const InquiriesManagement = () => {
     setDeleteTarget(null);
   };
 
-    const handleRename = async (newId: string) => {
-    if (!renameTarget) return;
-    try {
-      await renameDocumentId("contacts", renameTarget.id, newId);
-      setRenameTarget(null);
-      notifySuccess("Inquiry ID renamed");
-    } catch (error) {
-      notifyError(getErrorMessage(error, "Couldn't rename the ID."));
-      throw error; // keep RenameIdDialog's inline error visible
-    }
-  };
-
   const openRowDetail = (c: FirestoreContact) => setDetailTarget(c);
   const handleRowKeyDown = (e: React.KeyboardEvent, c: FirestoreContact) => {
     if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openRowDetail(c); }
@@ -118,8 +103,7 @@ export const InquiriesManagement = () => {
 
   const panelClass = isDark ? "bg-bg-dark-1 border-bg-gray-1" : "bg-white border-gray-200";
   const inputClass = `w-full rounded-xl border outline-none transition-colors ${isDark ? "bg-bg-dark border-bg-gray-1 text-white placeholder-gray-500 focus:border-primary" : "bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-primary"}`;
-    const rowHoverClass = isDark ? "hover:bg-bg-gray-1/40" : "hover:bg-gray-50";
-  const renameBtnClass = `p-2 rounded-lg transition-colors cursor-pointer ${isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-500 hover:bg-gray-100"}`;
+  const rowHoverClass = isDark ? "hover:bg-bg-gray-1/40" : "hover:bg-gray-50";
   const statusSelectClass = `rounded-lg border px-2.5 py-1.5 text-xs font-medium outline-none cursor-pointer transition-colors ${isDark ? "bg-bg-dark border-bg-gray-1 text-white focus:border-primary" : "bg-gray-50 border-gray-200 text-gray-900 focus:border-primary"}`;
 
   return (
@@ -145,7 +129,6 @@ export const InquiriesManagement = () => {
         </select>
       </motion.div>
 
-      {/* ── Loading skeleton ── */}
       {status !== "succeeded" && status !== "failed" && (
         <motion.div variants={staggerItem} className={`hidden lg:block rounded-2xl border overflow-hidden ${panelClass}`}>
           <table className="w-full text-sm">
@@ -194,10 +177,6 @@ export const InquiriesManagement = () => {
                   </td>
                   <td className="px-5 py-3">
                     <div className="flex items-center justify-end gap-2">
-                        <motion.button type="button" onClick={(e) => { e.stopPropagation(); setRenameTarget(contact); }}
-                          aria-label={`Rename ID`} {...iconBtnHover} className={renameBtnClass}>
-                          <FiHash className="w-4 h-4" />
-                        </motion.button>
                       <motion.button type="button" onClick={(e) => { e.stopPropagation(); setDeleteTarget(contact); }}
                         aria-label={`Delete inquiry from ${fullName(contact)}`} {...deleteBtnHover}
                         className={`p-2 rounded-lg text-rose-500 transition-colors cursor-pointer ${isDark ? "hover:bg-rose-500/10" : "hover:bg-rose-50"}`}>
@@ -252,14 +231,7 @@ export const InquiriesManagement = () => {
       )}
 
       {detailTarget && <DetailModal title={fullName(detailTarget)} fields={buildContactDetailFields(detailTarget)} onClose={() => setDetailTarget(null)} />}
-      <RenameIdDialog
-        open={renameTarget !== null}
-        currentId={renameTarget?.id ?? ""}
-        collectionName="contacts"
-        onConfirm={handleRename}
-        onCancel={() => setRenameTarget(null)}
-      />
-            <ConfirmDialog open={deleteTarget !== null} title="Delete this inquiry?"
+      <ConfirmDialog open={deleteTarget !== null} title="Delete this inquiry?"
         description={deleteTarget ? `The message from "${fullName(deleteTarget)}" will be permanently removed. This can't be undone.` : ""}
         confirmLabel="Delete" onConfirm={confirmDelete} onCancel={() => setDeleteTarget(null)} />
     </DashboardPageShell>

@@ -1,19 +1,18 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiEdit2, FiSearch, FiTrash2, FiHash } from "react-icons/fi";
+import { FiEdit2, FiSearch, FiTrash2 } from "react-icons/fi";
 import { HiOutlineEye } from "react-icons/hi2";
 import { useTheme } from "../../Context/ThemeContext";
 import { useTestimonials } from "../../hooks/useTestimonials";
-import { addDocument, updateDocument, deleteDocument, renameDocumentId } from "../../api/firestore";
+import { addDocument, updateDocument, deleteDocument } from "../../api/firestore";
 import { notifySuccess, notifyError, getErrorMessage } from "../../utils/notify";
 import type { FirestoreTestimonial } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { TestimonialFormModal } from "../../components/sections/dashboard/TestimonialFormModal";
 import { ConfirmDialog } from "../../components/sections/dashboard/ConfirmDialog";
-import { RenameIdDialog } from "../../components/sections/dashboard/RenameIdDialog";
 import { DetailModal, type DetailField } from "../../components/sections/dashboard/DetailModal";
 import {
-  DashboardPageShell, staggerItem, rowStagger, rowVariants,
+  DashboardPageShell, staggerItem,
   iconBtnHover, deleteBtnHover, cardHoverProps, SkeletonRow, SkeletonCard,
   tableRowVariants,
 } from "../../components/dashboard/DashboardPageShell";
@@ -55,7 +54,6 @@ export const TestimonialsManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [formModal, setFormModal] = useState<FormModalState>(null);
   const [deleteTarget, setDeleteTarget] = useState<FirestoreTestimonial | null>(null);
-  const [renameTarget, setRenameTarget] = useState<typeof deleteTarget>(null);
   const [detailTarget, setDetailTarget] = useState<FirestoreTestimonial | null>(null);
 
   const filteredTestimonials = testimonials.filter((t) => t.clientName.toLowerCase().includes(searchTerm.trim().toLowerCase()));
@@ -93,18 +91,6 @@ export const TestimonialsManagement = () => {
     setDeleteTarget(null);
   };
 
-    const handleRename = async (newId: string) => {
-    if (!renameTarget) return;
-    try {
-      await renameDocumentId("testimonials", renameTarget.id, newId);
-      setRenameTarget(null);
-      notifySuccess("Testimonial ID renamed");
-    } catch (error) {
-      notifyError(getErrorMessage(error, "Couldn't rename the ID."));
-      throw error; // keep RenameIdDialog's inline error visible
-    }
-  };
-
   const openRowDetail = (t: FirestoreTestimonial) => setDetailTarget(t);
   const handleRowKeyDown = (e: React.KeyboardEvent, t: FirestoreTestimonial) => {
     if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openRowDetail(t); }
@@ -112,8 +98,8 @@ export const TestimonialsManagement = () => {
 
   const panelClass = isDark ? "bg-bg-dark-1 border-bg-gray-1" : "bg-white border-gray-200";
   const inputClass = `w-full rounded-xl border outline-none transition-colors ${isDark ? "bg-bg-dark border-bg-gray-1 text-white placeholder-gray-500 focus:border-primary" : "bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-primary"}`;
-    const rowHoverClass = isDark ? "hover:bg-bg-gray-1/40" : "hover:bg-gray-50";
-  const renameBtnClass = `p-2 rounded-lg transition-colors cursor-pointer ${isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-500 hover:bg-gray-100"}`;
+  const rowHoverClass = isDark ? "hover:bg-bg-gray-1/40" : "hover:bg-gray-50";
+  const iconBtnClass = `p-2 rounded-lg transition-colors cursor-pointer ${isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-500 hover:bg-gray-100"}`;
 
   return (
     <DashboardPageShell>
@@ -175,22 +161,13 @@ export const TestimonialsManagement = () => {
                   <td className="px-5 py-3 text-primary-light whitespace-nowrap" title={`${testimonial.rating}/5`}>{renderStars(testimonial.rating)}</td>
                   <td className="px-5 py-3">
                     <div className="flex items-center justify-end gap-2">
-                        <motion.a href="/#testimonials"
-                          onClick={(e) => e.stopPropagation()} aria-label="View on site" title="View on site"
-                          {...iconBtnHover} className={renameBtnClass}>
-                          <HiOutlineEye className="w-4 h-4" />
-                        </motion.a>
-                        <motion.button type="button" onClick={(e) => { e.stopPropagation(); setRenameTarget(testimonial); }}
-                          aria-label={`Rename ID`} {...iconBtnHover} className={renameBtnClass}>
-                          <FiHash className="w-4 h-4" />
-                        </motion.button>
-                      <motion.button type="button" onClick={(e) => { e.stopPropagation(); openEditModal(testimonial); }}
-                        aria-label={`Edit ${testimonial.clientName}`} {...iconBtnHover}
-                        className={`p-2 rounded-lg transition-colors cursor-pointer ${isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-500 hover:bg-gray-100"}`}>
+                      <motion.a href="/#testimonials" onClick={(e) => e.stopPropagation()} aria-label="View on site" title="View on site" {...iconBtnHover} className={iconBtnClass}>
+                        <HiOutlineEye className="w-4 h-4" />
+                      </motion.a>
+                      <motion.button type="button" onClick={(e) => { e.stopPropagation(); openEditModal(testimonial); }} aria-label={`Edit ${testimonial.clientName}`} {...iconBtnHover} className={iconBtnClass}>
                         <FiEdit2 className="w-4 h-4" />
                       </motion.button>
-                      <motion.button type="button" onClick={(e) => { e.stopPropagation(); setDeleteTarget(testimonial); }}
-                        aria-label={`Delete ${testimonial.clientName}`} {...deleteBtnHover}
+                      <motion.button type="button" onClick={(e) => { e.stopPropagation(); setDeleteTarget(testimonial); }} aria-label={`Delete ${testimonial.clientName}`} {...deleteBtnHover}
                         className={`p-2 rounded-lg text-rose-500 transition-colors cursor-pointer ${isDark ? "hover:bg-rose-500/10" : "hover:bg-rose-50"}`}>
                         <FiTrash2 className="w-4 h-4" />
                       </motion.button>
@@ -244,14 +221,7 @@ export const TestimonialsManagement = () => {
 
       {formModal && <TestimonialFormModal mode={formModal.mode} initialData={formModal.mode === "edit" ? formModal.testimonial : undefined} onClose={closeFormModal} onSubmit={handleFormSubmit} />}
       {detailTarget && <DetailModal title={detailTarget.clientName} fields={buildTestimonialDetailFields(detailTarget)} onClose={() => setDetailTarget(null)} />}
-      <RenameIdDialog
-        open={renameTarget !== null}
-        currentId={renameTarget?.id ?? ""}
-        collectionName="testimonials"
-        onConfirm={handleRename}
-        onCancel={() => setRenameTarget(null)}
-      />
-            <ConfirmDialog open={deleteTarget !== null} title="Delete this testimonial?"
+      <ConfirmDialog open={deleteTarget !== null} title="Delete this testimonial?"
         description={deleteTarget ? `The testimonial from "${deleteTarget.clientName}" will be permanently removed from the site. This can't be undone.` : ""}
         confirmLabel="Delete" onConfirm={confirmDelete} onCancel={() => setDeleteTarget(null)} />
     </DashboardPageShell>

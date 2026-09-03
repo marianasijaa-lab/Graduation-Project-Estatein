@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiEdit2, FiSearch, FiTrash2, FiHash } from "react-icons/fi";
+import { FiEdit2, FiSearch, FiTrash2 } from "react-icons/fi";
 import { HiOutlineEye } from "react-icons/hi2";
 import { useTheme } from "../../Context/ThemeContext";
 import { useAchievements } from "../../hooks/useAchievements";
-import { addDocument, updateDocument, deleteDocument, renameDocumentId } from "../../api/firestore";
+import { addDocument, updateDocument, deleteDocument } from "../../api/firestore";
 import { notifySuccess, notifyError, getErrorMessage } from "../../utils/notify";
 import type { FirestoreAchievement } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { AchievementFormModal } from "../../components/sections/dashboard/AchievementFormModal";
 import { ConfirmDialog } from "../../components/sections/dashboard/ConfirmDialog";
-import { RenameIdDialog } from "../../components/sections/dashboard/RenameIdDialog";
 import { DetailModal, type DetailField } from "../../components/sections/dashboard/DetailModal";
 import {
   DashboardPageShell, staggerItem, iconBtnHover, deleteBtnHover, cardHoverProps, SkeletonRow, SkeletonCard,
@@ -38,7 +37,6 @@ export const AchievementsManagement = () => {
   const [formModal, setFormModal] = useState<FormModalState>(null);
   const [deleteTarget, setDeleteTarget] = useState<FirestoreAchievement | null>(null);
   const [detailTarget, setDetailTarget] = useState<FirestoreAchievement | null>(null);
-  const [renameTarget, setRenameTarget] = useState<FirestoreAchievement | null>(null);
 
   const filteredAchievements = achievements.filter((a) =>
     a.title.toLowerCase().includes(searchTerm.trim().toLowerCase()),
@@ -77,18 +75,6 @@ export const AchievementsManagement = () => {
     setDeleteTarget(null);
   };
 
-  const handleRename = async (newId: string) => {
-    if (!renameTarget) return;
-    try {
-      await renameDocumentId("achievements", renameTarget.id, newId);
-      setRenameTarget(null);
-      notifySuccess("Achievement ID renamed");
-    } catch (error) {
-      notifyError(getErrorMessage(error, "Couldn't rename the ID."));
-      throw error; // keep RenameIdDialog's inline error visible
-    }
-  };
-
   const openRowDetail = (a: FirestoreAchievement) => setDetailTarget(a);
   const handleRowKeyDown = (e: React.KeyboardEvent, a: FirestoreAchievement) => {
     if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openRowDetail(a); }
@@ -97,7 +83,7 @@ export const AchievementsManagement = () => {
   const panelClass = isDark ? "bg-bg-dark-1 border-bg-gray-1" : "bg-white border-gray-200";
   const inputClass = `w-full rounded-xl border outline-none transition-colors ${isDark ? "bg-bg-dark border-bg-gray-1 text-white placeholder-gray-500 focus:border-primary" : "bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-primary"}`;
   const rowHoverClass = isDark ? "hover:bg-bg-gray-1/40" : "hover:bg-gray-50";
-  const renameBtnClass = `p-2 rounded-lg transition-colors cursor-pointer ${isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-500 hover:bg-gray-100"}`;
+  const iconBtnClass = `p-2 rounded-lg transition-colors cursor-pointer ${isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-500 hover:bg-gray-100"}`;
 
   return (
     <DashboardPageShell>
@@ -158,16 +144,11 @@ export const AchievementsManagement = () => {
                       <div className="flex items-center justify-end gap-2">
                         <motion.a href="/about#achievements"
                           onClick={(e) => e.stopPropagation()} aria-label="View on site" title="View on site"
-                          {...iconBtnHover} className={renameBtnClass}>
+                          {...iconBtnHover} className={iconBtnClass}>
                           <HiOutlineEye className="w-4 h-4" />
                         </motion.a>
-                        <motion.button type="button" onClick={(e) => { e.stopPropagation(); setRenameTarget(achievement); }}
-                          aria-label={`Rename ID of ${achievement.title}`} {...iconBtnHover} className={renameBtnClass}>
-                          <FiHash className="w-4 h-4" />
-                        </motion.button>
                         <motion.button type="button" onClick={(e) => { e.stopPropagation(); openEditModal(achievement); }}
-                          aria-label={`Edit ${achievement.title}`} {...iconBtnHover}
-                          className={`p-2 rounded-lg transition-colors cursor-pointer ${isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-500 hover:bg-gray-100"}`}>
+                          aria-label={`Edit ${achievement.title}`} {...iconBtnHover} className={iconBtnClass}>
                           <FiEdit2 className="w-4 h-4" />
                         </motion.button>
                         <motion.button type="button" onClick={(e) => { e.stopPropagation(); setDeleteTarget(achievement); }}
@@ -197,12 +178,7 @@ export const AchievementsManagement = () => {
               className={`rounded-2xl border p-4 cursor-pointer transition-colors ${panelClass} ${rowHoverClass}`}>
               <h3 className={`font-semibold ${isDark ? "text-white" : "text-gray-900"}`}>{achievement.title}</h3>
               <p className={`mt-1 text-sm line-clamp-3 ${isDark ? "text-gray" : "text-gray-500"}`}>{achievement.description}</p>
-              <div className={`mt-4 grid grid-cols-3 gap-2 pt-4 border-t ${isDark ? "border-bg-gray-1" : "border-gray-200"}`}>
-                <motion.button type="button" onClick={(e) => { e.stopPropagation(); setRenameTarget(achievement); }}
-                  whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.96 }} transition={{ duration: 0.15 }}
-                  className={`flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer border ${isDark ? "border-bg-gray-1 text-white hover:bg-bg-gray-1" : "border-gray-200 text-gray-700 hover:bg-gray-100"}`}>
-                  <FiHash className="w-4 h-4" /> ID
-                </motion.button>
+              <div className={`mt-4 grid grid-cols-2 gap-2 pt-4 border-t ${isDark ? "border-bg-gray-1" : "border-gray-200"}`}>
                 <motion.button type="button" onClick={(e) => { e.stopPropagation(); openEditModal(achievement); }}
                   whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.96 }} transition={{ duration: 0.15 }}
                   className={`flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer border ${isDark ? "border-bg-gray-1 text-white hover:bg-bg-gray-1" : "border-gray-200 text-gray-700 hover:bg-gray-100"}`}>
@@ -230,13 +206,6 @@ export const AchievementsManagement = () => {
       {detailTarget && (
         <DetailModal title={detailTarget.title} fields={buildAchievementDetailFields(detailTarget)} onClose={() => setDetailTarget(null)} />
       )}
-      <RenameIdDialog
-        open={renameTarget !== null}
-        currentId={renameTarget?.id ?? ""}
-        collectionName="achievements"
-        onConfirm={handleRename}
-        onCancel={() => setRenameTarget(null)}
-      />
       <ConfirmDialog open={deleteTarget !== null} title="Delete this achievement?"
         description={deleteTarget ? `"${deleteTarget.title}" will be permanently removed. This can't be undone.` : ""}
         confirmLabel="Delete" onConfirm={confirmDelete} onCancel={() => setDeleteTarget(null)} />
