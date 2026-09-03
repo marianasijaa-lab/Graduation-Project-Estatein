@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../store';
 import {
   syncOffices,
@@ -8,6 +8,7 @@ import {
 } from '../store/slices/officesSlice';
 import { subscribeToCollection } from '../api/firestore';
 import type { FirestoreOffice } from '../store/types';
+import { filterOfficesByType } from '../components/OfficeLocations/officeFilters';
 
 export function useOffices() {
   const dispatch = useAppDispatch();
@@ -29,10 +30,10 @@ export function useOffices() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
-  // فلترة حسب الـ tab المختار
-  const filteredOffices = activeTab === 'All'
-    ? data
-    : data.filter((o) => o.type === activeTab);
+  const filteredOffices = useMemo(
+    () => filterOfficesByType(data, activeTab),
+    [data, activeTab],
+  );
 
   return { offices: filteredOffices, allOffices: data, status, error, activeTab };
 }

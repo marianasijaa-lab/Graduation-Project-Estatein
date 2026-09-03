@@ -9,6 +9,17 @@
   --color-primary: #703bf7;
   --color-primary-light: #a685fa;
   --color-border: #4d4d4d;
+
+  --decor-opacity: 1;
+  --icon-filter: none;
+  --color-arrow: #4d4d4d; 
+  --bg-border: #191919;
+  --bg-error: #ffffff;
+  --bg-shadow : linear-gradient(95.93deg, #262626 -26.82%, rgba(38, 38, 38, 0) 40.46%);
+  --color-shadow : 0px 0px 0px 6px #191919;
+  --bg-hover: #222;
+  --color-card: #ffffff13;
+  --color-placeholder: #666666;
 }
 
 @layer base {
@@ -24,17 +35,29 @@
 /* Dark mode (default) */
 :root {
   --bg-main: #141414;
-  --bg-secondary: #1a1a1a;
+  --bg-secondary: #1A1A1A;
   --text-main: #ffffff;
   --color-border: #4d4d4d;
+  
 }
 
 /* Light mode */
 :root.light {
   --bg-main: #ffffff;
-  --bg-secondary: #f5f5f5;
+  --bg-secondary: #ffffffc5;
   --text-main: #141414;
   --color-border: #d1d1d1;
+  --decor-opacity: 0.15;
+  --icon-filter: invert(1);
+  --color-bg-gray-1: #0c0c0c;
+  --color-arrow: #141414;
+  --bg-border: #ffffff;
+  --bg-error: #141414;
+  --bg-shadow: none;
+  --color-shadow: none;
+  --bg-hover: #d3c8c8;
+  --color-card: #141414;
+  --color-placeholder: #474747;
 }
 
 body {
@@ -42,6 +65,7 @@ body {
   margin: 0;
   background-color: #141414;
 }
+
 
 .site-container {
   width: 100%;
@@ -54,11 +78,33 @@ body {
 .autofill-none input:-webkit-autofill:hover,
 .autofill-none input:-webkit-autofill:focus,
 .autofill-none textarea:-webkit-autofill,
-.autofill-none select:-webkit-autofill {
+.autofill-none select:-webkit-autofill,
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
   -webkit-text-fill-color: #ffffff !important;
   -webkit-box-shadow: 0 0 0 1000px #141414 inset !important;
   box-shadow: 0 0 0 1000px #141414 inset !important;
   caret-color: #ffffff;
+}
+
+/* Light mode autofill override */
+:root.light .autofill-none input:-webkit-autofill,
+:root.light .autofill-none input:-webkit-autofill:hover,
+:root.light .autofill-none input:-webkit-autofill:focus,
+:root.light .autofill-none textarea:-webkit-autofill,
+:root.light .autofill-none select:-webkit-autofill,
+:root.light input:-webkit-autofill,
+:root.light input:-webkit-autofill:hover,
+:root.light input:-webkit-autofill:focus,
+:root.light textarea:-webkit-autofill,
+:root.light select:-webkit-autofill {
+  -webkit-text-fill-color: #141414 !important;
+  -webkit-box-shadow: 0 0 0 1000px #F9F9F9 inset !important;
+  box-shadow: 0 0 0 1000px #F9F9F9 inset !important;
+  caret-color: #141414;
 }
 
 @media (min-width: 640px) {
@@ -67,16 +113,90 @@ body {
   }
 }
 
+@media (min-width: 768px) {
+  .site-container {
+    padding-inline: 2rem;
+  }
+}
+
 @media (min-width: 1024px) {
   .site-container {
     padding-inline: 2.5rem;
   }
 }
+/* ── Dashboard Scrollbars (sidebar + modals) ── */
+.sidebar-scroll::-webkit-scrollbar,
+.modal-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar-scroll::-webkit-scrollbar-track,
+.modal-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar-scroll::-webkit-scrollbar-thumb,
+.modal-scroll::-webkit-scrollbar-thumb {
+  background-color: #262626;
+  border-radius: 999px;
+}
+.sidebar-scroll::-webkit-scrollbar-thumb:hover,
+.modal-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: #3a3a3a;
+}
+/* Firefox */
+.sidebar-scroll,
+.modal-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #262626 transparent;
+}
+
+/* Light mode scrollbar override */
+:root.light .sidebar-scroll::-webkit-scrollbar-thumb,
+:root.light .modal-scroll::-webkit-scrollbar-thumb {
+  background-color: #c0c0c0;
+}
+:root.light .sidebar-scroll::-webkit-scrollbar-thumb:hover,
+:root.light .modal-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: #a0a0a0;
+}
+:root.light .sidebar-scroll,
+:root.light .modal-scroll {
+  scrollbar-color: #c0c0c0 transparent;
+}
+
+/* ── Table horizontal scrollbar ── */
+.table-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+.table-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.table-scroll::-webkit-scrollbar-thumb {
+  background-color: #262626;
+  border-radius: 999px;
+}
+.table-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: #3a3a3a;
+}
+/* Firefox */
+.table-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #262626 transparent;
+}
+:root.light .table-scroll::-webkit-scrollbar-thumb {
+  background-color: #c0c0c0;
+}
+:root.light .table-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: #a0a0a0;
+}
+:root.light .table-scroll {
+  scrollbar-color: #c0c0c0 transparent;
+}
+
 .card{
-  @apply p-6 lg:p-8 xl:p-10 bg-bg-dark-1 border-bg-gray-1 border rounded-xl ;
+  @apply p-6 lg:p-8 xl:p-10 bg-(--bg-main) border-bg-gray-1 border rounded-xl ;
 }
 .card-title{
-  @apply text-bg-dark font-semibold xl:text-2xl
+  @apply text-(--text-main) font-semibold xl:text-2xl
 }
 
 /* ── Splash / route-transition animations ──
@@ -179,4 +299,13 @@ body {
   .animate-splash-progress {
     animation: splash-progress 2400ms linear forwards;
   }
+}
+
+/* Footer email input placeholder color */
+input.footer-email-input::placeholder,
+input.footer-email-input::-webkit-input-placeholder,
+input.footer-email-input::-moz-placeholder {
+  color: #999999 !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: #999999 !important;
 }

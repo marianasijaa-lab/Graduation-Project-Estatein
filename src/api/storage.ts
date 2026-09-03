@@ -1,31 +1,57 @@
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../firebase/config';
+const MAX_IMAGE_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
 
-const MAX_IMAGE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
-
-/** Thrown by uploadImage() for any validation/upload failure. */
+/** Thrown by uploadImage() for any validation or upload failure. */
 export class ImageUploadError extends Error {}
 
-/**
- * Uploads a single image file to Firebase Storage under `images/{folder}/`
- * and returns its permanent download URL — safe to store in Firestore and
- * safe across refreshes/other users (unlike a local blob: URL).
- */
 export async function uploadImage(file: File, folder: string): Promise<string> {
-  if (!storage) {
-    throw new ImageUploadError('Firebase Storage is not configured — please fill in the .env file.');
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME as string | undefined;
+  const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET as string | undefined;
+
+  if (!cloudName || !uploadPreset) {
+    throw new ImageUploadError(
+      'Cloudinary is not configured — add VITE_CLOUDINARY_CLOUD_NAME and VITE_CLOUDINARY_UPLOAD_PRESET to your .env file.'
+    );
   }
+
   if (!file.type.startsWith('image/')) {
     throw new ImageUploadError('Please select an image file.');
   }
+
   if (file.size > MAX_IMAGE_SIZE_BYTES) {
-    throw new ImageUploadError('Image must be 5MB or smaller.');
+    throw new ImageUploadError('Image must be 5 MB or smaller.');
   }
 
-  const extension = file.name.includes('.') ? file.name.split('.').pop() : undefined;
-  const fileName = `${crypto.randomUUID()}${extension ? `.${extension}` : ''}`;
-  const storageRef = ref(storage, `images/${folder}/${fileName}`);
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', uploadPreset);
+  formData.append('folder', `estatein/${folder}`);
 
-  await uploadBytes(storageRef, file);
-  return getDownloadURL(storageRef);
+  const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+
+  let response: Response;
+  try {
+    response = await fetch(url, { method: 'POST', body: formData });
+  } catch {
+    throw new ImageUploadError('Upload failed. Check your internet connection and try again.');
+  }
+
+  if (!response.ok) {
+    let message = `Upload failed (HTTP ${response.status}).`;
+    try {
+      const json = await response.json();
+      if (json?.error?.message) message = json.error.message;
+    } catch {
+      // ignore JSON parse errors
+    }
+    console.error('[uploadImage] Cloudinary error:', message);
+    throw new ImageUploadError(message);
+  }
+
+  const data = await response.json();
+
+  if (!data?.secure_url) {
+    throw new ImageUploadError('Upload succeeded but no URL was returned. Please try again.');
+  }
+
+  return data.secure_url as string;
 }

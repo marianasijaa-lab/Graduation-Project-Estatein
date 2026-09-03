@@ -4,36 +4,39 @@ import { useTheme } from "../../../Context/ThemeContext";
 import { Button } from "../../ui/Button";
 import { ImageUploadField } from "../../ui/ImageUploadField";
 import type { FirestoreUnlockPropertyValueCard } from "../../../store/types";
+import { validateRequired } from "../../../utils/validation";
 
-interface UnlockPropertyValueCardFormState {
+interface UPVCardFormState {
   title: string;
   description: string;
   icon: string;
 }
 
-type UnlockPropertyValueCardFormErrors = Partial<Record<keyof UnlockPropertyValueCardFormState, string>>;
+type F = keyof UPVCardFormState;
+type Errors  = Partial<Record<F, string>>;
+type Touched = Partial<Record<F, boolean>>;
 
-// Builds the form's starting values — blank for "add", pre-filled for "edit".
-function buildInitialState(initialData?: FirestoreUnlockPropertyValueCard): UnlockPropertyValueCardFormState {
-  if (!initialData) {
-    return { title: "", description: "", icon: "" };
-  }
-  return {
-    title: initialData.title,
-    description: initialData.description,
-    icon: initialData.icon,
-  };
+const FIELDS: F[] = ["title", "description", "icon"];
+
+function validateField(field: F, value: string): string {
+  if (field === "title")       return validateRequired(value, "Title");
+  if (field === "description") return validateRequired(value, "Description");
+  if (field === "icon")        return validateRequired(value, "Icon");
+  return "";
 }
 
-// Checks every field and returns a map of field -> error message.
-function validate(values: UnlockPropertyValueCardFormState): UnlockPropertyValueCardFormErrors {
-  const errors: UnlockPropertyValueCardFormErrors = {};
-
-  if (!values.title.trim()) errors.title = "Title is required.";
-  if (!values.description.trim()) errors.description = "Description is required.";
-  if (!values.icon.trim()) errors.icon = "Icon is required.";
-
+function validateAll(values: UPVCardFormState): Errors {
+  const errors: Errors = {};
+  for (const f of FIELDS) {
+    const err = validateField(f, values[f]);
+    if (err) errors[f] = err;
+  }
   return errors;
+}
+
+function buildInitialState(initialData?: FirestoreUnlockPropertyValueCard): UPVCardFormState {
+  if (!initialData) return { title: "", description: "", icon: "" };
+  return { title: initialData.title, description: initialData.description, icon: initialData.icon };
 }
 
 interface UnlockPropertyValueFormModalProps {
@@ -44,146 +47,117 @@ interface UnlockPropertyValueFormModalProps {
 }
 
 export const UnlockPropertyValueFormModal = ({
-  mode,
-  initialData,
-  onClose,
-  onSubmit,
+  mode, initialData, onClose, onSubmit,
 }: UnlockPropertyValueFormModalProps) => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const [values, setValues] = useState<UnlockPropertyValueCardFormState>(() => buildInitialState(initialData));
-  const [errors, setErrors] = useState<UnlockPropertyValueCardFormErrors>({});
+  const [values,  setValues]  = useState<UPVCardFormState>(() => buildInitialState(initialData));
+  const [errors,  setErrors]  = useState<Errors>({});
+  const [touched, setTouched] = useState<Touched>({});
   const formRef = useRef<HTMLFormElement>(null);
 
-  const setField = <K extends keyof UnlockPropertyValueCardFormState>(
-    field: K,
-    value: UnlockPropertyValueCardFormState[K],
-  ) => {
+  const setField = (field: F, value: string) => {
     setValues((prev) => ({ ...prev, [field]: value }));
+    if (touched[field]) setErrors((prev) => ({ ...prev, [field]: validateField(field, value) }));
   };
 
-  // Validates the form and, if valid, hands the cleaned-up payload to onSubmit.
+  const handleBlur = (field: F) => {
+    if (touched[field]) return;
+    setTouched((prev) => ({ ...prev, [field]: true }));
+    setErrors((prev) => ({ ...prev, [field]: validateField(field, values[field]) }));
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const validationErrors = validate(values);
-    setErrors(validationErrors);
-    if (Object.keys(validationErrors).length > 0) return;
-
-    const payload: Omit<FirestoreUnlockPropertyValueCard, "id"> = {
-      title: values.title.trim(),
-      description: values.description.trim(),
-      icon: values.icon.trim(),
-    };
-
-    onSubmit(payload);
+    const allTouched = FIELDS.reduce((a, f) => ({ ...a, [f]: true }), {} as Record<F, boolean>);
+    setTouched(allTouched);
+    const allErrors = validateAll(values);
+    setErrors(allErrors);
+    if (Object.keys(allErrors).length > 0) return;
+    onSubmit({ title: values.title.trim(), description: values.description.trim(), icon: values.icon.trim() });
   };
 
-  const inputBgClass = isDark
-    ? "bg-bg-dark border-bg-gray-1 text-white placeholder-gray-500 focus:border-primary"
-    : "bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-primary";
+  const inputBgClass = (field: F) => {
+    const hasErr = touched[field] && errors[field];
+    if (hasErr)
+      return isDark
+        ? "bg-bg-dark border-red-500 text-white placeholder-gray-500 focus:border-red-400"
+        : "bg-gray-50 border-red-500 text-gray-900 placeholder-gray-400 focus:border-red-400";
+    return isDark
+      ? "bg-bg-dark border-bg-gray-1 text-white placeholder-gray-500 focus:border-primary"
+      : "bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-primary";
+  };
 
   const labelClass = `block text-sm font-medium mb-2 ${isDark ? "text-white" : "text-gray-900"}`;
-  const fieldClass = `w-full px-4 py-3 rounded-xl border outline-none transition-all ${inputBgClass}`;
-  const errorClass = "mt-1.5 text-xs text-red-500";
+  const fieldClass = (f: F) => `w-full px-4 py-3 rounded-xl border outline-none transition-all ${inputBgClass(f)}`;
+  const errorClass = "mt-1.5 flex items-center gap-1 text-xs text-red-400";
+
+  const Err = ({ f }: { f: F }) =>
+    touched[f] && errors[f] ? (
+      <p role="alert" className={errorClass}><span aria-hidden="true">⚠</span>{errors[f]}</p>
+    ) : null;
 
   return (
     <div
-      className="fixed inset-0 z-70 flex items-start sm:items-center justify-center bg-black/60 px-4 py-6 overflow-y-auto"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="upv-card-form-title"
+      className="modal-scroll fixed inset-0 z-70 flex items-start sm:items-center justify-center bg-black/60 px-4 py-6 overflow-y-auto"
+      role="dialog" aria-modal="true" aria-labelledby="upv-card-form-title"
       onClick={onClose}
     >
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className={`w-full max-w-2xl rounded-2xl border shadow-xl ${
-          isDark ? "bg-bg-dark-1 border-bg-gray-1" : "bg-white border-gray-200"
-        }`}
-      >
-        <div
-          className={`flex items-center justify-between px-6 sm:px-8 py-5 border-b ${
-            isDark ? "border-bg-gray-1" : "border-gray-200"
-          }`}
-        >
+      <div onClick={(e) => e.stopPropagation()} className={`w-full max-w-2xl rounded-2xl border shadow-xl ${isDark ? "bg-bg-dark-1 border-bg-gray-1" : "bg-white border-gray-200"}`}>
+        <div className={`flex items-center justify-between px-6 sm:px-8 py-5 border-b ${isDark ? "border-bg-gray-1" : "border-gray-200"}`}>
           <h3 id="upv-card-form-title" className={`text-lg font-semibold ${isDark ? "text-white" : "text-gray-900"}`}>
             {mode === "add" ? "Add Card" : "Edit Card"}
           </h3>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Close"
-            className={`inline-flex items-center justify-center w-9 h-9 rounded-lg transition-colors cursor-pointer ${
-              isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-500 hover:bg-gray-100"
-            }`}
-          >
+          <button type="button" onClick={onClose} aria-label="Close"
+            className={`inline-flex items-center justify-center w-9 h-9 rounded-lg transition-colors cursor-pointer ${isDark ? "text-gray hover:bg-bg-gray-1 hover:text-white" : "text-gray-500 hover:bg-gray-100"}`}>
             <HiXMark className="w-5 h-5" />
           </button>
         </div>
 
-        <form
-          ref={formRef}
-          onSubmit={handleSubmit}
-          className="px-6 sm:px-8 py-6 space-y-6 max-h-[70vh] overflow-y-auto"
-        >
+        <form ref={formRef} onSubmit={handleSubmit} noValidate
+          className="modal-scroll px-6 sm:px-8 py-6 space-y-6 max-h-[70vh] overflow-y-auto">
           <div>
             <label className={labelClass} htmlFor="upv-card-title">Title</label>
-            <input
-              id="upv-card-title"
-              type="text"
-              placeholder="Add title"
+            <input id="upv-card-title" type="text" placeholder="Add title"
               value={values.title}
               onChange={(e) => setField("title", e.target.value)}
-              className={fieldClass}
-            />
-            {errors.title && <p className={errorClass}>{errors.title}</p>}
+              onBlur={() => handleBlur("title")}
+              aria-invalid={!!(touched.title && errors.title)}
+              className={fieldClass("title")} />
+            <Err f="title" />
           </div>
 
           <ImageUploadField
             label="Icon"
             value={values.icon}
-            onChange={(url) => setField("icon", url)}
+            onChange={(url) => {
+              setField("icon", url);
+              setTouched((prev) => ({ ...prev, icon: true }));
+            }}
             folder="unlockPropertyValue"
-            error={errors.icon}
+            error={touched.icon ? errors.icon : undefined}
           />
 
           <div>
             <label className={labelClass} htmlFor="upv-card-description">Description</label>
-            <textarea
-              id="upv-card-description"
-              rows={4}
-              placeholder="Description"
+            <textarea id="upv-card-description" rows={4} placeholder="Description"
               value={values.description}
               onChange={(e) => setField("description", e.target.value)}
-              className={`${fieldClass} resize-none`}
-            />
-            {errors.description && <p className={errorClass}>{errors.description}</p>}
+              onBlur={() => handleBlur("description")}
+              aria-invalid={!!(touched.description && errors.description)}
+              className={`${fieldClass("description")} resize-none`} />
+            <Err f="description" />
           </div>
         </form>
 
-        <div
-          className={`flex flex-col-reverse sm:flex-row sm:justify-end gap-3 px-6 sm:px-8 py-5 border-t ${
-            isDark ? "border-bg-gray-1" : "border-gray-200"
-          }`}
-        >
-          <button
-            type="button"
-            onClick={onClose}
-            className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer border ${
-              isDark
-                ? "border-bg-gray-1 text-white hover:bg-bg-gray-1"
-                : "border-gray-200 text-gray-700 hover:bg-gray-100"
-            }`}
-          >
+        <div className={`flex flex-col-reverse sm:flex-row sm:justify-end gap-3 px-6 sm:px-8 py-5 border-t ${isDark ? "border-bg-gray-1" : "border-gray-200"}`}>
+          <button type="button" onClick={onClose}
+            className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer border ${isDark ? "border-bg-gray-1 text-white hover:bg-bg-gray-1" : "border-gray-200 text-gray-700 hover:bg-gray-100"}`}>
             Cancel
           </button>
-          <Button
-            text={mode === "add" ? "Add Card" : "Save Changes"}
-            variant="primary"
-            type="submit"
-            onClick={() => formRef.current?.requestSubmit()}
-          />
+          <Button text={mode === "add" ? "Add Card" : "Save Changes"} variant="primary" type="submit"
+            onClick={() => formRef.current?.requestSubmit()} />
         </div>
       </div>
     </div>

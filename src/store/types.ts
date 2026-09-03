@@ -1,7 +1,7 @@
 
 export type DataStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
 
-// ── Properties (Firestore collection: "properties") ────────────────────────
+// ── Properties (Firestore collection: "properties") ──
 export interface FirestoreProperty {
   id: string;
   image: string;
@@ -25,10 +25,11 @@ export interface FirestoreProperty {
   images?: string[];
   featured?: boolean;
   currency?: string;
+  order?: number;
   createdAt?: string;
 }
 
-// ── Companies (Firestore collection: "companies") ───────────────────────────
+// ── Companies (Firestore collection: "companies") ──
 export interface FirestoreCompany {
   id: string;
   date: string;
@@ -37,15 +38,16 @@ export interface FirestoreCompany {
   domain: string;
   category: string;
   testimony: string;
+  order?: number;
 }
 
-// ── Stats (Realtime Database path: /stats) ──────────────────────────────────
+// ── Stats (Realtime Database path: /stats) ──
 export interface Stat {
   value: string;
   label: string;
 }
 
-// ── Core values (Firestore collection: "values") ────────────────────────────
+// ── Core values (Firestore collection: "values") ──
 export interface FirestoreValue {
   id: string;
   icon: string;
@@ -53,21 +55,22 @@ export interface FirestoreValue {
   description: string;
 }
 
-// ── Achievements (Firestore collection: "achievements") ─────────────────────
+// ── Achievements (Firestore collection: "achievements") ──
 export interface FirestoreAchievement {
   id: string;
   title: string;
   description: string;
+  order?: number;
 }
 
-// ── FAQs (Firestore collection: "faqs") ──────────────────────────────────────
+// ── FAQs (Firestore collection: "faqs") ──
 export interface FirestoreFAQ {
   id: string;
   question: string;
   description: string;
 }
 
-// ── Home page CTA section (Firestore collection: "cta") ─────────────────────
+// ── Home page CTA section (Firestore collection: "cta") ──
 export interface FirestoreCTA {
   id: string;
   heading: string;
@@ -76,9 +79,6 @@ export interface FirestoreCTA {
   buttonLink: string;
 }
 
-// ── Cards for the "Unlock Property Value" section on the Services page ──────
-// (Firestore collection: "unlockPropertyValue"). Each card is its own doc —
-// the section's header/subtitle and InfoBox banner stay hardcoded in the component.
 export interface FirestoreUnlockPropertyValueCard {
   id: string;
   title: string;
@@ -86,8 +86,6 @@ export interface FirestoreUnlockPropertyValueCard {
   icon: string;
 }
 
-// ── Cards for the "Effortless Property Management" section on the Services page ──
-// (Firestore collection: "effortlessPropertyManagement") — same note as above.
 export interface FirestoreEffortlessPropertyManagementCard {
   id: string;
   title: string;
@@ -95,8 +93,6 @@ export interface FirestoreEffortlessPropertyManagementCard {
   icon: string;
 }
 
-// ── Cards for the "Smart Investments" section on the Services page ──────────
-// (Firestore collection: "smartInvestments") — same note as above.
 export interface FirestoreSmartInvestmentsCard {
   id: string;
   title: string;
@@ -104,14 +100,14 @@ export interface FirestoreSmartInvestmentsCard {
   icon: string;
 }
 
-// ── Services (Firestore collection: "services") ─────────────────────────────
+// ── Services (Firestore collection: "services") ──
 export interface FirestoreService {
   id: string;
   icon: string;
   heading: string;
 }
 
-// ── Info boxes (Firestore collection: "infoBoxes") ───────────────────────────
+// ── Info boxes (Firestore collection: "infoBoxes") ──
 export interface FirestoreInfoBox {
   id: string;
   variant: 'horizontal' | 'vertical';
@@ -120,7 +116,7 @@ export interface FirestoreInfoBox {
   buttonLabel?: string;
 }
 
-// ── Client testimonials (Firestore collection: "testimonials") ──────────────
+// ── Client testimonials (Firestore collection: "testimonials") ──
 export interface FirestoreTestimonial {
   id: string;
   clientName: string;
@@ -130,10 +126,13 @@ export interface FirestoreTestimonial {
   description: string;       // testimonial body
   rating: number;            // 1 - 5
   position?: string;         // job title (optional)
+  order?: number;            // display order in the UI
   createdAt?: string;
 }
 
-// ── Contact messages (Firestore collection: "contacts") ──────────────────────
+//  Contact messages (Firestore collection: "contacts") 
+export type ContactStatus = 'new' | 'contacted' | 'closed';
+
 export interface FirestoreContact {
   id: string;
   firstName: string;
@@ -144,21 +143,64 @@ export interface FirestoreContact {
   inquiryType?: string;      // buying, selling, consulting, etc.
   howDidYouHear?: string;    // how they heard about us
   propertyId?: string;       // related property (optional)
-  status: 'new' | 'processing' | 'replied';
-  createdAt: string;
+  propertyName?: string;     // related property name, for a readable admin list
+  status: ContactStatus;
+  assignedTo?: string;       // internal — team member handling this inquiry
+  adminNote?: string;        // internal — triage notes
+  createdAt?: string;        // stamped server-side by addDocument()
 }
 
-// ── Company offices (Firestore collection: "offices") ─────────────────────────
+//  Newsletter subscribers (Firestore collection: "subscribers") 
+export type SubscriberStatus = 'subscribed' | 'unsubscribed';
+export type SubscriberSource = 'footer' | 'contact-page';
+
+export interface FirestoreSubscriber {
+  id: string;
+  email: string;
+  status: SubscriberStatus;
+  source: SubscriberSource;
+  name?: string;
+  createdAt?: string;     
+}
+
+// Site contact settings (Firestore: single doc "siteSettings/contact")
+export type SocialPlatform =
+  | 'facebook'
+  | 'linkedin'
+  | 'twitter'
+  | 'youtube'
+  | 'instagram';
+
+export interface SocialLink {
+  platform: SocialPlatform;
+  url: string;
+  enabled: boolean;
+}
+
+export interface FirestoreContactInfo {
+  id: string;          
+  email: string;
+  phone: string;
+  address: string;
+  mapUrl?: string;
+  openingHours?: string;
+  socialLinks: SocialLink[];
+}
+
+//  Company offices (Firestore collection: "offices") 
 export interface FirestoreOffice {
   id: string;
   name: string;             // office name
-  address: string;          // full address
+  address: string;
   city: string;
   country: string;
   phone: string;
   email: string;
-  type: 'Regional' | 'International' | 'Local';  // for tab filtering
+  type: string;  // for tab filtering — any value is valid
+  image?: string;
   latitude?: number;
   longitude?: number;
-  image?: string;           // office photo (optional)
+  description?: string;      
+  directionsUrl?: string;     
+  order?: number;            
 }

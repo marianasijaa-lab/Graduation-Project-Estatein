@@ -2,11 +2,13 @@ import { SectionHeader } from "../../common/SectionHeader";
 import FAQSlider from "../../ui/slider/FAQSlider";
 import { useState } from "react";
 
+
+
 const FAQSection = () => {
   const [showAllFaqs, setShowAllFaqs] = useState(false);
 
   return (
-    <section className="w-full bg-bg-dark-1">
+    <section className="w-full bg-(--bg-mian)">
       <div className="site-container py-8 sm:py-10 lg:py-14">
         <SectionHeader
           title="Frequently Asked Questions"

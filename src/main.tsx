@@ -25,6 +25,10 @@ import { TestimonialsManagement } from "./Pages/Dashboard/TestimonialsManagement
 import { UnlockPropertyValueManagement } from "./Pages/Dashboard/UnlockPropertyValueManagement";
 import { EffortlessPropertyManagementManagement } from "./Pages/Dashboard/EffortlessPropertyManagementManagement";
 import { SmartInvestmentsManagement } from "./Pages/Dashboard/SmartInvestmentsManagement";
+import { OfficesManagement } from "./Pages/Dashboard/OfficesManagement";
+import { InquiriesManagement } from "./Pages/Dashboard/InquiriesManagement";
+import { ContactInfoManagement } from "./Pages/Dashboard/ContactInfoManagement";
+import { SubscribersManagement } from "./Pages/Dashboard/SubscribersManagement";
 
 const router = createBrowserRouter([
   {
@@ -59,7 +63,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <AuthGate>
+        <DashboardLayout />
+      </AuthGate>
+    ),
     children: [
       { index: true, element: <Navigate to="properties" replace /> },
       { path: "properties", element: <PropertiesManagement /> },
@@ -71,6 +79,10 @@ const router = createBrowserRouter([
       { path: "unlock-property-value", element: <UnlockPropertyValueManagement /> },
       { path: "effortless-property-management", element: <EffortlessPropertyManagementManagement /> },
       { path: "smart-investments", element: <SmartInvestmentsManagement /> },
+      { path: "offices", element: <OfficesManagement /> },
+      { path: "inquiries", element: <InquiriesManagement /> },
+      { path: "contact-info", element: <ContactInfoManagement /> },
+      { path: "subscribers", element: <SubscribersManagement /> },
     ],
   },
 ]);
@@ -80,12 +92,9 @@ createRoot(document.getElementById("root")!).render(
     <Provider store={store}>
       <ThemeProvider>
         <AuthProvider>
-          {/* Nothing past this point renders until the user is signed in. */}
-          <AuthGate>
-            <SplashScreen>
-              <RouterProvider router={router} />
-            </SplashScreen>
-          </AuthGate>
+          <SplashScreen>
+            <RouterProvider router={router} />
+          </SplashScreen>
         </AuthProvider>
       </ThemeProvider>
     </Provider>

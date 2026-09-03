@@ -1,18 +1,58 @@
 import React from 'react';
 import { SectionHeader } from '../../common/SectionHeader';
 import { InfoBox } from '../infobox/InfoBox';
+import { motion } from 'framer-motion';
+import { StaggerContainer, staggerItem } from '../../common/StaggerContainer';
 import { useSmartInvestments } from '../../../hooks/useSmartInvestments';
 
+interface InvestmentServiceItem {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+}
+
+const investmentServices: InvestmentServiceItem[] = [
+  {
+    id: '1',
+    title: 'Market Insight',
+    description:
+      'Stay ahead of market trends with our expert Market Analysis. We provide in-depth insights into real estate market conditions',
+    icon: '/assets/Icon_19.png',
+  },
+  {
+    id: '2',
+    title: 'ROI Assessment',
+    description:
+      'Make investment decisions with confidence. Our ROI Assessment services evaluate the potential returns on your investments',
+    icon: '/assets/Icon_27.png',
+  },
+  {
+    id: '3',
+    title: 'Customized Strategies',
+    description:
+      'Every investor is unique, and so are their goals. We develop Customized Investment Strategies tailored to your specific needs',
+    icon: '/assets/Icon_28.png',
+  },
+  {
+    id: '4',
+    title: 'Diversification Mastery',
+    description:
+      'Diversify your real estate portfolio effectively. Our experts guide you in spreading your investments across various property types and locations',
+    icon: '/assets/Icon_4.png',
+  },
+];
+
 export const SmartInvestments: React.FC = () => {
-  const { smartInvestments: cards } = useSmartInvestments();
+  useSmartInvestments();
 
   return (
-    <section className="w-full bg-[#141414] border-t border-[#262626] py-16 sm:py-20 lg:py-24">
-
+    <section className="w-full bg-(--bg-main) border-t border-b border-bg-gray-1 py-16 sm:py-20 lg:py-24">
+     
       <div className="site-container">
 
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+        <div className="flex flex-col gap-8 md:gap-10 lg:grid lg:grid-cols-12 lg:gap-10 items-start">
 
 
           <div className="lg:col-span-5 xl:col-span-4 flex flex-col justify-start gap-0 sm:gap-1">
@@ -31,7 +71,7 @@ export const SmartInvestments: React.FC = () => {
 
 
             <div className="w-full">
-              <div className="h-auto">
+              <div className="h-auto ">
                 <InfoBox
                 variant="vertical"
                 title="Unlock Your Investment Potential"
@@ -45,13 +85,16 @@ export const SmartInvestments: React.FC = () => {
             </div>
           </div>
 
-
-          <div className="lg:col-span-7 xl:col-span-8 rounded-[10px] bg-[#191919] p-1.5 mt-14">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
-              {cards.map((service) => (
-                <div
+          
+          <div className="lg:col-span-7 xl:col-span-8 rounded-[10px] bg-(--bg-border) p-1.5 mt-14">
+            <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+              {investmentServices.map((service) => (
+                <motion.div
                   key={service.id}
-                  className="bg-[#141414] border border-[#262626] rounded-[8px] px-5 sm:px-6 py-3 sm:py-4 flex flex-col justify-start gap-4 hover:border-[#703BF7]/40 transition-all duration-300"
+                  variants={staggerItem}
+                  whileHover={{y: -4}}
+                  transition={{duration: 0.25}}
+                  className="bg-(--bg-main) border border-bg-gray-1 rounded-lg px-5 sm:px-6 py-3 sm:py-4 flex flex-col justify-start gap-4 hover:border-primary/40 transition-all duration-300"
                 >
 
                   <div className="flex items-center gap-3">
@@ -62,18 +105,18 @@ export const SmartInvestments: React.FC = () => {
                         className="w-full h-full object-contain"
                       />
                     </div>
-                    <h3 className="font-bold text-white text-lg xl:text-xl font-['Urbanist',sans-serif]">
+                    <h3 className="font-bold text-(--text-main) text-lg xl:text-xl font-['Urbanist',sans-serif]">
                       {service.title}
                     </h3>
                   </div>
 
 
-                  <p className="text-[15px] sm:text-base font-normal text-[#999999] leading-[150%]">
+                  <p className="text-[15px] sm:text-base font-normal text-gray-1 leading-[150%]">
                     {service.description}
                   </p>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
 
         </div>

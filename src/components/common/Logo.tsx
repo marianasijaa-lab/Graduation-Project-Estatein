@@ -1,16 +1,10 @@
-import React from 'react';
 import { motion } from 'framer-motion';
+import React from 'react';
 
 interface LogoProps {
   onClick?: () => void;
   className?: string;
   logoSrc?: string;
-  /**
-   * Opt-in entrance animation for the splash/route-transition overlays.
-   * "full": animated icon + glow + letter-by-letter text (initial load).
-   * "quick": animated icon only, no glow or text (route changes).
-   * Omitted: static icon + text, as used everywhere else.
-   */
   animated?: 'full' | 'quick';
 }
 
@@ -71,7 +65,7 @@ export const Logo: React.FC<LogoProps> = ({
           ))}
         </span>
       ) : animated === 'quick' ? null : (
-        <span className="font-semibold text-lg md:text-xl">{BRAND_NAME}</span>
+        <span className="font-semibold text-lg md:text-xl text-(--text-main) ">{BRAND_NAME}</span>
       )}
     </motion.div>
   );

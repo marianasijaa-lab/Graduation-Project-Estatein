@@ -5,7 +5,7 @@ export const StarCluster: React.FC<{ className?: string }> = ({
   className = "",
 }) => {
   return (
-    <div className={`inline-flex items-center text-[#666666] gap-1.5 mb-2.5 ${className}`} aria-hidden="true">
+    <div className={`inline-flex items-center text-placeholder gap-1.5 mb-2.5 ${className}`} aria-hidden="true">
       {/* النجمة الكبيرة الأولى */}
       <motion.svg
         viewBox="0 0 24 24"

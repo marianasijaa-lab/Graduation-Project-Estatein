@@ -1,25 +1,30 @@
 import { useNavigate } from "react-router";
 import { Button } from "../../ui/Button";
-import { useProperties } from "../../../hooks/useProperties";
 import { useSlider } from "../../../hooks/useSlider";
 import { LoadingSkeleton } from "../../ui/LoadingSkeleton";
 import { ErrorMessage } from "../../ui/ErrorMessage";
 import BaseSlider from "../../ui/slider/BaseSlider";
 import SliderButtons from "../../ui/slider/SliderButtons";
-import type { FirestoreProperty } from "../../../store/types";
-
+import type { DataStatus, FirestoreProperty } from "../../../store/types";
+import { motion } from "framer-motion";
+import { staggerItem } from "../../common/StaggerContainer";
+import { RiFileWarningFill } from "react-icons/ri";
+interface PropertiesGridProps{
+  properties:FirestoreProperty[],
+  status:DataStatus,
+  error:string |null
+}
 const GAP = 24;
 
-export function PropertiesGrid() {
+export function PropertiesGrid({error,status,properties}:PropertiesGridProps) {
   const navigate = useNavigate();
-  const { properties, status, error } = useProperties();
+  // const { properties, status, error } = useProperties();
   const { currentIndex, goNext, goPrev, itemsToShow, maxIndex } =
     useSlider(properties);
 
   if (status === 'loading' || status === 'idle') {
     return <LoadingSkeleton variant="grid" count={3} />;
   }
-
   if (status === 'failed') {
     return (
       <ErrorMessage
@@ -68,7 +73,11 @@ function PropertyCard({
   onView: () => void;
 }) {
   return (
-    <div className="card flex h-full w-full flex-col gap-4 lg:gap-5 xl:gap-7.5 bg-bg-dark-1 border border-bg-gray-1 rounded-2xl p-4 lg:p-5">
+    <motion.div
+      variants={staggerItem}
+      whileHover={{y: -6}}
+      transition={{duration: 0.25, ease: [0.25, 0.1, 0.25, 1]}}
+      className="card flex h-full w-full flex-col gap-4 lg:gap-5 xl:gap-7.5 bg-(--bg-main) border border-bg-gray-1 rounded-2xl p-4 lg:p-5">
       <img
         src={item.image}
         alt={item.name}
@@ -86,24 +95,24 @@ function PropertyCard({
             {item.descriptionLong.length > 60
               ? item.descriptionLong.slice(0, 60) + "... "
               : item.descriptionLong + "... "}
-            <button className="text-white underline underline-offset-2 hover:text-white/80 transition-colors whitespace-nowrap">
+            <button className="text-(--text-main) underline underline-offset-2 hover:text-white/80 transition-colors whitespace-nowrap">
               Read More
             </button>
           </p>
         </div>
         <div className="mt-auto flex items-center justify-between gap-4">
-          <p className="font-semibold text-white">
+          <p className="font-semibold text-(--text-main)">
             <span className="block font-normal text-gray text-sm">Price</span>
-            ${item.priceProperties.toLocaleString()}
+           <span className=" font-semibold text-white text-[15px] md:text-[18px] lg:text-2xl whitespace-nowrap"> ${item.priceProperties.toLocaleString()}</span>
           </p>
           <Button
             onClick={onView}
             text="View Property Details"
             variant="primary"
-            className="text-sm px-4 py-3 md:py-3 md:px-5"
+            className="text-[11px]  md:text-[13px] lg:text-sm px-3 py-2 md:px-4 md:py-3 lg:py-4 lg:px-5 max-w-[210px]"
           />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

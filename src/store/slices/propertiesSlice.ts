@@ -13,7 +13,7 @@ const FALLBACK_PROPERTIES: FirestoreProperty[] = [
     bedroomIcon: '/assets/icon_9.png',
     bathroomIcon: '/assets/icon_7.png',
     propertyTypeIcon: '/assets/icon_8.png',
-    priceHome: 550000, priceProperties: 1250000,
+    priceHome: 550000, priceProperties: 550000,
     location: 'Malibu, California', size: 320, buildYear: 2019,
     amenities: ['Private Pool', 'Beach Access', 'Ocean View', 'Smart Home'],
     featured: true, currency: 'USD',
@@ -29,7 +29,7 @@ const FALLBACK_PROPERTIES: FirestoreProperty[] = [
     bedroomIcon: '/assets/icon_9.png',
     bathroomIcon: '/assets/icon_7.png',
     propertyTypeIcon: '/assets/icon_8.png',
-    priceHome: 550000, priceProperties: 650000,
+    priceHome: 550000, priceProperties: 550000,
     location: 'Manhattan, New York', size: 180, buildYear: 2021,
     amenities: ['City View', 'Concierge', 'Gym', 'Rooftop Terrace'],
     featured: true, currency: 'USD',
@@ -45,7 +45,7 @@ const FALLBACK_PROPERTIES: FirestoreProperty[] = [
     bedroomIcon: '/assets/icon_9.png',
     bathroomIcon: '/assets/icon_7.png',
     propertyTypeIcon: '/assets/icon_8.png',
-    priceHome: 550000, priceProperties: 350000,
+    priceHome: 550000, priceProperties: 550000,
     location: 'Aspen, Colorado', size: 120, buildYear: 2015,
     amenities: ['Garden', 'Fireplace', 'Mountain View'],
     featured: false, currency: 'USD',
@@ -107,7 +107,7 @@ interface PropertiesState {
 }
 
 const initialState: PropertiesState = {
-  data: [],
+  data: FALLBACK_PROPERTIES,
   status: 'idle',
   error: null,
 };
@@ -119,7 +119,19 @@ const propertiesSlice = createSlice({
   reducers: {
     // Fired by onSnapshot on every Firestore change.
     syncProperties(state, action: PayloadAction<FirestoreProperty[]>) {
-      state.data   = action.payload;
+      // Sort by order field if present, fallback to prop-N id pattern, then alphabetical
+      const sortedData = [...action.payload].sort((a, b) => {
+        if (a.order !== undefined && b.order !== undefined) return a.order - b.order;
+        if (a.order !== undefined) return -1;
+        if (b.order !== undefined) return 1;
+        const aId = typeof a.id === 'string' ? a.id : '';
+        const bId = typeof b.id === 'string' ? b.id : '';
+        const aNum = parseInt(aId.replace('prop-', ''), 10);
+        const bNum = parseInt(bId.replace('prop-', ''), 10);
+        if (!Number.isNaN(aNum) && !Number.isNaN(bNum)) return aNum - bNum;
+        return aId.localeCompare(bId);
+      });
+      state.data   = sortedData;
       state.status = 'succeeded';
       state.error  = null;
     },

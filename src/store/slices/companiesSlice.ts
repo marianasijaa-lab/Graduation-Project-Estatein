@@ -10,6 +10,7 @@ export const FALLBACK_COMPANIES: FirestoreCompany[] = [
     domain: 'Commercial Real Estate',
     category: 'Luxury Home Development',
     testimony: "Estatein's expertise in finding the perfect office space for our expanding operations was invaluable. They truly understand our business needs.",
+    order: 1,
   },
   {
     id: 'comp-2',
@@ -19,6 +20,7 @@ export const FALLBACK_COMPANIES: FirestoreCompany[] = [
     domain: 'Commercial Real Estate',
     category: 'Retail Space',
     testimony: "Estatein's ability to identify prime retail locations helped us expand our brand presence. They are a trusted partner in our growth.",
+    order: 2,
   },
   {
     id: 'comp-3',
@@ -28,6 +30,7 @@ export const FALLBACK_COMPANIES: FirestoreCompany[] = [
     domain: 'Residential Real Estate',
     category: 'High-Rise Construction',
     testimony: 'Working with Estatein has been a game-changer for our development projects. Their market knowledge and network are second to none.',
+    order: 3,
   },
   {
     id: 'comp-4',
@@ -37,6 +40,7 @@ export const FALLBACK_COMPANIES: FirestoreCompany[] = [
     domain: 'Luxury Real Estate',
     category: 'Premium Residential',
     testimony: 'Estatein consistently delivers exceptional results for our luxury portfolio. Their professionalism and attention to detail are unmatched.',
+    order: 4,
   },
   {
     id: 'comp-5',
@@ -46,6 +50,7 @@ export const FALLBACK_COMPANIES: FirestoreCompany[] = [
     domain: 'Mixed-Use Development',
     category: 'Urban Residential',
     testimony: 'The team at Estatein helped us identify the best urban locations for our projects. Their insight into city living trends is invaluable.',
+    order: 5,
   },
 ];
 
@@ -67,9 +72,11 @@ const companiesSlice = createSlice({
   initialState,
   reducers: {
     syncCompanies(state, action: PayloadAction<FirestoreCompany[]>) {
-      state.data   = action.payload;
+      state.data = [...action.payload].sort(
+        (a, b) => (a.order ?? Number.MAX_SAFE_INTEGER) - (b.order ?? Number.MAX_SAFE_INTEGER),
+      );
       state.status = 'succeeded';
-      state.error  = null;
+      state.error = null;
     },
     setCompaniesLoading(state) {
       state.status = 'loading';

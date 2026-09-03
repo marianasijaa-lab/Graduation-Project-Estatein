@@ -20,13 +20,13 @@ export const PropertyDetails = () => {
     );
   }
 
-  // البحث عن العقار — id الآن string (Firestore document ID)
+  // البحث عن العقار 
   const property = properties.find((p) => p.id === id);
 
   if (!property) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-white text-xl">Property not found.</p>
+        <p className="text-(--text-main) text-xl">Property not found.</p>
       </div>
     );
   }
@@ -44,26 +44,21 @@ export const PropertyDetails = () => {
     <>
       <GallerySlider
         images={galleryImages}
-        propertyName="Seaside Serenity Villa"
-        location="Malibu, California"
-        price={1250000}
+        propertyName={property.name}
+        location={property.location ?? ""}
+        price={property.priceProperties}
       />
       <PropertyDescription
-        description="Discover your own piece of paradise with the Seaside Serenity Villa. With an open floor plan, breathtaking ocean views from every room, and direct access to a pristine sandy beach, this property is the epitome of coastal living."
-        bedrooms="04"
-        bathrooms="03"
-        area="2,500 Square Feet"
-        features={[
-          "Expansive oceanfront terrace for outdoor entertaining",
-          "Gourmet kitchen with top-of-the-line appliances",
-          "Private beach access for morning strolls and sunset views",
-          "Master suite with a spa-inspired bathroom and ocean-facing balcony",
-          "Private garage and ample storage space",
-        ]}
+        description={property.descriptionLong || property.descriptionShort || ""}
+        bedrooms={property.bedrooms !== undefined ? String(property.bedrooms).padStart(2, "0") : "—"}
+        bathrooms={property.bathrooms !== undefined ? String(property.bathrooms).padStart(2, "0") : "—"}
+        area={property.size !== undefined ? `${property.size.toLocaleString()} m²` : "—"}
+        features={property.amenities ?? []}
       />
       <InquireSection
-  propertyName="Seaside Serenity Villa"
-  propertyLocation="Seaside Serenity Villa, Malibu, California"
+  propertyId={property.id}
+  propertyName={property.name}
+  propertyLocation={property.location ? `${property.name}, ${property.location}` : property.name}
 />
 <PricingDetails
   title="Comprehensive Pricing Details"

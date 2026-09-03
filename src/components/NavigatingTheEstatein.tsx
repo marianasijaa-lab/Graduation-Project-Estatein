@@ -37,7 +37,7 @@ export const NavigatingTheEstatein = () => {
   ];
 
   return (
-    <section className="w-full bg-bg-dark-1 py-8 sm:py-10 lg:py-14">
+    <section className="w-full bg-(--bg-main) py-8 sm:py-10 lg:py-14">
       <div className="site-container">
         <SectionHeader
           title="Navigating the Estatein Experience"

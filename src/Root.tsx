@@ -55,7 +55,7 @@ function Root() {
 
       <RouteTransitionOverlay onTransitionEnd={() => mainRef.current?.focus()} />
 
-      <main ref={mainRef} tabIndex={-1} className="flex-1 outline-none">
+      <main ref={mainRef} tabIndex={-1} className="flex-1 outline-none overflow-x-clip">
         <Outlet />
       </main>
 

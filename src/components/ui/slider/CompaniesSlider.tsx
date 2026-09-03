@@ -61,7 +61,7 @@ function CompanyCard({ company }: { company: FirestoreCompany }) {
       whileHover={{ y: -6 }}
       transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
       className="w-full h-full rounded-xl border border-bg-gray-1 p-5 sm:p-8 lg:p-10 flex flex-col overflow-hidden"
-      style={{ backgroundColor: "#141414", boxShadow: "0px 0px 0px 8px #191919" }}
+      style={{ backgroundColor: "var(--bg-main)", boxShadow: "0px 0px 0px 8px var(--bg-border)" }}
     >
       <div className="flex flex-col gap-6 flex-1">
         {/* ── Top row: date + name + button ── */}
@@ -69,7 +69,7 @@ function CompanyCard({ company }: { company: FirestoreCompany }) {
           <div className="flex items-start justify-between gap-4">
             <div className="flex flex-col gap-1">
               <span className="text-gray text-sm sm:text-base">{company.date}</span>
-              <h3 className="font-semibold text-2xl sm:text-3xl md:text-2xl text-white">
+              <h3 className="font-semibold text-2xl sm:text-3xl lg:text-2xl text-(--text-main)">
                 {company.heading}
               </h3>
             </div>
@@ -87,8 +87,8 @@ function CompanyCard({ company }: { company: FirestoreCompany }) {
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => {}}
-              className="w-full text-white rounded-lg py-3 px-4 text-sm font-medium transition-all"
-              style={{ backgroundColor: "#141414", border: "1px solid #262626" }}
+              className="w-full text-(--text-main) rounded-lg py-3 px-4 text-sm font-medium transition-all"
+              style={{ backgroundColor: "var(--bg-main)", border: "1px solid #262626" }}
             >
               Visit Website
             </motion.button>
@@ -100,9 +100,9 @@ function CompanyCard({ company }: { company: FirestoreCompany }) {
           <div className="flex flex-col gap-2 flex-1">
             <p className="flex items-center gap-1.5">
               <MdWindow className="text-gray" size={20} />
-              <span className="text-gray text-sm md:text-base">Domain</span>
+              <span className="text-gray text-sm lg:text-base">Domain</span>
             </p>
-            <h4 className="text-white sm:text-sm md:text-base font-medium">
+            <h4 className="text-(--text-main) sm:text-sm md:text-base font-medium">
               {company.domain}
             </h4>
           </div>
@@ -110,9 +110,9 @@ function CompanyCard({ company }: { company: FirestoreCompany }) {
           <div className="flex flex-col gap-2 flex-1">
             <p className="flex items-center gap-1.5">
               <AiOutlineThunderbolt className="text-gray" size={20} />
-              <span className="text-gray text-sm md:text-base">Category</span>
+              <span className="text-gray text-sm lg:text-base">Category</span>
             </p>
-            <h4 className="text-white sm:text-sm md:text-base font-medium">
+            <h4 className="text-(--text-main) sm:text-sm md:text-base font-medium">
               {company.category}
             </h4>
           </div>
@@ -121,7 +121,7 @@ function CompanyCard({ company }: { company: FirestoreCompany }) {
         {/* ── Testimony box ── */}
         <div className="rounded-xl border border-bg-gray-1 p-5 sm:p-6 lg:p-7 flex flex-col gap-3 flex-1">
           <p className="text-gray text-sm sm:text-base">What They Said 🤗</p>
-          <p className="text-white sm:text-base lg:text-sm leading-relaxed">
+          <p className="text-(--text-main) sm:text-base lg:text-sm leading-relaxed">
             {company.testimony}
           </p>
         </div>

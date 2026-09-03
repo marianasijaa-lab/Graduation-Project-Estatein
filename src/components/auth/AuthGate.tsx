@@ -6,10 +6,10 @@ interface AuthGateProps {
   children: ReactNode;
 }
 
-// Blocks the whole app behind the cosmetic login gate (see AuthContext.tsx) —
-// shows Login when locked, or the app once "logged in".
 export const AuthGate = ({ children }: AuthGateProps) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) return null;
 
   if (!isAuthenticated) {
     return <Login />;

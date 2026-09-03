@@ -40,7 +40,7 @@ export const DetailModal = ({ title, fields, onClose }: DetailModalProps) => {
 
   return (
     <div
-      className="fixed inset-0 z-70 flex items-start sm:items-center justify-center bg-black/60 px-4 py-6 overflow-y-auto"
+      className="modal-scroll fixed inset-0 z-70 flex items-start sm:items-center justify-center bg-black/60 px-4 py-6 overflow-y-auto"
       role="dialog"
       aria-modal="true"
       aria-labelledby="detail-modal-title"
@@ -73,7 +73,7 @@ export const DetailModal = ({ title, fields, onClose }: DetailModalProps) => {
           </button>
         </div>
 
-        <div className="px-6 sm:px-8 py-6 grid grid-cols-1 sm:grid-cols-2 gap-6 max-h-[70vh] overflow-y-auto">
+        <div className="modal-scroll px-6 sm:px-8 py-6 grid grid-cols-1 sm:grid-cols-2 gap-6 max-h-[70vh] overflow-y-auto">
           {fields.map((field) => (
             <div key={field.label} className={field.fullWidth ? "sm:col-span-2" : undefined}>
               <p className={labelClass}>{field.label}</p>

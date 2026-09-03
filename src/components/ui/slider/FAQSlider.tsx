@@ -48,9 +48,13 @@ const FAQData: FAQItem[] = [
 const FAQSlider = ({
   showAll = false,
   onBack,
+  actionLabel = 'View All',
+  onAction,
 }: {
   showAll?: boolean;
   onBack?: () => void;
+  actionLabel?: string;
+  onAction?: () => void;
 }) => {
   const { currentIndex, goNext, goPrev, itemsToShow, maxIndex } =
     useSlider(FAQData);
@@ -64,7 +68,7 @@ const FAQSlider = ({
           variant="secondary"
           className="mb-6 rounded-xl px-5 py-3.5 text-sm"
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
           {FAQData.map((card) => (
             <FAQCard
               key={card.id}
@@ -79,7 +83,7 @@ const FAQSlider = ({
   }
 
   return (
-    <div className="w-full py-8">
+    <div className="w-full py-8)">
       <BaseSlider currentIndex={currentIndex} itemsToShow={itemsToShow}>
         {FAQData.map((card) => (
           <div
@@ -102,6 +106,8 @@ const FAQSlider = ({
         itemsLength={FAQData.length}
         itemsToShow={itemsToShow}
         maxIndex={maxIndex}
+        actionLabel={actionLabel}
+        onAction={onAction}
       />
     </div>
   );

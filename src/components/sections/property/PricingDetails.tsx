@@ -1,4 +1,7 @@
+import { motion } from "framer-motion";
 import { SectionHeader } from "../../common/SectionHeader";
+import { FadeInSection } from "../../common/FadeInSection";
+import { StaggerContainer, staggerItem } from "../../common/StaggerContainer";
 
 interface PricingItem {
   label: string;
@@ -26,27 +29,30 @@ const PricingCard = ({ title, items }: PricingSection) => {
   const isMonthlyCosts = title === "Monthly Costs";
 
   return (
-    <div className="w-full rounded-[10px] border border-bg-gray-1 bg-bg-dark-1">
+    <div className="w-full rounded-[10px] border border-bg-gray-1 bg-(--bg-mian)">
       {/* ================= CARD HEADER ================= */}
 
-      <div className="relative flex h-[96px] items-center justify-between px-[32px] after:absolute after:bottom-0 after:left-[32px] after:right-[32px] after:h-px after:bg-[#262626]">
-        <h3 className="font-['Urbanist'] text-[20px] font-semibold text-white">
+      <div className="relative flex h-[80px] sm:h-[96px] items-center justify-between px-[18px] sm:px-[32px] after:absolute after:bottom-0 after:left-[18px] after:right-[18px] sm:after:left-[32px] sm:after:right-[32px] after:h-px after:bg-[#262626]">
+        <h3 className="font-['Urbanist'] text-[15px] sm:text-[18px] lg:text-[20px] font-semibold text-(--text-main)">
           {title}
         </h3>
 
         <button
           type="button"
           className="
-            h-[50px]
+            h-[38px]
+            sm:h-[50px]
             rounded-lg
             border
-            border-[#262626]
-            bg-[#1A1A1A]
-            px-[18px]
+            border-bg-gray-1
+            bg-(--bg-secondary)
+            px-[12px]
+            sm:px-[18px]
             font-['Urbanist']
-            text-[14px]
+            text-[12px]
+            sm:text-[14px]
             font-medium
-            text-white
+            text-(--text-main)
             transition
             hover:bg-[#222222]
           "
@@ -57,12 +63,12 @@ const PricingCard = ({ title, items }: PricingSection) => {
 
       {/* ================= ITEMS ================= */}
 
-      <div className="px-[15px] md:px-[32px]">
+      <div className="px-[12px] sm:px-[20px] lg:px-[32px]">
         <div
           className={
             isMonthlyCosts
               ? "grid grid-cols-1"
-              : "grid grid-cols-1 md:grid-cols-2"
+              : "grid grid-cols-1 lg:grid-cols-2"
           }
         >
           {items.map((item, index) => (
@@ -74,14 +80,14 @@ const PricingCard = ({ title, items }: PricingSection) => {
 
                 ${
                   index !== items.length - 1
-                    ? "border-b border-[#262626]"
+                    ? "border-b border-bg-gray-1"
                     : ""
                 }
 
                 ${
                   !isMonthlyCosts &&
                   item.fullWidth
-                    ? "md:col-span-2"
+                    ? "lg:col-span-2"
                     : ""
                 }
 
@@ -89,7 +95,7 @@ const PricingCard = ({ title, items }: PricingSection) => {
                   !isMonthlyCosts &&
                   !item.fullWidth &&
                   index % 2 === 1
-                    ? "md:relative md:pl-[12px] lg:pl-[12px] md:before:absolute md:before:left-0 md:before:top-[30px] md:before:bottom-[30px] md:before:w-px md:before:bg-[#262626]"
+                    ? "lg:relative lg:pl-[12px] lg:before:absolute lg:before:left-0 lg:before:top-[30px] lg:before:bottom-[30px] lg:before:w-px lg:before:bg-bg-gray-1"
                     : ""
                 }
 
@@ -97,7 +103,7 @@ const PricingCard = ({ title, items }: PricingSection) => {
                   !isMonthlyCosts &&
                   !item.fullWidth &&
                   index % 2 === 0
-                    ? "md:pr-[12px] lg:pr-[12px]"
+                    ? "lg:pr-[12px]"
                     : ""
                 }`
               }
@@ -107,10 +113,11 @@ const PricingCard = ({ title, items }: PricingSection) => {
               <p
                 className="
                   font-['Urbanist']
-                  text-[16px]
+                  text-[13px]
+                  sm:text-[15px]
                   font-medium
                   text-gray
-                  md:text-sm
+                  lg:text-sm
                 "
               >
                 {item.label}
@@ -118,14 +125,19 @@ const PricingCard = ({ title, items }: PricingSection) => {
 
               {/* Value + Note */}
 
-              <div className="mt-[8px] grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-[16px] md:flex md:flex-wrap">
+              <div className="mt-[8px] grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-[10px] sm:gap-[16px] lg:flex lg:flex-wrap min-w-0">
                 <span
-                  className="
-                    text-[22px]
-                    font-semibold
-                    text-white
-                    md:text-[20px]
-                  "
+                  className={`
+                    
+                    text-(--text-main)
+                    break-words
+                    min-w-0
+                    max-w-full
+                    ${item.value.length > 20
+                      ? "text-[14px] sm:text-[14px] lg:text-[16px] font-normal"
+                      : "text-[18px] sm:text-[20px] lg:text-[20px] font-semibold"
+                    }
+                  `}
                 >
                   {item.value}
                 </span>
@@ -136,18 +148,21 @@ const PricingCard = ({ title, items }: PricingSection) => {
                       min-w-0
                       w-fit
                       max-w-full
-                      ${item.note.length > 35 ? "rounded-[6px]" : "rounded-[28px]"}
-                      bg-bg-dark
+                      ${item.note.length > 35 ? "rounded-md" : "rounded-[28px]"}
+                      bg-(--bg-secondary)
                       border border-bg-gray-1
-                      px-[12px]
-                      py-[8px]
+                      px-[8px]
+                      sm:px-[12px]
+                      py-[6px]
+                      sm:py-[8px]
                       font-['Urbanist']
-                      text-[16px]
+                      text-[11px]
+                      sm:text-[13px]
                       font-medium
                       leading-[150%]
                       text-gray
-                      md:rounded-full
-                      md:text-[13px]
+                      lg:rounded-full
+                      lg:text-[13px]
                     `}
                   >
                     {item.note}
@@ -170,7 +185,7 @@ const PricingDetails = ({
   sections,
 }: PricingDetailsProps) => {
   return (
-    <section className="w-full overflow-x-hidden bg-[#141414] text-white">
+    <section className="w-full overflow-x-hidden bg-(--bg-main) text-(--text-main)">
       <div
         className="
           mx-auto
@@ -194,7 +209,8 @@ const PricingDetails = ({
 
         {/* ================= NOTE ================= */}
 
-        <div
+        <FadeInSection
+          direction="up"
           className="
             mt-[50px]
             flex
@@ -203,12 +219,16 @@ const PricingDetails = ({
             flex-col
             items-start
             gap-[16px]
-            rounded-[8px]
+            rounded-lg
             border
-            border-[#262626]
-            bg-[#1A1A1A]
+            border-bg-gray-1
+            bg-(--bg-secondary)
             px-[25px]
             py-[22px]
+            md:flex-row
+            md:items-center
+            md:gap-[25px]
+            md:px-[30px]
             lg:flex-row
             lg:items-center
             lg:gap-[25px]
@@ -224,14 +244,23 @@ const PricingDetails = ({
               font-['Urbanist']
               text-[18px]
               font-semibold
-              text-white
+              text-(--text-main)
               after:absolute
               after:bottom-0
               after:left-0
               after:right-0
               after:h-px
               after:w-full
-              after:bg-[#262626]
+              after:bg-bg-gray-1
+              md:w-auto
+              md:pb-0
+              md:pr-[25px]
+              md:after:bottom-auto
+              md:after:left-auto
+              md:after:top-1/2
+              md:after:h-[42px]
+              md:after:w-px
+              md:after:-translate-y-1/2
               lg:w-auto
               lg:pb-0
               lg:pr-[25px]
@@ -257,7 +286,7 @@ const PricingDetails = ({
           >
             {noteText}
           </p>
-        </div>
+        </FadeInSection>
 
         {/* ================= PRICING AREA ================= */}
 
@@ -267,6 +296,9 @@ const PricingDetails = ({
             grid
             grid-cols-1
             gap-[30px]
+
+            md:grid-cols-[minmax(0,150px)_minmax(0,1fr)]
+            md:gap-[30px]
 
             lg:grid-cols-[minmax(0,170px)_minmax(0,1fr)]
             lg:gap-[40px]
@@ -303,7 +335,7 @@ const PricingDetails = ({
                 text-[24px]
                 font-semibold
                 leading-[150%]
-                text-white
+                text-(--text-main)
                 lg:text-[26px]
               "
             >
@@ -312,24 +344,13 @@ const PricingDetails = ({
           </div>
 
           {/* ================= RIGHT CONTAINERS ================= */}
-
-          <div
-            className="
-              flex
-              w-full
-              min-w-0
-              flex-col
-              gap-[30px]
-            "
-          >
+          <StaggerContainer className="flex w-full min-w-0 flex-col gap-[30px]" staggerDelay={0.1}>
             {sections.map((section, index) => (
-              <PricingCard
-                key={index}
-                title={section.title}
-                items={section.items}
-              />
+              <motion.div key={index} variants={staggerItem}>
+                <PricingCard title={section.title} items={section.items} />
+              </motion.div>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </div>
     </section>

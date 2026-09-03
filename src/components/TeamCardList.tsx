@@ -1,4 +1,5 @@
-
+import { motion } from "framer-motion";
+import { StaggerContainer, staggerItem } from "./common/StaggerContainer";
 
 
 interface TeamMember {
@@ -17,9 +18,12 @@ interface TeamCardsListProps {
 
 export const TeamCardsList = ({ members,hello }:TeamCardsListProps) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 2xl:gap-[30px]">
+    <StaggerContainer className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 2xl:gap-[30px]">
       {members.map((member) => (
-        <div 
+        <motion.div 
+          variants={staggerItem}
+          whileHover={{y: -4}}
+          transition={{duration: 0.25}}
           key={member.id} 
           className=" relative border border-bg-gray-1 rounded-xl  max-sm:p-5 max-2xl:p-6 2xl:p-[30px] flex flex-col items-center text-center"
         >
@@ -41,12 +45,12 @@ export const TeamCardsList = ({ members,hello }:TeamCardsListProps) => {
           </div>
 
          
-          <h3 className="text-white   max-sm:text-lg max-2xl:text-xl 2xl:text-2xl font-semibold text-center   max-sm:pb-[2px] max-2xl:pb-1 2xl:pb-[6px]">{member.name}</h3>
+          <h3 className="text-(--text-main)   max-sm:text-lg max-2xl:text-xl 2xl:text-2xl font-semibold text-center   max-sm:pb-[2px] max-2xl:pb-1 2xl:pb-[6px]">{member.name}</h3>
           <p className="text-gray font-medium text-center  max-sm:text-sm max-2xl:text-base 2xl:text-lg   max-sm:pb-4 max-2xl:pb-5 2xl:pb-6 ">{member.role}</p>
 
        
-          <div className="w-full bg-bg-dark border border-bg-gray-1 rounded-[100px] max-sm:py-2 max-2xl:py-[10px] 2xl:py-[14px]  max-sm:pr-2 max-2xl:pr-[10px] 2xl:pr-[14px]  max-sm:pl-6 max-2xl:pl-5 2xl:pl-6 flex items-center justify-between gap-5">
-            <span className="text-white max-sm:text-sm max-2xl:text-base 2xl:text-lg font-medium">{hello}</span>
+          <div className="w-full bg-(--bg-secondary) border border-bg-gray-1 rounded-[100px] max-sm:py-2 max-2xl:py-[10px] 2xl:py-[14px]  max-sm:pr-2 max-2xl:pr-[10px] 2xl:pr-[14px]  max-sm:pl-6 max-2xl:pl-5 2xl:pl-6 flex items-center justify-between gap-5">
+            <span className="text-(--text-main) max-sm:text-sm max-2xl:text-base 2xl:text-lg font-medium">{hello}</span>
             
 
             <div className="bg-primary max-sm:p-[14px] max-2xl:p-2 2xl:p-[10px] rounded-full cursor-pointer hover:bg-opacity-80 transition flex items-center justify-center">
@@ -57,8 +61,8 @@ export const TeamCardsList = ({ members,hello }:TeamCardsListProps) => {
               />
             </div>
           </div>
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </StaggerContainer>
   );
 };
