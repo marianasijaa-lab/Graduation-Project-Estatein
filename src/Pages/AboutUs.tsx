@@ -16,7 +16,8 @@ const OurAchievements: React.FC = () => {
 
   return (
     <section
-      className="w-full transition-colors bg-(--bg-main)"
+      id="achievements"
+      className="w-full transition-colors bg-(--bg-main) scroll-mt-24"
     >
       <div className="site-container py-14 sm:py-16 lg:py-20">
         {/* Header */}
@@ -65,7 +66,8 @@ const OurValues: React.FC = () => {
 
   return (
     <section
-      className="w-full transition-colors bg-(--bg-main)"
+      id="values"
+      className="w-full transition-colors bg-(--bg-main) scroll-mt-24"
     >
       <div className="site-container py-14 sm:py-16 lg:py-20">
         <div className="flex flex-col lg:flex-row gap-6">
@@ -140,11 +142,12 @@ const OurValuedClients: React.FC = () => {
 
   return (
     <motion.section
+      id="valued-clients"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6 }}
-      className="w-full transition-colors bg-(--bg-main)" 
+      className="w-full transition-colors bg-(--bg-main) scroll-mt-24"
     >
       <div className="site-container py-14 sm:py-16 lg:py-20">
         <SectionHeader

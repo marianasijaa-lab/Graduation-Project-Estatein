@@ -16,18 +16,19 @@ const Contact = () => {
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>("idle");
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const handleFormSubmit = async (data: Record<string, string>) => {
+  const handleFormSubmit = async (data: Record<string, unknown>) => {
     setSubmitStatus("submitting");
     setSubmitError(null);
+    const asString = (value: unknown) => (typeof value === "string" ? value : "");
     try {
       await addDocument<FirestoreContact>("contacts", {
-        firstName: data.firstName || "",
-        lastName: data.lastName || "",
-        email: data.email || "",
-        phone: data.phone || "",
-        message: data.message || "",
-        inquiryType: data.inquiryType || undefined,
-        howDidYouHear: data.howDidYouHear || undefined,
+        firstName: asString(data.firstName),
+        lastName: asString(data.lastName),
+        email: asString(data.email),
+        phone: asString(data.phone),
+        message: asString(data.message),
+        inquiryType: asString(data.inquiryType) || undefined,
+        howDidYouHear: asString(data.howDidYouHear) || undefined,
         status: "new",
       });
       setSubmitStatus("submitted");

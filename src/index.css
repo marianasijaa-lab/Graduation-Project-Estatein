@@ -299,6 +299,29 @@ select:-webkit-autofill {
   .animate-splash-progress {
     animation: splash-progress 2400ms linear forwards;
   }
+
+  /* One-shot highlight for an item deep-linked to via an anchor
+     (e.g. an office card reached from the dashboard "View on site" button).
+     Added by the hash-scroll effect in Root.tsx and removed after it plays,
+     so it never leaves a permanent style. */
+  @keyframes highlight-pulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(112, 59, 247, 0);
+    }
+    30% {
+      transform: scale(1.04);
+      box-shadow: 0 0 24px 4px rgba(112, 59, 247, 0.5);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(112, 59, 247, 0);
+    }
+  }
+
+  .highlight-pulse {
+    animation: highlight-pulse 1300ms ease-out;
+  }
 }
 
 /* Footer email input placeholder color */

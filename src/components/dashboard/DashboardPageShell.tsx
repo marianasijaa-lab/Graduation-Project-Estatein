@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { useLocation } from "react-router";
+import { DemoDataBanner } from "./DemoDataBanner";
 
 // ── Shared variants ───
 
@@ -133,6 +134,7 @@ export const DashboardPageShell = ({ children }: DashboardPageShellProps) => {
         transition={{ duration: 0.22, ease: [0.25, 0.1, 0.25, 1] }}
         className="flex flex-col gap-6"
       >
+        <DemoDataBanner />
         {children}
       </motion.div>
     </AnimatePresence>

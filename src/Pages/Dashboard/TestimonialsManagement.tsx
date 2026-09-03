@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiEdit2, FiSearch, FiTrash2, FiHash } from "react-icons/fi";
+import { HiOutlineEye } from "react-icons/hi2";
 import { useTheme } from "../../Context/ThemeContext";
 import { useTestimonials } from "../../hooks/useTestimonials";
 import { addDocument, updateDocument, deleteDocument, renameDocumentId } from "../../api/firestore";
+import { notifySuccess, notifyError, getErrorMessage } from "../../utils/notify";
 import type { FirestoreTestimonial } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { TestimonialFormModal } from "../../components/sections/dashboard/TestimonialFormModal";
@@ -64,24 +66,43 @@ export const TestimonialsManagement = () => {
 
   const handleFormSubmit = async (values: Omit<FirestoreTestimonial, "id">) => {
     try {
-      if (formModal?.mode === "edit") await updateDocument<FirestoreTestimonial>("testimonials", formModal.testimonial.id, values);
-      else await addDocument<FirestoreTestimonial>("testimonials", values);
-    } catch (error) { console.error("Failed to save testimonial:", error); }
+      if (formModal?.mode === "edit") {
+        await updateDocument<FirestoreTestimonial>("testimonials", formModal.testimonial.id, values);
+        notifySuccess("Testimonial updated");
+      } else {
+        await addDocument<FirestoreTestimonial>("testimonials", values);
+        notifySuccess("Testimonial added");
+      }
+    } catch (error) {
+      console.error("Failed to save testimonial:", error);
+      notifyError(getErrorMessage(error, "Couldn't save the testimonial."));
+    }
     setFormModal(null);
   };
 
   const confirmDelete = async () => {
     if (deleteTarget) {
-      try { await deleteDocument("testimonials", deleteTarget.id); }
-      catch (error) { console.error("Failed to delete testimonial:", error); }
+      try {
+        await deleteDocument("testimonials", deleteTarget.id);
+        notifySuccess("Testimonial deleted");
+      } catch (error) {
+        console.error("Failed to delete testimonial:", error);
+        notifyError(getErrorMessage(error, "Couldn't delete the testimonial."));
+      }
     }
     setDeleteTarget(null);
   };
 
     const handleRename = async (newId: string) => {
     if (!renameTarget) return;
-    await renameDocumentId("testimonials", renameTarget.id, newId);
-    setRenameTarget(null);
+    try {
+      await renameDocumentId("testimonials", renameTarget.id, newId);
+      setRenameTarget(null);
+      notifySuccess("Testimonial ID renamed");
+    } catch (error) {
+      notifyError(getErrorMessage(error, "Couldn't rename the ID."));
+      throw error; // keep RenameIdDialog's inline error visible
+    }
   };
 
   const openRowDetail = (t: FirestoreTestimonial) => setDetailTarget(t);
@@ -154,6 +175,11 @@ export const TestimonialsManagement = () => {
                   <td className="px-5 py-3 text-primary-light whitespace-nowrap" title={`${testimonial.rating}/5`}>{renderStars(testimonial.rating)}</td>
                   <td className="px-5 py-3">
                     <div className="flex items-center justify-end gap-2">
+                        <motion.a href="/#testimonials"
+                          onClick={(e) => e.stopPropagation()} aria-label="View on site" title="View on site"
+                          {...iconBtnHover} className={renameBtnClass}>
+                          <HiOutlineEye className="w-4 h-4" />
+                        </motion.a>
                         <motion.button type="button" onClick={(e) => { e.stopPropagation(); setRenameTarget(testimonial); }}
                           aria-label={`Rename ID`} {...iconBtnHover} className={renameBtnClass}>
                           <FiHash className="w-4 h-4" />

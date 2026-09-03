@@ -4,6 +4,7 @@ import { getDatabase, type Database } from 'firebase/database';
 import { getAuth, type Auth } from 'firebase/auth';
 import { validateFirebaseEnvVars } from './validateEnvVars';
 
+// Check that all required env vars are present.
 const missingVars = validateFirebaseEnvVars(import.meta.env as Record<string, string | undefined>);
 
 const firebaseConfig = {
@@ -16,6 +17,7 @@ const firebaseConfig = {
   databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
 };
 
+// Only initialize Firebase once every required env var is present.
 let app: FirebaseApp | null = null;
 let firestoreDb: Firestore | null = null;
 let realtimeDb: Database | null = null;
@@ -26,8 +28,16 @@ if (missingVars.length === 0) {
   firestoreDb = getFirestore(app);
   realtimeDb = getDatabase(app);
   auth = getAuth(app);
+
+  // TEMP DIAGNOSTIC — remove after confirming the project. Verify this matches
+  // the Firebase Console project you're inspecting for data/rules.
+  console.info(
+    `[Firebase] connected to projectId: ${firebaseConfig.projectId} · authDomain: ${firebaseConfig.authDomain}`,
+  );
 } else {
-  console.warn('[Firebase] التطبيق يعمل بدون Firebase — يرجى ملء ملف .env بقيم المشروع.');
+  console.warn(
+    '[Firebase] Running without Firebase — please fill in the .env file with your project values.',
+  );
 }
 
 export { firestoreDb, realtimeDb, auth };

@@ -18,17 +18,23 @@ export const ServicesPage: React.FC = () => {
 
       <Services />
 
-      <FadeInSection direction="up" delay={0.1}>
-        <UnlockPropertyValue />
-      </FadeInSection>
+      <section id="unlock-property-value" className="scroll-mt-24">
+        <FadeInSection direction="up" delay={0.1}>
+          <UnlockPropertyValue />
+        </FadeInSection>
+      </section>
 
-      <FadeInSection direction="up" delay={0.2}>
-        <EffortlessPropertyManagement />
-      </FadeInSection>
+      <section id="effortless-property-management" className="scroll-mt-24">
+        <FadeInSection direction="up" delay={0.2}>
+          <EffortlessPropertyManagement />
+        </FadeInSection>
+      </section>
 
-      <FadeInSection direction="up" delay={0.3}>
-        <SmartInvestments />
-      </FadeInSection>
+      <section id="smart-investments" className="scroll-mt-24">
+        <FadeInSection direction="up" delay={0.3}>
+          <SmartInvestments />
+        </FadeInSection>
+      </section>
     </div>
   );
 };

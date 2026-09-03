@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiEdit2, FiSearch, FiTrash2, FiHash } from "react-icons/fi";
+import { HiOutlineEye } from "react-icons/hi2";
 import { useTheme } from "../../Context/ThemeContext";
 import { useValues } from "../../hooks/useValues";
 import { addDocument, updateDocument, deleteDocument, renameDocumentId } from "../../api/firestore";
+import { notifySuccess, notifyError, getErrorMessage } from "../../utils/notify";
 import type { FirestoreValue } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { ValueFormModal } from "../../components/sections/dashboard/ValueFormModal";
@@ -47,24 +49,43 @@ export const ValuesManagement = () => {
 
   const handleFormSubmit = async (vals: Omit<FirestoreValue, "id">) => {
     try {
-      if (formModal?.mode === "edit") await updateDocument<FirestoreValue>("values", formModal.value.id, vals);
-      else await addDocument<FirestoreValue>("values", vals);
-    } catch (error) { console.error("Failed to save value:", error); }
+      if (formModal?.mode === "edit") {
+        await updateDocument<FirestoreValue>("values", formModal.value.id, vals);
+        notifySuccess("Value updated");
+      } else {
+        await addDocument<FirestoreValue>("values", vals);
+        notifySuccess("Value added");
+      }
+    } catch (error) {
+      console.error("Failed to save value:", error);
+      notifyError(getErrorMessage(error, "Couldn't save the value."));
+    }
     setFormModal(null);
   };
 
   const confirmDelete = async () => {
     if (deleteTarget) {
-      try { await deleteDocument("values", deleteTarget.id); }
-      catch (error) { console.error("Failed to delete value:", error); }
+      try {
+        await deleteDocument("values", deleteTarget.id);
+        notifySuccess("Value deleted");
+      } catch (error) {
+        console.error("Failed to delete value:", error);
+        notifyError(getErrorMessage(error, "Couldn't delete the value."));
+      }
     }
     setDeleteTarget(null);
   };
 
     const handleRename = async (newId: string) => {
     if (!renameTarget) return;
-    await renameDocumentId("values", renameTarget.id, newId);
-    setRenameTarget(null);
+    try {
+      await renameDocumentId("values", renameTarget.id, newId);
+      setRenameTarget(null);
+      notifySuccess("Value ID renamed");
+    } catch (error) {
+      notifyError(getErrorMessage(error, "Couldn't rename the ID."));
+      throw error; // keep RenameIdDialog's inline error visible
+    }
   };
 
   const openRowDetail = (v: FirestoreValue) => setDetailTarget(v);
@@ -127,6 +148,11 @@ export const ValuesManagement = () => {
                   <td className={`px-5 py-3 max-w-md truncate ${isDark ? "text-gray" : "text-gray-600"}`} title={value.description}>{value.description}</td>
                   <td className="px-5 py-3">
                     <div className="flex items-center justify-end gap-2">
+                        <motion.a href="/about#values"
+                          onClick={(e) => e.stopPropagation()} aria-label="View on site" title="View on site"
+                          {...iconBtnHover} className={renameBtnClass}>
+                          <HiOutlineEye className="w-4 h-4" />
+                        </motion.a>
                         <motion.button type="button" onClick={(e) => { e.stopPropagation(); setRenameTarget(value); }}
                           aria-label={`Rename ID`} {...iconBtnHover} className={renameBtnClass}>
                           <FiHash className="w-4 h-4" />

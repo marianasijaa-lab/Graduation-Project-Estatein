@@ -1,20 +1,19 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiEdit2, FiSearch, FiTrash2, FiHash } from "react-icons/fi";
+import { FiSearch, FiTrash2, FiHash } from "react-icons/fi";
 import { useTheme } from "../../Context/ThemeContext";
 import { useContacts } from "../../hooks/useContacts";
-import { addDocument, updateDocument, deleteDocument, renameDocumentId } from "../../api/firestore";
+import { updateDocument, deleteDocument, renameDocumentId } from "../../api/firestore";
+import { notifySuccess, notifyError, getErrorMessage } from "../../utils/notify";
 import type { ContactStatus, FirestoreContact } from "../../store/types";
 import { ConfirmDialog } from "../../components/sections/dashboard/ConfirmDialog";
 import { RenameIdDialog } from "../../components/sections/dashboard/RenameIdDialog";
 import { DetailModal, type DetailField } from "../../components/sections/dashboard/DetailModal";
 import {
-  DashboardPageShell, staggerItem, rowStagger, rowVariants,
+  DashboardPageShell, staggerItem, iconBtnHover,
   deleteBtnHover, cardHoverProps, SkeletonRow, SkeletonCard,
   tableRowVariants,
 } from "../../components/dashboard/DashboardPageShell";
-
-const shortId = (id: string) => id.length > 8 ? id.slice(0, 8) : id;
 
 const ALL_STATUSES = "All";
 
@@ -78,22 +77,38 @@ export const InquiriesManagement = () => {
 
   const handleStatusChange = async (contact: FirestoreContact, next: ContactStatus) => {
     if (contact.status === next) return;
-    try { await updateDocument<FirestoreContact>("contacts", contact.id, { status: next }); }
-    catch (error) { console.error("Failed to update inquiry status:", error); }
+    try {
+      await updateDocument<FirestoreContact>("contacts", contact.id, { status: next });
+      notifySuccess("Inquiry status updated");
+    } catch (error) {
+      console.error("Failed to update inquiry status:", error);
+      notifyError(getErrorMessage(error, "Couldn't update the status."));
+    }
   };
 
   const confirmDelete = async () => {
     if (deleteTarget) {
-      try { await deleteDocument("contacts", deleteTarget.id); }
-      catch (error) { console.error("Failed to delete inquiry:", error); }
+      try {
+        await deleteDocument("contacts", deleteTarget.id);
+        notifySuccess("Inquiry deleted");
+      } catch (error) {
+        console.error("Failed to delete inquiry:", error);
+        notifyError(getErrorMessage(error, "Couldn't delete the inquiry."));
+      }
     }
     setDeleteTarget(null);
   };
 
     const handleRename = async (newId: string) => {
     if (!renameTarget) return;
-    await renameDocumentId("contacts", renameTarget.id, newId);
-    setRenameTarget(null);
+    try {
+      await renameDocumentId("contacts", renameTarget.id, newId);
+      setRenameTarget(null);
+      notifySuccess("Inquiry ID renamed");
+    } catch (error) {
+      notifyError(getErrorMessage(error, "Couldn't rename the ID."));
+      throw error; // keep RenameIdDialog's inline error visible
+    }
   };
 
   const openRowDetail = (c: FirestoreContact) => setDetailTarget(c);

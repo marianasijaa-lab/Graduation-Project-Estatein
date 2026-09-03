@@ -1,9 +1,11 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiEdit2, FiSearch, FiTrash2, FiHash } from "react-icons/fi";
+import { HiOutlineEye } from "react-icons/hi2";
 import { useTheme } from "../../Context/ThemeContext";
 import { useCompanies } from "../../hooks/useCompanies";
 import { addDocument, updateDocument, deleteDocument, renameDocumentId } from "../../api/firestore";
+import { notifySuccess, notifyError, getErrorMessage } from "../../utils/notify";
 import type { FirestoreCompany } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { ClientFormModal } from "../../components/sections/dashboard/ClientFormModal";
@@ -62,24 +64,43 @@ export const ClientsManagement = () => {
 
   const handleFormSubmit = async (values: Omit<FirestoreCompany, "id">) => {
     try {
-      if (formModal?.mode === "edit") await updateDocument<FirestoreCompany>("companies", formModal.client.id, values);
-      else await addDocument<FirestoreCompany>("companies", values);
-    } catch (error) { console.error("Failed to save client:", error); }
+      if (formModal?.mode === "edit") {
+        await updateDocument<FirestoreCompany>("companies", formModal.client.id, values);
+        notifySuccess("Client updated");
+      } else {
+        await addDocument<FirestoreCompany>("companies", values);
+        notifySuccess("Client added");
+      }
+    } catch (error) {
+      console.error("Failed to save client:", error);
+      notifyError(getErrorMessage(error, "Couldn't save the client."));
+    }
     setFormModal(null);
   };
 
   const confirmDelete = async () => {
     if (deleteTarget) {
-      try { await deleteDocument("companies", deleteTarget.id); }
-      catch (error) { console.error("Failed to delete client:", error); }
+      try {
+        await deleteDocument("companies", deleteTarget.id);
+        notifySuccess("Client deleted");
+      } catch (error) {
+        console.error("Failed to delete client:", error);
+        notifyError(getErrorMessage(error, "Couldn't delete the client."));
+      }
     }
     setDeleteTarget(null);
   };
 
     const handleRename = async (newId: string) => {
     if (!renameTarget) return;
-    await renameDocumentId("companies", renameTarget.id, newId);
-    setRenameTarget(null);
+    try {
+      await renameDocumentId("companies", renameTarget.id, newId);
+      setRenameTarget(null);
+      notifySuccess("Client ID renamed");
+    } catch (error) {
+      notifyError(getErrorMessage(error, "Couldn't rename the ID."));
+      throw error; // keep RenameIdDialog's inline error visible
+    }
   };
 
   const openRowDetail = (c: FirestoreCompany) => setDetailTarget(c);
@@ -152,6 +173,11 @@ export const ClientsManagement = () => {
                   <td className={`px-5 py-3 max-w-[180px] truncate ${isDark ? "text-gray" : "text-gray-600"}`} title={client.testimony}>{client.testimony}</td>
                   <td className="px-5 py-3">
                     <div className="flex items-center justify-end gap-2">
+                        <motion.a href="/about#valued-clients"
+                          onClick={(e) => e.stopPropagation()} aria-label="View on site" title="View on site"
+                          {...iconBtnHover} className={renameBtnClass}>
+                          <HiOutlineEye className="w-4 h-4" />
+                        </motion.a>
                         <motion.button type="button" onClick={(e) => { e.stopPropagation(); setRenameTarget(client); }}
                           aria-label={`Rename ID`} {...iconBtnHover} className={renameBtnClass}>
                           <FiHash className="w-4 h-4" />

@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router';
 import { Navbar } from './components/Layout/Navbar';
 import { TopBanner } from './components/Layout/TopBanner';
@@ -8,6 +8,14 @@ import { CtaSection } from './components/sections/cta/CTA';
 import { useTheme } from './Context/ThemeContext';
 import { RouteTransitionOverlay } from './components/common/RouteTransitionOverlay';
 
+const pagePaths: Record<PageId, string> = {
+  home: "/",
+  about: "/about",
+  properties: "/properties",
+  services: "/services",
+  contact: "/contact",
+};
+
 function Root() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,8 +24,53 @@ function Root() {
 
   const isDark = theme === 'dark';
 
-  const currentPath = location.pathname.replace("/", "") || "home";
-  const activePage = (currentPath === "" ? "home" : currentPath) as PageId;
+  useEffect(() => {
+    history.scrollRestoration = 'manual';
+
+    // When the app is opened with a hash (e.g. /contact#office-abc from the
+    // dashboard's "View on site" links), scroll to that element once it exists.
+    // Data-driven sections mount asynchronously, so retry briefly.
+    const targetId = window.location.hash.slice(1);
+    if (targetId) {
+      let attempts = 0;
+      let highlightTimer: number | undefined;
+
+      const scrollToTarget = () => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+          // Per-item anchors (only the Offices cards use `office-<id>`) get a
+          // brief one-shot pulse so the specific card stands out. Section-level
+          // anchors (#testimonials, #achievements, …) wrap a whole section /
+          // carousel, so they are left with plain scroll-to behaviour.
+          if (targetId.startsWith('office-')) {
+            el.classList.add('highlight-pulse');
+            highlightTimer = window.setTimeout(() => {
+              el.classList.remove('highlight-pulse');
+            }, 1600);
+          }
+        } else if (attempts++ < 40) {
+          window.setTimeout(scrollToTarget, 100);
+        }
+      };
+
+      scrollToTarget();
+      return () => {
+        if (highlightTimer) window.clearTimeout(highlightTimer);
+      };
+    }
+
+    window.scrollTo(0, 0);
+  }, []);
+
+  const activePage = (
+    location.pathname.startsWith("/property-details/")
+      ? null
+      : Object.entries(pagePaths).find(
+          ([, path]) => path === location.pathname,
+        )?.[0] ?? "home"
+  ) as PageId | null;
 
   return (
     <div
@@ -32,7 +85,7 @@ function Root() {
       />
       <Navbar
         activePage={activePage}
-        onNavigate={(page) => navigate(page === "home" ? "/" : `/${page}`)}
+        onNavigate={(page) => navigate(pagePaths[page])}
       />
 
       <RouteTransitionOverlay onTransitionEnd={() => mainRef.current?.focus()} />

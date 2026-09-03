@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiEdit2, FiSearch, FiTrash2, FiHash } from "react-icons/fi";
+import { HiOutlineEye } from "react-icons/hi2";
 import { useTheme } from "../../Context/ThemeContext";
 import { useProperties } from "../../hooks/useProperties";
 import { addDocument, updateDocument, deleteDocument, renameDocumentId } from "../../api/firestore";
+import { notifySuccess, notifyError, getErrorMessage } from "../../utils/notify";
 import type { FirestoreProperty } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { PropertyFormModal } from "../../components/sections/dashboard/PropertyFormModal";
@@ -70,26 +72,43 @@ export const PropertiesManagement = () => {
 
   const handleFormSubmit = async (values: Omit<FirestoreProperty, "id">) => {
     try {
-      if (formModal?.mode === "edit") await updateDocument<FirestoreProperty>("properties", formModal.property.id, values);
-      else await addDocument<FirestoreProperty>("properties", values);
+      if (formModal?.mode === "edit") {
+        await updateDocument<FirestoreProperty>("properties", formModal.property.id, values);
+        notifySuccess("Property updated");
+      } else {
+        await addDocument<FirestoreProperty>("properties", values);
+        notifySuccess("Property added");
+      }
       setFormModal(null);
     } catch (error) {
       console.error("Failed to save property:", error);
-      alert(`Failed to save: ${error instanceof Error ? error.message : String(error)}`);
+      notifyError(getErrorMessage(error, "Couldn't save the property."));
     }
   };
 
   const confirmDelete = async () => {
     if (deleteTarget) {
-      try { await deleteDocument("properties", deleteTarget.id); setDeleteTarget(null); }
-      catch (error) { console.error("Failed to delete property:", error); alert(`Failed to delete: ${error instanceof Error ? error.message : String(error)}`); setDeleteTarget(null); }
-    } else { setDeleteTarget(null); }
+      try {
+        await deleteDocument("properties", deleteTarget.id);
+        notifySuccess("Property deleted");
+      } catch (error) {
+        console.error("Failed to delete property:", error);
+        notifyError(getErrorMessage(error, "Couldn't delete the property."));
+      }
+    }
+    setDeleteTarget(null);
   };
 
     const handleRename = async (newId: string) => {
     if (!renameTarget) return;
-    await renameDocumentId("properties", renameTarget.id, newId);
-    setRenameTarget(null);
+    try {
+      await renameDocumentId("properties", renameTarget.id, newId);
+      setRenameTarget(null);
+      notifySuccess("Property ID renamed");
+    } catch (error) {
+      notifyError(getErrorMessage(error, "Couldn't rename the ID."));
+      throw error; // keep RenameIdDialog's inline error visible
+    }
   };
 
   const openRowDetail = (p: FirestoreProperty) => setDetailTarget(p);
@@ -177,6 +196,11 @@ export const PropertiesManagement = () => {
                   <td className={`px-5 py-3 font-medium ${isDark ? "text-white" : "text-gray-900"}`}>{property.currency ?? "USD"} {property.priceProperties.toLocaleString()}</td>
                   <td className="px-5 py-3">
                     <div className="flex items-center justify-end gap-2">
+                        <motion.a href={`/property-details/${property.id}`}
+                          onClick={(e) => e.stopPropagation()} aria-label="View on site" title="View on site"
+                          {...iconBtnHover} className={renameBtnClass}>
+                          <HiOutlineEye className="w-4 h-4" />
+                        </motion.a>
                         <motion.button type="button" onClick={(e) => { e.stopPropagation(); setRenameTarget(property); }}
                           aria-label={`Rename ID`} {...iconBtnHover} className={renameBtnClass}>
                           <FiHash className="w-4 h-4" />

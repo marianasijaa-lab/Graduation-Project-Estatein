@@ -1,9 +1,11 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiEdit2, FiSearch, FiTrash2, FiHash } from "react-icons/fi";
+import { HiOutlineEye } from "react-icons/hi2";
 import { useTheme } from "../../Context/ThemeContext";
 import { useOffices } from "../../hooks/useOffices";
 import { addDocument, updateDocument, deleteDocument, renameDocumentId } from "../../api/firestore";
+import { notifySuccess, notifyError, getErrorMessage } from "../../utils/notify";
 import type { FirestoreOffice } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { OfficeFormModal } from "../../components/sections/dashboard/OfficeFormModal";
@@ -72,26 +74,43 @@ export const OfficesManagement = () => {
 
   const handleFormSubmit = async (values: Omit<FirestoreOffice, "id">) => {
     try {
-      if (formModal?.mode === "edit") await updateDocument<FirestoreOffice>("offices", formModal.office.id, values);
-      else await addDocument<FirestoreOffice>("offices", values);
+      if (formModal?.mode === "edit") {
+        await updateDocument<FirestoreOffice>("offices", formModal.office.id, values);
+        notifySuccess("Office updated");
+      } else {
+        await addDocument<FirestoreOffice>("offices", values);
+        notifySuccess("Office added");
+      }
       setFormModal(null);
     } catch (error) {
       console.error("Failed to save office:", error);
-      alert(`Failed to save: ${error instanceof Error ? error.message : String(error)}`);
+      notifyError(getErrorMessage(error, "Couldn't save the office."));
     }
   };
 
   const confirmDelete = async () => {
     if (deleteTarget) {
-      try { await deleteDocument("offices", deleteTarget.id); setDeleteTarget(null); }
-      catch (error) { console.error("Failed to delete office:", error); alert(`Failed to delete: ${error instanceof Error ? error.message : String(error)}`); setDeleteTarget(null); }
-    } else { setDeleteTarget(null); }
+      try {
+        await deleteDocument("offices", deleteTarget.id);
+        notifySuccess("Office deleted");
+      } catch (error) {
+        console.error("Failed to delete office:", error);
+        notifyError(getErrorMessage(error, "Couldn't delete the office."));
+      }
+    }
+    setDeleteTarget(null);
   };
 
     const handleRename = async (newId: string) => {
     if (!renameTarget) return;
-    await renameDocumentId("offices", renameTarget.id, newId);
-    setRenameTarget(null);
+    try {
+      await renameDocumentId("offices", renameTarget.id, newId);
+      setRenameTarget(null);
+      notifySuccess("Office ID renamed");
+    } catch (error) {
+      notifyError(getErrorMessage(error, "Couldn't rename the ID."));
+      throw error; // keep RenameIdDialog's inline error visible
+    }
   };
 
   const openRowDetail = (o: FirestoreOffice) => setDetailTarget(o);
@@ -160,6 +179,11 @@ export const OfficesManagement = () => {
                   <td className={`px-5 py-3 ${isDark ? "text-gray" : "text-gray-600"}`}>{office.phone}</td>
                   <td className="px-5 py-3">
                     <div className="flex items-center justify-end gap-2">
+                        <motion.a href={`/contact#office-${office.id}`}
+                          onClick={(e) => e.stopPropagation()} aria-label="View on site" title="View on site"
+                          {...iconBtnHover} className={renameBtnClass}>
+                          <HiOutlineEye className="w-4 h-4" />
+                        </motion.a>
                         <motion.button type="button" onClick={(e) => { e.stopPropagation(); setRenameTarget(office); }}
                           aria-label={`Rename ID`} {...iconBtnHover} className={renameBtnClass}>
                           <FiHash className="w-4 h-4" />

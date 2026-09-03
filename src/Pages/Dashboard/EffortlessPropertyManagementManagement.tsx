@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiEdit2, FiSearch, FiTrash2, FiHash } from "react-icons/fi";
+import { HiOutlineEye } from "react-icons/hi2";
 import { useTheme } from "../../Context/ThemeContext";
 import { useEffortlessPropertyManagement } from "../../hooks/useEffortlessPropertyManagement";
 import { addDocument, updateDocument, deleteDocument, renameDocumentId } from "../../api/firestore";
+import { notifySuccess, notifyError, getErrorMessage } from "../../utils/notify";
 import type { FirestoreEffortlessPropertyManagementCard } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { EffortlessPropertyManagementFormModal } from "../../components/sections/dashboard/EffortlessPropertyManagementFormModal";
@@ -47,24 +49,43 @@ export const EffortlessPropertyManagementManagement = () => {
 
   const handleFormSubmit = async (values: Omit<FirestoreEffortlessPropertyManagementCard, "id">) => {
     try {
-      if (formModal?.mode === "edit") await updateDocument<FirestoreEffortlessPropertyManagementCard>("effortlessPropertyManagement", formModal.card.id, values);
-      else await addDocument<FirestoreEffortlessPropertyManagementCard>("effortlessPropertyManagement", values);
-    } catch (error) { console.error("Failed to save card:", error); }
+      if (formModal?.mode === "edit") {
+        await updateDocument<FirestoreEffortlessPropertyManagementCard>("effortlessPropertyManagement", formModal.card.id, values);
+        notifySuccess("Management card updated");
+      } else {
+        await addDocument<FirestoreEffortlessPropertyManagementCard>("effortlessPropertyManagement", values);
+        notifySuccess("Management card added");
+      }
+    } catch (error) {
+      console.error("Failed to save card:", error);
+      notifyError(getErrorMessage(error, "Couldn't save the card."));
+    }
     setFormModal(null);
   };
 
   const confirmDelete = async () => {
     if (deleteTarget) {
-      try { await deleteDocument("effortlessPropertyManagement", deleteTarget.id); }
-      catch (error) { console.error("Failed to delete card:", error); }
+      try {
+        await deleteDocument("effortlessPropertyManagement", deleteTarget.id);
+        notifySuccess("Management card deleted");
+      } catch (error) {
+        console.error("Failed to delete card:", error);
+        notifyError(getErrorMessage(error, "Couldn't delete the card."));
+      }
     }
     setDeleteTarget(null);
   };
 
     const handleRename = async (newId: string) => {
     if (!renameTarget) return;
-    await renameDocumentId("effortlessPropertyManagement", renameTarget.id, newId);
-    setRenameTarget(null);
+    try {
+      await renameDocumentId("effortlessPropertyManagement", renameTarget.id, newId);
+      setRenameTarget(null);
+      notifySuccess("Card ID renamed");
+    } catch (error) {
+      notifyError(getErrorMessage(error, "Couldn't rename the ID."));
+      throw error; // keep RenameIdDialog's inline error visible
+    }
   };
 
   const openRowDetail = (c: FirestoreEffortlessPropertyManagementCard) => setDetailTarget(c);
@@ -127,6 +148,11 @@ export const EffortlessPropertyManagementManagement = () => {
                   <td className={`px-5 py-3 max-w-md truncate ${isDark ? "text-gray" : "text-gray-600"}`} title={card.description}>{card.description}</td>
                   <td className="px-5 py-3">
                     <div className="flex items-center justify-end gap-2">
+                        <motion.a href="/services#effortless-property-management"
+                          onClick={(e) => e.stopPropagation()} aria-label="View on site" title="View on site"
+                          {...iconBtnHover} className={renameBtnClass}>
+                          <HiOutlineEye className="w-4 h-4" />
+                        </motion.a>
                         <motion.button type="button" onClick={(e) => { e.stopPropagation(); setRenameTarget(card); }}
                           aria-label={`Rename ID`} {...iconBtnHover} className={renameBtnClass}>
                           <FiHash className="w-4 h-4" />

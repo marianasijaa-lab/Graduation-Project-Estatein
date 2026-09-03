@@ -4,6 +4,7 @@ import { FiPlus, FiTrash2 } from "react-icons/fi";
 import { useTheme } from "../../Context/ThemeContext";
 import { useContactInfo } from "../../hooks/useContactInfo";
 import { setDocument } from "../../api/firestore";
+import { notifySuccess, notifyError, getErrorMessage } from "../../utils/notify";
 import { CONTACT_INFO_DOC_ID } from "../../store/slices/contactInfoSlice";
 import type { FirestoreContactInfo, SocialLink, SocialPlatform } from "../../store/types";
 import { Button } from "../../components/ui/Button";
@@ -71,9 +72,12 @@ export const ContactInfoManagement = () => {
     try {
       await setDocument<FirestoreContactInfo>("siteSettings", CONTACT_INFO_DOC_ID, payload);
       setDirty(false); setSaveState("saved");
+      notifySuccess("Settings saved");
     } catch (error) {
+      const message = getErrorMessage(error, "Couldn't save the settings.");
       setSaveState("error");
-      setSaveError(error instanceof Error ? error.message : "Failed to save. Please try again.");
+      setSaveError(message);
+      notifyError(message);
     }
   };
 
