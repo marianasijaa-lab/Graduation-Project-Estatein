@@ -5,6 +5,7 @@ import {
   addDoc,
   setDoc,
   deleteDoc,
+  getDoc,
   onSnapshot,
   serverTimestamp,
   Timestamp,
@@ -63,6 +64,48 @@ const NOOP_UNSUBSCRIBE: Unsubscribe = () => {};
 const liveCollectionListeners = new Set<string>();
 const liveDocumentListeners = new Set<string>();
 
+// ── Dashboard-only diagnostic ─────────────────────────────────────────────────
+// Collections / documents that are currently serving FALLBACK_* demo data
+// *because their Firestore listener failed* (permission-denied, unavailable, …)
+// or because Firebase isn't configured. The PUBLIC site never reads this and its
+// behaviour is unchanged — it keeps showing fallback data seamlessly. Only the
+// dashboard's <DemoDataBanner> subscribes, so an admin is told the data on
+// screen isn't live. Populated ONLY on a genuine listener error — never on the
+// harmless initial fallback shown before the first snapshot, and never for a
+// collection that successfully loaded and is simply empty.
+const fallbackErrors = new Map<string, string>();
+let fallbackErrorsSnapshot: ReadonlyArray<{ key: string; message: string }> = [];
+const fallbackErrorListeners = new Set<() => void>();
+
+function setFallbackError(key: string, message: string | null): void {
+  if (message) {
+    if (fallbackErrors.get(key) === message) return;
+    fallbackErrors.set(key, message);
+  } else {
+    if (!fallbackErrors.has(key)) return;
+    fallbackErrors.delete(key);
+  }
+  fallbackErrorsSnapshot = Array.from(fallbackErrors, ([k, m]) => ({ key: k, message: m }));
+  fallbackErrorListeners.forEach((listener) => listener());
+}
+
+/**
+ * Collections / documents currently showing demo (FALLBACK_*) data because their
+ * Firestore listener failed. Empty array = every subscription is live.
+ * Dashboard diagnostic only — the public site ignores this.
+ */
+export function getFallbackErrors(): ReadonlyArray<{ key: string; message: string }> {
+  return fallbackErrorsSnapshot;
+}
+
+/** Subscribe to changes in getFallbackErrors(). Returns an unsubscribe fn. */
+export function subscribeFallbackErrors(listener: () => void): () => void {
+  fallbackErrorListeners.add(listener);
+  return () => {
+    fallbackErrorListeners.delete(listener);
+  };
+}
+
 export function subscribeToCollection<T>(
   collectionName: string,
   onData: SnapshotCallback<T>,
@@ -72,6 +115,7 @@ export function subscribeToCollection<T>(
   // Firebase isn't configured — hand over the fallback once and stop.
   if (!firestoreDb) {
     if (fallbackData) onData(fallbackData);
+    setFallbackError(collectionName, 'Firebase is not configured');
     return NOOP_UNSUBSCRIBE;
   }
 
@@ -101,12 +145,16 @@ export function subscribeToCollection<T>(
       receivedFirstSnapshot = true;
       if (fallbackTimer) clearTimeout(fallbackTimer);
       onData(snapshotToDocs<T>(snapshot));
+      // A successful read (even of an empty collection) means the data is live.
+      setFallbackError(collectionName, null);
     },
     (error) => {
       if (fallbackTimer) clearTimeout(fallbackTimer);
-      // On error, show the fallback instead of surfacing the error.
+      // On error, show the fallback instead of surfacing the error to the
+      // public site — but flag it so the dashboard can warn the admin.
       if (fallbackData) {
         onData(fallbackData);
+        setFallbackError(collectionName, error.message || 'Firestore listener error');
       } else if (onError) {
         onError(error);
       }
@@ -130,6 +178,7 @@ export function subscribeToDocument<T>(
 ): Unsubscribe {
   if (!firestoreDb) {
     onData(fallbackData ?? null);
+    setFallbackError(`${collectionName}/${documentId}`, 'Firebase is not configured');
     return NOOP_UNSUBSCRIBE;
   }
 
@@ -156,6 +205,8 @@ export function subscribeToDocument<T>(
     (snapshot) => {
       receivedFirstSnapshot = true;
       if (fallbackTimer) clearTimeout(fallbackTimer);
+      // A successful read (even if the doc doesn't exist yet) means data is live.
+      setFallbackError(path, null);
       if (!snapshot.exists()) {
         onData(fallbackData ?? null);
         return;
@@ -169,6 +220,7 @@ export function subscribeToDocument<T>(
       if (fallbackTimer) clearTimeout(fallbackTimer);
       if (fallbackData !== undefined) {
         onData(fallbackData);
+        setFallbackError(path, error.message || 'Firestore listener error');
       } else if (onError) {
         onError(error);
       }
@@ -244,14 +296,31 @@ export async function updateDocument<T extends DocumentData>(
 
 // ─── Delete ───
 
-/** Deletes a document by ID. */
+/**
+ * Deletes a document by ID.
+ *
+ * Firestore's deleteDoc() resolves successfully even when the target document
+ * doesn't exist (it's an idempotent no-op). In the dashboard that produced a
+ * misleading "deleted" toast when a row was actually seed/fallback data (whose
+ * id never matches a real auto-generated Firestore id) or when reads had failed.
+ * We now confirm the document exists first and throw a clear error otherwise, so
+ * the caller surfaces an accurate failure instead of a false success.
+ */
 export async function deleteDocument(
   collectionName: string,
   id: string,
 ): Promise<void> {
   if (!firestoreDb) throw new Error('Firebase is not configured');
 
-  await deleteDoc(doc(firestoreDb, collectionName, id));
+  const ref = doc(firestoreDb, collectionName, id);
+  const snapshot = await getDoc(ref);
+  if (!snapshot.exists()) {
+    throw new Error(
+      "This item isn't in the database — it may be demo data shown because Firestore is unreachable. Nothing was deleted.",
+    );
+  }
+
+  await deleteDoc(ref);
 }
 
 // ─── Rename (copy + delete) ───

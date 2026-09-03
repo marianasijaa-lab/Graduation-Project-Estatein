@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiEdit2, FiSearch, FiTrash2, FiHash } from "react-icons/fi";
+import { HiOutlineEye } from "react-icons/hi2";
 import { useTheme } from "../../Context/ThemeContext";
 import { useAchievements } from "../../hooks/useAchievements";
 import { addDocument, updateDocument, deleteDocument, renameDocumentId } from "../../api/firestore";
+import { notifySuccess, notifyError, getErrorMessage } from "../../utils/notify";
 import type { FirestoreAchievement } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { AchievementFormModal } from "../../components/sections/dashboard/AchievementFormModal";
@@ -48,24 +50,43 @@ export const AchievementsManagement = () => {
 
   const handleFormSubmit = async (values: Omit<FirestoreAchievement, "id">) => {
     try {
-      if (formModal?.mode === "edit") await updateDocument<FirestoreAchievement>("achievements", formModal.achievement.id, values);
-      else await addDocument<FirestoreAchievement>("achievements", values);
-    } catch (error) { console.error("Failed to save achievement:", error); }
+      if (formModal?.mode === "edit") {
+        await updateDocument<FirestoreAchievement>("achievements", formModal.achievement.id, values);
+        notifySuccess("Achievement updated");
+      } else {
+        await addDocument<FirestoreAchievement>("achievements", values);
+        notifySuccess("Achievement added");
+      }
+    } catch (error) {
+      console.error("Failed to save achievement:", error);
+      notifyError(getErrorMessage(error, "Couldn't save the achievement."));
+    }
     setFormModal(null);
   };
 
   const confirmDelete = async () => {
     if (deleteTarget) {
-      try { await deleteDocument("achievements", deleteTarget.id); }
-      catch (error) { console.error("Failed to delete achievement:", error); }
+      try {
+        await deleteDocument("achievements", deleteTarget.id);
+        notifySuccess("Achievement deleted");
+      } catch (error) {
+        console.error("Failed to delete achievement:", error);
+        notifyError(getErrorMessage(error, "Couldn't delete the achievement."));
+      }
     }
     setDeleteTarget(null);
   };
 
   const handleRename = async (newId: string) => {
     if (!renameTarget) return;
-    await renameDocumentId("achievements", renameTarget.id, newId);
-    setRenameTarget(null);
+    try {
+      await renameDocumentId("achievements", renameTarget.id, newId);
+      setRenameTarget(null);
+      notifySuccess("Achievement ID renamed");
+    } catch (error) {
+      notifyError(getErrorMessage(error, "Couldn't rename the ID."));
+      throw error; // keep RenameIdDialog's inline error visible
+    }
   };
 
   const openRowDetail = (a: FirestoreAchievement) => setDetailTarget(a);
@@ -135,6 +156,11 @@ export const AchievementsManagement = () => {
                     <td className={`px-5 py-3 max-w-md truncate ${isDark ? "text-gray" : "text-gray-600"}`} title={achievement.description}>{achievement.description}</td>
                     <td className="px-5 py-3">
                       <div className="flex items-center justify-end gap-2">
+                        <motion.a href="/about#achievements"
+                          onClick={(e) => e.stopPropagation()} aria-label="View on site" title="View on site"
+                          {...iconBtnHover} className={renameBtnClass}>
+                          <HiOutlineEye className="w-4 h-4" />
+                        </motion.a>
                         <motion.button type="button" onClick={(e) => { e.stopPropagation(); setRenameTarget(achievement); }}
                           aria-label={`Rename ID of ${achievement.title}`} {...iconBtnHover} className={renameBtnClass}>
                           <FiHash className="w-4 h-4" />

@@ -11,6 +11,39 @@ import {
   getEmailQuality,
   type PasswordStrength,
 } from "../utils/validation";
+import { notifySuccess, notifyError } from "../utils/notify";
+
+/** Maps a Firebase Auth error code to a short, human-readable sentence. */
+const authErrorMessage = (code: string, mode: Mode): string => {
+  switch (code) {
+    case "auth/user-not-found":
+    case "auth/wrong-password":
+    case "auth/invalid-credential":
+      return "Incorrect email or password.";
+    case "auth/invalid-email":
+      return "That email address isn't valid.";
+    case "auth/user-disabled":
+      return "This account has been disabled.";
+    case "auth/email-already-in-use":
+      return "This email is already registered. Try logging in.";
+    case "auth/too-many-requests":
+      return "Too many failed attempts. Please try again later.";
+    case "auth/weak-password":
+      return "Password is too weak. Use at least 8 characters, including numbers and symbols.";
+    case "auth/network-request-failed":
+      return "Network error — check your connection and try again.";
+    case "auth/operation-not-allowed":
+      return "Email/password sign-in is disabled for this project.";
+    case "auth/configuration-not-found":
+    case "auth/invalid-api-key":
+      return "Authentication isn't configured correctly. Check the Firebase setup.";
+    default:
+      if (code.includes("CONFIGURATION_NOT_FOUND")) {
+        return "Authentication isn't configured correctly. Check the Firebase setup.";
+      }
+      return mode === "login" ? "Login failed. Please try again." : "Sign up failed. Please try again.";
+  }
+};
 
 type Mode = "login" | "signup";
 
@@ -307,7 +340,9 @@ export const Login = () => {
     if (eErr || pErr) { triggerShake(); return; }
 
     if (!auth) {
-      setAuthError("Firebase is not configured. Check your .env file.");
+      const msg = "Firebase is not configured. Check your .env file.";
+      setAuthError(msg);
+      notifyError(msg);
       triggerShake(); return;
     }
 
@@ -319,19 +354,12 @@ export const Login = () => {
       } else {
         await createUserWithEmailAndPassword(auth, email.trim(), password);
       }
+      notifySuccess(mode === "login" ? "Signed in successfully" : "Account created");
     } catch (err: unknown) {
       const code = (err as { code?: string }).code ?? "";
-      if (["auth/user-not-found","auth/wrong-password","auth/invalid-credential"].includes(code)) {
-        setAuthError("Incorrect email or password.");
-      } else if (code === "auth/email-already-in-use") {
-        setAuthError("This email is already registered. Try logging in.");
-      } else if (code === "auth/too-many-requests") {
-        setAuthError("Too many failed attempts. Please try again later.");
-      } else if (code === "auth/weak-password") {
-        setAuthError("Password is too weak. Use at least 8 characters, including numbers and symbols.");
-      } else {
-        setAuthError(mode === "login" ? "Login failed. Please try again." : "Sign up failed. Please try again.");
-      }
+      const message = authErrorMessage(code, mode);
+      setAuthError(message);
+      notifyError(message);
       triggerShake();
     } finally {
       setLoading(false);

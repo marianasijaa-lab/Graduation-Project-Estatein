@@ -26,6 +26,41 @@ function Root() {
 
   useEffect(() => {
     history.scrollRestoration = 'manual';
+
+    // When the app is opened with a hash (e.g. /contact#office-abc from the
+    // dashboard's "View on site" links), scroll to that element once it exists.
+    // Data-driven sections mount asynchronously, so retry briefly.
+    const targetId = window.location.hash.slice(1);
+    if (targetId) {
+      let attempts = 0;
+      let highlightTimer: number | undefined;
+
+      const scrollToTarget = () => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+          // Per-item anchors (only the Offices cards use `office-<id>`) get a
+          // brief one-shot pulse so the specific card stands out. Section-level
+          // anchors (#testimonials, #achievements, …) wrap a whole section /
+          // carousel, so they are left with plain scroll-to behaviour.
+          if (targetId.startsWith('office-')) {
+            el.classList.add('highlight-pulse');
+            highlightTimer = window.setTimeout(() => {
+              el.classList.remove('highlight-pulse');
+            }, 1600);
+          }
+        } else if (attempts++ < 40) {
+          window.setTimeout(scrollToTarget, 100);
+        }
+      };
+
+      scrollToTarget();
+      return () => {
+        if (highlightTimer) window.clearTimeout(highlightTimer);
+      };
+    }
+
     window.scrollTo(0, 0);
   }, []);
 

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Link } from "react-router";
+import { Menu, X, LayoutDashboard, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "../common/Logo";
 import type { PageId } from "../../interfaces";
 import ThemeToggle from "../ui/ThemeToggle";
+import { useAuth } from "../../Context/AuthContext";
 
 interface NavbarProps {
   activePage: PageId | null;
@@ -26,11 +28,18 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleTheme: _onToggleTheme,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { logout, isAuthenticated } = useAuth();
 
   const handleNavClick = (pageId: PageId) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     onNavigate(pageId);
     setMobileMenuOpen(false);
+  };
+
+  // Signs the user out; AuthGate takes it from here and shows the login screen.
+  const handleLogout = () => {
+    setMobileMenuOpen(false);
+    void logout();
   };
 
   return (
@@ -77,7 +86,28 @@ export const Navbar: React.FC<NavbarProps> = ({
             Contact Us
           </motion.button>
 
+          <Link
+            to="/dashboard"
+            aria-label="Go to Admin Dashboard"
+            title="Admin Dashboard"
+            className="hidden sm:inline-flex items-center justify-center p-2.5 rounded-xl border border-bg-gray-1 bg-(--bg-main) text-gray hover:text-(--text-main) hover:border-primary/50 transition-all cursor-pointer"
+          >
+            <LayoutDashboard className="w-5 h-5" />
+          </Link>
+
           <ThemeToggle />
+
+          {isAuthenticated && (
+            <button
+              type="button"
+              onClick={handleLogout}
+              aria-label="Log out"
+              title="Log out"
+              className="hidden sm:inline-flex items-center justify-center p-2.5 rounded-xl border border-bg-gray-1 bg-(--bg-main) text-gray hover:text-(--text-main) hover:border-primary/50 transition-all cursor-pointer"
+            >
+              <LogOut className="w-5 h-5" />
+            </button>
+          )}
 
           <motion.button
             whileTap={{ scale: 0.9 }}
@@ -131,6 +161,25 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               Contact Us
             </button>
+            <Link
+              to="/dashboard"
+              aria-label="Go to Admin Dashboard"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium text-center border border-bg-gray-1 bg-(--bg-main) text-gray hover:text-(--text-main) hover:border-primary/50 transition-all"
+            >
+              <LayoutDashboard className="w-4 h-4" />
+              Admin Dashboard
+            </Link>
+            {isAuthenticated && (
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium text-center border border-bg-gray-1 bg-(--bg-main) text-gray hover:text-(--text-main) hover:border-primary/50 transition-all cursor-pointer"
+              >
+                <LogOut className="w-4 h-4" />
+                Log Out
+              </button>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

@@ -27,7 +27,7 @@ const HomePage = () => {
                 />
               </div>
             </section>
-            <section className="w-full">
+            <section id="testimonials" className="w-full scroll-mt-24">
               <div className="bg-(--bg-main) site-container py-8 sm:py-10 lg:py-14">
                 <SectionHeader title='What Our Clients Say' actionLabel='View All Testimonials' onAction={() => setShowAllTestimonials(true)} subtitle='Read the success stories and heartfelt testimonials from our valued clients. Discover why they chose Estatein for their real estate needs.'/>
                 <TestimonialsSlider
@@ -38,7 +38,7 @@ const HomePage = () => {
                 />
               </div>
             </section>
-            <section className="w-full">
+            <section id="faqs" className="w-full scroll-mt-24">
               <div className="bg-(--bg-main) site-container py-8 sm:py-10 lg:py-14">
                 <SectionHeader title='Frequently Asked Questions' actionLabel="View All FAQ's" onAction={() => setShowAllFaqs(true)} subtitle="Find answers to common questions about Estatein's services, property listings, and the real estate process. We're here to provide clarity and assist you every step of the way."/>
                 <FAQSlider

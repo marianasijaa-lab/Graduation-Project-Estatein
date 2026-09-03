@@ -28,6 +28,12 @@ if (missingVars.length === 0) {
   firestoreDb = getFirestore(app);
   realtimeDb = getDatabase(app);
   auth = getAuth(app);
+
+  // TEMP DIAGNOSTIC — remove after confirming the project. Verify this matches
+  // the Firebase Console project you're inspecting for data/rules.
+  console.info(
+    `[Firebase] connected to projectId: ${firebaseConfig.projectId} · authDomain: ${firebaseConfig.authDomain}`,
+  );
 } else {
   console.warn(
     '[Firebase] Running without Firebase — please fill in the .env file with your project values.',

@@ -1,20 +1,19 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiEdit2, FiSearch, FiTrash2, FiHash } from "react-icons/fi";
+import { FiSearch, FiTrash2, FiHash } from "react-icons/fi";
 import { useTheme } from "../../Context/ThemeContext";
 import { useSubscribers } from "../../hooks/useSubscribers";
-import { addDocument, updateDocument, deleteDocument, renameDocumentId } from "../../api/firestore";
+import { updateDocument, deleteDocument, renameDocumentId } from "../../api/firestore";
+import { notifySuccess, notifyError, getErrorMessage } from "../../utils/notify";
 import type { FirestoreSubscriber, SubscriberStatus } from "../../store/types";
 import { Button } from "../../components/ui/Button";
 import { ConfirmDialog } from "../../components/sections/dashboard/ConfirmDialog";
 import { RenameIdDialog } from "../../components/sections/dashboard/RenameIdDialog";
 import {
-  DashboardPageShell, staggerItem, rowStagger, rowVariants,
+  DashboardPageShell, staggerItem, iconBtnHover,
   deleteBtnHover, cardHoverProps, SkeletonRow, SkeletonCard,
   tableRowVariants,
 } from "../../components/dashboard/DashboardPageShell";
-
-const shortId = (id: string) => id.length > 8 ? id.slice(0, 8) : id;
 
 const ALL_STATUSES = "All";
 const STATUS_OPTIONS: SubscriberStatus[] = ["subscribed", "unsubscribed"];
@@ -58,16 +57,38 @@ export const SubscribersManagement = () => {
 
   const handleStatusChange = async (subscriber: FirestoreSubscriber, next: SubscriberStatus) => {
     if (subscriber.status === next) return;
-    try { await updateDocument<FirestoreSubscriber>("subscribers", subscriber.id, { status: next }); }
-    catch (error) { console.error("Failed to update subscriber status:", error); }
+    try {
+      await updateDocument<FirestoreSubscriber>("subscribers", subscriber.id, { status: next });
+      notifySuccess("Subscriber status updated");
+    } catch (error) {
+      console.error("Failed to update subscriber status:", error);
+      notifyError(getErrorMessage(error, "Couldn't update the status."));
+    }
   };
 
   const confirmDelete = async () => {
     if (deleteTarget) {
-      try { await deleteDocument("subscribers", deleteTarget.id); }
-      catch (error) { console.error("Failed to delete subscriber:", error); }
+      try {
+        await deleteDocument("subscribers", deleteTarget.id);
+        notifySuccess("Subscriber removed");
+      } catch (error) {
+        console.error("Failed to delete subscriber:", error);
+        notifyError(getErrorMessage(error, "Couldn't remove the subscriber."));
+      }
     }
     setDeleteTarget(null);
+  };
+
+  const handleRename = async (newId: string) => {
+    if (!renameTarget) return;
+    try {
+      await renameDocumentId("subscribers", renameTarget.id, newId);
+      setRenameTarget(null);
+      notifySuccess("Subscriber ID renamed");
+    } catch (error) {
+      notifyError(getErrorMessage(error, "Couldn't rename the ID."));
+      throw error; // keep RenameIdDialog's inline error visible
+    }
   };
 
   const handleExportCsv = () => {

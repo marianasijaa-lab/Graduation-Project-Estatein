@@ -8,6 +8,7 @@ import Root from "./Root";
 import { ThemeProvider } from "./Context/ThemeContext";
 import { AuthProvider } from "./Context/AuthContext";
 import { AuthGate } from "./components/auth/AuthGate";
+import { AppToaster } from "./components/common/AppToaster";
 import ProperityPage from "./Pages/Properties";
 import HomePage from "./Pages/Home";
 import AboutUs from "./Pages/AboutUs";
@@ -95,6 +96,7 @@ createRoot(document.getElementById("root")!).render(
           <SplashScreen>
             <RouterProvider router={router} />
           </SplashScreen>
+          <AppToaster />
         </AuthProvider>
       </ThemeProvider>
     </Provider>

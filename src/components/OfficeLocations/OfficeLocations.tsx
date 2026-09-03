@@ -80,7 +80,8 @@ const OfficeLocations = () => {
                 whileHover={{ y: -6 }}
                 transition={{ duration: 0.25 }}
                 key={office.id}
-                className="rounded-lg border border-bg-gray-1 bg-(--bg-main) p-7"
+                id={`office-${office.id}`}
+                className="scroll-mt-24 rounded-lg border border-bg-gray-1 bg-(--bg-main) p-7"
               >
                 {/* Office type badge */}
                 <p className="mb-4 text-sm text-gray">{office.type}</p>
