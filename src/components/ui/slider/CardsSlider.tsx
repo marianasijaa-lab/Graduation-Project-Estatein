@@ -123,7 +123,7 @@ function Card({ item }: CardProps) {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-1 overflow-hidden">
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-x-0 gap-y-1 sm:gap-1 overflow-hidden">
           {details.map((detail, index) => (
             <div
               key={detail.text}
