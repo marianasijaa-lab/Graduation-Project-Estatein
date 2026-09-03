@@ -6,25 +6,19 @@ export const FALLBACK_FAQS: FirestoreFAQ[] = [
     id: 'faq-1',
     question: 'How do I search for properties on Estatein?',
     description:
-      'Use the search bar on the Properties page to filter listings by location, price range, property type, and more. Each result links straight to its full details page.',
+      'Learn how to use our user-friendly search tools to find properties that match your criteria.',
   },
   {
     id: 'faq-2',
-    question: 'What documents do I need to buy a property?',
+    question: 'What documents do I need to sell my property through Estatein?',
     description:
-      'Typically a valid photo ID, proof of funds or a mortgage pre-approval, and a signed offer letter. Our agents walk you through every document at each step.',
+      'Find out about the necessary documentation for listing your property with us.',
   },
   {
     id: 'faq-3',
-    question: 'Does Estatein help with property financing?',
+    question: 'How can I contact an Estatein agent?',
     description:
-      'Yes. We partner with trusted lenders and can connect you with mortgage advisors to find financing options that fit your budget.',
-  },
-  {
-    id: 'faq-4',
-    question: 'Can I schedule a viewing before making an offer?',
-    description:
-      'Absolutely. You can request an in-person or virtual viewing for any active listing directly from its property details page.',
+      'Discover the different ways you can get in touch with our experienced agents.',
   },
 ];
 

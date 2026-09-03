@@ -68,7 +68,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => handleNavClick("contact")}
-            className="hidden md:inline-flex items-center justify-center px-3 lg:px-5 py-2.5 lg:py-3 rounded-xl text-xs lg:text-sm font-medium transition-all cursor-pointer border border-bg-gray-1 bg-(--bg-main) text-(--text-main) whitespace-nowrap"
+            className={`hidden md:inline-flex items-center justify-center px-3 lg:px-5 py-2.5 lg:py-3 rounded-xl text-xs lg:text-sm font-medium transition-all cursor-pointer whitespace-nowrap ${
+              activePage === "contact"
+                ? "bg-primary border border-primary text-white"
+                : "border border-bg-gray-1 bg-(--bg-main) text-(--text-main)"
+            }`}
           >
             Contact Us
           </motion.button>

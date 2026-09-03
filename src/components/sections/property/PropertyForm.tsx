@@ -154,7 +154,7 @@ const PropertyForm = ({
       transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
       className="
         autofill-none min-w-0 max-w-full w-full rounded-[10px] border border-bg-gray-1
-        bg-(--bg-main) p-[25px]
+        bg-(--bg-secondary) p-[25px]
         sm:p-[35px]
         xl:p-[50px]
       "
@@ -243,7 +243,7 @@ const PropertyForm = ({
             className="
               h-[60px] w-full rounded-lg
               border border-bg-gray-1
-              bg-(--bg-secondary) px-[20px] pr-[55px]
+              bg-(--bg-main) px-[20px] pr-[55px]
               font-['Urbanist'] text-[14px]
               font-medium text-white outline-none
               cursor-not-allowed opacity-80
@@ -266,7 +266,7 @@ const PropertyForm = ({
           className={`
             h-[140px] w-full resize-none
             rounded-lg border
-            bg-bg-dark px-[20px] py-[20px]
+            bg-(--bg-main) px-[20px] py-[20px]
             font-['Urbanist'] text-[14px]
             text-(--text-main) outline-none
             placeholder:text-placeholder
@@ -286,24 +286,35 @@ const PropertyForm = ({
       <div className="mt-[30px] flex flex-col gap-[30px] sm:flex-row sm:items-start sm:justify-between sm:gap-[50px]">
         <div className="flex flex-col gap-1">
           <label className="flex min-h-[28px] max-w-[584px] items-center gap-[10px] cursor-pointer">
-            <input
-              type="checkbox"
-              checked={agreeTerms}
-              onChange={(e) => {
-                setAgreeTerms(e.target.checked);
-                if (e.target.checked) setAgreeError("");
-              }}
-              className="
-                h-[20px] w-[20px] shrink-0
-                appearance-none rounded-sm
-                border border-bg-gay-1
-                bg-bg-dark-1
-                checked:bg-primary
-                cursor-pointer
-              "
-            />
-            <span className="font-['Urbanist'] text-sm text-gray-1">
-              I agree with Terms of Use and Privacy Policy
+            <div className="relative h-[20px] w-[20px] shrink-0">
+              <input
+                type="checkbox"
+                checked={agreeTerms}
+                onChange={(e) => {
+                  setAgreeTerms(e.target.checked);
+                  if (e.target.checked) setAgreeError("");
+                }}
+                className="peer absolute inset-0 h-full w-full opacity-0 cursor-pointer z-10"
+              />
+              <div
+                className="h-[20px] w-[20px] rounded-sm border transition-colors"
+                style={{
+                  backgroundColor: agreeTerms ? "#703bf7" : "var(--bg-secondary)",
+                  borderColor: agreeTerms ? "#703bf7" : "var(--color-bg-gray-1)"
+                }}
+              >
+                {agreeTerms && (
+                  <svg viewBox="0 0 12 10" fill="none" className="w-full h-full p-[3px]">
+                    <path d="M1 5l3.5 3.5L11 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                )}
+              </div>
+            </div>
+            <span className="font-['Urbanist'] text-sm whitespace-nowrap" style={{ color: "#999999" }}>
+              I agree with{" "}
+              <a href="#" className="underline" style={{ color: "#999999" }}>Terms of Use</a>
+              {" "}and{" "}
+              <a href="#" className="underline" style={{ color: "#999999" }}>Privacy Policy</a>
             </span>
           </label>
           {agreeError && (

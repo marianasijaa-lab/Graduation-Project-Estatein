@@ -13,7 +13,7 @@ const InquireSection = ({
   propertyLocation = "Seaside Serenity Villa, Malibu, California",
 }: InquireSectionProps) => {
   return (
-    <section className="w-full overflow-x-hidden bg-(--bg-secondary) text-(--text-main)">
+    <section className="w-full overflow-x-hidden bg-(--bg-main) text-(--text-main)">
       <div
         className="
           site-container flex flex-col

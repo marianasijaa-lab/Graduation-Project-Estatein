@@ -88,7 +88,7 @@ const PropertyDescription = ({
 
           {/* Horizontal Divider */}
 
-          <div className="my-[30px] h-px w-full bg-[#333333]" />
+          <div className="my-[30px] h-px w-full bg-bg-gray-1" />
 
           {/* Property Information */}
 
@@ -109,7 +109,7 @@ const PropertyDescription = ({
                 flex-col
                 gap-[10px]
                 border-r
-                border-[#333333]
+                border-bg-gray-1
                 pr-[20px]
                 sm:border-r
               "
@@ -155,7 +155,7 @@ const PropertyDescription = ({
                 gap-[10px]
                 pl-[20px]
                 sm:border-r
-                sm:border-[#333333]
+                sm:border-bg-gray-1
               "
             >
               <div className="flex items-center gap-[8px]">
@@ -193,7 +193,7 @@ const PropertyDescription = ({
                 flex-col
                 gap-[10px]
                 border-t
-                border-[#333333]
+                border-bg-gray-1
                 pt-[20px]
                 sm:col-span-1
                 sm:border-t-0
@@ -286,13 +286,13 @@ const PropertyDescription = ({
                   gap-[14px]
                   border-l-[1.5px]
                   border-l-primary
-                  bg-(--bg-secondary)
                   px-[16px]
                   py-[12px]
                   sm:min-h-[63px]
                   sm:px-[24px]
                   sm:py-[10px]
                 "
+              style={{ background: "linear-gradient(90deg, var(--bg-secondary) 0%, transparent 100%)" }}
               >
 
                 {/* White Lightning Icon */}

@@ -40,7 +40,7 @@ const FormField = ({
         aria-describedby={showError ? `ff-err-${label.replace(/\s+/g, '-').toLowerCase()}` : undefined}
         className={`
           h-[52px] w-full rounded-lg border
-          bg-bg-dark px-[20px]
+          bg-(--bg-main) px-[20px]
           font-['Urbanist'] text-[14px] font-medium
           text-(--text-main) outline-none
           placeholder:text-placeholder
