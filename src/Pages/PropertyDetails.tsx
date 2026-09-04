@@ -52,7 +52,7 @@ export const PropertyDetails = () => {
         description={property.descriptionLong || property.descriptionShort || ""}
         bedrooms={property.bedrooms !== undefined ? String(property.bedrooms).padStart(2, "0") : "—"}
         bathrooms={property.bathrooms !== undefined ? String(property.bathrooms).padStart(2, "0") : "—"}
-        area={property.size !== undefined ? `${property.size.toLocaleString()} Square Feet` : "—"}
+        area={property.size !== undefined ? `${Math.round(property.size * 0.0929).toLocaleString()} m²` : "—"}
         features={property.amenities ?? []}
       />
       <InquireSection

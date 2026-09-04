@@ -18,7 +18,7 @@ const HomePage = () => {
             <Services />
             <section className="w-full">
               <div className="bg-(--bg-main) site-container py-8 sm:py-10 lg:py-14">
-                <SectionHeader title='Featured Properties' actionLabel='View All Properties' onAction={() => setShowAllProperties(true)} subtitle='Explore our handpicked selection of featured properties. Each listing offers a glimpse into exceptional homes and investments available through Estatein.'/>
+                <SectionHeader title='Featured Properties' actionLabel='View All Properties' onAction={() => setShowAllProperties(true)} subtitle='Explore our handpicked selection of featured properties. Each listing offers a glimpse into exceptional homes and investments available through Estatein. Click "View Details" for more information.'/>
                 <CardsSlider
                   showAll={showAllProperties}
                   onBack={() => setShowAllProperties(false)}

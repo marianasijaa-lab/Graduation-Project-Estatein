@@ -154,7 +154,7 @@ const PropertyForm = ({
       transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
       className="
         autofill-none min-w-0 max-w-full w-full rounded-[10px] border border-bg-gray-1
-        bg-(--bg-secondary) p-[25px]
+        bg-(--bg-dark-1) p-[25px]
         sm:p-[35px]
         xl:p-[50px]
       "
@@ -243,7 +243,7 @@ const PropertyForm = ({
             className="
               h-[60px] w-full rounded-lg
               border border-bg-gray-1
-              bg-(--bg-main) px-[20px] pr-[55px]
+              bg-[#1A1A1A] px-[20px] pr-[55px]
               font-['Urbanist'] text-[14px]
               font-medium text-white outline-none
               cursor-not-allowed opacity-80
@@ -266,7 +266,7 @@ const PropertyForm = ({
           className={`
             h-[140px] w-full resize-none
             rounded-lg border
-            bg-(--bg-main) px-[20px] py-[20px]
+            bg-[#1A1A1A] px-[20px] py-[20px]
             font-['Urbanist'] text-[14px]
             text-(--text-main) outline-none
             placeholder:text-placeholder
@@ -310,7 +310,7 @@ const PropertyForm = ({
                 )}
               </div>
             </div>
-            <span className="font-['Urbanist'] text-sm whitespace-nowrap" style={{ color: "#999999" }}>
+            <span className="font-['Urbanist'] text-[11px] sm:text-sm whitespace-nowrap" style={{ color: "#999999" }}>
               I agree with{" "}
               <a href="#" className="underline" style={{ color: "#999999" }}>Terms of Use</a>
               {" "}and{" "}

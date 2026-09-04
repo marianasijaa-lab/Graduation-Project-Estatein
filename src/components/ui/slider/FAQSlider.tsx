@@ -32,9 +32,10 @@ const FAQSlider = ({
           className="mb-6 rounded-xl px-5 py-3.5 text-sm"
         />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
-          {faqs.map((card) => (
+          {faqs.map((card, i) => (
             <FAQCard
               key={card.id}
+              index={i}
               question={card.question}
               description={card.description}
               onReadMore={() => {}}
@@ -48,13 +49,14 @@ const FAQSlider = ({
   return (
     <div className="w-full py-8">
       <BaseSlider currentIndex={currentIndex} itemsToShow={itemsToShow}>
-        {faqs.map((card) => (
+        {faqs.map((card, i) => (
           <div
             key={card.id}
             className="shrink-0"
             style={{ width: `calc(${100 / itemsToShow}% - ${(GAP * (itemsToShow - 1)) / itemsToShow}px)` }}
           >
             <FAQCard
+              index={i}
               question={card.question}
               description={card.description}
               onReadMore={() => {}}

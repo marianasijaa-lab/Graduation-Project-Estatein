@@ -84,10 +84,20 @@ const TestimonialsSlider = ({
   );
 };
 
-function Star() {
+function Star({ index = 0 }: { index?: number }) {
   return (
     <div className="p-1.5 lg:p-2.5 rounded-full bg-(--bg-secondary)">
-      <FaStar className="w-4.5 lg:w-5 xl:w-6" color="#FFE500" />
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{
+          duration: 6 + index * 0.8,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+        style={{ display: "flex" }}
+      >
+        <FaStar className="w-4.5 lg:w-5 xl:w-6" color="#FFE500" />
+      </motion.div>
     </div>
   );
 }
@@ -101,7 +111,7 @@ function TestimonialCard({ testimony }: { testimony: FirestoreTestimonial }) {
     >
       <div className="flex gap-1.5 sm:gap-2.5">
         {Array.from({ length: testimony.rating || 5 }, (_, index) => (
-          <Star key={index} />
+          <Star key={index} index={index} />
         ))}
       </div>
 

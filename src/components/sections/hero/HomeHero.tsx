@@ -44,7 +44,7 @@ const HomeHero = () => {
 
         {/* Right: Hero Image full height, no border */}
         <FadeInSection direction="right" delay={0.2} className="flex flex-1 relative min-h-[240px] sm:min-h-[360px] md:min-h-[480px] order-1 md:order-2">
-          <div className="absolute z-30 -bottom-8 left-0 translate-x-0 translate-y-0 w-[65px] sm:top-[28%] sm:bottom-auto sm:left-0 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:w-24 md:w-26 xl:w-36">
+          <div className="absolute z-30 -bottom-8 left-0 translate-x-0 translate-y-0 w-[65px] sm:top-[28%] sm:bottom-auto sm:left-0 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:w-20 md:w-22 lg:w-26 xl:w-36">
             <img src='/assets/HeroSticker.png' alt="" className='w-full h-full animate-[spin_10s_linear_infinite]'/>
           </div>
           <img

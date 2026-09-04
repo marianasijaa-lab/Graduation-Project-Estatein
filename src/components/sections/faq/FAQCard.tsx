@@ -1,23 +1,32 @@
 import { motion } from 'framer-motion';
 import { Button } from '../../ui/Button';
-import { staggerItem } from '../../common/StaggerContainer';
 
 interface FAQCardProps {
   question: string;
   description: string;
   onReadMore: () => void;
+  index?: number;
 }
 
-export const FAQCard = ({ question, description, onReadMore }: FAQCardProps) => {
+export const FAQCard = ({ question, description, onReadMore, index = 0 }: FAQCardProps) => {
   return (
     <motion.div
-      variants={staggerItem}
-      whileHover={{y: -4}}
-      transition={{duration: 0.25}}
+      initial={{ opacity: 0, rotateY: -25, x: -30 }}
+      whileInView={{ opacity: 1, rotateY: 0, x: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      whileHover={{ y: -6, scale: 1.02 }}
+      transition={{
+        opacity: { duration: 0.5, delay: index * 0.15 },
+        rotateY: { duration: 0.6, delay: index * 0.15, ease: [0.25, 0.1, 0.25, 1] },
+        x: { duration: 0.5, delay: index * 0.15, ease: [0.25, 0.1, 0.25, 1] },
+        y: { duration: 0.25 },
+        scale: { duration: 0.25 },
+      }}
+      style={{ transformPerspective: 800 }}
       className="flex flex-col gap-4 bg-(--bg-main) border border-(--color-card) rounded-xl p-6 h-full">
 
       {/* question */}
-      <h3 className="text-(--text-main) font-semibold text-[15px] sm:text-[19px] min-h-[3.5rem]">
+      <h3 className="text-(--text-main) font-semibold text-[15px] sm:text-[19px] md:text-[21px] min-h-[3.5rem]">
         {question}
       </h3>
 

@@ -51,8 +51,8 @@ const CardsSlider = ({
           className="mb-6 rounded-xl px-5 py-3.5 text-sm"
         />
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-          {properties.map((card) => (
-            <Card key={card.id} item={card} />
+          {properties.map((card, i) => (
+            <Card key={card.id} item={card} index={i} />
           ))}
         </div>
       </div>
@@ -62,13 +62,13 @@ const CardsSlider = ({
   return (
     <div className="w-full py-8">
       <BaseSlider currentIndex={currentIndex} itemsToShow={itemsToShow}>
-        {properties.map((card) => (
+        {properties.map((card, i) => (
           <div
             key={card.id}
             className="shrink-0 flex"
             style={{ width: `calc(${100 / itemsToShow}% - ${(24 * (itemsToShow - 1)) / itemsToShow}px)` }}
           >
-            <Card item={card} />
+            <Card item={card} index={i} />
           </div>
         ))}
       </BaseSlider>
@@ -86,7 +86,7 @@ const CardsSlider = ({
   );
 };
 
-function Card({ item }: CardProps) {
+function Card({ item, index = 0 }: CardProps & { index?: number }) {
   const navigate = useNavigate();
   const details = [
     { icon: item.bedroomIcon, text: `${item.bedrooms}-Bedroom` },
@@ -96,8 +96,15 @@ function Card({ item }: CardProps) {
 
   return (
     <motion.div
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      whileHover={{ y: -6, boxShadow: "0 8px 32px 0 rgba(120,80,255,0.15)" }}
+      transition={{
+        opacity: { duration: 0.5, delay: index * 0.12 },
+        y: { duration: 0.5, delay: index * 0.12, ease: [0.25, 0.1, 0.25, 1] },
+        boxShadow: { duration: 0.25 },
+      }}
       className="card flex flex-col gap-2 md:gap-1 lg:gap-5 xl:gap-7.5 bg-[#111111] border border-bg-gray-1 rounded-2xl p-4 lg:p-5 w-full h-full"
     >
       <div className="w-full h-48 sm:h-56 overflow-hidden rounded-xl">
