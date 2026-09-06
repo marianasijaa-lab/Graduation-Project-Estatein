@@ -19,7 +19,7 @@ export const SmartInvestments = () => {
         <div className="flex flex-col gap-8 md:gap-10 lg:grid lg:grid-cols-12 lg:gap-10 items-start">
 
 
-          <div className="lg:col-span-5 xl:col-span-4 flex flex-col justify-start gap-0 sm:gap-1">
+          <div className="lg:col-span-5 xl:col-span-4 flex flex-col justify-start gap-6 sm:gap-4 lg:gap-0">
             <SectionHeader
               title={
                 <>
@@ -29,7 +29,7 @@ export const SmartInvestments = () => {
                 </>
               }
               subtitle="Building a real estate portfolio requires a strategic approach. Estatein's Investment Advisory Service empowers you to make smart investments and informed decisions."
-              className="mb-0"
+              className="mb-0 sm:!mb-4"
               fullWidth
             />
 
@@ -38,6 +38,7 @@ export const SmartInvestments = () => {
               <div className="h-auto ">
                 <InfoBox
                 variant="vertical"
+                compact
                 title="Unlock Your Investment Potential"
                 description="Explore our Property Management Service categories and let us handle the complexities while you enjoy the benefits of property ownership."
                 buttonLabel="Learn More"
@@ -52,7 +53,7 @@ export const SmartInvestments = () => {
           
           <div className="lg:col-span-7 xl:col-span-8 rounded-[10px] bg-(--bg-border) p-1.5 mt-14">
             <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-              {smartInvestments.map((service) => (
+              {[...smartInvestments].sort((a, b) => (a.order ?? 0) - (b.order ?? 0)).map((service) => (
                 <motion.div
                   key={service.id}
                   variants={staggerItem}

@@ -124,7 +124,7 @@ function Card({ item, index = 0 }: CardProps & { index?: number }) {
             {item.descriptionShort.length > 60
               ? item.descriptionShort.slice(0, 60) + "... "
               : item.descriptionShort + "... "}
-            <button className="text-(--text-main) underline underline-offset-2 hover:text-white/80 transition-colors whitespace-nowrap">
+            <button className="text-(--text-main) underline underline-offset-2 hover:text-(--bg-color) transition-colors whitespace-nowrap">
               Read More
             </button>
           </p>

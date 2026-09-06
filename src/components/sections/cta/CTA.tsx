@@ -27,7 +27,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
         >
             <div
               className="absolute left-0 top-0 block w-full h-1/2 bg-top-left bg-no-repeat bg-auto pointer-events-none z-0 sm:hidden"
-              style={{ backgroundImage: 'url(/assets/AbstractSmall.png)' }}
+              style={{ backgroundImage: 'url(/assets/AbstractSmall.png)',opacity:'var(--decor-opacity)' }}
             />
 
             {bgLeftImage && (

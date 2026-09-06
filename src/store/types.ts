@@ -98,6 +98,7 @@ export interface FirestoreSmartInvestmentsCard {
   title: string;
   description: string;
   icon: string;
+  order?: number;
 }
 
 // ── Services (Firestore collection: "services") ──

@@ -240,13 +240,15 @@ const PropertyForm = ({
           <input
             value={propertyLocation}
             readOnly
+            title={propertyLocation}
             className="
               h-[60px] w-full rounded-lg
               border border-bg-gray-1
               bg-[#1A1A1A] px-[20px] pr-[55px]
-              font-['Urbanist'] text-[14px]
+              font-['Urbanist'] text-[13px] sm:text-[14px]
               font-medium text-white outline-none
               cursor-not-allowed opacity-80
+              overflow-hidden text-ellipsis whitespace-nowrap
             "
           />
           <FaLocationDot className="absolute right-[20px] top-1/2 -translate-y-1/2 text-[18px] text-white" />

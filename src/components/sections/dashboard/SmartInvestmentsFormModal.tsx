@@ -10,18 +10,23 @@ interface SmartInvestmentsCardFormState {
   title: string;
   description: string;
   icon: string;
+  order: string;
 }
 
 type F = keyof SmartInvestmentsCardFormState;
 type Errors  = Partial<Record<F, string>>;
 type Touched = Partial<Record<F, boolean>>;
 
-const FIELDS: F[] = ["title", "description", "icon"];
+const FIELDS: F[] = ["title", "description", "icon", "order"];
 
 function validateField(field: F, value: string): string {
   if (field === "title")       return validateRequired(value, "Title");
   if (field === "description") return validateRequired(value, "Description");
   if (field === "icon")        return validateRequired(value, "Icon");
+  if (field === "order") {
+    if (!value.trim()) return "Order is required";
+    if (isNaN(Number(value)) || Number(value) < 1) return "Order must be a positive number";
+  }
   return "";
 }
 
@@ -35,8 +40,8 @@ function validateAll(values: SmartInvestmentsCardFormState): Errors {
 }
 
 function buildInitialState(initialData?: FirestoreSmartInvestmentsCard): SmartInvestmentsCardFormState {
-  if (!initialData) return { title: "", description: "", icon: "" };
-  return { title: initialData.title, description: initialData.description, icon: initialData.icon };
+  if (!initialData) return { title: "", description: "", icon: "", order: "" };
+  return { title: initialData.title, description: initialData.description, icon: initialData.icon, order: initialData.order?.toString() ?? "" };
 }
 
 interface SmartInvestmentsFormModalProps {
@@ -73,7 +78,7 @@ export const SmartInvestmentsFormModal = ({ mode, initialData, onClose, onSubmit
     const allErrors = validateAll(values);
     setErrors(allErrors);
     if (Object.keys(allErrors).length > 0) return;
-    onSubmit({ title: values.title.trim(), description: values.description.trim(), icon: values.icon.trim() });
+    onSubmit({ title: values.title.trim(), description: values.description.trim(), icon: values.icon.trim(), order: Number(values.order) });
   };
 
   const inputBgClass = (field: F) => {
@@ -136,6 +141,17 @@ export const SmartInvestmentsFormModal = ({ mode, initialData, onClose, onSubmit
             folder="smartInvestments"
             error={touched.icon ? errors.icon : undefined}
           />
+
+          <div>
+            <label className={labelClass} htmlFor="si-card-order">Order</label>
+            <input id="si-card-order" type="number" min={1} placeholder="e.g. 1"
+              value={values.order}
+              onChange={(e) => setField("order", e.target.value)}
+              onBlur={() => handleBlur("order")}
+              aria-invalid={!!(touched.order && errors.order)}
+              className={fieldClass("order")} />
+            <Err f="order" />
+          </div>
 
           <div>
             <label className={labelClass} htmlFor="si-card-description">Description</label>

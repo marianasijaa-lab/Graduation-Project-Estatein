@@ -26,7 +26,7 @@ export const StarCluster: React.FC<{ className?: string }> = ({
         whileInView={{ opacity: 1, scale: 1, rotate: 360 }}
         viewport={{ once: false }}
         animate={{ rotate: 360 }}
-        transition={spinTransition(6, 0)}
+        transition={spinTransition(2, 0)}
       >
         <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
       </motion.svg>
@@ -39,7 +39,7 @@ export const StarCluster: React.FC<{ className?: string }> = ({
         whileInView={{ opacity: 0.7, scale: 1, rotate: 360 }}
         viewport={{ once: false }}
         animate={{ rotate: 360 }}
-        transition={spinTransition(8, 0.3)}
+        transition={spinTransition(2, 0.15)}
       >
         <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
       </motion.svg>
@@ -52,7 +52,7 @@ export const StarCluster: React.FC<{ className?: string }> = ({
         whileInView={{ opacity: 0.4, scale: 1, rotate: 360 }}
         viewport={{ once: false }}
         animate={{ rotate: 360 }}
-        transition={spinTransition(5, 0.6)}
+        transition={spinTransition(2, 0.3)}
       >
         <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
       </motion.svg>

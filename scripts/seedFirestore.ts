@@ -560,24 +560,28 @@ const smartInvestments = [
     description:
       'Stay ahead of market trends with our expert Market Analysis. We provide in-depth insights into real estate market conditions',
     icon: '/assets/Icon_19.png',
+    order: 1,
   },
   {
     title: 'ROI Assessment',
     description:
       'Make investment decisions with confidence. Our ROI Assessment services evaluate the potential returns on your investments',
     icon: '/assets/Icon_27.png',
+    order: 2,
   },
   {
     title: 'Customized Strategies',
     description:
       'Every investor is unique, and so are their goals. We develop Customized Investment Strategies tailored to your specific needs',
     icon: '/assets/Icon_28.png',
+    order: 3,
   },
   {
     title: 'Diversification Mastery',
     description:
       'Diversify your real estate portfolio effectively. Our experts guide you in spreading your investments across various property types and locations',
     icon: '/assets/Icon_4.png',
+    order: 4,
   },
 ];
 

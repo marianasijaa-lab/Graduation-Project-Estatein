@@ -1,6 +1,7 @@
 ﻿import { useState } from "react";
 import { motion } from "framer-motion";
 import type { IconType } from "react-icons";
+import { useTheme } from "../../Context/ThemeContext";
 import {
   FaFacebookF,
   FaInstagram,
@@ -61,6 +62,10 @@ const footerLinks = [
 ];
 
 const Footer = () => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+  const dividerClass = isDark ? "bg-bg-gray-1" : "bg-gray-300";
+
   const { contactInfo } = useContactInfo();
   const socialLinks = contactInfo.socialLinks.filter((link) => link.enabled && link.url.trim());
 
@@ -185,12 +190,12 @@ const Footer = () => {
 
           {/* خط شاقولي علوي (Row 1 فقط) */}
           <div
-            className="absolute left-1/2 w-px bg-bg-gray-1 -translate-x-1/2"
+            className={`absolute left-1/2 w-px ${dividerClass} -translate-x-1/2`}
             style={{ top: '8px', height: 'calc(50% - 45px)' }}
           />
           {/* خط شاقولي سفلي (Row 2 فقط) */}
           <div
-            className="absolute left-1/2 w-px bg-bg-gray-1 -translate-x-1/2"
+            className={`absolute left-1/2 w-px ${dividerClass} -translate-x-1/2`}
             style={{ bottom: '0px', height: 'calc(50% + 25px)' }}
           />
 
@@ -207,14 +212,14 @@ const Footer = () => {
               {footerLinks[0].links.map((link, i) => (
                 <p key={i} className="text-[15px] sm:text-sm text-(--text-main) hover:text-gray cursor-pointer transition-colors leading-tight">{link}</p>
               ))}
-              <div className="mt-2 h-px bg-bg-gray-1" />
+              <div className={`mt-2 h-px ${dividerClass}`} />
             </motion.div>
             <motion.div variants={staggerItem} className="flex flex-col gap-2 pb-6 pt-2 pl-2">
               <h3 className="font-medium text-gray text-[17px] sm:text-base">{footerLinks[1].title}</h3>
               {footerLinks[1].links.map((link, i) => (
                 <p key={i} className="text-[15px] sm:text-sm text-(--text-main) hover:text-gray cursor-pointer transition-colors leading-tight">{link}</p>
               ))}
-              <div className="mt-2 h-px bg-bg-gray-1" />
+              <div className={`mt-2 h-px ${dividerClass}`} />
             </motion.div>
           </motion.div>
 
@@ -231,13 +236,13 @@ const Footer = () => {
               {footerLinks[2].links.map((link, i) => (
                 <p key={i} className="text-[15px] sm:text-sm text-(--text-main) hover:text-gray cursor-pointer transition-colors ">{link}</p>
               ))}
-              <div className="mt-2 h-px bg-bg-gray-1" />
+              <div className={`mt-2 h-px ${dividerClass}`} />
               <div className="pt-3">
                 <h3 className="font-medium text-gray text-[17px] sm:text-base mb-2">{footerLinks[4].title}</h3>
                 {footerLinks[4].links.map((link, i) => (
                   <p key={i} className="text-[15px] sm:text-sm text-(--text-main) hover:text-gray cursor-pointer transition-colors  mb-2">{link}</p>
                 ))}
-                <div className="mt-2 h-px bg-bg-gray-1" />
+                <div className={`mt-2 h-px ${dividerClass}`} />
               </div>
             </motion.div>
             <motion.div variants={staggerItem} className="flex flex-col gap-2 pb-6 pt-4 pl-2">
@@ -245,7 +250,7 @@ const Footer = () => {
               {footerLinks[3].links.map((link, i) => (
                 <p key={i} className="text-[15px] sm:text-sm text-(--text-main) hover:text-gray cursor-pointer transition-colors ">{link}</p>
               ))}
-              <div className="mt-2 h-px bg-bg-gray-1" />
+              <div className={`mt-2 h-px ${dividerClass}`} />
             </motion.div>
           </motion.div>
 
