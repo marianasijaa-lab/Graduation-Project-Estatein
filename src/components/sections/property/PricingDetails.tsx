@@ -7,6 +7,7 @@ interface PricingItem {
   label: string;
   value: string;
   note?: string;
+  noteLgOnly?: boolean;
   fullWidth?: boolean;
 }
 
@@ -125,13 +126,12 @@ const PricingCard = ({ title, items }: PricingSection) => {
 
               {/* Value + Note */}
 
-              <div className="mt-[8px] flex flex-wrap items-center gap-[10px] sm:gap-[16px] min-w-0">
+              <div className="mt-[8px] flex flex-nowrap items-center gap-[10px] sm:gap-[16px] min-w-0">
                 <span
                   className={`
                     text-(--text-main)
-                    break-words
-                    min-w-0
-                    max-w-full
+                    whitespace-nowrap
+                    shrink-0
                     ${item.value.length > 20
                       ? "text-[14px] sm:text-[14px] lg:text-[16px] font-normal"
                       : "text-[18px] sm:text-[20px] lg:text-[20px] font-semibold"
@@ -144,10 +144,10 @@ const PricingCard = ({ title, items }: PricingSection) => {
                 {item.note && (
                   <span
                     className={`
-                      inline
+                      ${item.noteLgOnly ? "hidden lg:inline" : "inline"}
+                      shrink
                       min-w-0
                       w-fit
-                      max-w-full
                       ${item.note.length > 35 ? "rounded-md" : "rounded-[28px]"}
                       bg-(--bg-secondary)
                       border border-bg-gray-1
