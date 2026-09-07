@@ -32,9 +32,10 @@ const SliderButtons = ({
   const total = itemsLength - itemsToShow + 1;
   const { theme } = useTheme();
   const isDark = theme === "dark";
-  const nextBtnClass = isDark
-    ? "bg-[#1A1A1A] hover:bg-[#262626]"
-    : "bg-gray-200 hover:bg-gray-300";
+
+  const btnStyle = isDark
+    ? { background: '#1A1A1A', borderColor: '#262626', color: '#ffffff' }
+    : { background: '#f4f4f5', borderColor: '#d4d4d8', color: '#71717a' };
 
   return (
     <>
@@ -53,19 +54,20 @@ const SliderButtons = ({
           <motion.button
             whileHover={currentIndex === 0 ? undefined : { scale: 1.08 }}
             whileTap={currentIndex === 0 ? undefined : { scale: 0.92 }}
-            className="w-10 h-10 rounded-full border border-bg-gray-1 flex items-center justify-center text-(--text-main) hover:bg-white/10 transition disabled:opacity-30 disabled:cursor-not-allowed"
+            className="w-10 h-10 rounded-full border flex items-center justify-center transition disabled:opacity-30 disabled:cursor-not-allowed"
             onClick={goPrev}
             disabled={currentIndex === 0}
+            style={btnStyle}
           >
             <FaArrowLeft size={16} />
           </motion.button>
           <motion.button
             whileHover={currentIndex >= maxIndex ? undefined : { scale: 1.08 }}
             whileTap={currentIndex >= maxIndex ? undefined : { scale: 0.92 }}
-            className="w-10 h-10 rounded-full border border-bg-gray-1 flex items-center justify-center text-(--text-main) transition disabled:opacity-30 disabled:cursor-not-allowed"
+            className="w-10 h-10 rounded-full border flex items-center justify-center transition disabled:opacity-30 disabled:cursor-not-allowed"
             onClick={goNext}
             disabled={currentIndex >= maxIndex}
-            style={{ background: isDark ? '#1A1A1A' : '#e5e7eb' }}
+            style={btnStyle}
           >
             <FaArrowRight size={16} />
           </motion.button>
@@ -100,19 +102,20 @@ const SliderButtons = ({
             <motion.button
               whileHover={currentIndex === 0 ? undefined : { scale: 1.08 }}
               whileTap={currentIndex === 0 ? undefined : { scale: 0.92 }}
-              className="w-8 h-8 lg:w-9 lg:h-9 rounded-full border border-bg-gray-1 flex items-center justify-center text-(--text-main) hover:bg-white/10 transition disabled:opacity-30 disabled:cursor-not-allowed"
+              className="w-8 h-8 lg:w-9 lg:h-9 rounded-full border flex items-center justify-center transition disabled:opacity-30 disabled:cursor-not-allowed"
               onClick={goPrev}
               disabled={currentIndex === 0}
+              style={btnStyle}
             >
               <FaArrowLeft size={14} />
             </motion.button>
             <motion.button
               whileHover={currentIndex >= maxIndex ? undefined : { scale: 1.08 }}
               whileTap={currentIndex >= maxIndex ? undefined : { scale: 0.92 }}
-              className="w-8 h-8 lg:w-9 lg:h-9 rounded-full border border-bg-gray-1 flex items-center justify-center text-(--text-main) transition disabled:opacity-30 disabled:cursor-not-allowed"
+              className="w-8 h-8 lg:w-9 lg:h-9 rounded-full border flex items-center justify-center transition disabled:opacity-30 disabled:cursor-not-allowed"
               onClick={goNext}
               disabled={currentIndex >= maxIndex}
-              style={{ background: isDark ? '#1A1A1A' : '#e5e7eb' }}
+              style={btnStyle}
             >
               <FaArrowRight size={14} />
             </motion.button>

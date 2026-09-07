@@ -244,14 +244,14 @@ const PropertyForm = ({
             className="
               h-[60px] w-full rounded-lg
               border border-bg-gray-1
-              bg-[#1A1A1A] px-[20px] pr-[55px]
+              bg-(--bg-secondary) px-[20px] pr-[55px]
               font-['Urbanist'] text-[13px] sm:text-[14px]
-              font-medium text-white outline-none
+              font-medium text-(--text-main) outline-none
               cursor-not-allowed opacity-80
               overflow-hidden text-ellipsis whitespace-nowrap
             "
           />
-          <FaLocationDot className="absolute right-[20px] top-1/2 -translate-y-1/2 text-[18px] text-white" />
+          <FaLocationDot className="absolute right-[20px] top-1/2 -translate-y-1/2 text-[18px] text-(--text-main)" />
         </div>
       </div>
        {/* Message */}
@@ -268,7 +268,7 @@ const PropertyForm = ({
           className={`
             h-[140px] w-full resize-none
             rounded-lg border
-            bg-[#1A1A1A] px-[20px] py-[20px]
+            bg-(--bg-secondary) px-[20px] py-[20px]
             font-['Urbanist'] text-[14px]
             text-(--text-main) outline-none
             placeholder:text-placeholder
