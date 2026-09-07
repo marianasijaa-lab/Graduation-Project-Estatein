@@ -64,15 +64,8 @@ const NOOP_UNSUBSCRIBE: Unsubscribe = () => {};
 const liveCollectionListeners = new Set<string>();
 const liveDocumentListeners = new Set<string>();
 
-// ── Dashboard-only diagnostic ─────────────────────────────────────────────────
-// Collections / documents that are currently serving FALLBACK_* demo data
-// *because their Firestore listener failed* (permission-denied, unavailable, …)
-// or because Firebase isn't configured. The PUBLIC site never reads this and its
-// behaviour is unchanged — it keeps showing fallback data seamlessly. Only the
-// dashboard's <DemoDataBanner> subscribes, so an admin is told the data on
-// screen isn't live. Populated ONLY on a genuine listener error — never on the
-// harmless initial fallback shown before the first snapshot, and never for a
-// collection that successfully loaded and is simply empty.
+// ── Dashboard-only diagnostic ──
+
 const fallbackErrors = new Map<string, string>();
 let fallbackErrorsSnapshot: ReadonlyArray<{ key: string; message: string }> = [];
 const fallbackErrorListeners = new Set<() => void>();
@@ -298,14 +291,8 @@ export async function updateDocument<T extends DocumentData>(
 
 /**
  * Deletes a document by ID.
- *
- * Firestore's deleteDoc() resolves successfully even when the target document
- * doesn't exist (it's an idempotent no-op). In the dashboard that produced a
- * misleading "deleted" toast when a row was actually seed/fallback data (whose
- * id never matches a real auto-generated Firestore id) or when reads had failed.
- * We now confirm the document exists first and throw a clear error otherwise, so
- * the caller surfaces an accurate failure instead of a false success.
- */
+**/
+
 export async function deleteDocument(
   collectionName: string,
   id: string,

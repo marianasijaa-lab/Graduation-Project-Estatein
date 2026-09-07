@@ -20,7 +20,7 @@ export function ErrorMessage({ message, onRetry }: ErrorMessageProps) {
           onClick={onRetry}
           className="px-6 py-2.5 bg-white text-(--bg-main) font-medium rounded-lg hover:bg-white/90 transition-colors"
         >
-          إعادة المحاولة
+         Retry
         </button>
       )}
     </div>

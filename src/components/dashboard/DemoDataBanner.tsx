@@ -2,14 +2,6 @@ import { useSyncExternalStore } from "react";
 import { HiOutlineExclamationTriangle } from "react-icons/hi2";
 import { getFallbackErrors, subscribeFallbackErrors } from "../../api/firestore";
 
-/**
- * Dashboard-only warning strip. Renders nothing while every Firestore
- * subscription is live. Appears automatically (via DashboardPageShell) the
- * moment any collection/document falls back to FALLBACK_* demo data because its
- * listener errored — e.g. Firestore is unreachable or security rules reject
- * reads. A genuinely empty-but-successfully-loaded collection does NOT trigger
- * it. The public site never renders this.
- */
 export const DemoDataBanner = () => {
   const errors = useSyncExternalStore(
     subscribeFallbackErrors,

@@ -29,7 +29,7 @@ export const SmartInvestments = () => {
                 </>
               }
               subtitle="Building a real estate portfolio requires a strategic approach. Estatein's Investment Advisory Service empowers you to make smart investments and informed decisions."
-              className="mb-0 sm:!mb-4"
+              className="mb-0 sm:mb-4!"
               fullWidth
             />
 

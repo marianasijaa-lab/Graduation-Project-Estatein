@@ -74,7 +74,7 @@ export const AchievementFormModal = ({ mode, initialData, onClose, onSubmit }: A
     onSubmit({ title: values.title.trim(), description: values.description.trim() });
   };
 
-  // ── style helpers ──────────────────────────────────────────────────────────
+  // ── style helpers ──
   const inputBgClass = (field: F) => {
     const hasErr = touched[field] && errors[field];
     if (hasErr)

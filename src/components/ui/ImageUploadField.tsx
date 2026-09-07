@@ -16,11 +16,6 @@ interface ImageUploadFieldProps {
   error?: string;
 }
 
-/**
- * Reusable image picker: shows a placeholder or preview, uploads the picked
- * file straight to Firebase Storage, and reports back the real download URL.
- * Used by every dashboard form that manages an image/icon field.
- */
 export const ImageUploadField = ({ label, value, onChange, folder, error }: ImageUploadFieldProps) => {
   const { theme } = useTheme();
   const isDark = theme === "dark";

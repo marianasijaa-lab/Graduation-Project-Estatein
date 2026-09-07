@@ -30,7 +30,7 @@ export const UnlockPropertyValue = () => {
               variants={staggerItem}
               whileHover={{y: -4}}
               transition={{duration: 0.25}}
-              className="bg-(--bg-main) border border-bg-gray-1 rounded-2xl p-5 sm:p-6 flex flex-col justify-start gap-3 hover:border-[#703BF7]/40 transition-all duration-300 lg:h-full lg:min-h-[200px]"
+              className="bg-(--bg-main) border border-bg-gray-1 rounded-2xl p-5 sm:p-6 flex flex-col justify-start gap-3 hover:border-primary/40 transition-all duration-300 lg:h-full lg:min-h-[200px]"
             >
               <div className="flex items-center gap-2 sm:gap-3">
                 <div className="w-14 h-14 shrink-0 flex items-center justify-center">

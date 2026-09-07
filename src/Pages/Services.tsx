@@ -1,4 +1,3 @@
-// src/pages/Services.tsx
 import { FadeInSection } from '../components/common/FadeInSection';
 import PageHero from '../components/sections/hero/PageHero';
 import Services from '../components/sections/services/Services';

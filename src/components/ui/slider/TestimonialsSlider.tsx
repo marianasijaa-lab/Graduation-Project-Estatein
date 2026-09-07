@@ -33,7 +33,7 @@ const TestimonialsSlider = ({
   if (status === 'failed') {
     return (
       <ErrorMessage
-        message={error ?? 'فشل جلب آراء العملاء'}
+        message={error ?? 'Failed to fetch customer reviews'}
         onRetry={() => window.location.reload()}
       />
     );

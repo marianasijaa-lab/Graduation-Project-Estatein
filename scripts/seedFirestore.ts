@@ -1,4 +1,3 @@
-
 import * as dotenv from 'dotenv';
 import { initializeApp, cert, type ServiceAccount } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';

@@ -36,6 +36,7 @@
 :root {
   --bg-main: #141414;
   --bg-secondary: #1A1A1A;
+  --team-card-bg: #1A1A1A;
   --text-main: #ffffff;
   --color-border: #4d4d4d;
   
@@ -45,6 +46,7 @@
 :root.light {
   --bg-main: #ffffff;
   --bg-secondary: #ffffffc5;
+  --team-card-bg: #ffffffc5;
   --text-main: #141414;
   --color-border: #d1d1d1;
   --decor-opacity: 0.15;

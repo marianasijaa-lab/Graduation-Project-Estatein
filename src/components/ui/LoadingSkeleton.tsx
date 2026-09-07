@@ -12,15 +12,15 @@ export function LoadingSkeleton({ variant = 'grid', count = 3 }: LoadingSkeleton
         {items.map((_, i) => (
           <div
             key={i}
-            className="bg-[#111111] border border-[#262626] rounded-2xl p-4 animate-pulse"
+            className="bg-[#111111] border border-bg-gray-1 rounded-2xl p-4 animate-pulse"
           >
-            <div className="w-full h-48 bg-[#262626] rounded-xl mb-4" />
-            <div className="h-5 bg-[#262626] rounded w-3/4 mb-2" />
-            <div className="h-4 bg-[#262626] rounded w-full mb-1" />
-            <div className="h-4 bg-[#262626] rounded w-5/6 mb-4" />
+            <div className="w-full h-48 bg-bg-gray-1 rounded-xl mb-4" />
+            <div className="h-5 bg-bg-gray-1 rounded w-3/4 mb-2" />
+            <div className="h-4 bg-bg-gray-1 rounded w-full mb-1" />
+            <div className="h-4 bg-bg-gray-1 rounded w-5/6 mb-4" />
             <div className="flex justify-between items-center">
-              <div className="h-6 bg-[#262626] rounded w-24" />
-              <div className="h-10 bg-[#262626] rounded w-36" />
+              <div className="h-6 bg-bg-gray-1 rounded w-24" />
+              <div className="h-10 bg-bg-gray-1 rounded w-36" />
             </div>
           </div>
         ))}
@@ -34,11 +34,11 @@ export function LoadingSkeleton({ variant = 'grid', count = 3 }: LoadingSkeleton
         {items.map((_, i) => (
           <div
             key={i}
-            className="flex-shrink-0 w-[calc(33%-8px)] bg-[#111111] border border-[#262626] rounded-2xl p-4 animate-pulse"
+            className="flex-shrink-0 w-[calc(33%-8px)] bg-[#111111] border border-bg-gray-1 rounded-2xl p-4 animate-pulse"
           >
-            <div className="w-full h-48 bg-[#262626] rounded-xl mb-4" />
-            <div className="h-5 bg-[#262626] rounded w-3/4 mb-2" />
-            <div className="h-4 bg-[#262626] rounded w-full" />
+            <div className="w-full h-48 bg-bg-gray-1 rounded-xl mb-4" />
+            <div className="h-5 bg-bg-gray-1 rounded w-3/4 mb-2" />
+            <div className="h-4 bg-bg-gray-1 rounded w-full" />
           </div>
         ))}
       </div>
@@ -50,8 +50,8 @@ export function LoadingSkeleton({ variant = 'grid', count = 3 }: LoadingSkeleton
       <div className="flex gap-6">
         {items.map((_, i) => (
           <div key={i} className="flex flex-col gap-2 animate-pulse">
-            <div className="h-8 bg-[#262626] rounded w-20" />
-            <div className="h-4 bg-[#262626] rounded w-32" />
+            <div className="h-8 bg-bg-gray-1 rounded w-20" />
+            <div className="h-4 bg-bg-gray-1 rounded w-32" />
           </div>
         ))}
       </div>
@@ -64,12 +64,12 @@ export function LoadingSkeleton({ variant = 'grid', count = 3 }: LoadingSkeleton
       {items.map((_, i) => (
         <div
           key={i}
-          className="bg-[#111111] border border-[#262626] rounded-xl p-4 flex gap-4 animate-pulse"
+          className="bg-[#111111] border border-bg-gray-1 rounded-xl p-4 flex gap-4 animate-pulse"
         >
-          <div className="w-12 h-12 bg-[#262626] rounded-lg flex-shrink-0" />
+          <div className="w-12 h-12 bg-bg-gray-1 rounded-lg flex-shrink-0" />
           <div className="flex-1">
-            <div className="h-5 bg-[#262626] rounded w-1/2 mb-2" />
-            <div className="h-4 bg-[#262626] rounded w-full" />
+            <div className="h-5 bg-bg-gray-1 rounded w-1/2 mb-2" />
+            <div className="h-4 bg-bg-gray-1 rounded w-full" />
           </div>
         </div>
       ))}

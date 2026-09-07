@@ -24,6 +24,18 @@ function Root() {
 
   const isDark = theme === 'dark';
 
+  // Scroll to top on every route change
+  useEffect(() => {
+    if (window.location.hash) return;
+    // Reset all possible scroll containers
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    if (mainRef.current) {
+      mainRef.current.scrollTop = 0;
+    }
+  }, [location.pathname]);
+
   useEffect(() => {
     history.scrollRestoration = 'manual';
 
@@ -40,10 +52,6 @@ function Root() {
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-          // Per-item anchors (only the Offices cards use `office-<id>`) get a
-          // brief one-shot pulse so the specific card stands out. Section-level
-          // anchors (#testimonials, #achievements, …) wrap a whole section /
-          // carousel, so they are left with plain scroll-to behaviour.
           if (targetId.startsWith('office-')) {
             el.classList.add('highlight-pulse');
             highlightTimer = window.setTimeout(() => {

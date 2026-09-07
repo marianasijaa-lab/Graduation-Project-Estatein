@@ -27,7 +27,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   const { logout, isAuthenticated } = useAuth();
 
   const handleNavClick = (pageId: PageId) => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
     onNavigate(pageId);
     setMobileMenuOpen(false);
   };

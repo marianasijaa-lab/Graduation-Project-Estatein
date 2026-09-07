@@ -154,6 +154,7 @@ export const PropertyDetails = () => {
         {
           label: "Mortgage Payment",
           value: "Varies based on terms and interest rate",
+          note: "If applicable",
         },
         {
           label: "Property Insurance",

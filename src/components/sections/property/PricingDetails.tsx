@@ -145,6 +145,8 @@ const PricingCard = ({ title, items }: PricingSection) => {
                 {item.note && (
                   <span
                     className={`
+                      hidden
+                      lg:inline
                       min-w-0
                       w-fit
                       max-w-full

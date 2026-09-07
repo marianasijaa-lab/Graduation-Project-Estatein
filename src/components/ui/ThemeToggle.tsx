@@ -11,7 +11,7 @@ export default function ThemeToggle() {
       aria-label="Toggle Theme"
       whileHover={{ scale: 1.08 }}
       whileTap={{ scale: 0.9 }}
-      className="relative inline-flex items-center justify-center w-11 h-11 rounded-xl bg-[var(--bg-main)] hover:bg-[var(--bg-secondary)] border border-[var(--color-border)] text-[var(--text-main)] hover:text-[#703BF7] transition-all cursor-pointer shadow-sm overflow-hidden"
+      className="relative inline-flex items-center justify-center w-11 h-11 rounded-xl bg-[var(--bg-main)] hover:bg-[var(--bg-secondary)] border border-bg-gray-1 text-[var(--text-main)] hover:text-[#703BF7] transition-all cursor-pointer shadow-sm overflow-hidden"
     >
       <AnimatePresence mode="wait" initial={false}>
         {theme === "dark" ? (
@@ -32,7 +32,7 @@ export default function ThemeToggle() {
             exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.25 }}
           >
-            <HiOutlineMoon className="text-xl text-[#703BF7]" />
+            <HiOutlineMoon className="text-xl text-primary" />
           </motion.span>
         )}
       </AnimatePresence>

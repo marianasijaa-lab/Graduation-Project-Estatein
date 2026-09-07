@@ -1,9 +1,5 @@
 import toast from "react-hot-toast";
 
-/**
- * Thin wrapper around react-hot-toast so every call site in the app uses the
- * same duration / id strategy. Styling lives on the <Toaster> in AppToaster.tsx.
- */
 
 const SUCCESS_DURATION = 3500;
 const ERROR_DURATION = 6000;
@@ -18,11 +14,6 @@ export function notifyError(message: string): void {
 
 // ─── Error → readable message ───
 
-/**
- * Turns whatever was thrown by a Firebase / Firestore call into a short, plain
- * sentence suitable for a toast. Falls back to `fallback` only when nothing
- * useful can be extracted — never returns a raw error code.
- */
 export function getErrorMessage(error: unknown, fallback = "Something went wrong. Please try again."): string {
   const raw =
     error instanceof Error

@@ -1,4 +1,4 @@
-// ─── Regex patterns ──────────────────────────────────────────────────────────
+// ─── Regex patterns ───
 
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -11,7 +11,7 @@ export const NAME_REGEX = /^[A-Za-zÀ-ÖØ-öø-ÿ\s'\-]{2,}$/;
 // Basic URL — must start with http:// or https://
 export const URL_REGEX = /^https?:\/\/[^\s/$.?#].[^\s]*$/i;
 
-// ─── Individual field validators ──────────────────────────────────────────────
+// ─── Individual field validators ───
 
 export function validateRequired(value: string, label = "This field"): string {
   return value.trim() ? "" : `${label} is required.`;
@@ -47,7 +47,7 @@ export function validatePassword(value: string): string {
   return "";
 }
 
-// ─── Password strength ────────────────────────────────────────────────────────
+// ─── Password strength ───
 
 export type PasswordStrength = "empty" | "weak" | "fair" | "strong";
 
@@ -73,7 +73,7 @@ export function getPasswordStrength(value: string): PasswordStrength {
   return "weak";
 }
 
-// ─── Email quality helpers ────────────────────────────────────────────────────
+// ─── Email quality helpers ───
 
 // Well-known legitimate providers — we won't warn about these.
 const TRUSTED_DOMAINS = new Set([
@@ -105,7 +105,7 @@ export interface EmailQuality {
   suggestions: string[];
 }
 
-/**
+/*
  * Analyses the email domain and returns quality info.
  * Call only after basic format validation passes.
  */
@@ -156,13 +156,13 @@ export function validateNumber(
   return "";
 }
 
-// ─── Helper: build a "touched" record from a set of field keys ────────────────
+// ─── Helper: build a "touched" record from a set of field keys ───
 
 export function buildTouched<T extends string>(keys: T[]): Record<T, boolean> {
   return keys.reduce((acc, k) => ({ ...acc, [k]: false }), {} as Record<T, boolean>);
 }
 
-// ─── Helper: mark all fields as touched (used on submit attempt) ──────────────
+// ─── Helper: mark all fields as touched (used on submit attempt) ───
 
 export function touchAll<T extends string>(keys: T[]): Record<T, boolean> {
   return keys.reduce((acc, k) => ({ ...acc, [k]: true }), {} as Record<T, boolean>);

@@ -47,7 +47,7 @@ export const InfoBox: FC<InfoBoxProps> = ({
         {getBgOverlay(true)}
 
         {/* Title */}
-        <h3 className={`relative z-10 ${compact ? 'text-[20px] sm:text-xl' : 'text-[20px] sm:text-2xl'} font-semibold leading-snug text-(--text-main)`}>
+        <h3 className={`relative z-10 ${compact ? 'text-[20px] sm:text-2xl' : 'text-[20px] sm:text-2xl'} font-semibold leading-snug text-(--text-main)`}>
           {title}
         </h3>
 
