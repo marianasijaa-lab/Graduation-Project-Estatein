@@ -125,10 +125,9 @@ const PricingCard = ({ title, items }: PricingSection) => {
 
               {/* Value + Note */}
 
-              <div className="mt-[8px] grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-[10px] sm:gap-[16px] lg:flex lg:flex-wrap min-w-0">
+              <div className="mt-[8px] flex flex-wrap items-center gap-[10px] sm:gap-[16px] min-w-0">
                 <span
                   className={`
-                    
                     text-(--text-main)
                     break-words
                     min-w-0
@@ -145,8 +144,7 @@ const PricingCard = ({ title, items }: PricingSection) => {
                 {item.note && (
                   <span
                     className={`
-                      hidden
-                      lg:inline
+                      inline
                       min-w-0
                       w-fit
                       max-w-full
