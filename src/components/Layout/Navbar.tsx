@@ -47,7 +47,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="site-container h-20 sm:h-24 flex items-center justify-between gap-2 lg:gap-4">
         <Logo onClick={() => handleNavClick("home")} className="shrink-0" />
 
-        <nav className="hidden md:flex items-center gap-1 bg-(--bg-secondary) border border-bg-gray-1 rounded-xl p-1 shadow-inner">
+        <nav className="hidden md:flex items-center gap-1 bg-(--bg-secondary) p-1">
           {NAV_ITEMS.map((item, index) => {
             const isActive = activePage === item.id;
             return (
@@ -62,7 +62,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className={`px-3 lg:px-5 py-2 lg:py-2.5 rounded-lg text-xs lg:text-sm font-medium transition-all duration-200 cursor-pointer whitespace-nowrap ${
                   isActive
                     ? "bg-(--bg-main) border border-bg-gray-1 text-(--text-main) shadow-sm"
-                    : "text-gray hover:text-white hover:bg-bg-dark/40"
+                    : "text-(--text-main) hover:text-(--text-main) hover:bg-black/10 dark:hover:bg-white/10"
                 }`}
               >
                 {item.label}
@@ -89,7 +89,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             to="/dashboard"
             aria-label="Go to Admin Dashboard"
             title="Admin Dashboard"
-            className="hidden sm:inline-flex items-center justify-center p-2.5 rounded-xl border border-bg-gray-1 bg-(--bg-main) text-gray hover:text-(--text-main) hover:border-primary/50 transition-all cursor-pointer"
+            className="hidden sm:inline-flex items-center justify-center p-2.5 rounded-xl border border-bg-gray-1 bg-(--bg-main) text-(--text-main) hover:text-(--text-main) hover:border-primary/50 transition-all cursor-pointer"
           >
             <LayoutDashboard className="w-5 h-5" />
           </Link>
@@ -102,7 +102,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={handleLogout}
               aria-label="Log out"
               title="Log out"
-              className="hidden sm:inline-flex items-center justify-center p-2.5 rounded-xl border border-bg-gray-1 bg-(--bg-main) text-gray hover:text-(--text-main) hover:border-primary/50 transition-all cursor-pointer"
+              className="hidden sm:inline-flex items-center justify-center p-2.5 rounded-xl border border-bg-gray-1 bg-(--bg-main) text-(--text-main) hover:text-(--text-main) hover:border-primary/50 transition-all cursor-pointer"
             >
               <LogOut className="w-5 h-5" />
             </button>
@@ -147,7 +147,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                     activePage === item.id
                       ? "bg-(--bg-secondary) text-(--text-main) border border-bg-gray-1"
-                      : "text-gray hover:text-white"
+                      : "text-(--text-main) hover:text-(--text-main) hover:bg-black/10 dark:hover:bg-white/10"
                   }`}
                 >
                   {item.label}
@@ -164,7 +164,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               to="/dashboard"
               aria-label="Go to Admin Dashboard"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium text-center border border-bg-gray-1 bg-(--bg-main) text-gray hover:text-(--text-main) hover:border-primary/50 transition-all"
+              className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium text-center border border-bg-gray-1 bg-(--bg-main) text-(--text-main) hover:text-(--text-main) hover:border-primary/50 transition-all"
             >
               <LayoutDashboard className="w-4 h-4" />
               Admin Dashboard
@@ -173,7 +173,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 type="button"
                 onClick={handleLogout}
-                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium text-center border border-bg-gray-1 bg-(--bg-main) text-gray hover:text-(--text-main) hover:border-primary/50 transition-all cursor-pointer"
+                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium text-center border border-bg-gray-1 bg-(--bg-main) text-(--text-main) hover:text-(--text-main) hover:border-primary/50 transition-all cursor-pointer"
               >
                 <LogOut className="w-4 h-4" />
                 Log Out

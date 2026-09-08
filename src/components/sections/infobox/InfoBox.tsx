@@ -31,12 +31,13 @@ export const InfoBox: FC<InfoBoxProps> = ({
     <div
       className="absolute inset-0 bg-center bg-no-repeat bg-cover pointer-events-none"
       style={{
-        backgroundImage: isVertical
-          ? isDark
-            ? `url(/assets/Abstract3.png)`
-            : `url(/assets/Group 1.png)`
-          : `url(/assets/Abstract3.png)`,
-        opacity: isDark ? 1 : isVertical ? 0.35 : 1,
+        backgroundImage: isDark
+          ? `url(/assets/Abstract3.png)`
+          : isVertical
+            ? `url(/assets/Group 1.png)`
+            : `url(/assets/background_2.png)`,
+        opacity: isDark ? 1 : isVertical ? 0.35 : 0.25,
+        mixBlendMode: isDark ? 'normal' : 'multiply',
       }}
     />
   );

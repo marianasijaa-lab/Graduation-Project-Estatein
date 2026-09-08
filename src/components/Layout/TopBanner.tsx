@@ -18,20 +18,20 @@ export const TopBanner: React.FC<TopBannerProps> = ({
 
   return (
     <aside
-      className="relative w-full border-b border-bg-gray-1 text-(--text-main) py-3 px-4 sm:px-6 overflow-hidden select-none z-50 opacity-50"
-      style={{ backgroundColor: 'var(--bg-main)' }}
+      className="relative w-full border-b border-bg-gray-1 text-(--text-main) py-3 px-4 sm:px-6 overflow-hidden select-none z-50"
+      style={{ backgroundColor: 'var(--banner-bg)' }}
     >
-      {/* Background with opacity only */}
+      {/* Background image layer with opacity */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage: 'url(/assets/background_1.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          opacity: 0.4,
+          opacity: 0.3,
         }}
       />
-      <div className="site-container flex items-center justify-between gap-2">
+      <div className="relative z-10 site-container flex items-center justify-between gap-2">
         <div className="flex-1 flex items-center justify-center gap-1.5 sm:gap-2 min-w-0 overflow-hidden">
           <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 text-[#F5C344] fill-[#F5C344]/30 shrink-0" />
           <span className="font-normal text-(--text-main)/90 text-[8.5px] sm:text-xs md:text-sm whitespace-nowrap overflow-hidden text-ellipsis shrink min-w-0">
@@ -47,10 +47,11 @@ export const TopBanner: React.FC<TopBannerProps> = ({
 
         <button
           onClick={() => setIsVisible(false)}
-          className="bg-(--bg-main) w-6 h-6 md:w-8 md:h-8 flex items-center justify-center rounded-full border border-bg-gray-1 hover:bg-white/10 text-(--text-main)  transition-colors cursor-pointer shrink-0 -mr-5 md:-mr-10"
+          className="w-6 h-6 md:w-8 md:h-8 flex items-center justify-center rounded-full border border-bg-gray-1 hover:bg-white/10 text-(--text-main) transition-colors cursor-pointer shrink-0 -mr-5 md:-mr-10"
+          style={{ backgroundColor: 'var(--close-btn-bg)' }}
           aria-label="Close"
         >
-          <X className="  w-4 h-4 md:w-5 md:h-5 text-(--text-main)" />
+          <X className="w-4 h-4 md:w-5 md:h-5 text-(--text-main)" />
         </button>
       </div>
     </aside>

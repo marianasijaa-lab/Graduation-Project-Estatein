@@ -39,7 +39,12 @@
   --team-card-bg: #1A1A1A;
   --text-main: #ffffff;
   --color-border: #4d4d4d;
-  
+  --banner-bg: #1A1A1A;
+  --close-btn-bg: #262626;
+  --tag-bg: #262626;
+  --tag-border: #3d3d3d;
+  --tag-text: #ffffff;
+  --footer-bottom-bg: #1a1a1a;
 }
 
 /* Light mode */
@@ -53,6 +58,12 @@
   --icon-filter: invert(1);
   --color-bg-gray-1: #0c0c0c;
   --color-arrow: #141414;
+  --banner-bg: #ffffff;
+  --close-btn-bg: #e5e5e5;
+  --tag-bg: #f0f0f0;
+  --tag-border: #d1d1d1;
+  --tag-text: #141414;
+  --footer-bottom-bg: #f0f0f0;
   --bg-border: #ffffff;
   --bg-error: #141414;
   --bg-shadow: none;

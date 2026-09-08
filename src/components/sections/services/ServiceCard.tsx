@@ -30,7 +30,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ type, heading, icon, descript
         </div>
 
         {/* العنوان */}
-        <h3 className="font-semibold text-(--text-main) text-[11px] sm:text-[13px] lg:text-base text-center break-words w-full">
+        <h3 className="font-semibold text-(--text-main) text-[11px] sm:text-[13px] lg:text-base text-center whitespace-nowrap w-full">
           {heading}
         </h3>
       </motion.div>

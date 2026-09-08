@@ -134,9 +134,14 @@ function Card({ item, index = 0 }: CardProps & { index?: number }) {
           {details.map((detail, index) => (
             <div
               key={detail.text}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-(--bg-secondary) text-(--text-main) rounded-[28px] whitespace-nowrap w-fit shrink-0"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border whitespace-nowrap w-fit shrink-0"
+              style={{
+                backgroundColor: 'var(--tag-bg)',
+                borderColor: 'var(--tag-border)',
+                color: 'var(--tag-text)',
+              }}
             >
-              <img src={detail.icon} alt={detail.text} className="w-3 h-3 md:w-3.5 md:h-3.5 lg:w-3.5 lg:h-3.5 shrink-0" />
+              <img src={detail.icon} alt={detail.text} className="w-3 h-3 md:w-3.5 md:h-3.5 lg:w-3.5 lg:h-3.5 shrink-0" style={{ filter: 'var(--icon-filter)' }} />
               <p className="font-medium text-[12px] md:text-[12px] lg:text-sm">{detail.text}</p>
             </div>
           ))}
