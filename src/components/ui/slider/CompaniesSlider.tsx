@@ -24,7 +24,7 @@ const CompaniesSlider = () => {
   if (status === 'failed') {
     return (
       <ErrorMessage
-        message={error ?? 'فشل جلب بيانات الشركات'}
+        message={error ?? 'Failed to fetch company data'}
         onRetry={() => window.location.reload()}
       />
     );

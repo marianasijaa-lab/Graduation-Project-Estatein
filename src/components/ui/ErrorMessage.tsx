@@ -11,7 +11,7 @@ export function ErrorMessage({ message, onRetry }: ErrorMessageProps) {
       </div>
       <div>
         <h3 className="text-(--text-main) font-semibold text-lg mb-1">
-          حدث خطأ في جلب البيانات
+         Oops, something went wrong getting the data
         </h3>
         <p className="text-gray-400 text-sm max-w-sm">{message}</p>
       </div>

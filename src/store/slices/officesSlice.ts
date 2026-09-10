@@ -56,10 +56,6 @@ const officesSlice = createSlice({
       state.status = 'succeeded';
       state.error = null;
 
-      // Only reset the active tab if the currently selected type no longer
-      // exists in the new data (e.g. the last office of that type was deleted).
-      // Do NOT reset on every snapshot — that would clear the user's selection
-      // every time Firestore pushes an update.
       const tabStillValid =
         state.activeTab === 'All' ||
         action.payload.some((office) => office.type === state.activeTab);

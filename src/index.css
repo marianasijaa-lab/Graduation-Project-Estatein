@@ -45,6 +45,7 @@
   --tag-border: #3d3d3d;
   --tag-text: #ffffff;
   --footer-bottom-bg: #1a1a1a;
+  --service-card-hover: #2a2a2a;
 }
 
 /* Light mode */
@@ -64,6 +65,7 @@
   --tag-border: #d1d1d1;
   --tag-text: #141414;
   --footer-bottom-bg: #f0f0f0;
+  --service-card-hover: #e8e4f5;
   --bg-border: #ffffff;
   --bg-error: #141414;
   --bg-shadow: none;

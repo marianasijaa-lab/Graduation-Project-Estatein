@@ -6,5 +6,5 @@ dist/
 .env.local
 .env.*.local
 
-# Firebase Service Account (لا ترفع هذا الملف أبداً)
+# Firebase Service Account
 serviceAccount.json

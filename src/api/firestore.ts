@@ -1,4 +1,3 @@
-
 import {
   collection,
   doc,
@@ -82,11 +81,6 @@ function setFallbackError(key: string, message: string | null): void {
   fallbackErrorListeners.forEach((listener) => listener());
 }
 
-/**
- * Collections / documents currently showing demo (FALLBACK_*) data because their
- * Firestore listener failed. Empty array = every subscription is live.
- * Dashboard diagnostic only — the public site ignores this.
- */
 export function getFallbackErrors(): ReadonlyArray<{ key: string; message: string }> {
   return fallbackErrorsSnapshot;
 }

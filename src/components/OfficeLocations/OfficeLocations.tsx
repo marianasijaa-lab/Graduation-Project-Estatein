@@ -49,10 +49,10 @@ const OfficeLocations = () => {
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => dispatch(setActiveTab(getNextOfficeTab(activeTab, tab)))}
-              className={`h-11 flex-1 rounded-md border px-3 text-sm font-medium transition lg:h-auto lg:w-[120px] lg:flex-none lg:px-5 lg:py-3 lg:text-sm ${
+              className={`h-11 flex-1 rounded-md border px-3 text-sm font-medium transition lg:h-auto lg:w-30 lg:flex-none lg:px-5 lg:py-3 lg:text-sm ${
                 activeTab === tab
                   ? "border-bg-gray-1 bg-(--bg-main) text-(--text-main)"
-                  : "border-bg-gray-1 bg-(--bg-secondary) text-gray hover:bg-[#252525] hover:text-(--text-main)"
+                  : "border-bg-gray-1 bg-(--bg-secondary) text-gray hover:bg-(--bg-hover) hover:text-(--text-main)"
               }`}
             >
               {tab}

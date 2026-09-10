@@ -42,7 +42,7 @@ export const Button = ({
       whileHover={disabled ? undefined : { scale: 1.03 }}
       whileTap={disabled ? undefined : { scale: 0.97 }}
       transition={{ duration: 0.15 }}
-      className={`inline-flex items-center justify-center gap-2 rounded-[8px] font-medium whitespace-nowrap transition-all ${variantStyles} ${
+      className={`inline-flex items-center justify-center gap-2 rounded-lg font-medium whitespace-nowrap transition-all ${variantStyles} ${
         fullWidth ? 'w-full' : 'w-auto'
       } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'} ${className || ' md:px-[18px] md:py-[12px]  md:text-[16px] max-sm:text-[14px]'} max-sm:h-[40px] `}
     >
