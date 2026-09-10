@@ -88,7 +88,7 @@ function CompanyCard({ company }: { company: FirestoreCompany }) {
               whileTap={{ scale: 0.97 }}
               onClick={() => {}}
               className="w-full text-(--text-main) rounded-lg py-3 px-4 text-sm font-medium transition-all"
-              style={{ backgroundColor: "var(--bg-main)", border: "1px solid #262626" }}
+              style={{ backgroundColor: "#1A1A1A", border: "1px solid #262626" }}
             >
               Visit Website
             </motion.button>

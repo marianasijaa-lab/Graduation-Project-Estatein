@@ -70,7 +70,7 @@ export const SmartInvestments = () => {
                         className="w-full h-full object-contain"
                       />
                     </div>
-                    <h3 className="font-bold text-(--text-main) text-base sm:text-lg xl:text-xl font-['Urbanist',sans-serif] whitespace-nowrap overflow-hidden text-ellipsis">
+                    <h3 className="font-semibold text-(--text-main) text-base sm:text-lg xl:text-xl font-['Urbanist',sans-serif] whitespace-nowrap overflow-hidden text-ellipsis">
                       {service.title}
                     </h3>
                   </div>

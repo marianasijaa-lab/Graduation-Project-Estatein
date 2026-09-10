@@ -333,9 +333,9 @@ const PropertyForm = ({
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
           className="
-            h-[60px] w-full rounded-lg
+            h-[46px] sm:h-[60px] w-full rounded-lg
             bg-primary
-             text-[14px]
+            text-[15px] sm:text-[14px]
             font-semibold text-white
             hover:bg-[#5f2fe0]
             disabled:cursor-not-allowed disabled:opacity-60

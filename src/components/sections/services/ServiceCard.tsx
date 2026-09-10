@@ -30,8 +30,9 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ type, heading, icon, descript
         </div>
 
         {/* العنوان */}
-        <h3 className="font-semibold text-(--text-main) text-[11px] sm:text-[13px] lg:text-base text-center whitespace-nowrap w-full">
-          {heading}
+        <h3 className="font-semibold text-(--text-main) text-[13px] sm:text-[13px] lg:text-base text-center break-words hyphens-none w-full leading-snug [word-spacing:normal] sm:[word-spacing:normal]">
+          <span className="sm:hidden">{heading.replace(/\u00A0+/g, ' ')}</span>
+          <span className="hidden sm:inline">{heading}</span>
         </h3>
       </motion.div>
     );

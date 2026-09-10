@@ -59,6 +59,7 @@ export function PropertiesGrid({error,status,properties}:PropertiesGridProps) {
         itemsLength={properties.length}
         itemsToShow={itemsToShow}
         maxIndex={maxIndex}
+        centeredMobile
       />
     </div>
   );

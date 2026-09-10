@@ -292,8 +292,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
             <div key={field.name} className={spanClass}>
               {field.label && (
                 <label
-                  className={labelClass}
-                  style={{ visibility: field.label.trim() === '' ? 'hidden' : 'visible' }}
+                  className={`${labelClass} ${field.label.trim() === '' ? 'hidden sm:block sm:invisible' : ''}`}
                 >
                   {field.label.trim() || 'placeholder'}
                 </label>

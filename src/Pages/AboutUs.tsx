@@ -41,7 +41,7 @@ const OurAchievements: React.FC = () => {
               }}
             >
               <h3
-                className="font-semibold sm:text-lg md:text-2xl text-(--text-main)"
+                className="font-semibold text-xl sm:text-lg md:text-2xl text-(--text-main)"
               >
                 {item.title}
               </h3>

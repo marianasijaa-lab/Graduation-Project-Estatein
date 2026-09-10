@@ -40,7 +40,7 @@ export const UnlockPropertyValue = () => {
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <h3 className="font-bold text-(--text-main) text-lg xl:text-xl">
+                <h3 className="font-semibold text-(--text-main) text-lg xl:text-xl">
                   {service.title}
                 </h3>
               </div>

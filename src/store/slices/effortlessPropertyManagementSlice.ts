@@ -24,7 +24,7 @@ export const FALLBACK_EFFORTLESS_PROPERTY_MANAGEMENT: FirestoreEffortlessPropert
     id: 'effortless-4',
     title: 'Legal Guardian',
     description: 'Stay compliant with property laws and regulations effortlessly.',
-    icon: '/assets/Icon_27.png',
+    icon: '/assets/Icon_4.png',
   },
 ];
 
