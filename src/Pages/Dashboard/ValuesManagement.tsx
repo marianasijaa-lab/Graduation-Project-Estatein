@@ -12,7 +12,7 @@ import { ValueFormModal } from "../../components/sections/dashboard/ValueFormMod
 import { ConfirmDialog } from "../../components/sections/dashboard/ConfirmDialog";
 import { DetailModal, type DetailField } from "../../components/sections/dashboard/DetailModal";
 import {
-  DashboardPageShell, staggerItem, iconBtnHover, deleteBtnHover, cardHoverProps, SkeletonRow,
+  DashboardPageShell, staggerItem, iconBtnHover, deleteBtnHover, cardHoverProps,
   tableRowVariants,
 } from "../../components/dashboard/DashboardPageShell";
 
@@ -199,3 +199,4 @@ export const ValuesManagement = () => {
 };
 
 export default ValuesManagement;
+

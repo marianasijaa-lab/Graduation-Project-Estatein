@@ -12,7 +12,7 @@ import { OfficeFormModal } from "../../components/sections/dashboard/OfficeFormM
 import { ConfirmDialog } from "../../components/sections/dashboard/ConfirmDialog";
 import { DetailModal, type DetailField } from "../../components/sections/dashboard/DetailModal";
 import {
-  DashboardPageShell, staggerItem, iconBtnHover, deleteBtnHover, cardHoverProps, SkeletonRow,
+  DashboardPageShell, staggerItem, iconBtnHover, deleteBtnHover, cardHoverProps,
   tableRowVariants,
 } from "../../components/dashboard/DashboardPageShell";
 
@@ -229,3 +229,4 @@ export const OfficesManagement = () => {
 };
 
 export default OfficesManagement;
+

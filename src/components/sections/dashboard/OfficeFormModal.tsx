@@ -30,6 +30,7 @@ type Touched = Partial<Record<F, boolean>>;
 
 // required fields only — optional ones are validated on blur but not on submit if empty
 const REQUIRED_FIELDS: F[] = ["name", "address", "city", "country", "phone", "email"];
+void REQUIRED_FIELDS;
 const ALL_FIELDS: F[] = ["name", "address", "city", "country", "phone", "email", "latitude", "longitude", "directionsUrl", "order"];
 
 function validateField(field: F, value: string): string {

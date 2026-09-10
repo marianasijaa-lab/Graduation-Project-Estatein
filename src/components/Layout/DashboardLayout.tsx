@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Menu, X, LogOut } from "lucide-react";
 import { Link, NavLink, Outlet, useLocation } from "react-router";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import type { Variants } from "framer-motion";
 import { RouteTransitionOverlay } from "../common/RouteTransitionOverlay";
 import {
   HiOutlineHome,
@@ -98,13 +99,13 @@ function useActiveSectionLabel(): string {
 }
 
 // Stagger variants for sidebar nav groups on first mount
-const sidebarNavVariants = {
+const sidebarNavVariants: Variants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.06, delayChildren: 0.28 } },
 };
-const navGroupVariants = {
+const navGroupVariants: Variants = {
   hidden:  { opacity: 0, x: -14 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.32, ease: [0.25, 0.1, 0.25, 1] } },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.32, ease: [0.25, 0.1, 0.25, 1] as any } },
 };
 
 interface SidebarLinksProps {

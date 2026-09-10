@@ -8,3 +8,4 @@ dist/
 
 # Firebase Service Account
 serviceAccount.json
+.vercel

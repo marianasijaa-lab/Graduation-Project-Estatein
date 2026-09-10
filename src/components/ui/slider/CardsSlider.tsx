@@ -131,7 +131,7 @@ function Card({ item, index = 0 }: CardProps & { index?: number }) {
         </div>
 
         <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-x-0 gap-y-1 sm:gap-1 overflow-hidden">
-          {details.map((detail, index) => (
+          {details.map((detail) => (
             <div
               key={detail.text}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border whitespace-nowrap w-fit shrink-0"

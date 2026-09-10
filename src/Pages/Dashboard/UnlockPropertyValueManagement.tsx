@@ -12,7 +12,7 @@ import { UnlockPropertyValueFormModal } from "../../components/sections/dashboar
 import { ConfirmDialog } from "../../components/sections/dashboard/ConfirmDialog";
 import { DetailModal, type DetailField } from "../../components/sections/dashboard/DetailModal";
 import {
-  DashboardPageShell, staggerItem, iconBtnHover, deleteBtnHover, cardHoverProps, SkeletonRow,
+  DashboardPageShell, staggerItem, iconBtnHover, deleteBtnHover, cardHoverProps,
   tableRowVariants,
 } from "../../components/dashboard/DashboardPageShell";
 
@@ -197,3 +197,4 @@ export const UnlockPropertyValueManagement = () => {
 };
 
 export default UnlockPropertyValueManagement;
+

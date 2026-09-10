@@ -1,33 +1,34 @@
 import { AnimatePresence, motion } from "framer-motion";
 import type { ReactNode } from "react";
+import type { Variants } from "framer-motion";
 import { useLocation } from "react-router";
 import { DemoDataBanner } from "./DemoDataBanner";
 
 // ── Shared variants ───
 
 /** Each staggered child — slides up from 12 px with a fade. */
-export const staggerItem = {
+export const staggerItem: Variants = {
   hidden:  { opacity: 0, y: 12 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.32, ease: [0.25, 0.1, 0.25, 1] },
+    transition: { duration: 0.32, ease: [0.25, 0.1, 0.25, 1] as any },
   },
 };
 
 /** Table row / mobile card — no animation to prevent re-render flicker. */
-export const rowVariants = {
+export const rowVariants: Variants = {
   hidden:  { opacity: 1 },
   visible: { opacity: 1 },
 };
 
 /** Passthrough — kept for API compatibility across all pages. */
-export const rowStagger = {
+export const rowStagger: Variants = {
   hidden: {},
   visible: {},
 };
 
-export const tableRowVariants = {
+export const tableRowVariants: Variants = {
   hidden:  { opacity: 0, y: 6 },
   visible: {
     opacity: 1, y: 0,
@@ -53,7 +54,7 @@ export const deleteBtnHover = {
 export const cardHoverProps = {
   whileHover: { y: -2, boxShadow: "0 8px 24px rgba(0,0,0,0.18)" },
   whileTap:   { scale: 0.985 },
-  transition: { duration: 0.18, ease: [0.25, 0.1, 0.25, 1] },
+  transition: { duration: 0.18, ease: "easeOut" },
 };
 
 // ── SkeletonRow ──
